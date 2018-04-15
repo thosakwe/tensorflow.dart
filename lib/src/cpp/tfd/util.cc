@@ -24,7 +24,13 @@ Dart_Handle tfd::get_tensor_value(TF_Tensor *tensor) {
     TF_DataType type = TF_TensorType(tensor);
 
     switch (type) {
-
+        case TF_STRING:
+            // TODO: Get String length
+            auto *str = ((char *) TF_TensorData(tensor)) + 9;
+            return Dart_NewStringFromCString(str);
+            //case TF_FLOAT:
+            //case TF_DOUBLE:
+            //    TF_OperationGetAttrFloat()
     }
 
     // Throw an UnsupportedError
