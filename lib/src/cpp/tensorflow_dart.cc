@@ -1,5 +1,4 @@
 #include <cstring>
-#include <iostream>
 #include "tfd/tfd.h"
 #include "tensorflow_dart.h"
 
@@ -30,11 +29,8 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     HandleError(Dart_StringToCString(name, &cname));
 
     if (strcmp("NewGraph", cname) == 0) result = tfd::NewGraph;
-    //if (strcmp("SystemSrand", cname) == 0) result = SystemSrand;
-
-    if (result == nullptr) {
-        std::cerr << "Unknown: " << cname << std::endl;
-    }
+    if (strcmp("Graph_Delete", cname) == 0) result = tfd::Graph_Delete;
+    //}
 
     return result;
 }

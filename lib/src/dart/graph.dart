@@ -7,6 +7,10 @@ class Graph {
   Graph() {
     _pointer = _newGraph();
   }
+
+  /// Destroy an options object.  Graph will be deleted once no more
+  /// TFSession's are referencing it.
+  void delete() native "Graph_Delete";
 }
 
 int _newGraph() native "NewGraph";

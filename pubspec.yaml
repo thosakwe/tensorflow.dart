@@ -5,6 +5,7 @@ author: Tobe O <thosakwe@gmail.com>
 publish_to: none
 dev_dependencies:
   scripts: ^1.0.0-dev
+  test: ^0.12.0
 scripts:
   get: scripts build
   build:

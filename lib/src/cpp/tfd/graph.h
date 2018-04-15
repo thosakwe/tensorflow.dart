@@ -10,6 +10,7 @@
 
 namespace tfd {
     void NewGraph(Dart_NativeArguments arguments);
+    void Graph_Delete(Dart_NativeArguments arguments);
 }
 
 #endif //TENSORFLOW_DART_GRAPH_H
