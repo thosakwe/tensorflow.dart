@@ -5,8 +5,8 @@ void main() {
   group('run', () {
     test('tensor', () {
       var hello = tf.constant("Hello, Tensorflow!");
-      var code = tf.Session.runTensor(hello);
-      print('Code: $code');
+      var result = tf.Session.runTensor(hello);
+      print('Code: $result');
     });
   });
 }

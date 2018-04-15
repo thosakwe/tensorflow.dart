@@ -12,8 +12,8 @@ namespace tfd
 {
     void *dereference_ptr(Dart_Handle handle);
     TF_Graph *dereference_graph_ptr(Dart_Handle handle);
-    TF_Session *dereference_session_ptr(Dart_Handle handle);
     TF_Tensor *dereference_tensor_ptr(Dart_Handle handle);
+    Dart_Handle get_tensor_value(TF_Tensor* tensor);
 }
 
 #endif //TENSORFLOW_DART_UTIL_H

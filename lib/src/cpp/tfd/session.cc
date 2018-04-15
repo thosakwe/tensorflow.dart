@@ -6,6 +6,11 @@
 #include "session.h"
 #include "util.h"
 
+Dart_Handle getTuple2Type() {
+    Dart_Handle tupleLib = Dart_LookupLibrary(Dart_NewStringFromCString("package:tuple/tuple.dart"));
+    return Dart_GetClass(tupleLib, Dart_NewStringFromCString("Tuple2"));
+}
+
 void tfd::SessionRunTensor(Dart_NativeArguments arguments) {
     const char *operationName;
     TF_Tensor *tensor = dereference_tensor_ptr(Dart_GetNativeArgument(arguments, 0));
@@ -15,6 +20,7 @@ void tfd::SessionRunTensor(Dart_NativeArguments arguments) {
     auto *opts = TF_NewSessionOptions();
     auto *status = TF_NewStatus();
     auto *session = TF_NewSession(graph, opts, status);
+    TF_Tensor *tensorOutput;
 
     // Create a `Const` operation.
     auto *op = TF_NewOperation(graph, "Const", operationName);
@@ -31,12 +37,22 @@ void tfd::SessionRunTensor(Dart_NativeArguments arguments) {
     // Now, run the operation we have created.
     TF_SessionRun(session, nullptr,
                   nullptr, nullptr, 0,  // Inputs
-                  &output, &tensor, 1,  // Outputs
+                  &output, &tensorOutput, 1,  // Outputs
                   (const TF_Operation *const *) &operation, 1,  // Operations
                   nullptr, status);
 
-    // Get the status code, and return it
-    Dart_SetReturnValue(arguments, Dart_NewInteger(TF_GetCode(status)));
+    Dart_Handle tuple[2];
+
+    // Get the status code.
+    tuple[0] = Dart_NewInteger(TF_GetCode(status));
+
+    // Get the value...
+    tuple[1] = get_tensor_value(tensorOutput);
+
+    // Return the tuple.
+    Dart_Handle tupleType = getTuple2Type();
+    Dart_Handle tupleInstance = Dart_New(tupleType, Dart_NewStringFromCString(""), 2, tuple);
+    Dart_SetReturnValue(arguments, tupleInstance);
 
     // Now, destroy the created session, etc.
     TF_CloseSession(session, status);

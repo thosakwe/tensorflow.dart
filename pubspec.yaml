@@ -3,6 +3,8 @@ description: Native bindings for Tensorflow.
 version: 0.0.0
 author: Tobe O <thosakwe@gmail.com>
 publish_to: none
+dependencies:
+  tuple: ^1.0.0
 dev_dependencies:
   test: ^0.12.0
   vector_math: ^2.0.0

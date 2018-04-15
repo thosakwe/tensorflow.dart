@@ -49,6 +49,36 @@ enum DataType {
   uInt64,
 }
 
+/// TF_Code holds an error code.  The enum values here are identical to
+/// corresponding values in error_codes.proto.
+enum Code {
+  ok,
+  cancelled,
+  unknown,
+  invalidArgument,
+  deadlineExceeded,
+  notFound,
+  alreadyExists,
+  permissionDenied,
+  unauthenticated,
+  resourceExhausted,
+  failedPrecondition,
+  aborted,
+  outOfRange,
+  unimplemented,
+  internal,
+  unavailable,
+  dataLoss,
+}
+
+int _codeToInt(Code type) {
+  return Code.values.indexOf(type);
+}
+
+Code _codeFrom(int value) {
+  return Code.values[value];
+}
+
 int _dataTypeToInt(DataType type) {
   return DataType.values.indexOf(type) + 1;
 }
