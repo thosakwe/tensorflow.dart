@@ -2,6 +2,7 @@ name: tensorflow
 description: Native bindings for Tensorflow.
 version: 0.0.0
 author: Tobe O <thosakwe@gmail.com>
+publish_to: none
 dev_dependencies:
   scripts: ^1.0.0-dev
 scripts:

@@ -1,12 +1,13 @@
 #include <cstring>
+#include <iostream>
+#include "tfd/tfd.h"
 #include "tensorflow_dart.h"
 
 // Forward declaration of ResolveName function.
 
-
 // The name of the initialization function is the extension name followed
 // by _Init.
-DART_EXPORT Dart_Handle sample_extension_Init(Dart_Handle parent_library) {
+DART_EXPORT Dart_Handle tensorflow_dart_Init(Dart_Handle parent_library) {
     if (Dart_IsError(parent_library)) return parent_library;
 
     Dart_Handle result_code =
@@ -28,7 +29,12 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     const char *cname;
     HandleError(Dart_StringToCString(name, &cname));
 
-    //if (strcmp("SystemRand", cname) == 0) result = SystemRand;
+    if (strcmp("NewGraph", cname) == 0) result = tfd::NewGraph;
     //if (strcmp("SystemSrand", cname) == 0) result = SystemSrand;
+
+    if (result == nullptr) {
+        std::cerr << "Unknown: " << cname << std::endl;
+    }
+
     return result;
 }
