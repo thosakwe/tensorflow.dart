@@ -1,3 +1,3 @@
 # tensorflow.dart
 
-![Logo](logo/tensorflow-layout.png)
+<img src="logo/tensorflow-layout.png">
