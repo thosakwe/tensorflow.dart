@@ -1,14 +1,6 @@
 part of tensorflow;
 
 class Session {
-  final SessionOptions options;
-  int _pointer;
-
-  Session({this.options});
-
-  void run(Tensor tensor) native "Session_Run";
-}
-
-class SessionOptions {
-
+  static Code runTensor(Tensor tensor, [String operationName = 'tensor'])
+      native "SessionRunTensor";
 }

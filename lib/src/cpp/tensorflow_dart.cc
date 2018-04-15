@@ -33,7 +33,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     else if (strcmp("Graph_Delete", cname) == 0) result = tfd::Graph_Delete;
 
         // session.h
-    else if (strcmp("Session_Run", cname) == 0) result = tfd::Session_Run;
+    else if (strcmp("SessionRunTensor", cname) == 0) result = tfd::SessionRunTensor;
 
         // tensor.h
     else if (strcmp("NewStringTensor", cname) == 0) result = tfd::NewStringTensor;

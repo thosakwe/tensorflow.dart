@@ -9,11 +9,11 @@ class Tensor {
 
 Tensor constant(value) {
   if (value is String)
-    return _newStringTensor(value, Tensor, Tensor._index++);
+    return _newStringTensor(value, Tensor);
 
   throw new UnsupportedError(
       'Cannot create constant Tensor from ${value.runtimeType}.');
 }
 
-Tensor _newStringTensor(String text, Type tensorType, int index)
+Tensor _newStringTensor(String text, Type tensorType)
     native "NewStringTensor";

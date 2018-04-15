@@ -16,6 +16,10 @@ TF_Graph *tfd::dereference_graph_ptr(Dart_Handle handle) {
     return (TF_Graph*) dereference_ptr(handle);
 }
 
+TF_Session *tfd::dereference_session_ptr(Dart_Handle handle) {
+    return (TF_Session*) dereference_ptr(handle);
+}
+
 TF_Tensor *tfd::dereference_tensor_ptr(Dart_Handle handle) {
     return (TF_Tensor*) dereference_ptr(handle);
 }

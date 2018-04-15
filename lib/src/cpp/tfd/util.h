@@ -12,6 +12,7 @@ namespace tfd
 {
     void *dereference_ptr(Dart_Handle handle);
     TF_Graph *dereference_graph_ptr(Dart_Handle handle);
+    TF_Session *dereference_session_ptr(Dart_Handle handle);
     TF_Tensor *dereference_tensor_ptr(Dart_Handle handle);
 }
 

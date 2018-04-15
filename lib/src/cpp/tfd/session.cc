@@ -2,26 +2,45 @@
 // Created by Tobe on 4/15/18.
 //
 
+#include "../tensorflow_dart.h"
 #include "session.h"
 #include "util.h"
 
-void tfd::Session_Run(Dart_NativeArguments arguments) {
-    Dart_Handle sessionInstance = Dart_GetNativeArgument(arguments, 0);
-    //TF_Tensor *tensor = dereference_tensor_ptr(Dart_GetNativeArgument(arguments, 1));
+void tfd::SessionRunTensor(Dart_NativeArguments arguments) {
+    const char *operationName;
+    TF_Tensor *tensor = dereference_tensor_ptr(Dart_GetNativeArgument(arguments, 0));
+    HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &operationName));
     auto *graph = TF_NewGraph();
+    // TODO: Parse options
     auto *opts = TF_NewSessionOptions();
     auto *status = TF_NewStatus();
     auto *session = TF_NewSession(graph, opts, status);
 
-    // Set the value of "_pointer"
-    Dart_SetField(sessionInstance, Dart_NewStringFromCString("_pointer"), Dart_NewInteger((int64_t) session));
+    // Create a `Const` operation.
+    auto *op = TF_NewOperation(graph, "Const", operationName);
 
-    // TODO: Name of op, type
-    //auto *desc = TF_NewOperation(graph, "Const", "hello");
+    // Indicate that the tensor we've allocated is the value of this operation.
+    TF_SetAttrTensor(op, "value", tensor, status);
+    TF_SetAttrType(op, "dtype", TF_TensorType(tensor));
 
-    // TODO: Actually run
-    Dart_Handle unsupportedError = Dart_GetClass(Dart_RootLibrary(), Dart_NewStringFromCString("UnimplementedError"));
-    Dart_Handle message = Dart_NewStringFromCString("Running sessions is not yet implemented.");
-    Dart_ThrowException(Dart_New(unsupportedError, Dart_NewStringFromCString(""), 1, &message));
-    Dart_SetReturnValue(arguments, Dart_Null());
+    // Finish the operation, and set the index.
+    auto *operation = TF_FinishOperation(op, status);
+    int index = 0;
+    TF_Output output = {operation, index};
+
+    // Now, run the operation we have created.
+    TF_SessionRun(session, nullptr,
+                  nullptr, nullptr, 0,  // Inputs
+                  &output, &tensor, 1,  // Outputs
+                  (const TF_Operation *const *) &operation, 1,  // Operations
+                  nullptr, status);
+
+    // Get the status code, and return it
+    Dart_SetReturnValue(arguments, Dart_NewInteger(TF_GetCode(status)));
+
+    // Now, destroy the created session, etc.
+    TF_CloseSession(session, status);
+    TF_DeleteSession(session, status);
+    TF_DeleteStatus(status);
+    TF_DeleteSessionOptions(opts);
 }

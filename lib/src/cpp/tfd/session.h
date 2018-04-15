@@ -9,7 +9,7 @@
 #include <tensorflow/c/c_api.h>
 
 namespace tfd {
-    void Session_Run(Dart_NativeArguments arguments);
+    void SessionRunTensor(Dart_NativeArguments arguments);
 }
 
 #endif //TENSORFLOW_DART_SESSION_H
