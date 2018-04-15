@@ -1,0 +1,35 @@
+# Created by .ignore support plugin (hsz.mobi)
+### CMake template
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+### Dart template
+# See https://www.dartlang.org/tools/private-files.html
+
+# Files and directories created by pub
+.packages
+.pub/
+build/
+# If you're building an application, you may want to check-in your pubspec.lock
+pubspec.lock
+
+# Directory created by dartdoc
+# If you don't generate documentation locally you can remove this line.
+doc/api/
+.idea
+*.iml
+.dart_tool
+.scripts-bin/
+*.cbp
+*.dylib
+*.a
+third_party
+*.dll
+*.so
+*.o

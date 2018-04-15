@@ -1,0 +1,11 @@
+name: tensorflow
+description: Native bindings for Tensorflow.
+version: 0.0.0
+author: Tobe O <thosakwe@gmail.com>
+dev_dependencies:
+  scripts: ^1.0.0-dev
+scripts:
+  get: scripts build
+  build:
+    - "cmake ."
+    - "cmake --build . --target tensorflow_dart -- -j 4"

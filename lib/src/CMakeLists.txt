@@ -1,0 +1,29 @@
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib/src)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib/src)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+# Find Dart
+set(DART_SDK $ENV{DART_SDK})
+
+if (${DART_SDK} STREQUAL "")
+    message(FATAL_ERROR "You must set the `DART_SDK` environment variable to the path of the Dart SDK.")
+else ()
+    message("Building against Dart SDK: ${DART_SDK}")
+endif ()
+
+include_directories(${DART_SDK}/include)
+add_definitions(-DDART_SHARED_LIB=1)
+
+# OS-specific flags
+if (${APPLE})
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -undefined dynamic_lookup")
+endif ()
+
+# Bundle in Tensorflow
+include_directories("${TENSORFLOW_DIR}/include")
+link_directories("${TENSORFLOW_DIR}/lib")
+
+add_library(tensorflow_dart SHARED
+        cpp/tensorflow_dart.cc cpp/tensorflow_dart.h)
+install(TARGETS tensorflow_dart DESTINATION lib)
