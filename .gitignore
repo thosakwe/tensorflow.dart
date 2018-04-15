@@ -29,7 +29,8 @@ doc/api/
 *.cbp
 *.dylib
 *.a
-third_party
+#third_party
 *.dll
 *.so
 *.o
+third_party/tensorflow*
