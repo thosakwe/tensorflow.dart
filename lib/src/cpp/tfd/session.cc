@@ -7,13 +7,17 @@
 
 void tfd::Session_Run(Dart_NativeArguments arguments) {
     Dart_Handle sessionInstance = Dart_GetNativeArgument(arguments, 0);
-    TF_Graph *graph = dereference_graph_ptr(Dart_GetNativeArgument(arguments, 1));
+    //TF_Tensor *tensor = dereference_tensor_ptr(Dart_GetNativeArgument(arguments, 1));
+    auto *graph = TF_NewGraph();
     auto *opts = TF_NewSessionOptions();
     auto *status = TF_NewStatus();
     auto *session = TF_NewSession(graph, opts, status);
 
     // Set the value of "_pointer"
     Dart_SetField(sessionInstance, Dart_NewStringFromCString("_pointer"), Dart_NewInteger((int64_t) session));
+
+    // TODO: Name of op, type
+    //auto *desc = TF_NewOperation(graph, "Const", "hello");
 
     // TODO: Actually run
     Dart_Handle unsupportedError = Dart_GetClass(Dart_RootLibrary(), Dart_NewStringFromCString("UnimplementedError"));

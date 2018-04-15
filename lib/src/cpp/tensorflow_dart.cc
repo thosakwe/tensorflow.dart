@@ -28,9 +28,15 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     const char *cname;
     HandleError(Dart_StringToCString(name, &cname));
 
+    // graph.h
     if (strcmp("NewGraph", cname) == 0) result = tfd::NewGraph;
     else if (strcmp("Graph_Delete", cname) == 0) result = tfd::Graph_Delete;
+
+        // session.h
     else if (strcmp("Session_Run", cname) == 0) result = tfd::Session_Run;
+
+        // tensor.h
+    else if (strcmp("NewStringTensor", cname) == 0) result = tfd::NewStringTensor;
 
     return result;
 }

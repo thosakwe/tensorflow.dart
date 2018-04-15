@@ -1,7 +1,14 @@
 part of tensorflow;
 
 class Session {
+  final SessionOptions options;
   int _pointer;
 
-  void run(Graph graph) native "Session_Run";
+  Session({this.options});
+
+  void run(Tensor tensor) native "Session_Run";
+}
+
+class SessionOptions {
+
 }
