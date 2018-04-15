@@ -29,8 +29,8 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     HandleError(Dart_StringToCString(name, &cname));
 
     if (strcmp("NewGraph", cname) == 0) result = tfd::NewGraph;
-    if (strcmp("Graph_Delete", cname) == 0) result = tfd::Graph_Delete;
-    //}
+    else if (strcmp("Graph_Delete", cname) == 0) result = tfd::Graph_Delete;
+    else if (strcmp("Session_Run", cname) == 0) result = tfd::Session_Run;
 
     return result;
 }

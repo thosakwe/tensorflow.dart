@@ -4,14 +4,7 @@
 
 #include "../tensorflow_dart.h"
 #include "graph.h"
-#include <iostream>
-
-TF_Graph *dereference_graph_ptr(Dart_Handle handle) {
-    uint64_t ptr;
-    Dart_Handle value = Dart_GetField(handle, Dart_NewStringFromCString("_pointer"));
-    HandleError(Dart_IntegerToUint64(value, &ptr));
-    return (TF_Graph *) ptr;
-}
+#include "util.h"
 
 void tfd::NewGraph(Dart_NativeArguments arguments) {
     auto *ptr = TF_NewGraph();

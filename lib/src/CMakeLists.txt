@@ -27,6 +27,6 @@ link_directories("${TENSORFLOW_DIR}/lib")
 add_library(tensorflow_dart SHARED
         cpp/tensorflow_dart.h cpp/tensorflow_dart.cc
         cpp/tfd/tfd.h
-        cpp/tfd/graph.h cpp/tfd/graph.cc)
+        cpp/tfd/graph.h cpp/tfd/graph.cc cpp/tfd/session.cc cpp/tfd/session.h cpp/tfd/util.cc cpp/tfd/util.h)
 target_link_libraries(tensorflow_dart tensorflow)
 install(TARGETS tensorflow_dart DESTINATION lib)
