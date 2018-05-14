@@ -6,6 +6,7 @@
 #define TENSORFLOW_DART_TFD_H
 
 #include "graph.h"
+#include "operation.h"
 #include "session.h"
 #include "tensor.h"
 
