@@ -2,15 +2,13 @@ part of tensorflow;
 
 /// Represents a computation graph.  Graphs may be shared between sessions.
 class Graph {
-  int _pointer;
+  final int _pointer;
 
-  Graph() {
-    _pointer = _newGraph();
-  }
+  Graph() : _pointer = Graph_new();
 
   /// Destroy an options object.  Graph will be deleted once no more
   /// TFSession's are referencing it.
-  void delete() native "Graph_Delete";
+  void delete() native "Graph_delete";
 }
 
-int _newGraph() native "NewGraph";
+int Graph_new() native "Graph_new";

@@ -8,9 +8,10 @@
 #include <dart_api.h>
 #include <tensorflow/c/c_api.h>
 
-namespace tfd {
-    void NewGraph(Dart_NativeArguments arguments);
-    void Graph_Delete(Dart_NativeArguments arguments);
+namespace tfd
+{
+    void Graph_new(Dart_NativeArguments arguments);
+    void Graph_delete(Dart_NativeArguments arguments);
 }
 
 #endif //TENSORFLOW_DART_GRAPH_H

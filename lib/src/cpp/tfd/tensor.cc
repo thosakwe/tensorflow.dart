@@ -6,7 +6,15 @@
 #include "../tensorflow_dart.h"
 #include "tensor.h"
 
+using namespace tfd;
+
 void tfd::NewStringTensor(Dart_NativeArguments arguments) {
+    const char *str;
+    Dart_Handle arg0 = Dart_GetNativeArgument(arguments, 0), tensorType
+            = Dart_GetNativeArgument(arguments, 1);
+    HandleError(Dart_StringToCString(arg0, &str));
+
+    /*
     const char *str;
     Dart_Handle arg0 = Dart_GetNativeArgument(arguments, 0), tensorType
             = Dart_GetNativeArgument(arguments, 1);
@@ -29,5 +37,5 @@ void tfd::NewStringTensor(Dart_NativeArguments arguments) {
     Dart_SetField(tensorInstance, Dart_NewStringFromCString("_pointer"), Dart_NewInteger((int64_t) tensor));
 
 
-    Dart_SetReturnValue(arguments, tensorInstance);
+    Dart_SetReturnValue(arguments, tensorInstance);*/
 }

@@ -4,10 +4,12 @@
 
 #ifndef TENSORFLOW_DART_TENSOR_H
 #define TENSORFLOW_DART_TENSOR_H
+
 #include <dart_api.h>
 #include <tensorflow/c/c_api.h>
 
-namespace tfd {
+namespace tfd
+{
     void NewStringTensor(Dart_NativeArguments arguments);
 }
 
