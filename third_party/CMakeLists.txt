@@ -24,3 +24,5 @@ if(NOT EXISTS ${TENSORFLOW_DIR})
 else()
     message("Building against Tensorflow: ${TENSORFLOW_DIR}")
 endif()
+
+add_subdirectory(tonic)

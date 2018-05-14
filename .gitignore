@@ -34,3 +34,4 @@ doc/api/
 *.so
 *.o
 third_party/tensorflow*
+tensorflow.tar.gz

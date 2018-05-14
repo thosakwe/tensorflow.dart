@@ -1,0 +1,45 @@
+# Copyright 2018 The Fuchsia Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+config("filesystem_config") {
+  visibility = [ ":*" ]
+
+  # We want callers to refer to headers in this folders using the "files"
+  # prefix.
+  include_dirs = [ ".." ]
+}
+
+source_set("filesystem") {
+  visibility = [ "../*" ]
+
+  sources = [
+    "build_config.h",
+    "directory.cc",
+    "directory.h",
+    "eintr_wrapper.h",
+    "file.cc",
+    "file.h",
+    "file_descriptor.cc",
+    "file_descriptor.h",
+    "path.h",
+    "portable_unistd.h",
+    "scoped_temp_dir.cc",
+    "scoped_temp_dir.h",
+    "symlink.h",
+  ]
+
+  if (is_win) {
+    sources += [
+      "path_win.cc",
+      "symlink_win.cc",
+    ]
+  } else {
+    sources += [
+      "path_posix.cc",
+      "symlink_posix.cc",
+    ]
+  }
+
+  public_configs = [ ":filesystem_config" ]
+}
