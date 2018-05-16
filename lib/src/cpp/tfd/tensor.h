@@ -10,7 +10,7 @@
 
 namespace tfd
 {
-    void NewStringTensor(Dart_NativeArguments arguments);
+    void Constant(Dart_NativeArguments arguments);
 }
 
 #endif //TENSORFLOW_DART_TENSOR_H

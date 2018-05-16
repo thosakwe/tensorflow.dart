@@ -1,8 +1,8 @@
 part of tensorflow;
 
 class Session {
-  static Object runTensor(Tensor tensor, [String operationName = 'tensor']) {
-    var result = _runTensor(tensor, operationName);
+  static Object _run(Graph graph, Output tensor) {
+    var result = __run(graph, tensor);
     var code = _codeFrom(result.item1);
 
     // TODO: Get message
@@ -11,6 +11,6 @@ class Session {
     return result.item2;
   }
 
-  static Tuple2<int, Object> _runTensor(Tensor tensor, String operationName)
-      native "SessionRunTensor";
+  static Tuple2<int, Object> __run(Graph graph, Output tensor)
+      native "SessionRunGraph";
 }

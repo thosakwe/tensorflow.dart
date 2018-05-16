@@ -12,6 +12,7 @@
 namespace tfd
 {
     void Operation_list(Dart_NativeArguments arguments);
+    void Operation_name(Dart_NativeArguments arguments);
     void Operation_new(Dart_NativeArguments arguments);
 }
 

@@ -1,4 +1,5 @@
 #include <cstring>
+#include <iostream>
 #include "tfd/tfd.h"
 #include "tensorflow_dart.h"
 
@@ -21,6 +22,10 @@ Dart_Handle HandleError(Dart_Handle handle) {
     return handle;
 }
 
+void Version(Dart_NativeArguments arguments) {
+    Dart_SetReturnValue(arguments, Dart_NewStringFromCString(TF_Version()));
+}
+
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_scope) {
     // If we fail, we return nullptr, and Dart throws an exception.
     if (!Dart_IsString(name)) return nullptr;
@@ -31,14 +36,19 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     // graph.h
     if (strcmp("Graph_new", cname) == 0) result = tfd::Graph_new;
     else if (strcmp("Graph_delete", cname) == 0) result = tfd::Graph_delete;
+    else if (strcmp("Graph_add_operation", cname) == 0) result = tfd::Graph_add_operation;
     else if (strcmp("Operation_list", cname) == 0) result = tfd::Operation_list;
+    else if (strcmp("Operation_name", cname) == 0) result = tfd::Operation_name;
     else if (strcmp("Operation_new", cname) == 0) result = tfd::Operation_new;
 
         // session.h
-    else if (strcmp("SessionRunTensor", cname) == 0) result = tfd::SessionRunTensor;
+    else if (strcmp("SessionRunGraph", cname) == 0) result = tfd::SessionRunGraph;
 
         // tensor.h
-    else if (strcmp("NewStringTensor", cname) == 0) result = tfd::NewStringTensor;
+    else if (strcmp("Constant", cname) == 0) result = tfd::Constant;
+
+    // Misc
+    else if (strcmp("Version", cname) == 0) result = Version;
 
     return result;
 }

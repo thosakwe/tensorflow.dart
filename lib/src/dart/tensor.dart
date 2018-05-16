@@ -1,19 +1,12 @@
 part of tensorflow;
 
-class Tensor {
-  static int _index = 0;
-  int _pointer;
+class Output<T> {
+  int _operation;
+  int _index;
 
-  Tensor._();
+  Output._();
+
+  int get index => _index;
+
+  Operation get op => new Operation._fromPointer(_operation);
 }
-
-Tensor constant(value) {
-  if (value is String)
-    return _newStringTensor(value, Tensor);
-
-  throw new UnsupportedError(
-      'Cannot create constant Tensor from ${value.runtimeType}.');
-}
-
-Tensor _newStringTensor(String text, Type tensorType)
-    native "NewStringTensor";

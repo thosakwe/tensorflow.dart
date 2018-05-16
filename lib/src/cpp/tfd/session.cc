@@ -11,35 +11,35 @@ Dart_Handle getTuple2Type() {
     return Dart_GetClass(tupleLib, Dart_NewStringFromCString("Tuple2"));
 }
 
-void tfd::SessionRunTensor(Dart_NativeArguments arguments) {
-    const char *operationName;
-    TF_Tensor *tensor = dereference_tensor_ptr(Dart_GetNativeArgument(arguments, 0));
-    HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &operationName));
-    auto *graph = TF_NewGraph();
+void tfd::SessionRunGraph(Dart_NativeArguments arguments) {
+    auto *graph = dereference_graph_ptr(Dart_GetNativeArgument(arguments, 0));
     // TODO: Parse options
     auto *opts = TF_NewSessionOptions();
     auto *status = TF_NewStatus();
     auto *session = TF_NewSession(graph, opts, status);
-    TF_Tensor *tensorOutput;
+    TF_Tensor *tensorOutput = nullptr;
+    auto *output = new TF_Output;
 
-    // Create a `Const` operation.
-    auto *op = TF_NewOperation(graph, "Const", operationName);
+    // Find the operation from the given tensor.
+    Dart_Handle tensorInstance = Dart_GetNativeArgument(arguments, 1);
+    Dart_Handle tensorOutputPtr = HandleError(Dart_GetField(tensorInstance, Dart_NewStringFromCString("_output")));
+    uint64_t outputPtr;
+    HandleError(Dart_IntegerToUint64(tensorOutputPtr, &outputPtr));
+    auto *op = (const TF_Operation*) outputPtr;
 
-    // Indicate that the tensor we've allocated is the value of this operation.
-    TF_SetAttrTensor(op, "value", tensor, status);
-    TF_SetAttrType(op, "dtype", TF_TensorType(tensor));
-
-    // Finish the operation, and set the index.
-    auto *operation = TF_FinishOperation(op, status);
-    int index = 0;
-    TF_Output output = {operation, index};
-
-    // Now, run the operation we have created.
-    TF_SessionRun(session, nullptr,
-                  nullptr, nullptr, 0,  // Inputs
-                  &output, &tensorOutput, 1,  // Outputs
-                  (const TF_Operation *const *) &operation, 1,  // Operations
-                  nullptr, status);
+    // Now, run the session.
+    TF_SessionRun(session, // Session
+                  nullptr, // Options
+                  nullptr, // Inputs
+                  nullptr, // Input values
+                  0, // nInputs
+                  output, // Output struct
+                  &tensorOutput, // Output tensor,
+                  1, // nOutputs,
+                  &op, 1, // Targets?
+                  nullptr, // Metadata
+                  status // Status
+    );
 
     Dart_Handle tuple[2];
 
@@ -47,7 +47,11 @@ void tfd::SessionRunTensor(Dart_NativeArguments arguments) {
     tuple[0] = Dart_NewInteger(TF_GetCode(status));
 
     // Get the value...
-    tuple[1] = get_tensor_value(tensorOutput);
+    if (tensorOutput == nullptr) {
+        tuple[1] = Dart_NewInteger(0);
+    } else {
+        tuple[1] = get_tensor_value(tensorOutput);
+    }
 
     // Return the tuple.
     Dart_Handle tupleType = getTuple2Type();

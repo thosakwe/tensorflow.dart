@@ -39,3 +39,14 @@ Dart_Handle tfd::get_tensor_value(TF_Tensor *tensor) {
     Dart_Handle error = Dart_New(unsupportedErrorType, Dart_NewStringFromCString(""), 1, &msg);
     Dart_ThrowException(error);
 }
+
+TF_Operation *tfd::dereference_operation_ptr(Dart_Handle handle) {
+    return (TF_Operation *) dereference_ptr(handle);
+}
+
+void tfd::throwArgumentError(const char *msg) {
+    Dart_Handle unsupportedErrorType = Dart_GetClass(Dart_RootLibrary(), Dart_NewStringFromCString("ArgumentError"));
+    Dart_Handle msgh = Dart_NewStringFromCString(msg);
+    Dart_Handle error = Dart_New(unsupportedErrorType, Dart_NewStringFromCString(""), 1, &msgh);
+    Dart_ThrowException(error);
+}
