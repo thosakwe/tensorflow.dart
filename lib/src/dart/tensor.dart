@@ -1,10 +1,11 @@
 part of tensorflow;
 
 class Output<T> {
+  final Graph _graph;
   int _operation;
   int _index;
 
-  Output._();
+  Output._(this._graph);
 
   int get index => _index;
 

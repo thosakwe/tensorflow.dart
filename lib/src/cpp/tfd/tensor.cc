@@ -13,14 +13,15 @@ using namespace tfd;
 void tfd::Constant(Dart_NativeArguments arguments) {
     const char *operationName;
     int64_t dtype;
-    auto *graph = dereference_graph_ptr(Dart_GetNativeArgument(arguments, 0));
+    Dart_Handle graphHandle = Dart_GetNativeArgument(arguments, 0);
+    auto *graph = dereference_graph_ptr(graphHandle);
     Dart_Handle value = Dart_GetNativeArgument(arguments, 1), outputType
             = Dart_GetNativeArgument(arguments, 2);
     HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 3), &operationName));
     HandleError(Dart_IntegerToInt64(Dart_GetNativeArgument(arguments, 4), &dtype));
 
     // Make a new Output._()
-    Dart_Handle outputInstance = Dart_New(outputType, Dart_NewStringFromCString("_"), 0, nullptr);
+    Dart_Handle outputInstance = Dart_New(outputType, Dart_NewStringFromCString("_"), 1, &graphHandle);
 
     // Create a `Const` operation.
     auto *status = TF_NewStatus(); // TODO: Preserve this for a graph

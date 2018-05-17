@@ -34,7 +34,7 @@ void tfd::SessionRunGraph(Dart_NativeArguments arguments) {
     HandleError(Dart_IntegerToInt64(indexHandle, &index));
     output->index = (int) index;
 
-    // Now, run the session.
+    // Now, run the session!
     TF_SessionRun(session, // Session
                   nullptr, // Options
                   nullptr, // Inputs

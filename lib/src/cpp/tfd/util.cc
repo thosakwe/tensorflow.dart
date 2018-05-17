@@ -24,32 +24,34 @@ Dart_Handle tfd::get_tensor_value(TF_Tensor *tensor) {
     TF_DataType type = TF_TensorType(tensor);
 
     if (type == TF_STRING) {
-        // TODO: Get String length
-        auto *str = ((char *) TF_TensorData(tensor)) + 8;
-        return Dart_NewStringFromCString(str);
+        auto *status = TF_NewStatus();
+        const char *str;
+        size_t str_len, size = TF_TensorByteSize(tensor);
+        TF_StringDecode(8 + (char *) TF_TensorData(tensor), size, &str, &str_len, status);
+        return Dart_NewStringFromUTF8((const uint8_t *) str, str_len);
     } else if (type == TF_INT8) {
-        auto v = *((uint8_t*) TF_TensorData(tensor));
+        auto v = *((uint8_t *) TF_TensorData(tensor));
         return Dart_NewInteger(v);
     } else if (type == TF_INT16) {
-        auto v = *((uint16_t*) TF_TensorData(tensor));
+        auto v = *((uint16_t *) TF_TensorData(tensor));
         return Dart_NewInteger(v);
     } else if (type == TF_INT32) {
-        auto v = *((uint32_t*) TF_TensorData(tensor));
+        auto v = *((uint32_t *) TF_TensorData(tensor));
         return Dart_NewInteger(v);
     } else if (type == TF_INT64) {
-        auto v = *((uint64_t*) TF_TensorData(tensor));
+        auto v = *((uint64_t *) TF_TensorData(tensor));
         return Dart_NewInteger(v);
     } else if (type == TF_UINT8) {
-        auto v = *((uint8_t*) TF_TensorData(tensor));
+        auto v = *((uint8_t *) TF_TensorData(tensor));
         return Dart_NewIntegerFromUint64(v);
     } else if (type == TF_UINT16) {
-        auto v = *((uint16_t*) TF_TensorData(tensor));
+        auto v = *((uint16_t *) TF_TensorData(tensor));
         return Dart_NewIntegerFromUint64(v);
     } else if (type == TF_UINT32) {
-        auto v = *((uint32_t*) TF_TensorData(tensor));
+        auto v = *((uint32_t *) TF_TensorData(tensor));
         return Dart_NewIntegerFromUint64(v);
     } else if (type == TF_UINT64) {
-        auto v = *((uint64_t*) TF_TensorData(tensor));
+        auto v = *((uint64_t *) TF_TensorData(tensor));
         return Dart_NewIntegerFromUint64(v);
     }
 

@@ -23,7 +23,8 @@ void tfd::Graph_delete(Dart_NativeArguments arguments) {
 void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
     const char *opType, *opName;
     auto *status = TF_NewStatus();
-    auto *graph = dereference_graph_ptr(Dart_GetNativeArgument(arguments, 0));
+    Dart_Handle graphHandle = Dart_GetNativeArgument(arguments, 0);
+    auto *graph = dereference_graph_ptr(graphHandle);
     HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &opType));
     HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 2), &opName));
     auto *desc = TF_NewOperation(graph, opType, opName);
@@ -54,7 +55,7 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
     }
 
     Dart_Handle outputType = Dart_GetNativeArgument(arguments, 5);
-    Dart_Handle outputInstance = Dart_New(outputType, Dart_NewStringFromCString("_"), 0, nullptr);
+    Dart_Handle outputInstance = Dart_New(outputType, Dart_NewStringFromCString("_"), 1, &graphHandle);
     Dart_SetField(outputInstance, Dart_NewStringFromCString("_operation"),
                   Dart_NewIntegerFromUint64((uint64_t) operation));
     Dart_SetField(outputInstance, Dart_NewStringFromCString("_index"), Dart_GetNativeArgument(arguments, 4));
