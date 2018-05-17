@@ -66,6 +66,6 @@ void tfd::Constant(Dart_NativeArguments arguments) {
     }
 
     Dart_SetField(outputInstance, Dart_NewStringFromCString("_operation"), Dart_NewIntegerFromUint64((uint64_t) op));
-    Dart_SetField(outputInstance, Dart_NewStringFromCString("_index"), Dart_NewInteger(0));
+    Dart_SetField(outputInstance, Dart_NewStringFromCString("_index"), Dart_GetNativeArgument(arguments, 5));
     Dart_SetReturnValue(arguments, outputInstance);
 }

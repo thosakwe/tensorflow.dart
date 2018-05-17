@@ -12,8 +12,13 @@ class _Graph {
   /// TFSession's are referencing it.
   void delete() native "Graph_delete";
 
-  int _addOperation(String opType, String opName, List<Output> inputs)
-      native "Graph_add_operation";
+  Output addOperation(OperationDescription desc) {
+    return _addOperation(
+        desc.type, desc.name, desc.inputs ?? [], _index++, Output);
+  }
+
+  Output _addOperation(String opType, String opName, List<Output> inputs,
+      int index, Type outputType) native "Graph_add_operation";
 
   /*int add(Op op) => _addOperation(op.type, op.name, op.inputs);
 
@@ -23,12 +28,12 @@ class _Graph {
 
   Output<T> constant<T>(value, {String operationName, DataType type}) {
     _count++;
-    return _constant(
-        value, Output, operationName ?? 'Op$_count', type?.value ?? -1);
+    return _constant(value, Output, operationName ?? 'Op$_count',
+        type?.value ?? -1, _index++);
   }
 
-  Output _constant(value, Type outputType, String operationName, int dtype)
-      native "Constant";
+  Output _constant(value, Type outputType, String operationName, int dtype,
+      int index) native "Constant";
 
   Object run(Output tensor) {
     if (_count == 0) {

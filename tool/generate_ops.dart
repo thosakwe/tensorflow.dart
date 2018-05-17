@@ -101,12 +101,11 @@ main() async {
           }
           args.add(new CodeExpression(new Code('[${inputs.join(',')}]')));
 
-          var opType = new TypeReference((b) => b.symbol = 'Op');
+          var opType =
+              new TypeReference((b) => b.symbol = 'OperationDescription');
           var instance = opType.newInstance(args);
 
-          b.body = new Block((b) {
-            b.statements.add(instance.assignVar('op').statement);
-          });
+          b.body = refer('addOperation')([instance]).returned.statement;
         }));
       }
     }));

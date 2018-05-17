@@ -14,9 +14,9 @@ class Operation {
 
 int _Operation_new() native "Operation_new";
 
-class Op {
+class OperationDescription {
   final String type, name;
   final List<Output> inputs;
 
-  Op(this.type, this.name, this.inputs);
+  OperationDescription(this.type, this.name, this.inputs);
 }

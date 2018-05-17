@@ -2,6 +2,7 @@
 // Created by Tobe on 4/15/18.
 //
 
+#include <iostream>
 #include "../tensorflow_dart.h"
 #include "session.h"
 #include "util.h"
@@ -20,12 +21,18 @@ void tfd::SessionRunGraph(Dart_NativeArguments arguments) {
     TF_Tensor *tensorOutput = nullptr;
     auto *output = new TF_Output;
 
-    // Find the operation from the given tensor.
-    Dart_Handle tensorInstance = Dart_GetNativeArgument(arguments, 1);
-    Dart_Handle tensorOutputPtr = HandleError(Dart_GetField(tensorInstance, Dart_NewStringFromCString("_output")));
-    uint64_t outputPtr;
-    HandleError(Dart_IntegerToUint64(tensorOutputPtr, &outputPtr));
-    auto *op = (const TF_Operation*) outputPtr;
+    // Find the operation from the given Output.
+    Dart_Handle outputInstance = Dart_GetNativeArgument(arguments, 1);
+    Dart_Handle operationHandle = HandleError(Dart_GetField(outputInstance, Dart_NewStringFromCString("_operation")));
+    Dart_Handle indexHandle = HandleError(Dart_GetField(outputInstance, Dart_NewStringFromCString("_index")));
+    uint64_t operationPtr;
+    HandleError(Dart_IntegerToUint64(operationHandle, &operationPtr));
+    auto *op = (const TF_Operation*) operationPtr;
+    output->oper = (TF_Operation*) op;
+
+    int64_t index;
+    HandleError(Dart_IntegerToInt64(indexHandle, &index));
+    output->index = (int) index;
 
     // Now, run the session.
     TF_SessionRun(session, // Session
@@ -36,7 +43,7 @@ void tfd::SessionRunGraph(Dart_NativeArguments arguments) {
                   output, // Output struct
                   &tensorOutput, // Output tensor,
                   1, // nOutputs,
-                  &op, 1, // Targets?
+                  nullptr, 0, // Targets?
                   nullptr, // Metadata
                   status // Status
     );
