@@ -64,15 +64,21 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
     // Add all attrs.
     Dart_Handle attrs = Dart_GetNativeArgument(arguments, 6);
     Dart_Handle attr_names = Dart_GetNativeArgument(arguments, 7);
+    Dart_Handle dataTypeType = Dart_GetNativeArgument(arguments, 8);
     HandleError(Dart_ListLength(attrs, &length));
 
     for (intptr_t i = 0; i < length; i++) {
         const char *name;
+        bool isDataType;
         Dart_Handle attr = Dart_ListGetAt(attrs, i);
         Dart_Handle attr_name = Dart_ListGetAt(attr_names, i);
         HandleError(Dart_StringToCString(attr_name, &name));
+        HandleError(Dart_ObjectIsType(attr, dataTypeType, &isDataType));
 
         // TODO: List attrs?
+
+        int dtype = 0;
+
         if (Dart_IsBoolean(attr)) {
             bool v;
             HandleError(Dart_BooleanValue(attr, &v));
@@ -86,13 +92,26 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
             HandleError(Dart_DoubleValue(attr, &v));
             TF_SetAttrFloat(desc, name, (float) v);
         } else if (Dart_IsString(attr)) {
-
+            const char *str;
+            HandleError(Dart_StringToCString(attr, &str));
+            TF_SetAttrString(desc, name, str, strlen(str));
+        } else if (isDataType) {
+            int64_t v;
+            Dart_Handle valueProp = HandleError(Dart_GetField(attr, Dart_NewStringFromCString("value")));
+            HandleError(Dart_IntegerToInt64(valueProp, &v));
+            TF_SetAttrType(desc, name, (TF_DataType) v);
         } else if (Dart_IsType(attr)) {
-            int dtype = 0;
-
-            // Is this an int?
+            // Is this dynamic
             if (Dart_IdentityEquals(attr,
-                                    Dart_GetType(Dart_RootLibrary(), Dart_NewStringFromCString("int"), 0, nullptr))) {
+                                    Dart_GetType(Dart_RootLibrary(), Dart_NewStringFromCString("dynamic"), 0,
+                                                 nullptr))) {
+                // TODO: Size?
+                //dtype = TF_INT64;
+            }
+                // Is this an int?
+            else if (Dart_IdentityEquals(attr,
+                                         Dart_GetType(Dart_RootLibrary(), Dart_NewStringFromCString("int"), 0,
+                                                      nullptr))) {
                 // TODO: Size?
                 dtype = TF_INT64;
             }
@@ -110,22 +129,32 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
                                          Dart_GetType(Dart_RootLibrary(), Dart_NewStringFromCString("int"), 0,
                                                       nullptr))) {
                 dtype = TF_STRING;
-            } else {
-                //const char *msg = "Hm";
-                //HandleError(Dart_StringToCString(Dart_TypeName(attr), &msg));
-                //throwArgumentError(msg);
-            }
-
-
-            if (dtype == 0) {
-                //throwArgumentError("Unsupported parameter type.");
-            } else {
-                TF_SetAttrType(desc, name, (TF_DataType) dtype);
-            }
-        } else {
-            // TODO: More descriptive error/handle every attr type
-            throwArgumentError("Unsupported attr");
+            } //else {
+            //const char *msg;
+            //HandleError(Dart_StringToCString(Dart_TypeName(attr), &msg));
+            //Dart_ThrowException(attr);
+            //}
         }
+
+        if (dtype != 0) {
+            TF_SetAttrType(desc, name, (TF_DataType) dtype);
+        } /*else {
+            // TODO: More descriptive error/handle every attr type
+            const char *toString;
+            std::string msg("Unsupported attr: ");
+
+            if (Dart_IsType(attr)) {
+                msg.append("<type>");
+            } else {
+
+                Dart_Handle toStringHandle = HandleError(
+                        Dart_Invoke(attr, Dart_NewStringFromCString("toString"), 0, nullptr));
+                HandleError(Dart_StringToCString(toStringHandle, &toString));
+                msg.append(toString);
+            }
+
+            throwArgumentError(msg.c_str());
+        }*/
     }
 
     auto *operation = TF_FinishOperation(desc, status);

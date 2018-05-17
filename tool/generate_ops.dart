@@ -22,6 +22,8 @@ String escapeName(String name) {
 
 Reference convertType(
     tf.DataType type, int index, List<tf.OpDef_AttrDef> attrs) {
+  return refer('Output');
+
   return new TypeReference((b) {
     b.symbol = 'Output';
 
@@ -44,7 +46,7 @@ Reference convertType(
         t = new Reference('String');
         break;
       case tf.DataType.DT_INVALID:
-        t = new Reference(attrs[index].name);
+        t = null; //new Reference(attrs[index].name);
         break;
       default:
         return null;
@@ -52,7 +54,7 @@ Reference convertType(
         break;
     }
 
-    b.types.add(t);
+    if (t != null) b.types.add(t);
   });
 }
 
@@ -68,8 +70,8 @@ main() async {
     if (o.attr.any((a) => dartType(a.type) == null)) return false;
 
     // Ignore reference types, for now.
-    if (o.inputArg.any((a) => a.isRef) || o.outputArg.any((a) => a.isRef))
-      return false;
+    //if (o.inputArg.any((a) => a.isRef) || o.outputArg.any((a) => a.isRef))
+    //  return false;
 
     // Dart does not support multiple outputs.
     if (o.outputArg.length > 1) return false;
@@ -93,6 +95,7 @@ main() async {
         b.methods.add(new Method((b) {
           var name = new ReCase(op.name).camelCase;
           b
+            ..docs.addAll(getDocs(op.summary))
             ..docs.addAll(getDocs(op.description))
             ..returns = new Reference('Output')
             ..name = escapeName(name);
@@ -136,10 +139,13 @@ main() async {
             }));
           }
 
-          for (var attr in paramAttr) {
+          for (var attr in op.attr) {
+            if (attr.name == 'T' && attr.type == 'type') continue;
+
+            var paramName = escapeName(new ReCase(attr.name).camelCase);
             b.optionalParameters.add(new Parameter((b) {
               b
-                ..name = escapeName(new ReCase(attr.name).camelCase)
+                ..name = paramName
                 ..named = true
                 ..type = refer(dartType(attr.type));
 
@@ -148,21 +154,24 @@ main() async {
               else
                 b.annotations.add(refer('required'));
             }));
-          }
+            /*}
 
           for (var attr in op.attr) {
             var name = escapeName(new ReCase(attr.name).camelCase);
 
             if (attr.type == 'type')
               attributes[attr.name] = refer(attr.name);
-            else
-              attributes[attr.name] = refer(name);
+            else*/
+            attributes[attr.name] = refer(paramName);
           }
 
-          var args = <Expression>[literal(op.name), literal(op.name)];
+          var args = <Expression>[
+            literal(op.name),
+            refer('_scope').property('uniqueName')([literal(op.name)]),
+          ];
 
           for (var attr in typeAttr) {
-            b.types.add(new Reference(attr.name));
+            //b.types.add(new Reference(attr.name));
           }
 
           /*
@@ -240,7 +249,7 @@ String dartType(String tfType) {
     case 'type':
       return 'DataType';
     case 'shape':
-      return 'List'; // TODO: How to handle shapes?
+      return 'List<int>'; // TODO: How to handle shapes?
     case 'tensor':
       return 'Output';
     case 'string':

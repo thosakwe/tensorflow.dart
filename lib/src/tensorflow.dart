@@ -2,6 +2,7 @@ library tensorflow;
 
 import 'dart:core';
 import 'dart:core' as core;
+import 'dart:mirrors';
 import 'dart:typed_data';
 import 'dart-ext:tensorflow_dart';
 import 'package:meta/meta.dart';

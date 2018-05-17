@@ -11,6 +11,8 @@ class Output<T> {
 
   Operation get op => new Operation._fromPointer(_operation);
 
+  T run() => _graph.run<T>(this);
+
   Output<T> operator *(Output<T> other) => _graph.mul(this, other);
 
   Output<T> operator /(Output<T> other) => _graph.div(this, other);
@@ -33,7 +35,7 @@ class Output<T> {
 
   Output<bool> operator <(Output<T> other) => _graph.less(this, other);
 
-  Output<bool> operator <=(Output<T> other) => _graph.less(this, other);
+  Output<bool> operator <=(Output<T> other) => _graph.lessEqual(this, other);
 
   Output<T> operator <<(Output<T> other) => _graph.leftShift(this, other);
 

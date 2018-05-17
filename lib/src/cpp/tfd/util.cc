@@ -30,6 +30,15 @@ Dart_Handle tfd::get_tensor_value(TF_Tensor *tensor) {
         size_t str_len, size = TF_TensorByteSize(tensor);
         TF_StringDecode(8 + (char *) TF_TensorData(tensor), size, &str, &str_len, status);
         return Dart_NewStringFromUTF8((const uint8_t *) str, str_len);
+    } else if (type == TF_BOOL) {
+        auto v = *((unsigned char *) TF_TensorData(tensor));
+        return Dart_NewBoolean(v == 1);
+    } else if (type == TF_DOUBLE) {
+        auto v = *((double *) TF_TensorData(tensor));
+        return Dart_NewDouble(v);
+    } else if (type == TF_FLOAT) {
+        auto v = *((float *) TF_TensorData(tensor));
+        return Dart_NewDouble((double) v);
     } else if (type == TF_INT8) {
         auto v = *((uint8_t *) TF_TensorData(tensor));
         return Dart_NewInteger(v);

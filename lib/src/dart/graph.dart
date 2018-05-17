@@ -15,7 +15,7 @@ class _Graph {
 
   Output addOperation(OperationDescription desc) {
     return _addOperation(desc.type, desc.name, desc.inputs ?? [], 0 ?? _index++,
-        Output, desc.attrs.values.toList(), desc.attrs.keys.toList());
+        Output, desc.attrs.values.toList(), desc.attrs.keys.toList(), DataType);
   }
 
   Output _addOperation(
@@ -25,7 +25,8 @@ class _Graph {
       int index,
       Type outputType,
       List attrs,
-      List attr_names) native "Graph_add_operation";
+      List attr_names,
+      Type dataTypeType) native "Graph_add_operation";
 
   /*int add(Op op) => _addOperation(op.type, op.name, op.inputs);
 

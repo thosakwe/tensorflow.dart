@@ -7,9 +7,9 @@
 #include "session.h"
 #include "util.h"
 
-Dart_Handle getTuple2Type() {
+Dart_Handle getTuple3Type() {
     Dart_Handle tupleLib = Dart_LookupLibrary(Dart_NewStringFromCString("package:tuple/tuple.dart"));
-    return Dart_GetClass(tupleLib, Dart_NewStringFromCString("Tuple2"));
+    return Dart_GetClass(tupleLib, Dart_NewStringFromCString("Tuple3"));
 }
 
 void tfd::SessionRunGraph(Dart_NativeArguments arguments) {
@@ -48,21 +48,23 @@ void tfd::SessionRunGraph(Dart_NativeArguments arguments) {
                   status // Status
     );
 
-    Dart_Handle tuple[2];
+    Dart_Handle tuple[3];
 
     // Get the status code.
     tuple[0] = Dart_NewInteger(TF_GetCode(status));
 
     // Get the value...
     if (tensorOutput == nullptr) {
-        tuple[1] = Dart_NewInteger(0);
+        tuple[1] = Dart_Null();
+        tuple[2] = Dart_NewStringFromCString(TF_Message(status));
     } else {
         tuple[1] = get_tensor_value(tensorOutput);
+        tuple[2] = Dart_EmptyString();
     }
 
     // Return the tuple.
-    Dart_Handle tupleType = getTuple2Type();
-    Dart_Handle tupleInstance = Dart_New(tupleType, Dart_NewStringFromCString(""), 2, tuple);
+    Dart_Handle tupleType = getTuple3Type();
+    Dart_Handle tupleInstance = Dart_New(tupleType, Dart_NewStringFromCString(""), 3, tuple);
     Dart_SetReturnValue(arguments, tupleInstance);
 
     // Now, destroy the created session, etc.
