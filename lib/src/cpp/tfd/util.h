@@ -15,6 +15,7 @@ namespace tfd
     TF_Operation *dereference_operation_ptr(Dart_Handle handle);
     TF_Tensor *dereference_tensor_ptr(Dart_Handle handle);
     Dart_Handle get_tensor_value(TF_Tensor* tensor);
+    TF_Output convert_output_wrapper(Dart_Handle handle, int index);
 
     void throwArgumentError(const char* msg);
 }

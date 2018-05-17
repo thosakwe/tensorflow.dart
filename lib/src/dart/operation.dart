@@ -16,7 +16,8 @@ int _Operation_new() native "Operation_new";
 
 class OperationDescription {
   final String type, name;
-  final List<Output> inputs;
+  final List inputs;
+  final Map<String, dynamic> attrs;
 
-  OperationDescription(this.type, this.name, this.inputs);
+  OperationDescription(this.type, this.name, this.inputs, this.attrs);
 }

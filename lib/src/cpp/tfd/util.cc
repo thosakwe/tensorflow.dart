@@ -1,6 +1,7 @@
 //
 // Created by Tobe on 4/15/18.
 //
+#include <iostream>
 #include <string>
 #include "../tensorflow_dart.h"
 #include "util.h"
@@ -75,4 +76,16 @@ void tfd::throwArgumentError(const char *msg) {
     Dart_Handle msgh = Dart_NewStringFromCString(msg);
     Dart_Handle error = Dart_New(unsupportedErrorType, Dart_NewStringFromCString(""), 1, &msgh);
     Dart_ThrowException(error);
+}
+
+TF_Output tfd::convert_output_wrapper(Dart_Handle handle, int index) {
+    uint64_t opPtr;
+    Dart_Handle opHandle = Dart_GetField(handle, Dart_NewStringFromCString("_operation"));
+    HandleError(Dart_IntegerToUint64(opHandle, &opPtr));
+
+    int64_t idx;
+    HandleError(Dart_IntegerToInt64(Dart_GetField(handle, Dart_NewStringFromCString("_index")), &idx));
+    auto *op = (TF_Operation *) opPtr;
+    //std::cout << "Op: " << op << "; index: " << index << std::endl;
+    return {op, (int) idx};
 }

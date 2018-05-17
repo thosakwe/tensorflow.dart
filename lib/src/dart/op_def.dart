@@ -3,1538 +3,1149 @@
 part of tensorflow;
 
 class Graph extends _Graph {
-  Output<tensor_type> recv<tensor_type, tensor_name, send_device,
-      send_device_incarnation, recv_device, client_terminated>() {
-    return addOperation(new OperationDescription('_Recv', '_Recv', []));
-  }
-
-  Output<T> while_<T, cond, body>(Output<T> input) {
-    return addOperation(new OperationDescription('_While', '_While', [input]));
-  }
-
-  Output<Tcond> if_<Tcond, Tin, Tout, then_branch, else_branch>(
-      Output<Tcond> cond, Output<Tin> input) {
-    return addOperation(new OperationDescription('_If', '_If', [cond, input]));
-  }
-
-  Output<Tin> remoteCall<Tin, Tout, f>(
-      Output<String> target, Output<Tin> args) {
-    return addOperation(
-        new OperationDescription('RemoteCall', 'RemoteCall', [target, args]));
-  }
-
-  Output<Tin> symbolicGradient<Tin, Tout, f>(Output<Tin> input) {
-    return addOperation(new OperationDescription(
-        'SymbolicGradient', 'SymbolicGradient', [input]));
-  }
-
-  Output<T> arrayToList<T, N, out_types>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('_ArrayToList', '_ArrayToList', [input]));
-  }
-
-  Output<Tin> listToArray<Tin, T, N>(Output<Tin> input) {
-    return addOperation(
-        new OperationDescription('_ListToArray', '_ListToArray', [input]));
-  }
-
-  Output retval<T, index>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('_Retval', '_Retval', [input]));
-  }
-
-  Output<T> arg<T, index>() {
-    return addOperation(new OperationDescription('_Arg', '_Arg', []));
-  }
-
-  Output<double> quantizedBatchNormWithGlobalNormalization<Tinput, out_type,
-          variance_epsilon, scale_after_normalization>(
-      Output<Tinput> t,
-      Output<double> tMin,
-      Output<double> tMax,
-      Output<out_type> m,
-      Output<double> mMin,
-      Output<double> mMax,
-      Output<variance_epsilon> v,
-      Output<double> vMin,
-      Output<double> vMax,
-      Output<scale_after_normalization> beta,
-      Output<double> betaMin,
-      Output<double> betaMax,
-      Output<scale_after_normalization> gamma,
-      Output<double> gammaMin,
-      Output<double> gammaMax) {
-    return addOperation(new OperationDescription(
-        'QuantizedBatchNormWithGlobalNormalization',
-        'QuantizedBatchNormWithGlobalNormalization', [
-      t,
-      tMin,
-      tMax,
-      m,
-      mMin,
-      mMax,
-      v,
-      vMin,
-      vMax,
-      beta,
-      betaMin,
-      betaMax,
-      gamma,
-      gammaMin,
-      gammaMax
-    ]));
-  }
-
-  Output<double> quantizedReluX<Tinput, out_type>(
-      Output<Tinput> features,
-      Output<double> maxValue,
-      Output<double> minFeatures,
-      Output<double> maxFeatures) {
-    return addOperation(new OperationDescription('QuantizedReluX',
-        'QuantizedReluX', [features, maxValue, minFeatures, maxFeatures]));
-  }
-
-  Output<double> quantizedRelu<Tinput, out_type>(Output<Tinput> features,
-      Output<double> minFeatures, Output<double> maxFeatures) {
-    return addOperation(new OperationDescription('QuantizedRelu',
-        'QuantizedRelu', [features, minFeatures, maxFeatures]));
-  }
-
-  Output<overlapping> fractionalAvgPoolGrad<overlapping, T>(
+  Output<T> fractionalAvgPoolGrad<T>(
       Output<int> origInputTensorShape,
-      Output<overlapping> outBackprop,
+      Output<T> outBackprop,
       Output<int> rowPoolingSequence,
-      Output<int> colPoolingSequence) {
+      Output<int> colPoolingSequence,
+      {bool overlapping: false}) {
     return addOperation(new OperationDescription(
         'FractionalAvgPoolGrad', 'FractionalAvgPoolGrad', [
       origInputTensorShape,
       outBackprop,
       rowPoolingSequence,
       colPoolingSequence
-    ]));
+    ], {
+      'overlapping': overlapping,
+      'T': T
+    }));
   }
 
-  Output<reverse> nthElement<reverse, T>(Output<reverse> input, Output<int> n) {
-    return addOperation(
-        new OperationDescription('NthElement', 'NthElement', [input, n]));
-  }
-
-  Output<int> topKV2<sorted, T>(Output<sorted> input, Output<int> k) {
-    return addOperation(
-        new OperationDescription('TopKV2', 'TopKV2', [input, k]));
-  }
-
-  Output<int> topK<k, sorted, T>(Output<k> input) {
-    return addOperation(new OperationDescription('TopK', 'TopK', [input]));
+  Output<T> nthElement<T>(Output<T> input, Output<int> n,
+      {bool reverse: false}) {
+    return addOperation(new OperationDescription(
+        'NthElement', 'NthElement', [input, n], {'reverse': reverse, 'T': T}));
   }
 
   Output<bool> inTopKV2<T>(
       Output<double> predictions, Output<T> targets, Output<T> k) {
     return addOperation(new OperationDescription(
-        'InTopKV2', 'InTopKV2', [predictions, targets, k]));
-  }
-
-  Output<T> sparseSoftmaxCrossEntropyWithLogits<T, Tlabels>(
-      Output<T> features, Output<Tlabels> labels) {
-    return addOperation(new OperationDescription(
-        'SparseSoftmaxCrossEntropyWithLogits',
-        'SparseSoftmaxCrossEntropyWithLogits',
-        [features, labels]));
+        'InTopKV2', 'InTopKV2', [predictions, targets, k], {'T': T}));
   }
 
   Output<T> logSoftmax<T>(Output<T> logits) {
-    return addOperation(
-        new OperationDescription('LogSoftmax', 'LogSoftmax', [logits]));
+    return addOperation(new OperationDescription(
+        'LogSoftmax', 'LogSoftmax', [logits], {'T': T}));
   }
 
   Output<T> softmax<T>(Output<T> logits) {
     return addOperation(
-        new OperationDescription('Softmax', 'Softmax', [logits]));
+        new OperationDescription('Softmax', 'Softmax', [logits], {'T': T}));
   }
 
   Output<T> softsignGrad<T>(Output<T> gradients, Output<T> features) {
     return addOperation(new OperationDescription(
-        'SoftsignGrad', 'SoftsignGrad', [gradients, features]));
+        'SoftsignGrad', 'SoftsignGrad', [gradients, features], {'T': T}));
   }
 
   Output<T> softplusGrad<T>(Output<T> gradients, Output<T> features) {
     return addOperation(new OperationDescription(
-        'SoftplusGrad', 'SoftplusGrad', [gradients, features]));
+        'SoftplusGrad', 'SoftplusGrad', [gradients, features], {'T': T}));
   }
 
   Output<T> seluGrad<T>(Output<T> gradients, Output<T> outputs) {
-    return addOperation(
-        new OperationDescription('SeluGrad', 'SeluGrad', [gradients, outputs]));
+    return addOperation(new OperationDescription(
+        'SeluGrad', 'SeluGrad', [gradients, outputs], {'T': T}));
   }
 
   Output<T> selu<T>(Output<T> features) {
-    return addOperation(new OperationDescription('Selu', 'Selu', [features]));
+    return addOperation(
+        new OperationDescription('Selu', 'Selu', [features], {'T': T}));
   }
 
   Output<T> eluGrad<T>(Output<T> gradients, Output<T> outputs) {
-    return addOperation(
-        new OperationDescription('EluGrad', 'EluGrad', [gradients, outputs]));
+    return addOperation(new OperationDescription(
+        'EluGrad', 'EluGrad', [gradients, outputs], {'T': T}));
   }
 
   Output<T> relu6Grad<T>(Output<T> gradients, Output<T> features) {
     return addOperation(new OperationDescription(
-        'Relu6Grad', 'Relu6Grad', [gradients, features]));
+        'Relu6Grad', 'Relu6Grad', [gradients, features], {'T': T}));
   }
 
   Output<T> reluGrad<T>(Output<T> gradients, Output<T> features) {
     return addOperation(new OperationDescription(
-        'ReluGrad', 'ReluGrad', [gradients, features]));
+        'ReluGrad', 'ReluGrad', [gradients, features], {'T': T}));
   }
 
-  Output<bool> all<keep_dims, Tidx>(
-      Output<bool> input, Output<keep_dims> reductionIndices) {
-    return addOperation(
-        new OperationDescription('All', 'All', [input, reductionIndices]));
+  Output<bool> all<Tidx>(Output<bool> input, Output<Tidx> reductionIndices,
+      {bool keepDims: false}) {
+    return addOperation(new OperationDescription('All', 'All',
+        [input, reductionIndices], {'keep_dims': keepDims, 'Tidx': Tidx}));
   }
 
-  Output<T> dilation2DBackpropInput<T, strides, rates, padding>(
-      Output<T> input, Output<strides> filter, Output<rates> outBackprop) {
-    return addOperation(new OperationDescription('Dilation2DBackpropInput',
-        'Dilation2DBackpropInput', [input, filter, outBackprop]));
-  }
-
-  Output<padding> maxPoolGradGradV2<padding, data_format, T>(
-      Output<padding> origInput,
-      Output<data_format> origOutput,
-      Output<T> grad,
-      Output<int> ksize,
-      Output<int> strides) {
-    return addOperation(new OperationDescription('MaxPoolGradGradV2',
-        'MaxPoolGradGradV2', [origInput, origOutput, grad, ksize, strides]));
-  }
-
-  Output<ksize> maxPoolGradGrad<ksize, strides, padding, data_format, T>(
-      Output<ksize> origInput,
-      Output<strides> origOutput,
-      Output<padding> grad) {
+  Output<T> maxPoolGradGradV2<T>(Output<T> origInput, Output<T> origOutput,
+      Output<T> grad, Output<int> ksize, Output<int> strides,
+      {@required String padding, String dataFormat: 'NHWC'}) {
     return addOperation(new OperationDescription(
-        'MaxPoolGradGrad', 'MaxPoolGradGrad', [origInput, origOutput, grad]));
+        'MaxPoolGradGradV2',
+        'MaxPoolGradGradV2',
+        [origInput, origOutput, grad, ksize, strides],
+        {'padding': padding, 'data_format': dataFormat, 'T': T}));
   }
 
-  Output<padding> maxPoolGradV2<padding, data_format, T>(
-      Output<padding> origInput,
-      Output<data_format> origOutput,
-      Output<T> grad,
-      Output<int> ksize,
-      Output<int> strides) {
-    return addOperation(new OperationDescription('MaxPoolGradV2',
-        'MaxPoolGradV2', [origInput, origOutput, grad, ksize, strides]));
+  Output<T> maxPoolGradV2<T>(Output<T> origInput, Output<T> origOutput,
+      Output<T> grad, Output<int> ksize, Output<int> strides,
+      {@required String padding, String dataFormat: 'NHWC'}) {
+    return addOperation(new OperationDescription(
+        'MaxPoolGradV2',
+        'MaxPoolGradV2',
+        [origInput, origOutput, grad, ksize, strides],
+        {'padding': padding, 'data_format': dataFormat, 'T': T}));
   }
 
   Output<T> roll<T, Tshift, Taxis>(
-      Output<T> input, Output<Tshift> shift, Output<Taxis> axis) {
-    return addOperation(
-        new OperationDescription('Roll', 'Roll', [input, shift, axis]));
+      Output<T> input, Output<T> shift, Output<T> axis) {
+    return addOperation(new OperationDescription('Roll', 'Roll',
+        [input, shift, axis], {'T': T, 'Tshift': Tshift, 'Taxis': Taxis}));
   }
 
-  Output<ksize> maxPoolGrad<ksize, strides, padding, data_format, T>(
-      Output<ksize> origInput,
-      Output<strides> origOutput,
-      Output<padding> grad) {
+  Output<T> lRNGrad<T>(
+      Output<T> inputGrads, Output<T> inputImage, Output<T> outputImage,
+      {int depthRadius: 5,
+      double bias: 1.0,
+      double alpha: 1.0,
+      double beta: 0.5}) {
+    return addOperation(new OperationDescription('LRNGrad', 'LRNGrad', [
+      inputGrads,
+      inputImage,
+      outputImage
+    ], {
+      'depth_radius': depthRadius,
+      'bias': bias,
+      'alpha': alpha,
+      'beta': beta,
+      'T': T
+    }));
+  }
+
+  Output<double> cropAndResize<T>(Output<T> image, Output<double> boxes,
+      Output<int> boxInd, Output<int> cropSize,
+      {String method: 'bilinear', double extrapolationValue: 0.0}) {
     return addOperation(new OperationDescription(
-        'MaxPoolGrad', 'MaxPoolGrad', [origInput, origOutput, grad]));
-  }
-
-  Output<depth_radius> lRNGrad<depth_radius, bias, alpha, beta, T>(
-      Output<depth_radius> inputGrads,
-      Output<bias> inputImage,
-      Output<alpha> outputImage) {
-    return addOperation(new OperationDescription(
-        'LRNGrad', 'LRNGrad', [inputGrads, inputImage, outputImage]));
-  }
-
-  Output<ksize> maxPool3DGradGrad<ksize, strides, padding, data_format, T>(
-      Output<ksize> origInput,
-      Output<strides> origOutput,
-      Output<padding> grad) {
-    return addOperation(new OperationDescription('MaxPool3DGradGrad',
-        'MaxPool3DGradGrad', [origInput, origOutput, grad]));
-  }
-
-  Output<T> conv3DBackpropFilter<T, strides, padding>(
-      Output<T> input, Output<strides> filter, Output<padding> outBackprop) {
-    return addOperation(new OperationDescription('Conv3DBackpropFilter',
-        'Conv3DBackpropFilter', [input, filter, outBackprop]));
-  }
-
-  Output<T> conv3D<T, strides, padding, data_format, dilations>(
-      Output<T> input, Output<strides> filter) {
-    return addOperation(
-        new OperationDescription('Conv3D', 'Conv3D', [input, filter]));
-  }
-
-  Output<double> cropAndResize<T, method, extrapolation_value>(Output<T> image,
-      Output<double> boxes, Output<int> boxInd, Output<int> cropSize) {
-    return addOperation(new OperationDescription(
-        'CropAndResize', 'CropAndResize', [image, boxes, boxInd, cropSize]));
-  }
-
-  Output<T> depthwiseConv2dNativeBackpropFilter<T, strides, padding,
-          data_format, dilations>(
-      Output<T> input, Output<int> filterSizes, Output<strides> outBackprop) {
-    return addOperation(new OperationDescription(
-        'DepthwiseConv2dNativeBackpropFilter',
-        'DepthwiseConv2dNativeBackpropFilter',
-        [input, filterSizes, outBackprop]));
+        'CropAndResize',
+        'CropAndResize',
+        [image, boxes, boxInd, cropSize],
+        {'T': T, 'method': method, 'extrapolation_value': extrapolationValue}));
   }
 
   Output<T> expm1<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Expm1', 'Expm1', [x]));
-  }
-
-  Output<T> conv2DBackpropInput<T, strides, use_cudnn_on_gpu, padding,
-          data_format, dilations>(
-      Output<int> inputSizes, Output<T> filter, Output<strides> outBackprop) {
-    return addOperation(new OperationDescription('Conv2DBackpropInput',
-        'Conv2DBackpropInput', [inputSizes, filter, outBackprop]));
-  }
-
-  Output<T>
-      conv2D<T, strides, use_cudnn_on_gpu, padding, data_format, dilations>(
-          Output<T> input, Output<strides> filter) {
     return addOperation(
-        new OperationDescription('Conv2D', 'Conv2D', [input, filter]));
+        new OperationDescription('Expm1', 'Expm1', [x], {'T': T}));
   }
 
-  Output<T> biasAdd<T, data_format>(Output<T> value, Output<data_format> bias) {
-    return addOperation(
-        new OperationDescription('BiasAdd', 'BiasAdd', [value, bias]));
+  Output<T> biasAdd<T>(Output<T> value, Output<T> bias,
+      {String dataFormat: 'NHWC'}) {
+    return addOperation(new OperationDescription('BiasAdd', 'BiasAdd',
+        [value, bias], {'T': T, 'data_format': dataFormat}));
   }
 
   Output<T> sin<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Sin', 'Sin', [x]));
+    return addOperation(new OperationDescription('Sin', 'Sin', [x], {'T': T}));
   }
 
-  Output<T> fusedBatchNormV2<T, U, epsilon, data_format, is_training>(
-      Output<T> x,
-      Output<U> scale,
-      Output<epsilon> offset,
-      Output<data_format> mean,
-      Output<is_training> variance) {
-    return addOperation(new OperationDescription('FusedBatchNormV2',
-        'FusedBatchNormV2', [x, scale, offset, mean, variance]));
-  }
-
-  Output<double>
-      sparseMatMul<transpose_a, transpose_b, a_is_sparse, b_is_sparse, Ta, Tb>(
-          Output<transpose_a> a, Output<transpose_b> b) {
+  Output<double> sparseMatMul<Ta, Tb>(Output<Ta> a, Output<Ta> b,
+      {bool transposeA: false,
+      bool transposeB: false,
+      bool aIsSparse: false,
+      bool bIsSparse: false}) {
     return addOperation(
-        new OperationDescription('SparseMatMul', 'SparseMatMul', [a, b]));
+        new OperationDescription('SparseMatMul', 'SparseMatMul', [
+      a,
+      b
+    ], {
+      'transpose_a': transposeA,
+      'transpose_b': transposeB,
+      'a_is_sparse': aIsSparse,
+      'b_is_sparse': bIsSparse,
+      'Ta': Ta,
+      'Tb': Tb
+    }));
   }
 
-  Output<T> fusedBatchNorm<T, epsilon, data_format, is_training>(
-      Output<T> x,
-      Output<epsilon> scale,
-      Output<data_format> offset,
-      Output<is_training> mean,
-      Output<is_training> variance) {
-    return addOperation(new OperationDescription('FusedBatchNorm',
-        'FusedBatchNorm', [x, scale, offset, mean, variance]));
-  }
-
-  Output<dtype> readVariableOp<dtype>(Output<dynamic> resource) {
+  Output<dtype> readVariableOp<dtype>(Output resource) {
     return addOperation(new OperationDescription(
-        'ReadVariableOp', 'ReadVariableOp', [resource]));
+        'ReadVariableOp', 'ReadVariableOp', [resource], {'dtype': dtype}));
   }
 
   Output<T> lgamma<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Lgamma', 'Lgamma', [x]));
-  }
-
-  Output<double> requantizationRange<Tinput>(
-      Output<Tinput> input, Output<double> inputMin, Output<double> inputMax) {
-    return addOperation(new OperationDescription('RequantizationRange',
-        'RequantizationRange', [input, inputMin, inputMax]));
-  }
-
-  Output<dynamic> compareAndBitpack<T>(Output<T> input, Output<T> threshold) {
-    return addOperation(new OperationDescription(
-        'CompareAndBitpack', 'CompareAndBitpack', [input, threshold]));
-  }
-
-  Output<double> quantizeDownAndShrinkRange<Tinput, out_type>(
-      Output<Tinput> input, Output<double> inputMin, Output<double> inputMax) {
-    return addOperation(new OperationDescription('QuantizeDownAndShrinkRange',
-        'QuantizeDownAndShrinkRange', [input, inputMin, inputMax]));
-  }
-
-  Output<double>
-      quantizedMatMul<T1, T2, Toutput, transpose_a, transpose_b, Tactivation>(
-          Output<T1> a,
-          Output<T2> b,
-          Output<double> minA,
-          Output<double> maxA,
-          Output<double> minB,
-          Output<double> maxB) {
-    return addOperation(new OperationDescription(
-        'QuantizedMatMul', 'QuantizedMatMul', [a, b, minA, maxA, minB, maxB]));
-  }
-
-  Output<exclusive> cumsum<exclusive, reverse, T, Tidx>(
-      Output<exclusive> x, Output<reverse> axis) {
     return addOperation(
-        new OperationDescription('Cumsum', 'Cumsum', [x, axis]));
+        new OperationDescription('Lgamma', 'Lgamma', [x], {'T': T}));
   }
 
-  Output<T> batchNormWithGlobalNormalizationGrad<T, variance_epsilon,
-          scale_after_normalization>(
-      Output<T> t,
-      Output<variance_epsilon> m,
-      Output<scale_after_normalization> v,
-      Output<scale_after_normalization> gamma,
-      Output<scale_after_normalization> backprop) {
-    return addOperation(new OperationDescription(
-        'BatchNormWithGlobalNormalizationGrad',
-        'BatchNormWithGlobalNormalizationGrad',
-        [t, m, v, gamma, backprop]));
+  Output compareAndBitpack<T>(Output<T> input, Output<T> threshold) {
+    return addOperation(new OperationDescription('CompareAndBitpack',
+        'CompareAndBitpack', [input, threshold], {'T': T}));
+  }
+
+  Output<T> cumsum<T, Tidx>(Output<T> x, Output<T> axis,
+      {bool exclusive: false, bool reverse: false}) {
+    return addOperation(new OperationDescription('Cumsum', 'Cumsum', [x, axis],
+        {'exclusive': exclusive, 'reverse': reverse, 'T': T, 'Tidx': Tidx}));
   }
 
   Output<T> bincount<T>(Output<int> arr, Output<int> size, Output<T> weights) {
-    return addOperation(
-        new OperationDescription('Bincount', 'Bincount', [arr, size, weights]));
+    return addOperation(new OperationDescription(
+        'Bincount', 'Bincount', [arr, size, weights], {'T': T}));
   }
 
   Output<T> cross<T>(Output<T> a, Output<T> b) {
-    return addOperation(new OperationDescription('Cross', 'Cross', [a, b]));
+    return addOperation(
+        new OperationDescription('Cross', 'Cross', [a, b], {'T': T}));
   }
 
   Output<T> conj<T>(Output<T> input) {
-    return addOperation(new OperationDescription('Conj', 'Conj', [input]));
-  }
-
-  /// *NOTE*: `Add` supports broadcasting. `AddN` does not. More about broadcasting
-  /// [here](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
-  Output<dynamic> mklAdd<T>(
-      Output<T> x, Output<T> y, Output<dynamic> mklX, Output<dynamic> mklY) {
     return addOperation(
-        new OperationDescription('_MklAdd', '_MklAdd', [x, y, mklX, mklY]));
+        new OperationDescription('Conj', 'Conj', [input], {'T': T}));
   }
 
   Output<T> real<T, Tout>(Output<T> input) {
-    return addOperation(new OperationDescription('Real', 'Real', [input]));
-  }
-
-  Output<double> dequantize<T, mode>(
-      Output<T> input, Output<double> minRange, Output<double> maxRange) {
     return addOperation(new OperationDescription(
-        'Dequantize', 'Dequantize', [input, minRange, maxRange]));
+        'Real', 'Real', [input], {'T': T, 'Tout': Tout}));
   }
 
-  Output<T> complex<T, Tout>(Output<T> real, Output<Tout> imag) {
-    return addOperation(
-        new OperationDescription('Complex', 'Complex', [real, imag]));
+  Output<double> dequantize<T>(
+      Output<T> input, Output<double> minRange, Output<double> maxRange,
+      {String mode: 'MIN_COMBINED'}) {
+    return addOperation(new OperationDescription('Dequantize', 'Dequantize',
+        [input, minRange, maxRange], {'T': T, 'mode': mode}));
   }
 
-  Output<bool> any<keep_dims, Tidx>(
-      Output<bool> input, Output<keep_dims> reductionIndices) {
-    return addOperation(
-        new OperationDescription('Any', 'Any', [input, reductionIndices]));
+  Output<T> complex<T, Tout>(Output<T> real, Output<T> imag) {
+    return addOperation(new OperationDescription(
+        'Complex', 'Complex', [real, imag], {'T': T, 'Tout': Tout}));
+  }
+
+  Output<bool> any<Tidx>(Output<bool> input, Output<Tidx> reductionIndices,
+      {bool keepDims: false}) {
+    return addOperation(new OperationDescription('Any', 'Any',
+        [input, reductionIndices], {'keep_dims': keepDims, 'Tidx': Tidx}));
   }
 
   Output<T> sparseSegmentMean<T, Tidx>(
-      Output<T> data, Output<Tidx> indices, Output<int> segmentIds) {
+      Output<T> data, Output<T> indices, Output<int> segmentIds) {
     return addOperation(new OperationDescription(
-        'SparseSegmentMean', 'SparseSegmentMean', [data, indices, segmentIds]));
+        'SparseSegmentMean',
+        'SparseSegmentMean',
+        [data, indices, segmentIds],
+        {'T': T, 'Tidx': Tidx}));
   }
 
   Output<T> sparseSegmentSumWithNumSegments<T, Tidx, Tnumsegments>(
       Output<T> data,
-      Output<Tidx> indices,
+      Output<T> indices,
       Output<int> segmentIds,
-      Output<Tnumsegments> numSegments) {
+      Output<T> numSegments) {
     return addOperation(new OperationDescription(
         'SparseSegmentSumWithNumSegments',
         'SparseSegmentSumWithNumSegments',
-        [data, indices, segmentIds, numSegments]));
+        [data, indices, segmentIds, numSegments],
+        {'T': T, 'Tidx': Tidx, 'Tnumsegments': Tnumsegments}));
   }
 
-  Output<T> unsortedSegmentSum<T, Tindices, Tnumsegments>(Output<T> data,
-      Output<Tindices> segmentIds, Output<Tnumsegments> numSegments) {
-    return addOperation(new OperationDescription('UnsortedSegmentSum',
-        'UnsortedSegmentSum', [data, segmentIds, numSegments]));
+  Output<T> unsortedSegmentSum<T, Tindices, Tnumsegments>(
+      Output<T> data, Output<T> segmentIds, Output<T> numSegments) {
+    return addOperation(new OperationDescription(
+        'UnsortedSegmentSum',
+        'UnsortedSegmentSum',
+        [data, segmentIds, numSegments],
+        {'T': T, 'Tindices': Tindices, 'Tnumsegments': Tnumsegments}));
   }
 
   Output<T> atan2<T>(Output<T> y, Output<T> x) {
-    return addOperation(new OperationDescription('Atan2', 'Atan2', [y, x]));
-  }
-
-  Output<T> segmentProd<T, Tindices>(
-      Output<T> data, Output<Tindices> segmentIds) {
-    return addOperation(new OperationDescription(
-        'SegmentProd', 'SegmentProd', [data, segmentIds]));
-  }
-
-  Output<T> resizeBilinearGrad<T, align_corners>(
-      Output<double> grads, Output<T> originalImage) {
-    return addOperation(new OperationDescription(
-        'ResizeBilinearGrad', 'ResizeBilinearGrad', [grads, originalImage]));
-  }
-
-  Output<keep_dims> max<keep_dims, T, Tidx>(
-      Output<keep_dims> input, Output<T> reductionIndices) {
     return addOperation(
-        new OperationDescription('Max', 'Max', [input, reductionIndices]));
+        new OperationDescription('Atan2', 'Atan2', [y, x], {'T': T}));
+  }
+
+  Output<T> segmentProd<T, Tindices>(Output<T> data, Output<T> segmentIds) {
+    return addOperation(new OperationDescription('SegmentProd', 'SegmentProd',
+        [data, segmentIds], {'T': T, 'Tindices': Tindices}));
+  }
+
+  Output<T> resizeBilinearGrad<T>(Output<double> grads, Output<T> originalImage,
+      {bool alignCorners: false}) {
+    return addOperation(new OperationDescription(
+        'ResizeBilinearGrad',
+        'ResizeBilinearGrad',
+        [grads, originalImage],
+        {'T': T, 'align_corners': alignCorners}));
+  }
+
+  Output<T> max<T, Tidx>(Output<T> input, Output<T> reductionIndices,
+      {bool keepDims: false}) {
+    return addOperation(new OperationDescription(
+        'Max',
+        'Max',
+        [input, reductionIndices],
+        {'keep_dims': keepDims, 'T': T, 'Tidx': Tidx}));
   }
 
   Output<dtype> getSessionTensor<dtype>(Output<String> handle) {
     return addOperation(new OperationDescription(
-        'GetSessionTensor', 'GetSessionTensor', [handle]));
+        'GetSessionTensor', 'GetSessionTensor', [handle], {'dtype': dtype}));
   }
 
-  Output<keep_dims> min<keep_dims, T, Tidx>(
-      Output<keep_dims> input, Output<T> reductionIndices) {
-    return addOperation(
-        new OperationDescription('Min', 'Min', [input, reductionIndices]));
-  }
-
-  Output<double> sampleDistortedBoundingBoxV2<
-          T,
-          seed,
-          seed2,
-          aspect_ratio_range,
-          area_range,
-          max_attempts,
-          use_image_if_no_bounding_boxes>(Output<T> imageSize,
-      Output<double> boundingBoxes, Output<double> minObjectCovered) {
+  Output<T> min<T, Tidx>(Output<T> input, Output<T> reductionIndices,
+      {bool keepDims: false}) {
     return addOperation(new OperationDescription(
-        'SampleDistortedBoundingBoxV2',
-        'SampleDistortedBoundingBoxV2',
-        [imageSize, boundingBoxes, minObjectCovered]));
+        'Min',
+        'Min',
+        [input, reductionIndices],
+        {'keep_dims': keepDims, 'T': T, 'Tidx': Tidx}));
   }
 
-  Output accumulatorApplyGradient<dtype>(
-      Output<String> handle, Output<int> localStep, Output<dtype> gradient) {
-    return addOperation(new OperationDescription('AccumulatorApplyGradient',
-        'AccumulatorApplyGradient', [handle, localStep, gradient]));
+  Output<T> prod<T, Tidx>(Output<T> input, Output<T> reductionIndices,
+      {bool keepDims: false}) {
+    return addOperation(new OperationDescription(
+        'Prod',
+        'Prod',
+        [input, reductionIndices],
+        {'keep_dims': keepDims, 'T': T, 'Tidx': Tidx}));
   }
 
-  Output<keep_dims> prod<keep_dims, T, Tidx>(
-      Output<keep_dims> input, Output<T> reductionIndices) {
-    return addOperation(
-        new OperationDescription('Prod', 'Prod', [input, reductionIndices]));
-  }
-
-  Output<keep_dims> sum<keep_dims, T, Tidx>(
-      Output<keep_dims> input, Output<T> reductionIndices) {
-    return addOperation(
-        new OperationDescription('Sum', 'Sum', [input, reductionIndices]));
+  Output<T> sum<T, Tidx>(Output<T> input, Output<T> reductionIndices,
+      {bool keepDims: false}) {
+    return addOperation(new OperationDescription(
+        'Sum',
+        'Sum',
+        [input, reductionIndices],
+        {'keep_dims': keepDims, 'T': T, 'Tidx': Tidx}));
   }
 
   Output<T> relu<T>(Output<T> features) {
-    return addOperation(new OperationDescription('Relu', 'Relu', [features]));
+    return addOperation(
+        new OperationDescription('Relu', 'Relu', [features], {'T': T}));
   }
 
-  Output<int> sparseReduceSumSparse<keep_dims, T>(
-      Output<int> inputIndices,
-      Output<keep_dims> inputValues,
-      Output<int> inputShape,
-      Output<int> reductionAxes) {
-    return addOperation(new OperationDescription(
-        'SparseReduceSumSparse',
-        'SparseReduceSumSparse',
-        [inputIndices, inputValues, inputShape, reductionAxes]));
-  }
-
-  Output<transpose_a> matMul<transpose_a, transpose_b, T>(
-      Output<transpose_a> a, Output<transpose_b> b) {
-    return addOperation(new OperationDescription('MatMul', 'MatMul', [a, b]));
+  Output<T> matMul<T>(Output<T> a, Output<T> b,
+      {bool transposeA: false, bool transposeB: false}) {
+    return addOperation(new OperationDescription('MatMul', 'MatMul', [a, b],
+        {'transpose_a': transposeA, 'transpose_b': transposeB, 'T': T}));
   }
 
   Output<bool> logicalAnd(Output<bool> x, Output<bool> y) {
     return addOperation(
-        new OperationDescription('LogicalAnd', 'LogicalAnd', [x, y]));
+        new OperationDescription('LogicalAnd', 'LogicalAnd', [x, y], {}));
   }
 
   Output writeGraphSummary(
-      Output<dynamic> writer, Output<int> step, Output<String> tensor) {
+      Output writer, Output<int> step, Output<String> tensor) {
     return addOperation(new OperationDescription(
-        'WriteGraphSummary', 'WriteGraphSummary', [writer, step, tensor]));
+        'WriteGraphSummary', 'WriteGraphSummary', [writer, step, tensor], {}));
   }
 
-  Output<bool> approximateEqual<T, tolerance>(
-      Output<T> x, Output<tolerance> y) {
-    return addOperation(new OperationDescription(
-        'ApproximateEqual', 'ApproximateEqual', [x, y]));
-  }
-
-  Output<double> quantizeV2<T, mode, round_mode>(
-      Output<double> input, Output<double> minRange, Output<double> maxRange) {
-    return addOperation(new OperationDescription(
-        'QuantizeV2', 'QuantizeV2', [input, minRange, maxRange]));
+  Output<bool> approximateEqual<T>(Output<T> x, Output<T> y,
+      {double tolerance: 0.000009999999747378752}) {
+    return addOperation(new OperationDescription('ApproximateEqual',
+        'ApproximateEqual', [x, y], {'T': T, 'tolerance': tolerance}));
   }
 
   Output<bool> greaterEqual<T>(Output<T> x, Output<T> y) {
-    return addOperation(
-        new OperationDescription('GreaterEqual', 'GreaterEqual', [x, y]));
+    return addOperation(new OperationDescription(
+        'GreaterEqual', 'GreaterEqual', [x, y], {'T': T}));
   }
 
   Output<T> polygamma<T>(Output<T> a, Output<T> x) {
     return addOperation(
-        new OperationDescription('Polygamma', 'Polygamma', [a, x]));
+        new OperationDescription('Polygamma', 'Polygamma', [a, x], {'T': T}));
   }
 
   /// When CreateSummaryDbWriter is being used, this op can be useful for
   /// importing data from event logs.
-  Output importEvent(Output<dynamic> writer, Output<String> event) {
+  Output importEvent(Output writer, Output<String> event) {
     return addOperation(new OperationDescription(
-        'ImportEvent', 'ImportEvent', [writer, event]));
+        'ImportEvent', 'ImportEvent', [writer, event], {}));
   }
 
   Output<T> igamma<T>(Output<T> a, Output<T> x) {
-    return addOperation(new OperationDescription('Igamma', 'Igamma', [a, x]));
+    return addOperation(
+        new OperationDescription('Igamma', 'Igamma', [a, x], {'T': T}));
   }
 
   Output<T> igammac<T>(Output<T> a, Output<T> x) {
-    return addOperation(new OperationDescription('Igammac', 'Igammac', [a, x]));
+    return addOperation(
+        new OperationDescription('Igammac', 'Igammac', [a, x], {'T': T}));
   }
 
   Output<T> mod<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('Mod', 'Mod', [x, y]));
+    return addOperation(
+        new OperationDescription('Mod', 'Mod', [x, y], {'T': T}));
   }
 
   Output<T> maximum<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('Maximum', 'Maximum', [x, y]));
-  }
-
-  /// *NOTE*: `SquaredDifference` supports broadcasting. More about broadcasting
-  /// [here](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
-  Output<dynamic> mklSquaredDifference<T>(
-      Output<T> x, Output<T> y, Output<dynamic> mklX, Output<dynamic> mklY) {
-    return addOperation(new OperationDescription(
-        '_MklSquaredDifference', '_MklSquaredDifference', [x, y, mklX, mklY]));
+    return addOperation(
+        new OperationDescription('Maximum', 'Maximum', [x, y], {'T': T}));
   }
 
   Output<T> squaredDifference<T>(Output<T> x, Output<T> y) {
     return addOperation(new OperationDescription(
-        'SquaredDifference', 'SquaredDifference', [x, y]));
+        'SquaredDifference', 'SquaredDifference', [x, y], {'T': T}));
   }
 
-  Output<limit> resourceCountUpTo<limit, T>(Output<dynamic> resource) {
-    return addOperation(new OperationDescription(
-        'ResourceCountUpTo', 'ResourceCountUpTo', [resource]));
+  Output<T> resourceCountUpTo<T>(Output resource, {@required int limit}) {
+    return addOperation(new OperationDescription('ResourceCountUpTo',
+        'ResourceCountUpTo', [resource], {'limit': limit, 'T': T}));
   }
 
   Output<T> realDiv<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('RealDiv', 'RealDiv', [x, y]));
+    return addOperation(
+        new OperationDescription('RealDiv', 'RealDiv', [x, y], {'T': T}));
   }
 
   Output<T> truncateDiv<T>(Output<T> x, Output<T> y) {
-    return addOperation(
-        new OperationDescription('TruncateDiv', 'TruncateDiv', [x, y]));
+    return addOperation(new OperationDescription(
+        'TruncateDiv', 'TruncateDiv', [x, y], {'T': T}));
   }
 
-  Output<T> conv3DBackpropFilterV2<T, strides, padding, data_format, dilations>(
-      Output<T> input, Output<int> filterSizes, Output<strides> outBackprop) {
-    return addOperation(new OperationDescription('Conv3DBackpropFilterV2',
-        'Conv3DBackpropFilterV2', [input, filterSizes, outBackprop]));
-  }
-
-  Output<String> asString<T, precision, scientific, shortest, width, fill>(
-      Output<T> input) {
-    return addOperation(
-        new OperationDescription('AsString', 'AsString', [input]));
+  Output<String> asString<T>(Output<T> input,
+      {int precision: -1,
+      bool scientific: false,
+      bool shortest: false,
+      int width: -1,
+      String fill}) {
+    return addOperation(new OperationDescription('AsString', 'AsString', [
+      input
+    ], {
+      'T': T,
+      'precision': precision,
+      'scientific': scientific,
+      'shortest': shortest,
+      'width': width,
+      'fill': fill
+    }));
   }
 
   Output<T> addV2<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('AddV2', 'AddV2', [x, y]));
+    return addOperation(
+        new OperationDescription('AddV2', 'AddV2', [x, y], {'T': T}));
   }
 
-  Output<double> uniformCandidateSampler<num_true, num_sampled, unique,
-      range_max, seed, seed2>(Output<int> trueClasses) {
+  Output<dtype> resourceGather<dtype, Tindices>(
+      Output resource, Output<dtype> indices,
+      {bool validateIndices: true}) {
     return addOperation(new OperationDescription(
-        'UniformCandidateSampler', 'UniformCandidateSampler', [trueClasses]));
-  }
-
-  Output<validate_indices> resourceGather<validate_indices, dtype, Tindices>(
-      Output<dynamic> resource, Output<validate_indices> indices) {
-    return addOperation(new OperationDescription(
-        'ResourceGather', 'ResourceGather', [resource, indices]));
+        'ResourceGather', 'ResourceGather', [
+      resource,
+      indices
+    ], {
+      'validate_indices': validateIndices,
+      'dtype': dtype,
+      'Tindices': Tindices
+    }));
   }
 
   Output<T> add<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('Add', 'Add', [x, y]));
+    return addOperation(
+        new OperationDescription('Add', 'Add', [x, y], {'T': T}));
   }
 
   Output<T> floor<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Floor', 'Floor', [x]));
+    return addOperation(
+        new OperationDescription('Floor', 'Floor', [x], {'T': T}));
   }
 
   Output<T> ceil<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Ceil', 'Ceil', [x]));
-  }
-
-  Output<ksize> maxPool3D<ksize, strides, padding, data_format, T>(
-      Output<ksize> input) {
     return addOperation(
-        new OperationDescription('MaxPool3D', 'MaxPool3D', [input]));
+        new OperationDescription('Ceil', 'Ceil', [x], {'T': T}));
   }
 
   Output<bool> isInf<T>(Output<T> x) {
-    return addOperation(new OperationDescription('IsInf', 'IsInf', [x]));
+    return addOperation(
+        new OperationDescription('IsInf', 'IsInf', [x], {'T': T}));
   }
 
-  Output<T> padV2<T, Tpaddings>(Output<T> input, Output<Tpaddings> paddings,
-      Output<Tpaddings> constantValues) {
-    return addOperation(new OperationDescription(
-        'PadV2', 'PadV2', [input, paddings, constantValues]));
+  Output<T> padV2<T, Tpaddings>(
+      Output<T> input, Output<T> paddings, Output<T> constantValues) {
+    return addOperation(new OperationDescription('PadV2', 'PadV2',
+        [input, paddings, constantValues], {'T': T, 'Tpaddings': Tpaddings}));
   }
 
   Output<T> cos<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Cos', 'Cos', [x]));
-  }
-
-  Output<String> tensorArray<dtype, dynamic_size, clear_after_read,
-      tensor_array_name, element_shape>(Output<int> size) {
-    return addOperation(
-        new OperationDescription('TensorArray', 'TensorArray', [size]));
-  }
-
-  Output<shape> variable<shape, dtype, container, shared_name>() {
-    return addOperation(new OperationDescription('Variable', 'Variable', []));
+    return addOperation(new OperationDescription('Cos', 'Cos', [x], {'T': T}));
   }
 
   Output<T> sigmoidGrad<T>(Output<T> y, Output<T> dy) {
-    return addOperation(
-        new OperationDescription('SigmoidGrad', 'SigmoidGrad', [y, dy]));
+    return addOperation(new OperationDescription(
+        'SigmoidGrad', 'SigmoidGrad', [y, dy], {'T': T}));
   }
 
   Output<T> digamma<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Digamma', 'Digamma', [x]));
+    return addOperation(
+        new OperationDescription('Digamma', 'Digamma', [x], {'T': T}));
   }
 
   Output<T> acosh<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Acosh', 'Acosh', [x]));
+    return addOperation(
+        new OperationDescription('Acosh', 'Acosh', [x], {'T': T}));
   }
 
-  Output resourceApplyProximalAdagrad<T, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> accum,
-      Output<T> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> grad) {
-    return addOperation(new OperationDescription('ResourceApplyProximalAdagrad',
-        'ResourceApplyProximalAdagrad', [var_, accum, lr, l1, l2, grad]));
+  Output resourceApplyProximalAdagrad<T>(Output var_, Output accum,
+      Output<T> lr, Output<T> l1, Output<T> l2, Output<T> grad,
+      {bool useLocking: false}) {
+    return addOperation(new OperationDescription(
+        'ResourceApplyProximalAdagrad',
+        'ResourceApplyProximalAdagrad',
+        [var_, accum, lr, l1, l2, grad],
+        {'T': T, 'use_locking': useLocking}));
   }
 
   Output<T> asin<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Asin', 'Asin', [x]));
-  }
-
-  /// _HostRecv requires its input on host memory whereas _Recv requires its
-  /// input on device memory.
-  Output<tensor_type> hostRecv<tensor_type, tensor_name, send_device,
-      send_device_incarnation, recv_device, client_terminated>() {
-    return addOperation(new OperationDescription('_HostRecv', '_HostRecv', []));
+    return addOperation(
+        new OperationDescription('Asin', 'Asin', [x], {'T': T}));
   }
 
   Output<T> log1p<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Log1p', 'Log1p', [x]));
-  }
-
-  Output<int> tensorArraySize(Output<String> handle, Output<double> flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArraySize', 'TensorArraySize', [handle, flowIn]));
-  }
-
-  Output<double> requantize<Tinput, out_type>(
-      Output<Tinput> input,
-      Output<double> inputMin,
-      Output<double> inputMax,
-      Output<double> requestedOutputMin,
-      Output<double> requestedOutputMax) {
-    return addOperation(new OperationDescription('Requantize', 'Requantize',
-        [input, inputMin, inputMax, requestedOutputMin, requestedOutputMax]));
+    return addOperation(
+        new OperationDescription('Log1p', 'Log1p', [x], {'T': T}));
   }
 
   Output<T> exp<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Exp', 'Exp', [x]));
+    return addOperation(new OperationDescription('Exp', 'Exp', [x], {'T': T}));
   }
 
-  Output<String> mutableHashTableOfTensors<container, shared_name,
-      use_node_name_sharing, key_dtype, value_dtype, value_shape>() {
-    return addOperation(new OperationDescription(
-        'MutableHashTableOfTensors', 'MutableHashTableOfTensors', []));
-  }
-
-  Output<T> scatterNdAdd<T, Tindices, use_locking>(
-      Output<T> ref, Output<Tindices> indices, Output<use_locking> updates) {
-    return addOperation(new OperationDescription(
-        'ScatterNdAdd', 'ScatterNdAdd', [ref, indices, updates]));
-  }
-
-  Output<T> dilation2D<T, strides, rates, padding>(
-      Output<T> input, Output<strides> filter) {
-    return addOperation(
-        new OperationDescription('Dilation2D', 'Dilation2D', [input, filter]));
-  }
-
-  Output deserializeIterator(
-      Output<dynamic> resourceHandle, Output<dynamic> serialized) {
+  Output deserializeIterator(Output resourceHandle, Output serialized) {
     return addOperation(new OperationDescription('DeserializeIterator',
-        'DeserializeIterator', [resourceHandle, serialized]));
+        'DeserializeIterator', [resourceHandle, serialized], {}));
   }
 
   Output<T> rsqrtGrad<T>(Output<T> y, Output<T> dy) {
     return addOperation(
-        new OperationDescription('RsqrtGrad', 'RsqrtGrad', [y, dy]));
-  }
-
-  Output<double> quantizedInstanceNorm<
-      T,
-      output_range_given,
-      given_y_min,
-      given_y_max,
-      variance_epsilon,
-      min_separation>(Output<T> x, Output<double> xMin, Output<double> xMax) {
-    return addOperation(new OperationDescription(
-        'QuantizedInstanceNorm', 'QuantizedInstanceNorm', [x, xMin, xMax]));
+        new OperationDescription('RsqrtGrad', 'RsqrtGrad', [y, dy], {'T': T}));
   }
 
   Output<T> rsqrt<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Rsqrt', 'Rsqrt', [x]));
-  }
-
-  Output initializeTableFromTextFile<key_index, value_index, vocab_size,
-      delimiter>(Output<String> tableHandle, Output<String> filename) {
-    return addOperation(new OperationDescription('InitializeTableFromTextFile',
-        'InitializeTableFromTextFile', [tableHandle, filename]));
+    return addOperation(
+        new OperationDescription('Rsqrt', 'Rsqrt', [x], {'T': T}));
   }
 
   Output<T> sqrtGrad<T>(Output<T> y, Output<T> dy) {
     return addOperation(
-        new OperationDescription('SqrtGrad', 'SqrtGrad', [y, dy]));
+        new OperationDescription('SqrtGrad', 'SqrtGrad', [y, dy], {'T': T}));
   }
 
   Output<T> invGrad<T>(Output<T> y, Output<T> dy) {
     return addOperation(
-        new OperationDescription('InvGrad', 'InvGrad', [y, dy]));
+        new OperationDescription('InvGrad', 'InvGrad', [y, dy], {'T': T}));
   }
 
   Output<T> inv<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Inv', 'Inv', [x]));
+    return addOperation(new OperationDescription('Inv', 'Inv', [x], {'T': T}));
   }
 
-  /// _HostCast requires its input and produces its output in host memory.
-  Output<SrcT> hostCast<SrcT, DstT>(Output<SrcT> x) {
-    return addOperation(
-        new OperationDescription('_HostCast', '_HostCast', [x]));
+  Output<T> accumulateNV2<T>(List<Output<T>> inputs,
+      {@required int n, @required List shape}) {
+    return addOperation(new OperationDescription('AccumulateNV2',
+        'AccumulateNV2', [inputs], {'N': n, 'T': T, 'shape': shape}));
   }
 
-  Output<N> accumulateNV2<N, T, shape>(Output<N> inputs) {
-    return addOperation(
-        new OperationDescription('AccumulateNV2', 'AccumulateNV2', [inputs]));
-  }
-
+  @Deprecated('DEPRECATED at GraphDef version 14: Use MatrixSetDiag')
   Output<T> batchMatrixSetDiag<T>(Output<T> input, Output<T> diagonal) {
-    return addOperation(new OperationDescription(
-        'BatchMatrixSetDiag', 'BatchMatrixSetDiag', [input, diagonal]));
+    return addOperation(new OperationDescription('BatchMatrixSetDiag',
+        'BatchMatrixSetDiag', [input, diagonal], {'T': T}));
   }
 
-  Output<T> segmentMean<T, Tindices>(
-      Output<T> data, Output<Tindices> segmentIds) {
-    return addOperation(new OperationDescription(
-        'SegmentMean', 'SegmentMean', [data, segmentIds]));
+  Output<T> segmentMean<T, Tindices>(Output<T> data, Output<T> segmentIds) {
+    return addOperation(new OperationDescription('SegmentMean', 'SegmentMean',
+        [data, segmentIds], {'T': T, 'Tindices': Tindices}));
   }
 
-  Output<signed_input> quantizeAndDequantize<signed_input, num_bits,
-      range_given, input_min, input_max, T>(Output<signed_input> input) {
+  @Deprecated(
+      'DEPRECATED at GraphDef version 22: Replaced by QuantizeAndDequantizeV2')
+  Output<T> quantizeAndDequantize<T>(Output<T> input,
+      {bool signedInput: true,
+      int numBits: 8,
+      bool rangeGiven: false,
+      double inputMin: 0.0,
+      double inputMax: 0.0}) {
     return addOperation(new OperationDescription(
-        'QuantizeAndDequantize', 'QuantizeAndDequantize', [input]));
-  }
-
-  /// *NOTE*: `Maximum` supports broadcasting. More about broadcasting
-  /// [here](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
-  Output<dynamic> mklMaximum<T>(
-      Output<T> x, Output<T> y, Output<dynamic> mklX, Output<dynamic> mklY) {
-    return addOperation(new OperationDescription(
-        '_MklMaximum', '_MklMaximum', [x, y, mklX, mklY]));
+        'QuantizeAndDequantize', 'QuantizeAndDequantize', [
+      input
+    ], {
+      'signed_input': signedInput,
+      'num_bits': numBits,
+      'range_given': rangeGiven,
+      'input_min': inputMin,
+      'input_max': inputMax,
+      'T': T
+    }));
   }
 
   Output<T> sparseSegmentSqrtN<T, Tidx>(
-      Output<T> data, Output<Tidx> indices, Output<int> segmentIds) {
-    return addOperation(new OperationDescription('SparseSegmentSqrtN',
-        'SparseSegmentSqrtN', [data, indices, segmentIds]));
+      Output<T> data, Output<T> indices, Output<int> segmentIds) {
+    return addOperation(new OperationDescription(
+        'SparseSegmentSqrtN',
+        'SparseSegmentSqrtN',
+        [data, indices, segmentIds],
+        {'T': T, 'Tidx': Tidx}));
   }
 
-  Output<T> depthToSpace<T, block_size, data_format>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('DepthToSpace', 'DepthToSpace', [input]));
+  Output<T> depthToSpace<T>(Output<T> input,
+      {@required int blockSize, String dataFormat: 'NHWC'}) {
+    return addOperation(new OperationDescription('DepthToSpace', 'DepthToSpace',
+        [input], {'T': T, 'block_size': blockSize, 'data_format': dataFormat}));
   }
 
-  Output<T> spaceToDepth<T, block_size, data_format>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('SpaceToDepth', 'SpaceToDepth', [input]));
+  Output<T> spaceToDepth<T>(Output<T> input,
+      {@required int blockSize, String dataFormat: 'NHWC'}) {
+    return addOperation(new OperationDescription('SpaceToDepth', 'SpaceToDepth',
+        [input], {'T': T, 'block_size': blockSize, 'data_format': dataFormat}));
   }
 
-  Output<signed_input> quantizeAndDequantizeV3<signed_input, range_given, T>(
-      Output<signed_input> input,
-      Output<range_given> inputMin,
-      Output<T> inputMax,
-      Output<int> numBits) {
-    return addOperation(new OperationDescription('QuantizeAndDequantizeV3',
-        'QuantizeAndDequantizeV3', [input, inputMin, inputMax, numBits]));
+  Output<T> quantizeAndDequantizeV3<T>(Output<T> input, Output<T> inputMin,
+      Output<T> inputMax, Output<int> numBits,
+      {bool signedInput: true, bool rangeGiven: true}) {
+    return addOperation(new OperationDescription(
+        'QuantizeAndDequantizeV3',
+        'QuantizeAndDequantizeV3',
+        [input, inputMin, inputMax, numBits],
+        {'signed_input': signedInput, 'range_given': rangeGiven, 'T': T}));
   }
 
   Output<T> mul<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('Mul', 'Mul', [x, y]));
-  }
-
-  Output<T> batchToSpace<T, block_size, Tidx>(
-      Output<T> input, Output<block_size> crops) {
-    return addOperation(new OperationDescription(
-        'BatchToSpace', 'BatchToSpace', [input, crops]));
-  }
-
-  Output<T> spaceToBatch<T, Tpaddings, block_size>(
-      Output<T> input, Output<Tpaddings> paddings) {
-    return addOperation(new OperationDescription(
-        'SpaceToBatch', 'SpaceToBatch', [input, paddings]));
-  }
-
-  Output<T> squeeze<T, squeeze_dims>(Output<T> input) {
     return addOperation(
-        new OperationDescription('Squeeze', 'Squeeze', [input]));
+        new OperationDescription('Mul', 'Mul', [x, y], {'T': T}));
   }
 
-  /// _HostSend requires its input on host memory whereas _Send requires its
-  /// input on device memory.
-  Output hostSend<T, tensor_name, send_device, send_device_incarnation,
-      recv_device, client_terminated>(Output<T> tensor) {
-    return addOperation(
-        new OperationDescription('_HostSend', '_HostSend', [tensor]));
+  Output<T> batchToSpace<T, Tidx>(Output<T> input, Output<T> crops,
+      {@required int blockSize}) {
+    return addOperation(new OperationDescription('BatchToSpace', 'BatchToSpace',
+        [input, crops], {'T': T, 'block_size': blockSize, 'Tidx': Tidx}));
   }
 
-  Output<T> expandDims<T, Tdim>(Output<T> input, Output<Tdim> dim) {
-    return addOperation(
-        new OperationDescription('ExpandDims', 'ExpandDims', [input, dim]));
-  }
-
-  Output<dtype> placeholderWithDefault<dtype, shape>(Output<dtype> input) {
+  Output<T> spaceToBatch<T, Tpaddings>(Output<T> input, Output<T> paddings,
+      {@required int blockSize}) {
     return addOperation(new OperationDescription(
-        'PlaceholderWithDefault', 'PlaceholderWithDefault', [input]));
+        'SpaceToBatch',
+        'SpaceToBatch',
+        [input, paddings],
+        {'T': T, 'Tpaddings': Tpaddings, 'block_size': blockSize}));
   }
 
-  Output<T> applyMomentum<T, use_locking, use_nesterov>(
-      Output<T> var_,
-      Output<use_locking> accum,
-      Output<use_nesterov> lr,
-      Output<use_nesterov> grad,
-      Output<use_nesterov> momentum) {
+  Output<T> expandDims<T, Tdim>(Output<T> input, Output<T> dim) {
     return addOperation(new OperationDescription(
-        'ApplyMomentum', 'ApplyMomentum', [var_, accum, lr, grad, momentum]));
+        'ExpandDims', 'ExpandDims', [input, dim], {'T': T, 'Tdim': Tdim}));
+  }
+
+  Output<dtype> placeholderWithDefault<dtype>(Output<dtype> input,
+      {@required List shape}) {
+    return addOperation(new OperationDescription('PlaceholderWithDefault',
+        'PlaceholderWithDefault', [input], {'dtype': dtype, 'shape': shape}));
   }
 
   Output<T> acos<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Acos', 'Acos', [x]));
-  }
-
-  Output<dtype> placeholder<dtype, shape>() {
     return addOperation(
-        new OperationDescription('Placeholder', 'Placeholder', []));
+        new OperationDescription('Acos', 'Acos', [x], {'T': T}));
   }
 
-  Output<double> quantizedMaxPool<T, ksize, strides, padding>(
-      Output<T> input, Output<double> minInput, Output<double> maxInput) {
+  Output<dtype> placeholder<dtype>({List shape}) {
     return addOperation(new OperationDescription(
-        'QuantizedMaxPool', 'QuantizedMaxPool', [input, minInput, maxInput]));
+        'Placeholder', 'Placeholder', [], {'dtype': dtype, 'shape': shape}));
   }
 
-  Output<T> mirrorPadGrad<T, Tpaddings, mode>(
-      Output<T> input, Output<Tpaddings> paddings) {
+  Output<T> mirrorPadGrad<T, Tpaddings>(Output<T> input, Output<T> paddings,
+      {@required String mode}) {
     return addOperation(new OperationDescription(
-        'MirrorPadGrad', 'MirrorPadGrad', [input, paddings]));
+        'MirrorPadGrad',
+        'MirrorPadGrad',
+        [input, paddings],
+        {'T': T, 'Tpaddings': Tpaddings, 'mode': mode}));
   }
 
-  Output<double> tensorArrayV3<
-      dtype,
-      element_shape,
-      dynamic_size,
-      clear_after_read,
-      identical_element_shapes,
-      tensor_array_name>(Output<int> size) {
-    return addOperation(
-        new OperationDescription('TensorArrayV3', 'TensorArrayV3', [size]));
+  Output<T> matrixSolveLs<T>(
+      Output<T> matrix, Output<T> rhs, Output l2Regularizer,
+      {bool fast: true}) {
+    return addOperation(new OperationDescription('MatrixSolveLs',
+        'MatrixSolveLs', [matrix, rhs, l2Regularizer], {'T': T, 'fast': fast}));
   }
 
-  Output<T> matrixSolveLs<T, fast>(
-      Output<T> matrix, Output<fast> rhs, Output<dynamic> l2Regularizer) {
+  Output<T> mirrorPad<T, Tpaddings>(Output<T> input, Output<T> paddings,
+      {@required String mode}) {
+    return addOperation(new OperationDescription('MirrorPad', 'MirrorPad',
+        [input, paddings], {'T': T, 'Tpaddings': Tpaddings, 'mode': mode}));
+  }
+
+  Output<T> pad<T, Tpaddings>(Output<T> input, Output<T> paddings) {
     return addOperation(new OperationDescription(
-        'MatrixSolveLs', 'MatrixSolveLs', [matrix, rhs, l2Regularizer]));
-  }
-
-  Output<T> mirrorPad<T, Tpaddings, mode>(
-      Output<T> input, Output<Tpaddings> paddings) {
-    return addOperation(
-        new OperationDescription('MirrorPad', 'MirrorPad', [input, paddings]));
-  }
-
-  Output<T> pad<T, Tpaddings>(Output<T> input, Output<Tpaddings> paddings) {
-    return addOperation(
-        new OperationDescription('Pad', 'Pad', [input, paddings]));
-  }
-
-  Output<T> broadcastGradientArgs<T>(Output<T> s0, Output<T> s1) {
-    return addOperation(new OperationDescription(
-        'BroadcastGradientArgs', 'BroadcastGradientArgs', [s0, s1]));
+        'Pad', 'Pad', [input, paddings], {'T': T, 'Tpaddings': Tpaddings}));
   }
 
   Output<T> broadcastArgs<T>(Output<T> s0, Output<T> s1) {
-    return addOperation(
-        new OperationDescription('BroadcastArgs', 'BroadcastArgs', [s0, s1]));
+    return addOperation(new OperationDescription(
+        'BroadcastArgs', 'BroadcastArgs', [s0, s1], {'T': T}));
   }
 
-  Output<double> quantizedRelu6<Tinput, out_type>(Output<Tinput> features,
-      Output<double> minFeatures, Output<double> maxFeatures) {
-    return addOperation(new OperationDescription('QuantizedRelu6',
-        'QuantizedRelu6', [features, minFeatures, maxFeatures]));
-  }
-
-  Output resourceStridedSliceAssign<T, Index, begin_mask, end_mask,
-          ellipsis_mask, new_axis_mask, shrink_axis_mask>(
-      Output<dynamic> ref,
-      Output<T> begin,
-      Output<Index> end,
-      Output<begin_mask> strides,
-      Output<end_mask> value) {
-    return addOperation(new OperationDescription('ResourceStridedSliceAssign',
-        'ResourceStridedSliceAssign', [ref, begin, end, strides, value]));
+  Output resourceStridedSliceAssign<T, Index>(Output ref, Output<T> begin,
+      Output<T> end, Output<T> strides, Output<T> value,
+      {int beginMask: 0,
+      int endMask: 0,
+      int ellipsisMask: 0,
+      int newAxisMask: 0,
+      int shrinkAxisMask: 0}) {
+    return addOperation(new OperationDescription(
+        'ResourceStridedSliceAssign', 'ResourceStridedSliceAssign', [
+      ref,
+      begin,
+      end,
+      strides,
+      value
+    ], {
+      'T': T,
+      'Index': Index,
+      'begin_mask': beginMask,
+      'end_mask': endMask,
+      'ellipsis_mask': ellipsisMask,
+      'new_axis_mask': newAxisMask,
+      'shrink_axis_mask': shrinkAxisMask
+    }));
   }
 
   Output<T> truncateMod<T>(Output<T> x, Output<T> y) {
-    return addOperation(
-        new OperationDescription('TruncateMod', 'TruncateMod', [x, y]));
+    return addOperation(new OperationDescription(
+        'TruncateMod', 'TruncateMod', [x, y], {'T': T}));
   }
 
-  Output resourceApplyFtrl<T, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> accum,
-      Output<dynamic> linear,
+  Output resourceApplyFtrl<T>(
+      Output var_,
+      Output accum,
+      Output linear,
       Output<T> grad,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> lrPower) {
-    return addOperation(new OperationDescription('ResourceApplyFtrl',
-        'ResourceApplyFtrl', [var_, accum, linear, grad, lr, l1, l2, lrPower]));
-  }
-
-  Output<T> stridedSliceGrad<T, Index, begin_mask, end_mask, ellipsis_mask,
-          new_axis_mask, shrink_axis_mask>(
-      Output<T> shape,
-      Output<Index> begin,
-      Output<begin_mask> end,
-      Output<end_mask> strides,
-      Output<ellipsis_mask> dy) {
-    return addOperation(new OperationDescription('StridedSliceGrad',
-        'StridedSliceGrad', [shape, begin, end, strides, dy]));
-  }
-
-  Output<T> stridedSlice<T, Index, begin_mask, end_mask, ellipsis_mask,
-          new_axis_mask, shrink_axis_mask>(Output<T> input, Output<Index> begin,
-      Output<begin_mask> end, Output<end_mask> strides) {
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> lrPower,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
-        'StridedSlice', 'StridedSlice', [input, begin, end, strides]));
+        'ResourceApplyFtrl',
+        'ResourceApplyFtrl',
+        [var_, accum, linear, grad, lr, l1, l2, lrPower],
+        {'T': T, 'use_locking': useLocking}));
   }
 
-  Output<String> lMDBReader<container, shared_name>() {
+  Output<T> stridedSliceGrad<T, Index>(Output<T> shape, Output<T> begin,
+      Output<T> end, Output<T> strides, Output<T> dy,
+      {int beginMask: 0,
+      int endMask: 0,
+      int ellipsisMask: 0,
+      int newAxisMask: 0,
+      int shrinkAxisMask: 0}) {
     return addOperation(
-        new OperationDescription('LMDBReader', 'LMDBReader', []));
+        new OperationDescription('StridedSliceGrad', 'StridedSliceGrad', [
+      shape,
+      begin,
+      end,
+      strides,
+      dy
+    ], {
+      'T': T,
+      'Index': Index,
+      'begin_mask': beginMask,
+      'end_mask': endMask,
+      'ellipsis_mask': ellipsisMask,
+      'new_axis_mask': newAxisMask,
+      'shrink_axis_mask': shrinkAxisMask
+    }));
   }
 
-  Output<T> slice<T, Index>(
-      Output<T> input, Output<Index> begin, Output<Index> size) {
+  Output<T> stridedSlice<T, Index>(
+      Output<T> input, Output<T> begin, Output<T> end, Output<T> strides,
+      {int beginMask: 0,
+      int endMask: 0,
+      int ellipsisMask: 0,
+      int newAxisMask: 0,
+      int shrinkAxisMask: 0}) {
     return addOperation(
-        new OperationDescription('Slice', 'Slice', [input, begin, size]));
+        new OperationDescription('StridedSlice', 'StridedSlice', [
+      input,
+      begin,
+      end,
+      strides
+    ], {
+      'T': T,
+      'Index': Index,
+      'begin_mask': beginMask,
+      'end_mask': endMask,
+      'ellipsis_mask': ellipsisMask,
+      'new_axis_mask': newAxisMask,
+      'shrink_axis_mask': shrinkAxisMask
+    }));
   }
 
-  Output<T> uniqueWithCountsV2<T, Taxis, out_idx>(
-      Output<T> x, Output<Taxis> axis) {
+  Output<T> slice<T, Index>(Output<T> input, Output<T> begin, Output<T> size) {
     return addOperation(new OperationDescription(
-        'UniqueWithCountsV2', 'UniqueWithCountsV2', [x, axis]));
-  }
-
-  Output<T> uniqueV2<T, Taxis, out_idx>(Output<T> x, Output<Taxis> axis) {
-    return addOperation(
-        new OperationDescription('UniqueV2', 'UniqueV2', [x, axis]));
+        'Slice', 'Slice', [input, begin, size], {'T': T, 'Index': Index}));
   }
 
   Output<T> scatterNd<T, Tindices>(
-      Output<T> indices, Output<Tindices> updates, Output<Tindices> shape) {
+      Output<T> indices, Output<T> updates, Output<T> shape) {
+    return addOperation(new OperationDescription('ScatterNd', 'ScatterNd',
+        [indices, updates, shape], {'T': T, 'Tindices': Tindices}));
+  }
+
+  Output<T> argMax<T, Tidx, output_type>(Output<T> input, Output<T> dimension) {
     return addOperation(new OperationDescription(
-        'ScatterNd', 'ScatterNd', [indices, updates, shape]));
+        'ArgMax',
+        'ArgMax',
+        [input, dimension],
+        {'T': T, 'Tidx': Tidx, 'output_type': output_type}));
   }
 
-  Output<T> unique<T, out_idx>(Output<T> x) {
-    return addOperation(new OperationDescription('Unique', 'Unique', [x]));
+  Output<T> reshape<T, Tshape>(Output<T> tensor, Output<T> shape) {
+    return addOperation(new OperationDescription(
+        'Reshape', 'Reshape', [tensor, shape], {'T': T, 'Tshape': Tshape}));
   }
 
-  Output<T> argMax<T, Tidx, output_type>(
-      Output<T> input, Output<Tidx> dimension) {
-    return addOperation(
-        new OperationDescription('ArgMax', 'ArgMax', [input, dimension]));
-  }
-
-  Output<T> reshape<T, Tshape>(Output<T> tensor, Output<Tshape> shape) {
-    return addOperation(
-        new OperationDescription('Reshape', 'Reshape', [tensor, shape]));
-  }
-
-  Output<T> checkNumerics<T, message>(Output<T> tensor) {
-    return addOperation(
-        new OperationDescription('CheckNumerics', 'CheckNumerics', [tensor]));
+  Output<T> checkNumerics<T>(Output<T> tensor, {@required String message}) {
+    return addOperation(new OperationDescription('CheckNumerics',
+        'CheckNumerics', [tensor], {'T': T, 'message': message}));
   }
 
   Output<T> stopGradient<T>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('StopGradient', 'StopGradient', [input]));
+    return addOperation(new OperationDescription(
+        'StopGradient', 'StopGradient', [input], {'T': T}));
   }
 
   Output<T> debugGradientIdentity<T>(Output<T> input) {
     return addOperation(new OperationDescription(
-        'DebugGradientIdentity', 'DebugGradientIdentity', [input]));
-  }
-
-  Output<T> refIdentity<T>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('RefIdentity', 'RefIdentity', [input]));
-  }
-
-  Output<dynamic> zipDataset<output_types, output_shapes, N>(
-      Output<dynamic> inputDatasets) {
-    return addOperation(
-        new OperationDescription('ZipDataset', 'ZipDataset', [inputDatasets]));
+        'DebugGradientIdentity', 'DebugGradientIdentity', [input], {'T': T}));
   }
 
   Output<T> round<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Round', 'Round', [x]));
-  }
-
-  Output<T> identityN<T>(Output<T> input) {
     return addOperation(
-        new OperationDescription('IdentityN', 'IdentityN', [input]));
+        new OperationDescription('Round', 'Round', [x], {'T': T}));
   }
 
-  Output<T> sparseTensorDenseAdd<T, Tindices>(Output<T> aIndices,
-      Output<Tindices> aValues, Output<Tindices> aShape, Output<Tindices> b) {
-    return addOperation(new OperationDescription('SparseTensorDenseAdd',
-        'SparseTensorDenseAdd', [aIndices, aValues, aShape, b]));
+  Output<T> sparseTensorDenseAdd<T, Tindices>(
+      Output<T> aIndices, Output<T> aValues, Output<T> aShape, Output<T> b) {
+    return addOperation(new OperationDescription(
+        'SparseTensorDenseAdd',
+        'SparseTensorDenseAdd',
+        [aIndices, aValues, aShape, b],
+        {'T': T, 'Tindices': Tindices}));
   }
 
   Output<T> snapshot<T>(Output<T> input) {
     return addOperation(
-        new OperationDescription('Snapshot', 'Snapshot', [input]));
-  }
-
-  Output<double> fakeQuantWithMinMaxVarsGradient<num_bits, narrow_range>(
-      Output<double> gradients,
-      Output<double> inputs,
-      Output<double> min,
-      Output<double> max) {
-    return addOperation(new OperationDescription(
-        'FakeQuantWithMinMaxVarsGradient',
-        'FakeQuantWithMinMaxVarsGradient',
-        [gradients, inputs, min, max]));
+        new OperationDescription('Snapshot', 'Snapshot', [input], {'T': T}));
   }
 
   Output<T> size<T, out_type>(Output<T> input) {
-    return addOperation(new OperationDescription('Size', 'Size', [input]));
-  }
-
-  /// The memory can optionally be initialized. This is usually useful in
-  /// conjunction with inplace operations.
-  Output<shape> parallelConcatStart<shape, dtype>() {
     return addOperation(new OperationDescription(
-        '_ParallelConcatStart', '_ParallelConcatStart', []));
+        'Size', 'Size', [input], {'T': T, 'out_type': out_type}));
   }
 
   Output<String> scalarSummary<T>(Output<String> tags, Output<T> values) {
     return addOperation(new OperationDescription(
-        'ScalarSummary', 'ScalarSummary', [tags, values]));
+        'ScalarSummary', 'ScalarSummary', [tags, values], {'T': T}));
   }
 
   Output<T> identity<T>(Output<T> input) {
     return addOperation(
-        new OperationDescription('Identity', 'Identity', [input]));
+        new OperationDescription('Identity', 'Identity', [input], {'T': T}));
   }
 
-  Output<Tidx> reverseV2<Tidx, T>(Output<Tidx> tensor, Output<T> axis) {
-    return addOperation(
-        new OperationDescription('ReverseV2', 'ReverseV2', [tensor, axis]));
+  Output<Tidx> reverseV2<Tidx, T>(Output<Tidx> tensor, Output<Tidx> axis) {
+    return addOperation(new OperationDescription(
+        'ReverseV2', 'ReverseV2', [tensor, axis], {'Tidx': Tidx, 'T': T}));
   }
 
   Output<T> reverse<T>(Output<T> tensor, Output<bool> dims) {
-    return addOperation(
-        new OperationDescription('Reverse', 'Reverse', [tensor, dims]));
+    return addOperation(new OperationDescription(
+        'Reverse', 'Reverse', [tensor, dims], {'T': T}));
   }
 
   Output<T> matrixDiagPart<T>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('MatrixDiagPart', 'MatrixDiagPart', [input]));
+    return addOperation(new OperationDescription(
+        'MatrixDiagPart', 'MatrixDiagPart', [input], {'T': T}));
   }
 
   Output<T> matrixSetDiag<T>(Output<T> input, Output<T> diagonal) {
     return addOperation(new OperationDescription(
-        'MatrixSetDiag', 'MatrixSetDiag', [input, diagonal]));
+        'MatrixSetDiag', 'MatrixSetDiag', [input, diagonal], {'T': T}));
   }
 
   Output<dtype> statelessTruncatedNormal<dtype, T, Tseed>(
-      Output<dtype> shape, Output<T> seed) {
+      Output<dtype> shape, Output<dtype> seed) {
     return addOperation(new OperationDescription(
-        'StatelessTruncatedNormal', 'StatelessTruncatedNormal', [shape, seed]));
+        'StatelessTruncatedNormal',
+        'StatelessTruncatedNormal',
+        [shape, seed],
+        {'dtype': dtype, 'T': T, 'Tseed': Tseed}));
   }
 
   Output<T> matrixDiag<T>(Output<T> diagonal) {
-    return addOperation(
-        new OperationDescription('MatrixDiag', 'MatrixDiag', [diagonal]));
-  }
-
-  Output<dynamic> generatorDataset<
-          init_func,
-          next_func,
-          finalize_func,
-          Tinit_func_args,
-          Tnext_func_args,
-          Tfinalize_func_args,
-          output_types,
-          output_shapes>(
-      Output<init_func> initFuncOtherArgs,
-      Output<next_func> nextFuncOtherArgs,
-      Output<finalize_func> finalizeFuncOtherArgs) {
     return addOperation(new OperationDescription(
-        'GeneratorDataset',
-        'GeneratorDataset',
-        [initFuncOtherArgs, nextFuncOtherArgs, finalizeFuncOtherArgs]));
+        'MatrixDiag', 'MatrixDiag', [diagonal], {'T': T}));
   }
 
-  Output<dtype> placeholderV2<dtype, shape>() {
-    return addOperation(
-        new OperationDescription('PlaceholderV2', 'PlaceholderV2', []));
+  @Deprecated(
+      'DEPRECATED at GraphDef version 23: Placeholder now behaves the same as PlaceholderV2.')
+  Output<dtype> placeholderV2<dtype>({@required List shape}) {
+    return addOperation(new OperationDescription('PlaceholderV2',
+        'PlaceholderV2', [], {'dtype': dtype, 'shape': shape}));
   }
 
   Output<T> diagPart<T>(Output<T> input) {
     return addOperation(
-        new OperationDescription('DiagPart', 'DiagPart', [input]));
-  }
-
-  Output<double>
-      fakeQuantWithMinMaxVarsPerChannelGradient<num_bits, narrow_range>(
-          Output<double> gradients,
-          Output<double> inputs,
-          Output<double> min,
-          Output<double> max) {
-    return addOperation(new OperationDescription(
-        'FakeQuantWithMinMaxVarsPerChannelGradient',
-        'FakeQuantWithMinMaxVarsPerChannelGradient',
-        [gradients, inputs, min, max]));
+        new OperationDescription('DiagPart', 'DiagPart', [input], {'T': T}));
   }
 
   Output<T> onesLike<T>(Output<T> x) {
-    return addOperation(new OperationDescription('OnesLike', 'OnesLike', [x]));
-  }
-
-  Output<num_sparse> parseSingleExample<num_sparse, sparse_keys, dense_keys,
-          sparse_types, Tdense, dense_shapes>(
-      Output<String> serialized, Output<num_sparse> denseDefaults) {
-    return addOperation(new OperationDescription('ParseSingleExample',
-        'ParseSingleExample', [serialized, denseDefaults]));
+    return addOperation(
+        new OperationDescription('OnesLike', 'OnesLike', [x], {'T': T}));
   }
 
   Output<T> guaranteeConst<T>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('GuaranteeConst', 'GuaranteeConst', [input]));
-  }
-
-  Output<dtype> immutableConst<dtype, shape, memory_region_name>() {
-    return addOperation(
-        new OperationDescription('ImmutableConst', 'ImmutableConst', []));
-  }
-
-  Output<T> fill<T, index_type>(Output<T> dims, Output<index_type> value) {
-    return addOperation(
-        new OperationDescription('Fill', 'Fill', [dims, value]));
-  }
-
-  Output<T> applyCenteredRMSProp<T, use_locking>(
-      Output<T> var_,
-      Output<use_locking> mg,
-      Output<use_locking> ms,
-      Output<use_locking> mom,
-      Output<use_locking> lr,
-      Output<use_locking> rho,
-      Output<use_locking> momentum,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad) {
     return addOperation(new OperationDescription(
-        'ApplyCenteredRMSProp',
-        'ApplyCenteredRMSProp',
-        [var_, mg, ms, mom, lr, rho, momentum, epsilon, grad]));
+        'GuaranteeConst', 'GuaranteeConst', [input], {'T': T}));
   }
 
-  Output<value> const_<value, dtype>() {
-    return addOperation(new OperationDescription('Const', 'Const', []));
-  }
-
-  Output<num_split> splitV<num_split, T, Tlen>(
-      Output<num_split> value, Output<T> sizeSplits, Output<int> splitDim) {
+  Output<dtype> immutableConst<dtype>(
+      {@required List shape, @required String memoryRegionName}) {
     return addOperation(new OperationDescription(
-        'SplitV', 'SplitV', [value, sizeSplits, splitDim]));
+        'ImmutableConst', 'ImmutableConst', [], {
+      'dtype': dtype,
+      'shape': shape,
+      'memory_region_name': memoryRegionName
+    }));
   }
 
-  Output<num_split> split<num_split, T>(
-      Output<int> splitDim, Output<num_split> value) {
-    return addOperation(
-        new OperationDescription('Split', 'Split', [splitDim, value]));
-  }
-
-  Output negTrain<vocab_count, num_negative_samples>(
-      Output<double> wIn,
-      Output<double> wOut,
-      Output<int> examples,
-      Output<int> labels,
-      Output<double> lr) {
+  Output<T> fill<T, index_type>(Output<T> dims, Output<T> value) {
     return addOperation(new OperationDescription(
-        'NegTrain', 'NegTrain', [wIn, wOut, examples, labels, lr]));
+        'Fill', 'Fill', [dims, value], {'T': T, 'index_type': index_type}));
   }
 
-  Output<N> concatV2<N, T, Tidx>(Output<N> values, Output<T> axis) {
-    return addOperation(
-        new OperationDescription('ConcatV2', 'ConcatV2', [values, axis]));
+  Output<dtype> const_<dtype>({@required Output value}) {
+    return addOperation(new OperationDescription(
+        'Const', 'Const', [], {'value': value, 'dtype': dtype}));
   }
 
-  Output resourceApplyPowerSign<T, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> m,
-      Output<T> lr,
-      Output<use_locking> logbase,
-      Output<use_locking> signDecay,
-      Output<use_locking> beta,
-      Output<use_locking> grad) {
+  Output<T> splitV<T, Tlen>(
+      Output<T> value, Output<T> sizeSplits, Output<int> splitDim,
+      {@required int numSplit}) {
+    return addOperation(new OperationDescription(
+        'SplitV',
+        'SplitV',
+        [value, sizeSplits, splitDim],
+        {'num_split': numSplit, 'T': T, 'Tlen': Tlen}));
+  }
+
+  Output<T> split<T>(Output<int> splitDim, Output<T> value,
+      {@required int numSplit}) {
+    return addOperation(new OperationDescription(
+        'Split', 'Split', [splitDim, value], {'num_split': numSplit, 'T': T}));
+  }
+
+  Output<T> concatV2<T, Tidx>(List<Output<T>> values, Output<T> axis,
+      {@required int n}) {
+    return addOperation(new OperationDescription('ConcatV2', 'ConcatV2',
+        [values, axis], {'N': n, 'T': T, 'Tidx': Tidx}));
+  }
+
+  Output resourceApplyPowerSign<T>(Output var_, Output m, Output<T> lr,
+      Output<T> logbase, Output<T> signDecay, Output<T> beta, Output<T> grad,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceApplyPowerSign',
         'ResourceApplyPowerSign',
-        [var_, m, lr, logbase, signDecay, beta, grad]));
+        [var_, m, lr, logbase, signDecay, beta, grad],
+        {'T': T, 'use_locking': useLocking}));
   }
 
-  Output<N> concat<N, T>(Output<int> concatDim, Output<N> values) {
-    return addOperation(
-        new OperationDescription('Concat', 'Concat', [concatDim, values]));
+  Output<T> concat<T>(Output<int> concatDim, List<Output<T>> values,
+      {@required int n}) {
+    return addOperation(new OperationDescription(
+        'Concat', 'Concat', [concatDim, values], {'N': n, 'T': T}));
   }
 
   Output<T> leftShift<T>(Output<T> x, Output<T> y) {
     return addOperation(
-        new OperationDescription('LeftShift', 'LeftShift', [x, y]));
-  }
-
-  Output<double> tensorArrayScatter<T>(Output<String> handle,
-      Output<int> indices, Output<T> value, Output<double> flowIn) {
-    return addOperation(new OperationDescription('TensorArrayScatter',
-        'TensorArrayScatter', [handle, indices, value, flowIn]));
+        new OperationDescription('LeftShift', 'LeftShift', [x, y], {'T': T}));
   }
 
   Output<T> bitwiseOr<T>(Output<T> x, Output<T> y) {
     return addOperation(
-        new OperationDescription('BitwiseOr', 'BitwiseOr', [x, y]));
-  }
-
-  Output<T> applyAddSign<T, use_locking>(
-      Output<T> var_,
-      Output<use_locking> m,
-      Output<use_locking> lr,
-      Output<use_locking> alpha,
-      Output<use_locking> signDecay,
-      Output<use_locking> beta,
-      Output<use_locking> grad) {
-    return addOperation(new OperationDescription('ApplyAddSign', 'ApplyAddSign',
-        [var_, m, lr, alpha, signDecay, beta, grad]));
+        new OperationDescription('BitwiseOr', 'BitwiseOr', [x, y], {'T': T}));
   }
 
   Output<T> bitwiseAnd<T>(Output<T> x, Output<T> y) {
     return addOperation(
-        new OperationDescription('BitwiseAnd', 'BitwiseAnd', [x, y]));
+        new OperationDescription('BitwiseAnd', 'BitwiseAnd', [x, y], {'T': T}));
   }
 
-  Output<dynamic> populationCount<T>(Output<T> x) {
-    return addOperation(
-        new OperationDescription('PopulationCount', 'PopulationCount', [x]));
+  Output populationCount<T>(Output<T> x) {
+    return addOperation(new OperationDescription(
+        'PopulationCount', 'PopulationCount', [x], {'T': T}));
   }
 
-  Output<channels> decodePng<channels, dtype>(Output<String> contents) {
-    return addOperation(
-        new OperationDescription('DecodePng', 'DecodePng', [contents]));
+  Output<dtype> decodePng<dtype>(Output<String> contents, {int channels: 0}) {
+    return addOperation(new OperationDescription('DecodePng', 'DecodePng',
+        [contents], {'channels': channels, 'dtype': dtype}));
   }
 
   Output<T> invert<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Invert', 'Invert', [x]));
+    return addOperation(
+        new OperationDescription('Invert', 'Invert', [x], {'T': T}));
   }
 
   Output<String> fact() {
-    return addOperation(new OperationDescription('Fact', 'Fact', []));
+    return addOperation(new OperationDescription('Fact', 'Fact', [], {}));
   }
 
-  Output<int>
-      skipgram<filename, batch_size, window_size, min_count, subsample>() {
-    return addOperation(new OperationDescription('Skipgram', 'Skipgram', []));
-  }
-
-  Output<T> resizeBicubicGrad<T, align_corners>(
-      Output<double> grads, Output<T> originalImage) {
+  Output<T> resizeBicubicGrad<T>(Output<double> grads, Output<T> originalImage,
+      {bool alignCorners: false}) {
     return addOperation(new OperationDescription(
-        'ResizeBicubicGrad', 'ResizeBicubicGrad', [grads, originalImage]));
+        'ResizeBicubicGrad',
+        'ResizeBicubicGrad',
+        [grads, originalImage],
+        {'T': T, 'align_corners': alignCorners}));
   }
 
-  Output<T> sparseApplyMomentum<T, Tindices, use_locking, use_nesterov>(
-      Output<T> var_,
-      Output<Tindices> accum,
-      Output<use_locking> lr,
-      Output<use_nesterov> grad,
-      Output<use_nesterov> indices,
-      Output<use_nesterov> momentum) {
-    return addOperation(new OperationDescription('SparseApplyMomentum',
-        'SparseApplyMomentum', [var_, accum, lr, grad, indices, momentum]));
-  }
-
-  Output<T> uniqueWithCounts<T, out_idx>(Output<T> x) {
-    return addOperation(
-        new OperationDescription('UniqueWithCounts', 'UniqueWithCounts', [x]));
-  }
-
-  Output<dynamic> serializeIterator(Output<dynamic> resourceHandle) {
+  Output serializeIterator(Output resourceHandle) {
     return addOperation(new OperationDescription(
-        'SerializeIterator', 'SerializeIterator', [resourceHandle]));
+        'SerializeIterator', 'SerializeIterator', [resourceHandle], {}));
   }
 
-  Output resourceApplyCenteredRMSProp<T, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> mg,
-      Output<dynamic> ms,
-      Output<dynamic> mom,
+  Output resourceApplyCenteredRMSProp<T>(
+      Output var_,
+      Output mg,
+      Output ms,
+      Output mom,
       Output<T> lr,
-      Output<use_locking> rho,
-      Output<use_locking> momentum,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad) {
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceApplyCenteredRMSProp',
         'ResourceApplyCenteredRMSProp',
-        [var_, mg, ms, mom, lr, rho, momentum, epsilon, grad]));
+        [var_, mg, ms, mom, lr, rho, momentum, epsilon, grad],
+        {'T': T, 'use_locking': useLocking}));
   }
 
-  Output<ksize> maxPool3DGrad<ksize, strides, padding, data_format, T, TInput>(
-      Output<ksize> origInput,
-      Output<strides> origOutput,
-      Output<padding> grad) {
-    return addOperation(new OperationDescription(
-        'MaxPool3DGrad', 'MaxPool3DGrad', [origInput, origOutput, grad]));
-  }
-
-  Output resourceApplyRMSProp<T, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> ms,
-      Output<dynamic> mom,
+  Output resourceApplyRMSProp<T>(
+      Output var_,
+      Output ms,
+      Output mom,
       Output<T> lr,
-      Output<use_locking> rho,
-      Output<use_locking> momentum,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad) {
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceApplyRMSProp',
         'ResourceApplyRMSProp',
-        [var_, ms, mom, lr, rho, momentum, epsilon, grad]));
+        [var_, ms, mom, lr, rho, momentum, epsilon, grad],
+        {'T': T, 'use_locking': useLocking}));
   }
 
   Output<T> zerosLike<T>(Output<T> x) {
     return addOperation(
-        new OperationDescription('ZerosLike', 'ZerosLike', [x]));
+        new OperationDescription('ZerosLike', 'ZerosLike', [x], {'T': T}));
   }
 
-  Output<int> concatOffset<N>(Output<int> concatDim, Output<int> shape) {
+  Output<int> concatOffset(Output<int> concatDim, List<Output<int>> shape,
+      {@required int n}) {
     return addOperation(new OperationDescription(
-        'ConcatOffset', 'ConcatOffset', [concatDim, shape]));
+        'ConcatOffset', 'ConcatOffset', [concatDim, shape], {'N': n}));
   }
 
   Output<T> sigmoid<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Sigmoid', 'Sigmoid', [x]));
-  }
-
-  Output resourceSparseApplyAdadelta<T, Tindices, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> accum,
-      Output<dynamic> accumUpdate,
-      Output<T> lr,
-      Output<Tindices> rho,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad,
-      Output<use_locking> indices) {
-    return addOperation(new OperationDescription(
-        'ResourceSparseApplyAdadelta',
-        'ResourceSparseApplyAdadelta',
-        [var_, accum, accumUpdate, lr, rho, epsilon, grad, indices]));
-  }
-
-  Output resourceApplyAdam<T, use_locking, use_nesterov>(
-      Output<dynamic> var_,
-      Output<dynamic> m,
-      Output<dynamic> v,
-      Output<T> beta1Power,
-      Output<use_locking> beta2Power,
-      Output<use_nesterov> lr,
-      Output<use_nesterov> beta1,
-      Output<use_nesterov> beta2,
-      Output<use_nesterov> epsilon,
-      Output<use_nesterov> grad) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyAdam',
-        'ResourceApplyAdam',
-        [var_, m, v, beta1Power, beta2Power, lr, beta1, beta2, epsilon, grad]));
-  }
-
-  Output resourceSparseApplyMomentum<T, Tindices, use_locking, use_nesterov>(
-      Output<dynamic> var_,
-      Output<dynamic> accum,
-      Output<T> lr,
-      Output<Tindices> grad,
-      Output<use_locking> indices,
-      Output<use_nesterov> momentum) {
-    return addOperation(new OperationDescription(
-        'ResourceSparseApplyMomentum',
-        'ResourceSparseApplyMomentum',
-        [var_, accum, lr, grad, indices, momentum]));
-  }
-
-  Output resourceApplyMomentum<T, use_locking, use_nesterov>(
-      Output<dynamic> var_,
-      Output<dynamic> accum,
-      Output<T> lr,
-      Output<use_locking> grad,
-      Output<use_nesterov> momentum) {
-    return addOperation(new OperationDescription('ResourceApplyMomentum',
-        'ResourceApplyMomentum', [var_, accum, lr, grad, momentum]));
-  }
-
-  Output<N> parallelConcat<N, T, shape>(Output<N> values) {
     return addOperation(
-        new OperationDescription('ParallelConcat', 'ParallelConcat', [values]));
+        new OperationDescription('Sigmoid', 'Sigmoid', [x], {'T': T}));
   }
 
-  Output<ksize> avgPoolGrad<ksize, strides, padding, data_format, T>(
-      Output<int> origInputShape, Output<ksize> grad) {
+  Output resourceSparseApplyAdadelta<T, Tindices>(
+      Output var_,
+      Output accum,
+      Output accumUpdate,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> epsilon,
+      Output<T> grad,
+      Output<T> indices,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
-        'AvgPoolGrad', 'AvgPoolGrad', [origInputShape, grad]));
+        'ResourceSparseApplyAdadelta',
+        'ResourceSparseApplyAdadelta',
+        [var_, accum, accumUpdate, lr, rho, epsilon, grad, indices],
+        {'T': T, 'Tindices': Tindices, 'use_locking': useLocking}));
   }
 
-  Output<double> editDistance<normalize, T>(
+  Output resourceApplyAdam<T>(
+      Output var_,
+      Output m,
+      Output v,
+      Output<T> beta1Power,
+      Output<T> beta2Power,
+      Output<T> lr,
+      Output<T> beta1,
+      Output<T> beta2,
+      Output<T> epsilon,
+      Output<T> grad,
+      {bool useLocking: false,
+      bool useNesterov: false}) {
+    return addOperation(new OperationDescription(
+        'ResourceApplyAdam',
+        'ResourceApplyAdam',
+        [var_, m, v, beta1Power, beta2Power, lr, beta1, beta2, epsilon, grad],
+        {'T': T, 'use_locking': useLocking, 'use_nesterov': useNesterov}));
+  }
+
+  Output resourceSparseApplyMomentum<T, Tindices>(Output var_, Output accum,
+      Output<T> lr, Output<T> grad, Output<T> indices, Output<T> momentum,
+      {bool useLocking: false, bool useNesterov: false}) {
+    return addOperation(new OperationDescription(
+        'ResourceSparseApplyMomentum', 'ResourceSparseApplyMomentum', [
+      var_,
+      accum,
+      lr,
+      grad,
+      indices,
+      momentum
+    ], {
+      'T': T,
+      'Tindices': Tindices,
+      'use_locking': useLocking,
+      'use_nesterov': useNesterov
+    }));
+  }
+
+  Output resourceApplyMomentum<T>(Output var_, Output accum, Output<T> lr,
+      Output<T> grad, Output<T> momentum,
+      {bool useLocking: false, bool useNesterov: false}) {
+    return addOperation(new OperationDescription(
+        'ResourceApplyMomentum',
+        'ResourceApplyMomentum',
+        [var_, accum, lr, grad, momentum],
+        {'T': T, 'use_locking': useLocking, 'use_nesterov': useNesterov}));
+  }
+
+  Output<T> parallelConcat<T>(List<Output<T>> values,
+      {@required int n, @required List shape}) {
+    return addOperation(new OperationDescription('ParallelConcat',
+        'ParallelConcat', [values], {'N': n, 'T': T, 'shape': shape}));
+  }
+
+  Output<double> editDistance<T>(
       Output<int> hypothesisIndices,
-      Output<normalize> hypothesisValues,
+      Output<T> hypothesisValues,
       Output<int> hypothesisShape,
       Output<int> truthIndices,
       Output<T> truthValues,
-      Output<int> truthShape) {
+      Output<int> truthShape,
+      {bool normalize: true}) {
     return addOperation(
         new OperationDescription('EditDistance', 'EditDistance', [
       hypothesisIndices,
@@ -1543,136 +1154,108 @@ class Graph extends _Graph {
       truthIndices,
       truthValues,
       truthShape
-    ]));
+    ], {
+      'normalize': normalize,
+      'T': T
+    }));
   }
 
-  Output resourceApplyFtrlV2<T, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> accum,
-      Output<dynamic> linear,
+  Output resourceApplyFtrlV2<T>(
+      Output var_,
+      Output accum,
+      Output linear,
       Output<T> grad,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> l2Shrinkage,
-      Output<use_locking> lrPower) {
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> l2Shrinkage,
+      Output<T> lrPower,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceApplyFtrlV2',
         'ResourceApplyFtrlV2',
-        [var_, accum, linear, grad, lr, l1, l2, l2Shrinkage, lrPower]));
+        [var_, accum, linear, grad, lr, l1, l2, l2Shrinkage, lrPower],
+        {'T': T, 'use_locking': useLocking}));
   }
 
-  Output<elem_type> stackPop<elem_type>(Output<String> handle) {
-    return addOperation(
-        new OperationDescription('StackPop', 'StackPop', [handle]));
-  }
-
-  Output<T> sparseApplyFtrlV2<T, Tindices, use_locking>(
-      Output<T> var_,
-      Output<Tindices> accum,
-      Output<use_locking> linear,
-      Output<use_locking> grad,
-      Output<use_locking> indices,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> l2Shrinkage,
-      Output<use_locking> lrPower) {
-    return addOperation(new OperationDescription(
-        'SparseApplyFtrlV2', 'SparseApplyFtrlV2', [
-      var_,
-      accum,
-      linear,
-      grad,
-      indices,
-      lr,
-      l1,
-      l2,
-      l2Shrinkage,
-      lrPower
-    ]));
-  }
-
-  Output resourceSparseApplyFtrl<T, Tindices, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> accum,
-      Output<dynamic> linear,
+  Output resourceSparseApplyFtrl<T, Tindices>(
+      Output var_,
+      Output accum,
+      Output linear,
       Output<T> grad,
-      Output<Tindices> indices,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> lrPower) {
+      Output<T> indices,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> lrPower,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceSparseApplyFtrl',
         'ResourceSparseApplyFtrl',
-        [var_, accum, linear, grad, indices, lr, l1, l2, lrPower]));
+        [var_, accum, linear, grad, indices, lr, l1, l2, lrPower],
+        {'T': T, 'Tindices': Tindices, 'use_locking': useLocking}));
   }
 
   Output<T> sign<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Sign', 'Sign', [x]));
+    return addOperation(
+        new OperationDescription('Sign', 'Sign', [x], {'T': T}));
   }
 
-  Output resourceApplyAddSign<T, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> m,
-      Output<T> lr,
-      Output<use_locking> alpha,
-      Output<use_locking> signDecay,
-      Output<use_locking> beta,
-      Output<use_locking> grad) {
-    return addOperation(new OperationDescription('ResourceApplyAddSign',
-        'ResourceApplyAddSign', [var_, m, lr, alpha, signDecay, beta, grad]));
+  Output resourceApplyAddSign<T>(Output var_, Output m, Output<T> lr,
+      Output<T> alpha, Output<T> signDecay, Output<T> beta, Output<T> grad,
+      {bool useLocking: false}) {
+    return addOperation(new OperationDescription(
+        'ResourceApplyAddSign',
+        'ResourceApplyAddSign',
+        [var_, m, lr, alpha, signDecay, beta, grad],
+        {'T': T, 'use_locking': useLocking}));
   }
 
   Output<T> neg<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Neg', 'Neg', [x]));
+    return addOperation(new OperationDescription('Neg', 'Neg', [x], {'T': T}));
   }
 
-  Output<String>
-      barrier<component_types, shapes, capacity, container, shared_name>() {
-    return addOperation(new OperationDescription('Barrier', 'Barrier', []));
-  }
-
-  Output resourceSparseApplyProximalAdagrad<T, Tindices, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> accum,
+  Output resourceSparseApplyProximalAdagrad<T, Tindices>(
+      Output var_,
+      Output accum,
       Output<T> lr,
-      Output<Tindices> l1,
-      Output<use_locking> l2,
-      Output<use_locking> grad,
-      Output<use_locking> indices) {
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> grad,
+      Output<T> indices,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceSparseApplyProximalAdagrad',
         'ResourceSparseApplyProximalAdagrad',
-        [var_, accum, lr, l1, l2, grad, indices]));
+        [var_, accum, lr, l1, l2, grad, indices],
+        {'T': T, 'Tindices': Tindices, 'use_locking': useLocking}));
   }
 
   Output<T> bitcast<T, type>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('Bitcast', 'Bitcast', [input]));
+    return addOperation(new OperationDescription(
+        'Bitcast', 'Bitcast', [input], {'T': T, 'type': type}));
   }
 
-  Output<validate_indices> sparseToDense<validate_indices, T, Tindices>(
-      Output<validate_indices> sparseIndices,
-      Output<T> outputShape,
-      Output<Tindices> sparseValues,
-      Output<Tindices> defaultValue) {
+  Output<T> sparseToDense<T, Tindices>(Output<T> sparseIndices,
+      Output<T> outputShape, Output<T> sparseValues, Output<T> defaultValue,
+      {bool validateIndices: true}) {
     return addOperation(new OperationDescription(
         'SparseToDense',
         'SparseToDense',
-        [sparseIndices, outputShape, sparseValues, defaultValue]));
+        [sparseIndices, outputShape, sparseValues, defaultValue],
+        {'validate_indices': validateIndices, 'T': T, 'Tindices': Tindices}));
   }
 
-  Output resourceApplyAdagradDA<T, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> gradientAccumulator,
-      Output<dynamic> gradientSquaredAccumulator,
+  Output resourceApplyAdagradDA<T>(
+      Output var_,
+      Output gradientAccumulator,
+      Output gradientSquaredAccumulator,
       Output<T> grad,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<int> globalStep) {
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<int> globalStep,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceApplyAdagradDA', 'ResourceApplyAdagradDA', [
       var_,
@@ -1683,301 +1266,174 @@ class Graph extends _Graph {
       l1,
       l2,
       globalStep
-    ]));
+    ], {
+      'T': T,
+      'use_locking': useLocking
+    }));
   }
 
-  Output<T> sparseApplyAdagradDA<T, Tindices, use_locking>(
-      Output<T> var_,
-      Output<Tindices> gradientAccumulator,
-      Output<use_locking> gradientSquaredAccumulator,
-      Output<use_locking> grad,
-      Output<use_locking> indices,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<int> globalStep) {
+  Output resourceSparseApplyAdagrad<T, Tindices>(Output var_, Output accum,
+      Output<T> lr, Output<T> grad, Output<T> indices,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
-        'SparseApplyAdagradDA', 'SparseApplyAdagradDA', [
-      var_,
-      gradientAccumulator,
-      gradientSquaredAccumulator,
-      grad,
-      indices,
-      lr,
-      l1,
-      l2,
-      globalStep
-    ]));
-  }
-
-  Output resourceSparseApplyAdagrad<T, Tindices, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> accum,
-      Output<T> lr,
-      Output<Tindices> grad,
-      Output<use_locking> indices) {
-    return addOperation(new OperationDescription('ResourceSparseApplyAdagrad',
-        'ResourceSparseApplyAdagrad', [var_, accum, lr, grad, indices]));
+        'ResourceSparseApplyAdagrad',
+        'ResourceSparseApplyAdagrad',
+        [var_, accum, lr, grad, indices],
+        {'T': T, 'Tindices': Tindices, 'use_locking': useLocking}));
   }
 
   Output<T> sqrt<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Sqrt', 'Sqrt', [x]));
+    return addOperation(
+        new OperationDescription('Sqrt', 'Sqrt', [x], {'T': T}));
   }
 
-  Output resourceApplyAdagrad<T, use_locking>(Output<dynamic> var_,
-      Output<dynamic> accum, Output<T> lr, Output<use_locking> grad) {
-    return addOperation(new OperationDescription('ResourceApplyAdagrad',
-        'ResourceApplyAdagrad', [var_, accum, lr, grad]));
-  }
-
-  Output<T> applyAdadelta<T, use_locking>(
-      Output<T> var_,
-      Output<use_locking> accum,
-      Output<use_locking> accumUpdate,
-      Output<use_locking> lr,
-      Output<use_locking> rho,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad) {
-    return addOperation(new OperationDescription('ApplyAdadelta',
-        'ApplyAdadelta', [var_, accum, accumUpdate, lr, rho, epsilon, grad]));
+  Output resourceApplyAdagrad<T>(
+      Output var_, Output accum, Output<T> lr, Output<T> grad,
+      {bool useLocking: false}) {
+    return addOperation(new OperationDescription(
+        'ResourceApplyAdagrad',
+        'ResourceApplyAdagrad',
+        [var_, accum, lr, grad],
+        {'T': T, 'use_locking': useLocking}));
   }
 
   Output<T> cholesky<T>(Output<T> input) {
     return addOperation(
-        new OperationDescription('Cholesky', 'Cholesky', [input]));
+        new OperationDescription('Cholesky', 'Cholesky', [input], {'T': T}));
   }
 
   Output<T> sparseSegmentSqrtNWithNumSegments<T, Tidx, Tnumsegments>(
       Output<T> data,
-      Output<Tidx> indices,
+      Output<T> indices,
       Output<int> segmentIds,
-      Output<Tnumsegments> numSegments) {
+      Output<T> numSegments) {
     return addOperation(new OperationDescription(
         'SparseSegmentSqrtNWithNumSegments',
         'SparseSegmentSqrtNWithNumSegments',
-        [data, indices, segmentIds, numSegments]));
+        [data, indices, segmentIds, numSegments],
+        {'T': T, 'Tidx': Tidx, 'Tnumsegments': Tnumsegments}));
   }
 
-  Output resourceApplyProximalGradientDescent<T, use_locking>(
-      Output<dynamic> var_,
-      Output<T> alpha,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> delta) {
+  Output resourceApplyProximalGradientDescent<T>(
+      Output var_, Output<T> alpha, Output<T> l1, Output<T> l2, Output<T> delta,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceApplyProximalGradientDescent',
         'ResourceApplyProximalGradientDescent',
-        [var_, alpha, l1, l2, delta]));
+        [var_, alpha, l1, l2, delta],
+        {'T': T, 'use_locking': useLocking}));
   }
 
-  Output<T> tile<T, Tmultiples>(Output<T> input, Output<Tmultiples> multiples) {
-    return addOperation(
-        new OperationDescription('Tile', 'Tile', [input, multiples]));
-  }
-
-  Output<T> sparseApplyProximalGradientDescent<T, Tindices, use_locking>(
-      Output<T> var_,
-      Output<Tindices> alpha,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> grad,
-      Output<use_locking> indices) {
-    return addOperation(new OperationDescription(
-        'SparseApplyProximalGradientDescent',
-        'SparseApplyProximalGradientDescent',
-        [var_, alpha, l1, l2, grad, indices]));
-  }
-
-  Output queueEnqueue<Tcomponents, timeout_ms>(
-      Output<String> handle, Output<Tcomponents> components) {
-    return addOperation(new OperationDescription(
-        'QueueEnqueue', 'QueueEnqueue', [handle, components]));
-  }
-
-  Output<int> stringToHashBucketStrong<num_buckets, key>(Output<String> input) {
-    return addOperation(new OperationDescription(
-        'StringToHashBucketStrong', 'StringToHashBucketStrong', [input]));
-  }
-
-  /// *NOTE*: `Sub` supports broadcasting. More about broadcasting
-  /// [here](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
-  Output<dynamic> mklSub<T>(
-      Output<T> x, Output<T> y, Output<dynamic> mklX, Output<dynamic> mklY) {
-    return addOperation(
-        new OperationDescription('_MklSub', '_MklSub', [x, y, mklX, mklY]));
-  }
-
-  Output<T> applyProximalGradientDescent<T, use_locking>(
-      Output<T> var_,
-      Output<use_locking> alpha,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> delta) {
-    return addOperation(new OperationDescription('ApplyProximalGradientDescent',
-        'ApplyProximalGradientDescent', [var_, alpha, l1, l2, delta]));
-  }
-
-  Output<component_types> barrierTakeMany<
-      component_types,
-      allow_small_batch,
-      wait_for_incomplete,
-      timeout_ms>(Output<String> handle, Output<int> numElements) {
-    return addOperation(new OperationDescription(
-        'BarrierTakeMany', 'BarrierTakeMany', [handle, numElements]));
+  Output<T> tile<T, Tmultiples>(Output<T> input, Output<T> multiples) {
+    return addOperation(new OperationDescription('Tile', 'Tile',
+        [input, multiples], {'T': T, 'Tmultiples': Tmultiples}));
   }
 
   Output<T> matrixLogarithm<T>(Output<T> input) {
     return addOperation(new OperationDescription(
-        'MatrixLogarithm', 'MatrixLogarithm', [input]));
+        'MatrixLogarithm', 'MatrixLogarithm', [input], {'T': T}));
   }
 
-  Output resourceApplyGradientDescent<T, use_locking>(
-      Output<dynamic> var_, Output<T> alpha, Output<use_locking> delta) {
-    return addOperation(new OperationDescription('ResourceApplyGradientDescent',
-        'ResourceApplyGradientDescent', [var_, alpha, delta]));
+  Output resourceApplyGradientDescent<T>(
+      Output var_, Output<T> alpha, Output<T> delta,
+      {bool useLocking: false}) {
+    return addOperation(new OperationDescription(
+        'ResourceApplyGradientDescent',
+        'ResourceApplyGradientDescent',
+        [var_, alpha, delta],
+        {'T': T, 'use_locking': useLocking}));
   }
 
   Output<T> cosh<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Cosh', 'Cosh', [x]));
-  }
-
-  Output<T> applyGradientDescent<T, use_locking>(
-      Output<T> var_, Output<use_locking> alpha, Output<use_locking> delta) {
-    return addOperation(new OperationDescription(
-        'ApplyGradientDescent', 'ApplyGradientDescent', [var_, alpha, delta]));
+    return addOperation(
+        new OperationDescription('Cosh', 'Cosh', [x], {'T': T}));
   }
 
   Output<T> l2Loss<T>(Output<T> t) {
-    return addOperation(new OperationDescription('L2Loss', 'L2Loss', [t]));
+    return addOperation(
+        new OperationDescription('L2Loss', 'L2Loss', [t], {'T': T}));
   }
 
   Output<SrcT> cast<SrcT, DstT>(Output<SrcT> x) {
-    return addOperation(new OperationDescription('Cast', 'Cast', [x]));
-  }
-
-  Output<T> segmentMax<T, Tindices>(
-      Output<T> data, Output<Tindices> segmentIds) {
     return addOperation(new OperationDescription(
-        'SegmentMax', 'SegmentMax', [data, segmentIds]));
+        'Cast', 'Cast', [x], {'SrcT': SrcT, 'DstT': DstT}));
   }
 
-  Output<limit> countUpTo<limit, T>(Output<limit> ref) {
-    return addOperation(
-        new OperationDescription('CountUpTo', 'CountUpTo', [ref]));
+  Output<T> segmentMax<T, Tindices>(Output<T> data, Output<T> segmentIds) {
+    return addOperation(new OperationDescription('SegmentMax', 'SegmentMax',
+        [data, segmentIds], {'T': T, 'Tindices': Tindices}));
   }
 
-  Output<T> batchNormWithGlobalNormalization<T, variance_epsilon,
-          scale_after_normalization>(
-      Output<T> t,
-      Output<variance_epsilon> m,
-      Output<scale_after_normalization> v,
-      Output<scale_after_normalization> beta,
-      Output<scale_after_normalization> gamma) {
+  @Deprecated(
+      'DEPRECATED at GraphDef version 9: Use tf.nn.batch_normalization()')
+  Output<T> batchNormWithGlobalNormalization<T>(
+      Output<T> t, Output<T> m, Output<T> v, Output<T> beta, Output<T> gamma,
+      {@required double varianceEpsilon,
+      @required bool scaleAfterNormalization}) {
     return addOperation(new OperationDescription(
         'BatchNormWithGlobalNormalization',
-        'BatchNormWithGlobalNormalization',
-        [t, m, v, beta, gamma]));
+        'BatchNormWithGlobalNormalization', [
+      t,
+      m,
+      v,
+      beta,
+      gamma
+    ], {
+      'T': T,
+      'variance_epsilon': varianceEpsilon,
+      'scale_after_normalization': scaleAfterNormalization
+    }));
   }
 
-  Output<double> fakeQuantWithMinMaxArgs<min, max, num_bits, narrow_range>(
-      Output<double> inputs) {
+  Output<double> fakeQuantWithMinMaxArgs(Output<double> inputs,
+      {double min: -6.0,
+      double max: 6.0,
+      int numBits: 8,
+      bool narrowRange: false}) {
     return addOperation(new OperationDescription(
-        'FakeQuantWithMinMaxArgs', 'FakeQuantWithMinMaxArgs', [inputs]));
+        'FakeQuantWithMinMaxArgs', 'FakeQuantWithMinMaxArgs', [
+      inputs
+    ], {
+      'min': min,
+      'max': max,
+      'num_bits': numBits,
+      'narrow_range': narrowRange
+    }));
   }
 
-  Output resourceScatterNdUpdate<T, Tindices, use_locking>(
-      Output<dynamic> ref, Output<T> indices, Output<Tindices> updates) {
-    return addOperation(new OperationDescription('ResourceScatterNdUpdate',
-        'ResourceScatterNdUpdate', [ref, indices, updates]));
-  }
-
-  Output<T> scatterNdUpdate<T, Tindices, use_locking>(
-      Output<T> ref, Output<Tindices> indices, Output<use_locking> updates) {
+  Output resourceScatterNdUpdate<T, Tindices>(
+      Output ref, Output<T> indices, Output<T> updates,
+      {bool useLocking: true}) {
     return addOperation(new OperationDescription(
-        'ScatterNdUpdate', 'ScatterNdUpdate', [ref, indices, updates]));
+        'ResourceScatterNdUpdate',
+        'ResourceScatterNdUpdate',
+        [ref, indices, updates],
+        {'T': T, 'Tindices': Tindices, 'use_locking': useLocking}));
   }
 
-  Output<T> scatterMul<T, Tindices, use_locking>(
-      Output<T> ref, Output<Tindices> indices, Output<use_locking> updates) {
+  @Deprecated(
+      'DEPRECATED at GraphDef version 13: Use MatrixTriangularSolve instead.')
+  Output<T> batchMatrixTriangularSolve<T>(Output<T> matrix, Output<T> rhs,
+      {bool lower: true, bool adjoint: false}) {
     return addOperation(new OperationDescription(
-        'ScatterMul', 'ScatterMul', [ref, indices, updates]));
+        'BatchMatrixTriangularSolve',
+        'BatchMatrixTriangularSolve',
+        [matrix, rhs],
+        {'lower': lower, 'adjoint': adjoint, 'T': T}));
   }
 
-  Output<T> scatterSub<T, Tindices, use_locking>(
-      Output<T> ref, Output<Tindices> indices, Output<use_locking> updates) {
+  Output<T> mean<T, Tidx>(Output<T> input, Output<T> reductionIndices,
+      {bool keepDims: false}) {
     return addOperation(new OperationDescription(
-        'ScatterSub', 'ScatterSub', [ref, indices, updates]));
-  }
-
-  Output<lower> batchMatrixTriangularSolve<lower, adjoint, T>(
-      Output<lower> matrix, Output<adjoint> rhs) {
-    return addOperation(new OperationDescription('BatchMatrixTriangularSolve',
-        'BatchMatrixTriangularSolve', [matrix, rhs]));
-  }
-
-  Output<keep_dims> mean<keep_dims, T, Tidx>(
-      Output<keep_dims> input, Output<T> reductionIndices) {
-    return addOperation(
-        new OperationDescription('Mean', 'Mean', [input, reductionIndices]));
-  }
-
-  Output<T> scatterAdd<T, Tindices, use_locking>(
-      Output<T> ref, Output<Tindices> indices, Output<use_locking> updates) {
-    return addOperation(new OperationDescription(
-        'ScatterAdd', 'ScatterAdd', [ref, indices, updates]));
-  }
-
-  Output<T> scatterUpdate<T, Tindices, use_locking>(
-      Output<T> ref, Output<Tindices> indices, Output<use_locking> updates) {
-    return addOperation(new OperationDescription(
-        'ScatterUpdate', 'ScatterUpdate', [ref, indices, updates]));
-  }
-
-  Output<T> assignSub<T, use_locking>(
-      Output<T> ref, Output<use_locking> value) {
-    return addOperation(
-        new OperationDescription('AssignSub', 'AssignSub', [ref, value]));
-  }
-
-  Output<T> assignAdd<T, use_locking>(
-      Output<T> ref, Output<use_locking> value) {
-    return addOperation(
-        new OperationDescription('AssignAdd', 'AssignAdd', [ref, value]));
+        'Mean',
+        'Mean',
+        [input, reductionIndices],
+        {'keep_dims': keepDims, 'T': T, 'Tidx': Tidx}));
   }
 
   Output<T> betainc<T>(Output<T> a, Output<T> b, Output<T> x) {
     return addOperation(
-        new OperationDescription('Betainc', 'Betainc', [a, b, x]));
-  }
-
-  Output<T> assign<T, validate_shape, use_locking>(
-      Output<T> ref, Output<validate_shape> value) {
-    return addOperation(
-        new OperationDescription('Assign', 'Assign', [ref, value]));
-  }
-
-  Output<bool> isVariableInitialized<dtype>(Output<dtype> ref) {
-    return addOperation(new OperationDescription(
-        'IsVariableInitialized', 'IsVariableInitialized', [ref]));
-  }
-
-  /// If you use this function you will almost certainly want to add
-  /// a control dependency as done in the implementation of parallel_stack to
-  /// avoid race conditions.
-  Output<T> parallelConcatUpdate<T, loc>(Output<T> value, Output<loc> update) {
-    return addOperation(new OperationDescription(
-        '_ParallelConcatUpdate', '_ParallelConcatUpdate', [value, update]));
-  }
-
-  Output<shape> variableV2<shape, dtype, container, shared_name>() {
-    return addOperation(
-        new OperationDescription('VariableV2', 'VariableV2', []));
-  }
-
-  Output<dynamic> iteratorFromStringHandle<output_types, output_shapes>(
-      Output<String> stringHandle) {
-    return addOperation(new OperationDescription('IteratorFromStringHandle',
-        'IteratorFromStringHandle', [stringHandle]));
+        new OperationDescription('Betainc', 'Betainc', [a, b, x], {'T': T}));
   }
 
   /// The summary has up to `max_outputs` summary values containing audio. The
@@ -1989,42 +1445,34 @@ class Graph extends _Graph {
   /// *  If `max_outputs` is 1, the summary value tag is '*tag*/audio'.
   /// *  If `max_outputs` is greater than 1, the summary value tags are
   /// generated sequentially as '*tag*/audio/0', '*tag*/audio/1', etc.
-  Output writeAudioSummary<max_outputs>(
-      Output<dynamic> writer,
-      Output<int> step,
-      Output<String> tag,
-      Output<double> tensor,
-      Output<double> sampleRate) {
-    return addOperation(new OperationDescription('WriteAudioSummary',
-        'WriteAudioSummary', [writer, step, tag, tensor, sampleRate]));
-  }
-
-  Output tensorArrayClose(Output<String> handle) {
+  Output writeAudioSummary(Output writer, Output<int> step, Output<String> tag,
+      Output<double> tensor, Output<double> sampleRate,
+      {int maxOutputs: 3}) {
     return addOperation(new OperationDescription(
-        'TensorArrayClose', 'TensorArrayClose', [handle]));
+        'WriteAudioSummary',
+        'WriteAudioSummary',
+        [writer, step, tag, tensor, sampleRate],
+        {'max_outputs': maxOutputs}));
   }
 
   Output<T> matrixBandPart<T, Tindex>(
-      Output<T> input, Output<Tindex> numLower, Output<Tindex> numUpper) {
+      Output<T> input, Output<T> numLower, Output<T> numUpper) {
     return addOperation(new OperationDescription(
-        'MatrixBandPart', 'MatrixBandPart', [input, numLower, numUpper]));
+        'MatrixBandPart',
+        'MatrixBandPart',
+        [input, numLower, numUpper],
+        {'T': T, 'Tindex': Tindex}));
   }
 
-  Output<int> tensorArrayConcatV2<dtype, element_shape_except0>(
-      Output<String> handle, Output<double> flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayConcatV2', 'TensorArrayConcatV2', [handle, flowIn]));
-  }
-
-  Output<adjoint> matrixSolve<adjoint, T>(
-      Output<adjoint> matrix, Output<T> rhs) {
-    return addOperation(
-        new OperationDescription('MatrixSolve', 'MatrixSolve', [matrix, rhs]));
+  Output<T> matrixSolve<T>(Output<T> matrix, Output<T> rhs,
+      {bool adjoint: false}) {
+    return addOperation(new OperationDescription('MatrixSolve', 'MatrixSolve',
+        [matrix, rhs], {'adjoint': adjoint, 'T': T}));
   }
 
   Output writeFile(Output<String> filename, Output<String> contents) {
     return addOperation(new OperationDescription(
-        'WriteFile', 'WriteFile', [filename, contents]));
+        'WriteFile', 'WriteFile', [filename, contents], {}));
   }
 
   /// The summary has up to `max_images` summary values containing images. The
@@ -2053,59 +1501,45 @@ class Graph extends _Graph {
   /// pixel in the output image).  Non-finite values in the input tensor are
   /// replaced by this tensor in the output image.  The default value is the color
   /// red.
-  Output writeImageSummary<max_images, T>(
-      Output<dynamic> writer,
-      Output<int> step,
-      Output<String> tag,
-      Output<max_images> tensor,
-      Output<dynamic> badColor) {
-    return addOperation(new OperationDescription('WriteImageSummary',
-        'WriteImageSummary', [writer, step, tag, tensor, badColor]));
+  Output writeImageSummary<T>(Output writer, Output<int> step,
+      Output<String> tag, Output<T> tensor, Output badColor,
+      {int maxImages: 3}) {
+    return addOperation(new OperationDescription(
+        'WriteImageSummary',
+        'WriteImageSummary',
+        [writer, step, tag, tensor, badColor],
+        {'max_images': maxImages, 'T': T}));
   }
 
   Output<T> tan<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Tan', 'Tan', [x]));
+    return addOperation(new OperationDescription('Tan', 'Tan', [x], {'T': T}));
   }
 
   /// The generated
   /// [`Summary`](https://www.tensorflow.org/code/tensorflow/core/framework/summary.proto)
   /// has one summary value containing a histogram for `values`.
   /// This op reports an `InvalidArgument` error if any value is not finite.
-  Output writeHistogramSummary<T>(Output<dynamic> writer, Output<int> step,
-      Output<String> tag, Output<T> values) {
+  Output writeHistogramSummary<T>(
+      Output writer, Output<int> step, Output<String> tag, Output<T> values) {
     return addOperation(new OperationDescription('WriteHistogramSummary',
-        'WriteHistogramSummary', [writer, step, tag, values]));
+        'WriteHistogramSummary', [writer, step, tag, values], {'T': T}));
   }
 
-  Output<T> batchMatMul<T, adj_x, adj_y>(Output<T> x, Output<adj_x> y) {
-    return addOperation(
-        new OperationDescription('BatchMatMul', 'BatchMatMul', [x, y]));
+  Output<T> batchMatMul<T>(Output<T> x, Output<T> y,
+      {bool adjX: false, bool adjY: false}) {
+    return addOperation(new OperationDescription('BatchMatMul', 'BatchMatMul',
+        [x, y], {'T': T, 'adj_x': adjX, 'adj_y': adjY}));
   }
 
-  Output<int> batch<
-      num_batch_threads,
-      max_batch_size,
-      max_enqueued_batches,
-      batch_timeout_micros,
-      allowed_batch_sizes,
-      grad_timeout_micros,
-      container,
-      shared_name,
-      batching_queue,
-      T>(Output<num_batch_threads> inTensors) {
-    return addOperation(
-        new OperationDescription('Batch', 'Batch', [inTensors]));
-  }
-
-  Output writeSummary<T>(Output<dynamic> writer, Output<int> step,
-      Output<T> tensor, Output<String> tag, Output<String> summaryMetadata) {
+  Output writeSummary<T>(Output writer, Output<int> step, Output<T> tensor,
+      Output<String> tag, Output<String> summaryMetadata) {
     return addOperation(new OperationDescription('WriteSummary', 'WriteSummary',
-        [writer, step, tensor, tag, summaryMetadata]));
+        [writer, step, tensor, tag, summaryMetadata], {'T': T}));
   }
 
-  Output flushSummaryWriter(Output<dynamic> writer) {
+  Output flushSummaryWriter(Output writer) {
     return addOperation(new OperationDescription(
-        'FlushSummaryWriter', 'FlushSummaryWriter', [writer]));
+        'FlushSummaryWriter', 'FlushSummaryWriter', [writer], {}));
   }
 
   /// This can be used to write tensors from the execution graph directly
@@ -2114,7 +1548,7 @@ class Graph extends _Graph {
   /// Experiments, and Runs tables will be created automatically if they
   /// don't already exist.
   Output createSummaryDbWriter(
-      Output<dynamic> writer,
+      Output writer,
       Output<String> dbUri,
       Output<String> experimentName,
       Output<String> runName,
@@ -2122,1487 +1556,1139 @@ class Graph extends _Graph {
     return addOperation(new OperationDescription(
         'CreateSummaryDbWriter',
         'CreateSummaryDbWriter',
-        [writer, dbUri, experimentName, runName, userName]));
-  }
-
-  Output<T> sparseApplyRMSProp<T, Tindices, use_locking>(
-      Output<T> var_,
-      Output<Tindices> ms,
-      Output<use_locking> mom,
-      Output<use_locking> lr,
-      Output<use_locking> rho,
-      Output<use_locking> momentum,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad,
-      Output<use_locking> indices) {
-    return addOperation(new OperationDescription(
-        'SparseApplyRMSProp',
-        'SparseApplyRMSProp',
-        [var_, ms, mom, lr, rho, momentum, epsilon, grad, indices]));
+        [writer, dbUri, experimentName, runName, userName],
+        {}));
   }
 
   /// The summary writer is an in-graph resource which can be used by ops to write
   /// summaries to event files.
-  Output<dynamic> summaryWriter<shared_name, container>() {
-    return addOperation(
-        new OperationDescription('SummaryWriter', 'SummaryWriter', []));
+  Output summaryWriter({String sharedName, String container}) {
+    return addOperation(new OperationDescription(
+        'SummaryWriter',
+        'SummaryWriter',
+        [],
+        {'shared_name': sharedName, 'container': container}));
   }
 
   Output<String> substr<T>(Output<String> input, Output<T> pos, Output<T> len) {
-    return addOperation(
-        new OperationDescription('Substr', 'Substr', [input, pos, len]));
+    return addOperation(new OperationDescription(
+        'Substr', 'Substr', [input, pos, len], {'T': T}));
   }
 
   Output<String> decodeBase64(Output<String> input) {
     return addOperation(
-        new OperationDescription('DecodeBase64', 'DecodeBase64', [input]));
+        new OperationDescription('DecodeBase64', 'DecodeBase64', [input], {}));
   }
 
-  Output<String> encodeBase64<pad>(Output<String> input) {
-    return addOperation(
-        new OperationDescription('EncodeBase64', 'EncodeBase64', [input]));
+  Output<String> encodeBase64(Output<String> input, {bool pad: false}) {
+    return addOperation(new OperationDescription(
+        'EncodeBase64', 'EncodeBase64', [input], {'pad': pad}));
   }
 
-  Output<String> stringJoin<N, separator>(Output<String> inputs) {
-    return addOperation(
-        new OperationDescription('StringJoin', 'StringJoin', [inputs]));
+  Output<String> stringJoin(List<Output<String>> inputs,
+      {@required int n, String separator}) {
+    return addOperation(new OperationDescription('StringJoin', 'StringJoin',
+        [inputs], {'N': n, 'separator': separator}));
   }
 
   Output<T> softsign<T>(Output<T> features) {
     return addOperation(
-        new OperationDescription('Softsign', 'Softsign', [features]));
+        new OperationDescription('Softsign', 'Softsign', [features], {'T': T}));
   }
 
-  Output<double> quantizedAdd<T1, T2, Toutput>(
-      Output<T1> x,
-      Output<T2> y,
-      Output<double> minX,
-      Output<double> maxX,
-      Output<double> minY,
-      Output<double> maxY) {
-    return addOperation(new OperationDescription(
-        'QuantizedAdd', 'QuantizedAdd', [x, y, minX, maxX, minY, maxY]));
-  }
-
-  Output<int> stringToHashBucket<num_buckets>(Output<String> stringTensor) {
-    return addOperation(new OperationDescription(
-        'StringToHashBucket', 'StringToHashBucket', [stringTensor]));
+  Output<int> stringToHashBucket(Output<String> stringTensor,
+      {@required int numBuckets}) {
+    return addOperation(new OperationDescription('StringToHashBucket',
+        'StringToHashBucket', [stringTensor], {'num_buckets': numBuckets}));
   }
 
   Output<bool> isFinite<T>(Output<T> x) {
-    return addOperation(new OperationDescription('IsFinite', 'IsFinite', [x]));
+    return addOperation(
+        new OperationDescription('IsFinite', 'IsFinite', [x], {'T': T}));
   }
 
-  Output<String> regexReplace<replace_global>(
-      Output<String> input, Output<String> pattern, Output<String> rewrite) {
-    return addOperation(new OperationDescription(
-        'RegexReplace', 'RegexReplace', [input, pattern, rewrite]));
-  }
-
-  Output<T> applyAdagrad<T, use_locking>(
-      Output<T> var_,
-      Output<use_locking> accum,
-      Output<use_locking> lr,
-      Output<use_locking> grad) {
-    return addOperation(new OperationDescription(
-        'ApplyAdagrad', 'ApplyAdagrad', [var_, accum, lr, grad]));
+  Output<String> regexReplace(
+      Output<String> input, Output<String> pattern, Output<String> rewrite,
+      {bool replaceGlobal: true}) {
+    return addOperation(new OperationDescription('RegexReplace', 'RegexReplace',
+        [input, pattern, rewrite], {'replace_global': replaceGlobal}));
   }
 
   Output<dtype> statelessRandomNormal<dtype, T, Tseed>(
-      Output<dtype> shape, Output<T> seed) {
+      Output<dtype> shape, Output<dtype> seed) {
     return addOperation(new OperationDescription(
-        'StatelessRandomNormal', 'StatelessRandomNormal', [shape, seed]));
+        'StatelessRandomNormal',
+        'StatelessRandomNormal',
+        [shape, seed],
+        {'dtype': dtype, 'T': T, 'Tseed': Tseed}));
   }
 
   Output<dtype> statelessRandomUniform<dtype, T, Tseed>(
-      Output<dtype> shape, Output<T> seed) {
+      Output<dtype> shape, Output<dtype> seed) {
     return addOperation(new OperationDescription(
-        'StatelessRandomUniform', 'StatelessRandomUniform', [shape, seed]));
+        'StatelessRandomUniform',
+        'StatelessRandomUniform',
+        [shape, seed],
+        {'dtype': dtype, 'T': T, 'Tseed': Tseed}));
   }
 
-  Output<double> quantizedResizeBilinear<T, align_corners>(Output<T> images,
-      Output<int> size, Output<double> min, Output<double> max) {
-    return addOperation(new OperationDescription('QuantizedResizeBilinear',
-        'QuantizedResizeBilinear', [images, size, min, max]));
+  Output<S> randomGamma<S, T>(Output<S> shape, Output<S> alpha,
+      {int seed: 0, int seed2: 0}) {
+    return addOperation(new OperationDescription('RandomGamma', 'RandomGamma',
+        [shape, alpha], {'seed': seed, 'seed2': seed2, 'S': S, 'T': T}));
   }
 
-  Output<seed> randomGamma<seed, seed2, S, T>(
-      Output<seed> shape, Output<seed2> alpha) {
-    return addOperation(
-        new OperationDescription('RandomGamma', 'RandomGamma', [shape, alpha]));
-  }
-
-  Output<seed> randomShuffle<seed, seed2, T>(Output<seed> value) {
-    return addOperation(
-        new OperationDescription('RandomShuffle', 'RandomShuffle', [value]));
+  Output<T> randomShuffle<T>(Output<T> value, {int seed: 0, int seed2: 0}) {
+    return addOperation(new OperationDescription('RandomShuffle',
+        'RandomShuffle', [value], {'seed': seed, 'seed2': seed2, 'T': T}));
   }
 
   Output<T> invertPermutation<T>(Output<T> x) {
     return addOperation(new OperationDescription(
-        'InvertPermutation', 'InvertPermutation', [x]));
+        'InvertPermutation', 'InvertPermutation', [x], {'T': T}));
   }
 
   Output<String> readFile(Output<String> filename) {
     return addOperation(
-        new OperationDescription('ReadFile', 'ReadFile', [filename]));
+        new OperationDescription('ReadFile', 'ReadFile', [filename], {}));
   }
 
-  Output<seed> truncatedNormal<seed, seed2, dtype, T>(Output<seed> shape) {
+  Output<dtype> truncatedNormal<dtype, T>(Output<dtype> shape,
+      {int seed: 0, int seed2: 0}) {
     return addOperation(new OperationDescription(
-        'TruncatedNormal', 'TruncatedNormal', [shape]));
+        'TruncatedNormal',
+        'TruncatedNormal',
+        [shape],
+        {'seed': seed, 'seed2': seed2, 'dtype': dtype, 'T': T}));
   }
 
   Output<T> erf<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Erf', 'Erf', [x]));
+    return addOperation(new OperationDescription('Erf', 'Erf', [x], {'T': T}));
   }
 
-  Output<seed> randomStandardNormal<seed, seed2, dtype, T>(Output<seed> shape) {
+  Output<dtype> randomStandardNormal<dtype, T>(Output<dtype> shape,
+      {int seed: 0, int seed2: 0}) {
     return addOperation(new OperationDescription(
-        'RandomStandardNormal', 'RandomStandardNormal', [shape]));
+        'RandomStandardNormal',
+        'RandomStandardNormal',
+        [shape],
+        {'seed': seed, 'seed2': seed2, 'dtype': dtype, 'T': T}));
   }
 
   Output<T> erfc<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Erfc', 'Erfc', [x]));
-  }
-
-  Output<seed> randomUniformInt<seed, seed2, Tout, T>(
-      Output<seed> shape, Output<seed2> minval, Output<Tout> maxval) {
-    return addOperation(new OperationDescription(
-        'RandomUniformInt', 'RandomUniformInt', [shape, minval, maxval]));
-  }
-
-  Output<seed> randomUniform<seed, seed2, dtype, T>(Output<seed> shape) {
     return addOperation(
-        new OperationDescription('RandomUniform', 'RandomUniform', [shape]));
+        new OperationDescription('Erfc', 'Erfc', [x], {'T': T}));
   }
 
-  Output<T> sparseFillEmptyRowsGrad<T>(
-      Output<int> reverseIndexMap, Output<T> gradValues) {
-    return addOperation(new OperationDescription('SparseFillEmptyRowsGrad',
-        'SparseFillEmptyRowsGrad', [reverseIndexMap, gradValues]));
-  }
-
-  Output<double>
-      quantizedConv2D<Tinput, Tfilter, out_type, strides, padding, dilations>(
-          Output<Tinput> input,
-          Output<Tfilter> filter,
-          Output<double> minInput,
-          Output<double> maxInput,
-          Output<double> minFilter,
-          Output<double> maxFilter) {
+  Output<Tout> randomUniformInt<Tout, T>(
+      Output<Tout> shape, Output<Tout> minval, Output<Tout> maxval,
+      {int seed: 0, int seed2: 0}) {
     return addOperation(new OperationDescription(
-        'QuantizedConv2D',
-        'QuantizedConv2D',
-        [input, filter, minInput, maxInput, minFilter, maxFilter]));
+        'RandomUniformInt',
+        'RandomUniformInt',
+        [shape, minval, maxval],
+        {'seed': seed, 'seed2': seed2, 'Tout': Tout, 'T': T}));
   }
 
-  Output<T> scatterNdSub<T, Tindices, use_locking>(
-      Output<T> ref, Output<Tindices> indices, Output<use_locking> updates) {
+  Output<dtype> randomUniform<dtype, T>(Output<dtype> shape,
+      {int seed: 0, int seed2: 0}) {
     return addOperation(new OperationDescription(
-        'ScatterNdSub', 'ScatterNdSub', [ref, indices, updates]));
+        'RandomUniform',
+        'RandomUniform',
+        [shape],
+        {'seed': seed, 'seed2': seed2, 'dtype': dtype, 'T': T}));
   }
 
-  Output<int> sparseFillEmptyRows<T>(Output<int> indices, Output<T> values,
-      Output<int> denseShape, Output<T> defaultValue) {
-    return addOperation(new OperationDescription('SparseFillEmptyRows',
-        'SparseFillEmptyRows', [indices, values, denseShape, defaultValue]));
-  }
-
-  Output<dynamic> flatMapDataset<f, Targuments, output_types, output_shapes>(
-      Output<dynamic> inputDataset, Output<f> otherArguments) {
-    return addOperation(new OperationDescription(
-        'FlatMapDataset', 'FlatMapDataset', [inputDataset, otherArguments]));
-  }
-
-  Output<int> addManySparseToTensorsMap<T, container, shared_name>(
-      Output<int> sparseIndices,
-      Output<T> sparseValues,
-      Output<int> sparseShape) {
+  Output<int> addManySparseToTensorsMap<T>(Output<int> sparseIndices,
+      Output<T> sparseValues, Output<int> sparseShape,
+      {String container, String sharedName}) {
     return addOperation(new OperationDescription(
         'AddManySparseToTensorsMap',
         'AddManySparseToTensorsMap',
-        [sparseIndices, sparseValues, sparseShape]));
+        [sparseIndices, sparseValues, sparseShape],
+        {'T': T, 'container': container, 'shared_name': sharedName}));
   }
 
-  Output<T> biasAddGrad<T, data_format>(Output<T> outBackprop) {
-    return addOperation(
-        new OperationDescription('BiasAddGrad', 'BiasAddGrad', [outBackprop]));
+  Output<T> biasAddGrad<T>(Output<T> outBackprop, {String dataFormat: 'NHWC'}) {
+    return addOperation(new OperationDescription('BiasAddGrad', 'BiasAddGrad',
+        [outBackprop], {'T': T, 'data_format': dataFormat}));
   }
 
   Output<T> elu<T>(Output<T> features) {
-    return addOperation(new OperationDescription('Elu', 'Elu', [features]));
+    return addOperation(
+        new OperationDescription('Elu', 'Elu', [features], {'T': T}));
   }
 
-  Output<int> addSparseToTensorsMap<T, container, shared_name>(
-      Output<int> sparseIndices,
-      Output<T> sparseValues,
-      Output<int> sparseShape) {
-    return addOperation(new OperationDescription('AddSparseToTensorsMap',
-        'AddSparseToTensorsMap', [sparseIndices, sparseValues, sparseShape]));
-  }
-
-  Output<T> sparseSparseMaximum<T>(
-      Output<int> aIndices,
-      Output<T> aValues,
-      Output<int> aShape,
-      Output<int> bIndices,
-      Output<T> bValues,
-      Output<int> bShape) {
+  Output<int> addSparseToTensorsMap<T>(Output<int> sparseIndices,
+      Output<T> sparseValues, Output<int> sparseShape,
+      {String container, String sharedName}) {
     return addOperation(new OperationDescription(
-        'SparseSparseMaximum',
-        'SparseSparseMaximum',
-        [aIndices, aValues, aShape, bIndices, bValues, bShape]));
+        'AddSparseToTensorsMap',
+        'AddSparseToTensorsMap',
+        [sparseIndices, sparseValues, sparseShape],
+        {'T': T, 'container': container, 'shared_name': sharedName}));
   }
 
-  Output<T> preventGradient<T, message>(Output<T> input) {
-    return addOperation(new OperationDescription(
-        'PreventGradient', 'PreventGradient', [input]));
+  Output<T> preventGradient<T>(Output<T> input, {String message}) {
+    return addOperation(new OperationDescription('PreventGradient',
+        'PreventGradient', [input], {'T': T, 'message': message}));
   }
 
   Output<T> sparseSoftmax<T>(
       Output<int> spIndices, Output<T> spValues, Output<int> spShape) {
-    return addOperation(new OperationDescription(
-        'SparseSoftmax', 'SparseSoftmax', [spIndices, spValues, spShape]));
+    return addOperation(new OperationDescription('SparseSoftmax',
+        'SparseSoftmax', [spIndices, spValues, spShape], {'T': T}));
   }
 
   Output<T> sparseDenseCwiseAdd<T>(Output<int> spIndices, Output<T> spValues,
       Output<int> spShape, Output<T> dense) {
-    return addOperation(new OperationDescription('SparseDenseCwiseAdd',
-        'SparseDenseCwiseAdd', [spIndices, spValues, spShape, dense]));
+    return addOperation(new OperationDescription(
+        'SparseDenseCwiseAdd',
+        'SparseDenseCwiseAdd',
+        [spIndices, spValues, spShape, dense],
+        {'T': T}));
   }
 
   Output<String> getSessionHandle<T>(Output<T> value) {
     return addOperation(new OperationDescription(
-        'GetSessionHandle', 'GetSessionHandle', [value]));
-  }
-
-  Output<T> fusedPadConv2D<T, mode, strides, padding>(
-      Output<T> input, Output<int> paddings, Output<mode> filter) {
-    return addOperation(new OperationDescription(
-        'FusedPadConv2D', 'FusedPadConv2D', [input, paddings, filter]));
+        'GetSessionHandle', 'GetSessionHandle', [value], {'T': T}));
   }
 
   Output<T> sparseDenseCwiseMul<T>(Output<int> spIndices, Output<T> spValues,
       Output<int> spShape, Output<T> dense) {
-    return addOperation(new OperationDescription('SparseDenseCwiseMul',
-        'SparseDenseCwiseMul', [spIndices, spValues, spShape, dense]));
-  }
-
-  Output<T> sparseReorder<T>(
-      Output<int> inputIndices, Output<T> inputValues, Output<int> inputShape) {
-    return addOperation(new OperationDescription('SparseReorder',
-        'SparseReorder', [inputIndices, inputValues, inputShape]));
+    return addOperation(new OperationDescription(
+        'SparseDenseCwiseMul',
+        'SparseDenseCwiseMul',
+        [spIndices, spValues, spShape, dense],
+        {'T': T}));
   }
 
   Output<T> relu6<T>(Output<T> features) {
-    return addOperation(new OperationDescription('Relu6', 'Relu6', [features]));
+    return addOperation(
+        new OperationDescription('Relu6', 'Relu6', [features], {'T': T}));
   }
 
-  Output<String> readerSerializeStateV2(Output<dynamic> readerHandle) {
-    return addOperation(new OperationDescription(
-        'ReaderSerializeStateV2', 'ReaderSerializeStateV2', [readerHandle]));
+  Output<String> readerSerializeStateV2(Output readerHandle) {
+    return addOperation(new OperationDescription('ReaderSerializeStateV2',
+        'ReaderSerializeStateV2', [readerHandle], {}));
   }
 
-  Output<int> sparseSplit<num_split, T>(Output<int> splitDim,
-      Output<int> indices, Output<num_split> values, Output<int> shape) {
+  Output destroyResourceOp(Output resource, {bool ignoreLookupError: true}) {
     return addOperation(new OperationDescription(
-        'SparseSplit', 'SparseSplit', [splitDim, indices, values, shape]));
-  }
-
-  Output destroyResourceOp<ignore_lookup_error>(Output<dynamic> resource) {
-    return addOperation(new OperationDescription(
-        'DestroyResourceOp', 'DestroyResourceOp', [resource]));
+        'DestroyResourceOp',
+        'DestroyResourceOp',
+        [resource],
+        {'ignore_lookup_error': ignoreLookupError}));
   }
 
   Output<T> histogramFixedWidth<T, dtype>(
-      Output<T> values, Output<dtype> valueRange, Output<int> nbins) {
-    return addOperation(new OperationDescription('HistogramFixedWidth',
-        'HistogramFixedWidth', [values, valueRange, nbins]));
+      Output<T> values, Output<T> valueRange, Output<int> nbins) {
+    return addOperation(new OperationDescription(
+        'HistogramFixedWidth',
+        'HistogramFixedWidth',
+        [values, valueRange, nbins],
+        {'T': T, 'dtype': dtype}));
   }
 
-  Output<dynamic>
-      iterator<shared_name, container, output_types, output_shapes>() {
-    return addOperation(new OperationDescription('Iterator', 'Iterator', []));
-  }
-
+  @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayWriteV3')
   Output<double> tensorArrayWriteV2<T>(Output<String> handle, Output<int> index,
       Output<T> value, Output<double> flowIn) {
     return addOperation(new OperationDescription('TensorArrayWriteV2',
-        'TensorArrayWriteV2', [handle, index, value, flowIn]));
+        'TensorArrayWriteV2', [handle, index, value, flowIn], {'T': T}));
   }
 
-  Output<int> denseToSparseSetOperation<set_operation, validate_indices, T>(
-      Output<set_operation> set1,
-      Output<int> set2Indices,
-      Output<validate_indices> set2Values,
-      Output<int> set2Shape) {
+  Output consumeMutexLock(Output mutexLock) {
     return addOperation(new OperationDescription(
-        'DenseToSparseSetOperation',
-        'DenseToSparseSetOperation',
-        [set1, set2Indices, set2Values, set2Shape]));
+        'ConsumeMutexLock', 'ConsumeMutexLock', [mutexLock], {}));
   }
 
-  Output sdcaShrinkL1<num_features, l1, l2>(Output<double> weights) {
-    return addOperation(
-        new OperationDescription('SdcaShrinkL1', 'SdcaShrinkL1', [weights]));
-  }
-
-  Output consumeMutexLock(Output<dynamic> mutexLock) {
+  Output<T> dataFormatVecPermute<T>(Output<T> x,
+      {String srcFormat: 'NHWC', String dstFormat: 'NCHW'}) {
     return addOperation(new OperationDescription(
-        'ConsumeMutexLock', 'ConsumeMutexLock', [mutexLock]));
+        'DataFormatVecPermute',
+        'DataFormatVecPermute',
+        [x],
+        {'T': T, 'src_format': srcFormat, 'dst_format': dstFormat}));
   }
 
-  Output<double> quantizedBiasAdd<T1, T2, out_type>(
-      Output<T1> input,
-      Output<T2> bias,
-      Output<double> minInput,
-      Output<double> maxInput,
-      Output<double> minBias,
-      Output<double> maxBias) {
-    return addOperation(new OperationDescription(
-        'QuantizedBiasAdd',
-        'QuantizedBiasAdd',
-        [input, bias, minInput, maxInput, minBias, maxBias]));
-  }
-
-  Output<T> dataFormatVecPermute<T, src_format, dst_format>(Output<T> x) {
-    return addOperation(new OperationDescription(
-        'DataFormatVecPermute', 'DataFormatVecPermute', [x]));
-  }
-
+  @Deprecated('DEPRECATED at GraphDef version 13: Use CholeskyGrad instead.')
   Output<T> batchCholeskyGrad<T>(Output<T> l, Output<T> grad) {
     return addOperation(new OperationDescription(
-        'BatchCholeskyGrad', 'BatchCholeskyGrad', [l, grad]));
+        'BatchCholeskyGrad', 'BatchCholeskyGrad', [l, grad], {'T': T}));
   }
 
-  Output resourceScatterAdd<dtype, Tindices>(Output<dynamic> resource,
-      Output<dtype> indices, Output<Tindices> updates) {
-    return addOperation(new OperationDescription('ResourceScatterAdd',
-        'ResourceScatterAdd', [resource, indices, updates]));
-  }
-
-  Output<T> fusedBatchNormGradV2<T, U, epsilon, data_format, is_training>(
-      Output<T> yBackprop,
-      Output<U> x,
-      Output<double> scale,
-      Output<epsilon> reserveSpace1,
-      Output<data_format> reserveSpace2) {
+  Output resourceScatterAdd<dtype, Tindices>(
+      Output resource, Output<dtype> indices, Output<dtype> updates) {
     return addOperation(new OperationDescription(
-        'FusedBatchNormGradV2',
-        'FusedBatchNormGradV2',
-        [yBackprop, x, scale, reserveSpace1, reserveSpace2]));
+        'ResourceScatterAdd',
+        'ResourceScatterAdd',
+        [resource, indices, updates],
+        {'dtype': dtype, 'Tindices': Tindices}));
   }
 
-  Output<int> barrierReadySize(Output<String> handle) {
+  Output<T> sparseTensorDenseMatMul<T, Tindices>(
+      Output<T> aIndices, Output<T> aValues, Output<int> aShape, Output<T> b,
+      {bool adjointA: false, bool adjointB: false}) {
     return addOperation(new OperationDescription(
-        'BarrierReadySize', 'BarrierReadySize', [handle]));
+        'SparseTensorDenseMatMul', 'SparseTensorDenseMatMul', [
+      aIndices,
+      aValues,
+      aShape,
+      b
+    ], {
+      'T': T,
+      'Tindices': Tindices,
+      'adjoint_a': adjointA,
+      'adjoint_b': adjointB
+    }));
   }
 
-  Output mapStage<capacity, memory_limit, dtypes, fake_dtypes, container,
-          shared_name>(
-      Output<int> key, Output<int> indices, Output<capacity> values) {
+  Output<T> unsortedSegmentMin<T, Tindices, Tnumsegments>(
+      Output<T> data, Output<T> segmentIds, Output<T> numSegments) {
     return addOperation(new OperationDescription(
-        'MapStage', 'MapStage', [key, indices, values]));
+        'UnsortedSegmentMin',
+        'UnsortedSegmentMin',
+        [data, segmentIds, numSegments],
+        {'T': T, 'Tindices': Tindices, 'Tnumsegments': Tnumsegments}));
   }
 
-  Output<T> sparseTensorDenseMatMul<T, Tindices, adjoint_a, adjoint_b>(
-      Output<T> aIndices,
-      Output<Tindices> aValues,
-      Output<int> aShape,
-      Output<adjoint_a> b) {
-    return addOperation(new OperationDescription('SparseTensorDenseMatMul',
-        'SparseTensorDenseMatMul', [aIndices, aValues, aShape, b]));
+  Output<T> segmentMin<T, Tindices>(Output<T> data, Output<T> segmentIds) {
+    return addOperation(new OperationDescription('SegmentMin', 'SegmentMin',
+        [data, segmentIds], {'T': T, 'Tindices': Tindices}));
   }
 
-  Output<T> unsortedSegmentMin<T, Tindices, Tnumsegments>(Output<T> data,
-      Output<Tindices> segmentIds, Output<Tnumsegments> numSegments) {
-    return addOperation(new OperationDescription('UnsortedSegmentMin',
-        'UnsortedSegmentMin', [data, segmentIds, numSegments]));
-  }
-
-  Output<T> segmentMin<T, Tindices>(
-      Output<T> data, Output<Tindices> segmentIds) {
-    return addOperation(new OperationDescription(
-        'SegmentMin', 'SegmentMin', [data, segmentIds]));
-  }
-
-  Output<Tinputs> remoteFusedGraphExecute<Tinputs, Toutputs,
-      serialized_remote_fused_graph_execute_info>(Output<Tinputs> inputs) {
-    return addOperation(new OperationDescription(
-        'RemoteFusedGraphExecute', 'RemoteFusedGraphExecute', [inputs]));
-  }
-
-  Output resourceSparseApplyRMSProp<T, Tindices, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> ms,
-      Output<dynamic> mom,
+  Output resourceSparseApplyRMSProp<T, Tindices>(
+      Output var_,
+      Output ms,
+      Output mom,
       Output<T> lr,
-      Output<Tindices> rho,
-      Output<use_locking> momentum,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad,
-      Output<use_locking> indices) {
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
+      Output<T> indices,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceSparseApplyRMSProp',
         'ResourceSparseApplyRMSProp',
-        [var_, ms, mom, lr, rho, momentum, epsilon, grad, indices]));
+        [var_, ms, mom, lr, rho, momentum, epsilon, grad, indices],
+        {'T': T, 'Tindices': Tindices, 'use_locking': useLocking}));
   }
 
-  Output<dynamic> batchIFFT2D(Output<dynamic> input) {
+  @Deprecated('DEPRECATED at GraphDef version 15: Use IFFT2D')
+  Output batchIFFT2D(Output input) {
     return addOperation(
-        new OperationDescription('BatchIFFT2D', 'BatchIFFT2D', [input]));
+        new OperationDescription('BatchIFFT2D', 'BatchIFFT2D', [input], {}));
   }
 
   Output<out_type> stringToNumber<out_type>(Output<String> stringTensor) {
-    return addOperation(new OperationDescription(
-        'StringToNumber', 'StringToNumber', [stringTensor]));
+    return addOperation(new OperationDescription('StringToNumber',
+        'StringToNumber', [stringTensor], {'out_type': out_type}));
   }
 
   Output<String> decodeJSONExample(Output<String> jsonExamples) {
     return addOperation(new OperationDescription(
-        'DecodeJSONExample', 'DecodeJSONExample', [jsonExamples]));
-  }
-
-  Output<String> tensorSummary<T, description, labels, display_name>(
-      Output<T> tensor) {
-    return addOperation(
-        new OperationDescription('TensorSummary', 'TensorSummary', [tensor]));
-  }
-
-  Output<T> scatterDiv<T, Tindices, use_locking>(
-      Output<T> ref, Output<Tindices> indices, Output<use_locking> updates) {
-    return addOperation(new OperationDescription(
-        'ScatterDiv', 'ScatterDiv', [ref, indices, updates]));
+        'DecodeJSONExample', 'DecodeJSONExample', [jsonExamples], {}));
   }
 
   Output<String> serializeTensor<T>(Output<T> tensor) {
     return addOperation(new OperationDescription(
-        'SerializeTensor', 'SerializeTensor', [tensor]));
-  }
-
-  Output<double> cTCBeamSearchDecoder<beam_width, top_paths, merge_repeated>(
-      Output<double> inputs, Output<int> sequenceLength) {
-    return addOperation(new OperationDescription('CTCBeamSearchDecoder',
-        'CTCBeamSearchDecoder', [inputs, sequenceLength]));
+        'SerializeTensor', 'SerializeTensor', [tensor], {'T': T}));
   }
 
   Output<out_type> parseTensor<out_type>(Output<String> serialized) {
-    return addOperation(
-        new OperationDescription('ParseTensor', 'ParseTensor', [serialized]));
+    return addOperation(new OperationDescription(
+        'ParseTensor', 'ParseTensor', [serialized], {'out_type': out_type}));
   }
 
   Output<T> scatterNdNonAliasingAdd<T, Tindices>(
-      Output<T> input, Output<Tindices> indices, Output<Tindices> updates) {
-    return addOperation(new OperationDescription('ScatterNdNonAliasingAdd',
-        'ScatterNdNonAliasingAdd', [input, indices, updates]));
+      Output<T> input, Output<T> indices, Output<T> updates) {
+    return addOperation(new OperationDescription(
+        'ScatterNdNonAliasingAdd',
+        'ScatterNdNonAliasingAdd',
+        [input, indices, updates],
+        {'T': T, 'Tindices': Tindices}));
   }
 
-  Output<seed> multinomial<seed, seed2, T, output_dtype>(
-      Output<seed> logits, Output<int> numSamples) {
+  Output<T> multinomial<T, output_dtype>(
+      Output<T> logits, Output<int> numSamples,
+      {int seed: 0, int seed2: 0}) {
     return addOperation(new OperationDescription(
-        'Multinomial', 'Multinomial', [logits, numSamples]));
+        'Multinomial',
+        'Multinomial',
+        [logits, numSamples],
+        {'seed': seed, 'seed2': seed2, 'T': T, 'output_dtype': output_dtype}));
   }
 
-  Output<String> decodeCompressed<compression_type>(Output<String> bytes) {
-    return addOperation(new OperationDescription(
-        'DecodeCompressed', 'DecodeCompressed', [bytes]));
+  Output<String> decodeCompressed(Output<String> bytes,
+      {String compressionType}) {
+    return addOperation(new OperationDescription('DecodeCompressed',
+        'DecodeCompressed', [bytes], {'compression_type': compressionType}));
   }
 
   Output<int> sdcaFprint(Output<String> input) {
     return addOperation(
-        new OperationDescription('SdcaFprint', 'SdcaFprint', [input]));
+        new OperationDescription('SdcaFprint', 'SdcaFprint', [input], {}));
   }
 
-  Output<int> readerNumRecordsProducedV2(Output<dynamic> readerHandle) {
+  Output<int> readerNumRecordsProducedV2(Output readerHandle) {
     return addOperation(new OperationDescription('ReaderNumRecordsProducedV2',
-        'ReaderNumRecordsProducedV2', [readerHandle]));
+        'ReaderNumRecordsProducedV2', [readerHandle], {}));
   }
 
-  Output<out_type> decodeRaw<out_type, little_endian>(Output<String> bytes) {
+  Output<out_type> decodeRaw<out_type>(Output<String> bytes,
+      {bool littleEndian: true}) {
+    return addOperation(new OperationDescription('DecodeRaw', 'DecodeRaw',
+        [bytes], {'out_type': out_type, 'little_endian': littleEndian}));
+  }
+
+  @Deprecated('DEPRECATED at GraphDef version 15: Use IFFT3D')
+  Output batchIFFT3D(Output input) {
     return addOperation(
-        new OperationDescription('DecodeRaw', 'DecodeRaw', [bytes]));
-  }
-
-  Output saveSlices<T>(Output<String> filename, Output<String> tensorNames,
-      Output<String> shapesAndSlices, Output<T> data) {
-    return addOperation(new OperationDescription('SaveSlices', 'SaveSlices',
-        [filename, tensorNames, shapesAndSlices, data]));
-  }
-
-  Output<ksize> avgPool3D<ksize, strides, padding, data_format, T>(
-      Output<ksize> input) {
-    return addOperation(
-        new OperationDescription('AvgPool3D', 'AvgPool3D', [input]));
-  }
-
-  Output<dynamic> batchIFFT3D(Output<dynamic> input) {
-    return addOperation(
-        new OperationDescription('BatchIFFT3D', 'BatchIFFT3D', [input]));
+        new OperationDescription('BatchIFFT3D', 'BatchIFFT3D', [input], {}));
   }
 
   Output<double> adjustHue(Output<double> images, Output<double> delta) {
-    return addOperation(
-        new OperationDescription('AdjustHue', 'AdjustHue', [images, delta]));
-  }
-
-  Output<dynamic> batchFFT3D(Output<dynamic> input) {
-    return addOperation(
-        new OperationDescription('BatchFFT3D', 'BatchFFT3D', [input]));
-  }
-
-  Output<T> sparseSparseMinimum<T>(
-      Output<int> aIndices,
-      Output<T> aValues,
-      Output<int> aShape,
-      Output<int> bIndices,
-      Output<T> bValues,
-      Output<int> bShape) {
     return addOperation(new OperationDescription(
-        'SparseSparseMinimum',
-        'SparseSparseMinimum',
-        [aIndices, aValues, aShape, bIndices, bValues, bShape]));
+        'AdjustHue', 'AdjustHue', [images, delta], {}));
   }
 
-  Output<dynamic>
-      textLineReaderV2<skip_header_lines, container, shared_name>() {
+  @Deprecated('DEPRECATED at GraphDef version 15: Use FFT3D')
+  Output batchFFT3D(Output input) {
     return addOperation(
-        new OperationDescription('TextLineReaderV2', 'TextLineReaderV2', []));
+        new OperationDescription('BatchFFT3D', 'BatchFFT3D', [input], {}));
   }
 
-  Output<dynamic> fixedLengthRecordReaderV2<header_bytes, record_bytes,
-      footer_bytes, hop_bytes, container, shared_name, encoding>() {
+  Output textLineReaderV2(
+      {int skipHeaderLines: 0, String container, String sharedName}) {
+    return addOperation(
+        new OperationDescription('TextLineReaderV2', 'TextLineReaderV2', [], {
+      'skip_header_lines': skipHeaderLines,
+      'container': container,
+      'shared_name': sharedName
+    }));
+  }
+
+  Output fixedLengthRecordReaderV2(
+      {int headerBytes: 0,
+      @required int recordBytes,
+      int footerBytes: 0,
+      int hopBytes: 0,
+      String container,
+      String sharedName,
+      String encoding}) {
     return addOperation(new OperationDescription(
-        'FixedLengthRecordReaderV2', 'FixedLengthRecordReaderV2', []));
+        'FixedLengthRecordReaderV2', 'FixedLengthRecordReaderV2', [], {
+      'header_bytes': headerBytes,
+      'record_bytes': recordBytes,
+      'footer_bytes': footerBytes,
+      'hop_bytes': hopBytes,
+      'container': container,
+      'shared_name': sharedName,
+      'encoding': encoding
+    }));
   }
 
-  Output<dynamic> identityReaderV2<container, shared_name>() {
+  Output identityReaderV2({String container, String sharedName}) {
+    return addOperation(new OperationDescription(
+        'IdentityReaderV2',
+        'IdentityReaderV2',
+        [],
+        {'container': container, 'shared_name': sharedName}));
+  }
+
+  Output<double> iRFFT3D(Output input, Output<int> fftLength) {
     return addOperation(
-        new OperationDescription('IdentityReaderV2', 'IdentityReaderV2', []));
+        new OperationDescription('IRFFT3D', 'IRFFT3D', [input, fftLength], {}));
   }
 
-  Output<double> iRFFT3D(Output<dynamic> input, Output<int> fftLength) {
+  Output<double> iRFFT(Output input, Output<int> fftLength) {
     return addOperation(
-        new OperationDescription('IRFFT3D', 'IRFFT3D', [input, fftLength]));
+        new OperationDescription('IRFFT', 'IRFFT', [input, fftLength], {}));
   }
 
-  Output<T> applyFtrl<T, use_locking>(
-      Output<T> var_,
-      Output<use_locking> accum,
-      Output<use_locking> linear,
-      Output<use_locking> grad,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> lrPower) {
-    return addOperation(new OperationDescription('ApplyFtrl', 'ApplyFtrl',
-        [var_, accum, linear, grad, lr, l1, l2, lrPower]));
-  }
-
-  Output<double> iRFFT(Output<dynamic> input, Output<int> fftLength) {
+  Output rFFT(Output<double> input, Output<int> fftLength) {
     return addOperation(
-        new OperationDescription('IRFFT', 'IRFFT', [input, fftLength]));
+        new OperationDescription('RFFT', 'RFFT', [input, fftLength], {}));
   }
 
-  Output<dynamic> rFFT(Output<double> input, Output<int> fftLength) {
+  Output iFFT3D(Output input) {
     return addOperation(
-        new OperationDescription('RFFT', 'RFFT', [input, fftLength]));
+        new OperationDescription('IFFT3D', 'IFFT3D', [input], {}));
   }
 
-  Output<dynamic> iFFT3D(Output<dynamic> input) {
-    return addOperation(new OperationDescription('IFFT3D', 'IFFT3D', [input]));
-  }
-
-  Output<dynamic> fFT3D(Output<dynamic> input) {
-    return addOperation(new OperationDescription('FFT3D', 'FFT3D', [input]));
+  Output fFT3D(Output input) {
+    return addOperation(
+        new OperationDescription('FFT3D', 'FFT3D', [input], {}));
   }
 
   Output<bool> lessEqual<T>(Output<T> x, Output<T> y) {
     return addOperation(
-        new OperationDescription('LessEqual', 'LessEqual', [x, y]));
+        new OperationDescription('LessEqual', 'LessEqual', [x, y], {'T': T}));
   }
 
-  Output<dynamic> timestamp() {
-    return addOperation(new OperationDescription('Timestamp', 'Timestamp', []));
-  }
-
-  Output<dynamic> paddedBatchDataset<Toutput_types, output_shapes, N>(
-      Output<dynamic> inputDataset,
-      Output<int> batchSize,
-      Output<int> paddedShapes,
-      Output<Toutput_types> paddingValues) {
-    return addOperation(new OperationDescription(
-        'PaddedBatchDataset',
-        'PaddedBatchDataset',
-        [inputDataset, batchSize, paddedShapes, paddingValues]));
-  }
-
-  Output<dynamic> stackV2<elem_type, stack_name>(Output<int> maxSize) {
+  Output timestamp() {
     return addOperation(
-        new OperationDescription('StackV2', 'StackV2', [maxSize]));
+        new OperationDescription('Timestamp', 'Timestamp', [], {}));
   }
 
-  Output<component_types> queueDequeueUpTo<component_types, timeout_ms>(
-      Output<String> handle, Output<int> n) {
-    return addOperation(new OperationDescription(
-        'QueueDequeueUpTo', 'QueueDequeueUpTo', [handle, n]));
+  Output stackV2<elem_type>(Output<int> maxSize, {String stackName}) {
+    return addOperation(new OperationDescription('StackV2', 'StackV2',
+        [maxSize], {'elem_type': elem_type, 'stack_name': stackName}));
   }
 
+  @Deprecated(
+      'DEPRECATED at GraphDef version 3: TileGrad has been replaced with reduce_sum')
   Output<T> tileGrad<T>(Output<T> input, Output<int> multiples) {
-    return addOperation(
-        new OperationDescription('TileGrad', 'TileGrad', [input, multiples]));
-  }
-
-  Output<String> audioSummary<sample_rate, max_outputs>(
-      Output<String> tag, Output<double> tensor) {
     return addOperation(new OperationDescription(
-        'AudioSummary', 'AudioSummary', [tag, tensor]));
+        'TileGrad', 'TileGrad', [input, multiples], {'T': T}));
   }
 
-  Output<timeout_micros> unbatch<timeout_micros, container, shared_name, T>(
-      Output<timeout_micros> batchedTensor,
-      Output<int> batchIndex,
-      Output<int> id) {
-    return addOperation(new OperationDescription(
-        'Unbatch', 'Unbatch', [batchedTensor, batchIndex, id]));
+  @Deprecated('DEPRECATED at GraphDef version 15: Use AudioSummaryV2.')
+  Output<String> audioSummary(Output<String> tag, Output<double> tensor,
+      {@required double sampleRate, int maxOutputs: 3}) {
+    return addOperation(new OperationDescription('AudioSummary', 'AudioSummary',
+        [tag, tensor], {'sample_rate': sampleRate, 'max_outputs': maxOutputs}));
   }
 
-  Output<capacity>
-      mapUnstage<capacity, memory_limit, dtypes, container, shared_name>(
-          Output<int> key, Output<int> indices) {
-    return addOperation(
-        new OperationDescription('MapUnstage', 'MapUnstage', [key, indices]));
+  Output<T> unbatch<T>(
+      Output<T> batchedTensor, Output<int> batchIndex, Output<int> id,
+      {@required int timeoutMicros, String container, String sharedName}) {
+    return addOperation(new OperationDescription('Unbatch', 'Unbatch', [
+      batchedTensor,
+      batchIndex,
+      id
+    ], {
+      'timeout_micros': timeoutMicros,
+      'container': container,
+      'shared_name': sharedName,
+      'T': T
+    }));
   }
 
   Output<String> tensorSummaryV2<T>(Output<String> tag, Output<T> tensor,
       Output<String> serializedSummaryMetadata) {
     return addOperation(new OperationDescription('TensorSummaryV2',
-        'TensorSummaryV2', [tag, tensor, serializedSummaryMetadata]));
+        'TensorSummaryV2', [tag, tensor, serializedSummaryMetadata], {'T': T}));
   }
 
-  Output<signed_input>
-      quantizeAndDequantizeV2<signed_input, num_bits, range_given, T>(
-          Output<signed_input> input,
-          Output<num_bits> inputMin,
-          Output<range_given> inputMax) {
-    return addOperation(new OperationDescription('QuantizeAndDequantizeV2',
-        'QuantizeAndDequantizeV2', [input, inputMin, inputMax]));
-  }
-
-  Output<dynamic> slideDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset,
-      Output<int> windowSize,
-      Output<int> stride) {
+  Output<T> quantizeAndDequantizeV2<T>(
+      Output<T> input, Output<T> inputMin, Output<T> inputMax,
+      {bool signedInput: true, int numBits: 8, bool rangeGiven: false}) {
     return addOperation(new OperationDescription(
-        'SlideDataset', 'SlideDataset', [inputDataset, windowSize, stride]));
+        'QuantizeAndDequantizeV2', 'QuantizeAndDequantizeV2', [
+      input,
+      inputMin,
+      inputMax
+    ], {
+      'signed_input': signedInput,
+      'num_bits': numBits,
+      'range_given': rangeGiven,
+      'T': T
+    }));
   }
 
-  Output<T> print<T, U, message, first_n, summarize>(
-      Output<T> input, Output<U> data) {
-    return addOperation(
-        new OperationDescription('Print', 'Print', [input, data]));
-  }
-
-  Output<double> tensorArrayWrite<T>(Output<String> handle, Output<int> index,
-      Output<T> value, Output<double> flowIn) {
-    return addOperation(new OperationDescription('TensorArrayWrite',
-        'TensorArrayWrite', [handle, index, value, flowIn]));
-  }
-
-  Output<T> transpose<T, Tperm>(Output<T> x, Output<Tperm> perm) {
-    return addOperation(
-        new OperationDescription('Transpose', 'Transpose', [x, perm]));
-  }
-
-  Output assert_<T, summarize>(Output<bool> condition, Output<T> data) {
-    return addOperation(
-        new OperationDescription('Assert', 'Assert', [condition, data]));
+  Output<T> transpose<T, Tperm>(Output<T> x, Output<T> perm) {
+    return addOperation(new OperationDescription(
+        'Transpose', 'Transpose', [x, perm], {'T': T, 'Tperm': Tperm}));
   }
 
   Output controlTrigger() {
     return addOperation(
-        new OperationDescription('ControlTrigger', 'ControlTrigger', []));
+        new OperationDescription('ControlTrigger', 'ControlTrigger', [], {}));
   }
 
-  Output<N> parallelDynamicStitch<N, T>(Output<int> indices, Output<N> data) {
-    return addOperation(new OperationDescription(
-        'ParallelDynamicStitch', 'ParallelDynamicStitch', [indices, data]));
+  Output<T> parallelDynamicStitch<T>(
+      List<Output<int>> indices, List<Output<T>> data,
+      {@required int n}) {
+    return addOperation(new OperationDescription('ParallelDynamicStitch',
+        'ParallelDynamicStitch', [indices, data], {'N': n, 'T': T}));
   }
 
   Output<T> nextIteration<T>(Output<T> data) {
-    return addOperation(
-        new OperationDescription('NextIteration', 'NextIteration', [data]));
+    return addOperation(new OperationDescription(
+        'NextIteration', 'NextIteration', [data], {'T': T}));
   }
 
   Output initializeTableV2<Tkey, Tval>(
-      Output<dynamic> tableHandle, Output<Tkey> keys, Output<Tval> values) {
+      Output tableHandle, Output<Tkey> keys, Output<Tkey> values) {
     return addOperation(new OperationDescription(
-        'InitializeTableV2', 'InitializeTableV2', [tableHandle, keys, values]));
+        'InitializeTableV2',
+        'InitializeTableV2',
+        [tableHandle, keys, values],
+        {'Tkey': Tkey, 'Tval': Tval}));
   }
 
   Output<T> imag<T, Tout>(Output<T> input) {
-    return addOperation(new OperationDescription('Imag', 'Imag', [input]));
+    return addOperation(new OperationDescription(
+        'Imag', 'Imag', [input], {'T': T, 'Tout': Tout}));
   }
 
-  Output<String> tensorArrayGrad<source>(
-      Output<String> handle, Output<double> flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayGrad', 'TensorArrayGrad', [handle, flowIn]));
+  Output<T> oneHot<T, TI>(Output<T> indices, Output<int> depth,
+      Output<T> onValue, Output<T> offValue,
+      {int axis: -1}) {
+    return addOperation(new OperationDescription('OneHot', 'OneHot',
+        [indices, depth, onValue, offValue], {'axis': axis, 'T': T, 'TI': TI}));
   }
 
-  Output<String> mutableDenseHashTable<
-      container,
-      shared_name,
-      use_node_name_sharing,
-      key_dtype,
-      value_dtype,
-      value_shape,
-      initial_num_buckets,
-      max_load_factor>(Output<container> emptyKey) {
+  Output mutableHashTableOfTensorsV2<key_dtype, value_dtype>(
+      {String container,
+      String sharedName,
+      bool useNodeNameSharing: false,
+      List valueShape}) {
     return addOperation(new OperationDescription(
-        'MutableDenseHashTable', 'MutableDenseHashTable', [emptyKey]));
-  }
-
-  Output<axis> oneHot<axis, T, TI>(Output<axis> indices, Output<int> depth,
-      Output<T> onValue, Output<TI> offValue) {
-    return addOperation(new OperationDescription(
-        'OneHot', 'OneHot', [indices, depth, onValue, offValue]));
-  }
-
-  Output<dynamic> mutableHashTableOfTensorsV2<container, shared_name,
-      use_node_name_sharing, key_dtype, value_dtype, value_shape>() {
-    return addOperation(new OperationDescription(
-        'MutableHashTableOfTensorsV2', 'MutableHashTableOfTensorsV2', []));
+        'MutableHashTableOfTensorsV2', 'MutableHashTableOfTensorsV2', [], {
+      'container': container,
+      'shared_name': sharedName,
+      'use_node_name_sharing': useNodeNameSharing,
+      'key_dtype': key_dtype,
+      'value_dtype': value_dtype,
+      'value_shape': valueShape
+    }));
   }
 
   Output<T> softplus<T>(Output<T> features) {
     return addOperation(
-        new OperationDescription('Softplus', 'Softplus', [features]));
+        new OperationDescription('Softplus', 'Softplus', [features], {'T': T}));
   }
 
-  Output<dynamic> mutableHashTableV2<container, shared_name,
-      use_node_name_sharing, key_dtype, value_dtype>() {
+  Output mutableHashTableV2<key_dtype, value_dtype>(
+      {String container, String sharedName, bool useNodeNameSharing: false}) {
     return addOperation(new OperationDescription(
-        'MutableHashTableV2', 'MutableHashTableV2', []));
+        'MutableHashTableV2', 'MutableHashTableV2', [], {
+      'container': container,
+      'shared_name': sharedName,
+      'use_node_name_sharing': useNodeNameSharing,
+      'key_dtype': key_dtype,
+      'value_dtype': value_dtype
+    }));
   }
 
   /// The input `tag` and `value` must have the scalars.
-  Output writeScalarSummary<T>(Output<dynamic> writer, Output<int> step,
-      Output<String> tag, Output<T> value) {
+  Output writeScalarSummary<T>(
+      Output writer, Output<int> step, Output<String> tag, Output<T> value) {
     return addOperation(new OperationDescription('WriteScalarSummary',
-        'WriteScalarSummary', [writer, step, tag, value]));
+        'WriteScalarSummary', [writer, step, tag, value], {'T': T}));
   }
 
-  Output<String> reduceJoin<keep_dims, separator>(
-      Output<String> inputs, Output<int> reductionIndices) {
+  Output<String> reduceJoin(Output<String> inputs, Output<int> reductionIndices,
+      {bool keepDims: false, String separator}) {
     return addOperation(new OperationDescription(
-        'ReduceJoin', 'ReduceJoin', [inputs, reductionIndices]));
-  }
-
-  Output<int> sparseConcat<concat_dim, N, T>(
-      Output<int> indices, Output<concat_dim> values, Output<int> shapes) {
-    return addOperation(new OperationDescription(
-        'SparseConcat', 'SparseConcat', [indices, values, shapes]));
+        'ReduceJoin',
+        'ReduceJoin',
+        [inputs, reductionIndices],
+        {'keep_dims': keepDims, 'separator': separator}));
   }
 
   Output<String> shardedFilespec(
       Output<String> basename, Output<int> numShards) {
     return addOperation(new OperationDescription(
-        'ShardedFilespec', 'ShardedFilespec', [basename, numShards]));
+        'ShardedFilespec', 'ShardedFilespec', [basename, numShards], {}));
   }
 
-  Output<dynamic> iFFT2D(Output<dynamic> input) {
-    return addOperation(new OperationDescription('IFFT2D', 'IFFT2D', [input]));
-  }
-
-  Output<dynamic> hashTableV2<container, shared_name, use_node_name_sharing,
-      key_dtype, value_dtype>() {
+  Output iFFT2D(Output input) {
     return addOperation(
-        new OperationDescription('HashTableV2', 'HashTableV2', []));
+        new OperationDescription('IFFT2D', 'IFFT2D', [input], {}));
   }
 
-  Output<String> hashTable<container, shared_name, use_node_name_sharing,
-      key_dtype, value_dtype>() {
-    return addOperation(new OperationDescription('HashTable', 'HashTable', []));
+  Output hashTableV2<key_dtype, value_dtype>(
+      {String container, String sharedName, bool useNodeNameSharing: false}) {
+    return addOperation(
+        new OperationDescription('HashTableV2', 'HashTableV2', [], {
+      'container': container,
+      'shared_name': sharedName,
+      'use_node_name_sharing': useNodeNameSharing,
+      'key_dtype': key_dtype,
+      'value_dtype': value_dtype
+    }));
   }
 
   Output<T> sparseDenseCwiseDiv<T>(Output<int> spIndices, Output<T> spValues,
       Output<int> spShape, Output<T> dense) {
-    return addOperation(new OperationDescription('SparseDenseCwiseDiv',
-        'SparseDenseCwiseDiv', [spIndices, spValues, spShape, dense]));
-  }
-
-  Output lookupTableImport<Tin, Tout>(
-      Output<String> tableHandle, Output<Tin> keys, Output<Tout> values) {
     return addOperation(new OperationDescription(
-        'LookupTableImport', 'LookupTableImport', [tableHandle, keys, values]));
+        'SparseDenseCwiseDiv',
+        'SparseDenseCwiseDiv',
+        [spIndices, spValues, spShape, dense],
+        {'T': T}));
   }
 
-  Output<Tkeys> lookupTableExportV2<Tkeys, Tvalues>(
-      Output<dynamic> tableHandle) {
+  Output assignVariableOp<dtype>(Output resource, Output<dtype> value) {
+    return addOperation(new OperationDescription('AssignVariableOp',
+        'AssignVariableOp', [resource, value], {'dtype': dtype}));
+  }
+
+  Output<out_type> variableShape<out_type>(Output input) {
     return addOperation(new OperationDescription(
-        'LookupTableExportV2', 'LookupTableExportV2', [tableHandle]));
+        'VariableShape', 'VariableShape', [input], {'out_type': out_type}));
   }
 
-  Output assignVariableOp<dtype>(
-      Output<dynamic> resource, Output<dtype> value) {
-    return addOperation(new OperationDescription(
-        'AssignVariableOp', 'AssignVariableOp', [resource, value]));
-  }
-
-  Output<int> lookupTableSize(Output<String> tableHandle) {
-    return addOperation(new OperationDescription(
-        'LookupTableSize', 'LookupTableSize', [tableHandle]));
-  }
-
-  Output lookupTableInsert<Tin, Tout>(
-      Output<String> tableHandle, Output<Tin> keys, Output<Tout> values) {
-    return addOperation(new OperationDescription(
-        'LookupTableInsert', 'LookupTableInsert', [tableHandle, keys, values]));
-  }
-
-  Output initializeTable<Tkey, Tval>(
-      Output<String> tableHandle, Output<Tkey> keys, Output<Tval> values) {
-    return addOperation(new OperationDescription(
-        'InitializeTable', 'InitializeTable', [tableHandle, keys, values]));
-  }
-
-  Output<out_type> variableShape<out_type>(Output<dynamic> input) {
-    return addOperation(
-        new OperationDescription('VariableShape', 'VariableShape', [input]));
-  }
-
-  Output<dynamic> tensorListReserve<element_dtype, shape_type>(
+  Output tensorListReserve<element_dtype, shape_type>(
       Output<element_dtype> elementShape, Output<int> numElements) {
     return addOperation(new OperationDescription(
-        'TensorListReserve', 'TensorListReserve', [elementShape, numElements]));
+        'TensorListReserve',
+        'TensorListReserve',
+        [elementShape, numElements],
+        {'element_dtype': element_dtype, 'shape_type': shape_type}));
   }
 
-  Output<shape_type> tensorListElementShape<shape_type>(
-      Output<dynamic> inputHandle) {
+  Output<shape_type> tensorListElementShape<shape_type>(Output inputHandle) {
+    return addOperation(new OperationDescription('TensorListElementShape',
+        'TensorListElementShape', [inputHandle], {'shape_type': shape_type}));
+  }
+
+  Output<element_dtype> tensorListStack<element_dtype>(Output inputHandle,
+      {int numElements: -1}) {
     return addOperation(new OperationDescription(
-        'TensorListElementShape', 'TensorListElementShape', [inputHandle]));
+        'TensorListStack',
+        'TensorListStack',
+        [inputHandle],
+        {'element_dtype': element_dtype, 'num_elements': numElements}));
   }
 
-  Output<element_dtype> tensorListStack<element_dtype, num_elements>(
-      Output<dynamic> inputHandle) {
-    return addOperation(new OperationDescription(
-        'TensorListStack', 'TensorListStack', [inputHandle]));
-  }
-
-  Output<dynamic> emptyTensorList<element_dtype, shape_type>(
+  Output emptyTensorList<element_dtype, shape_type>(
       Output<element_dtype> elementShape) {
     return addOperation(new OperationDescription(
-        'EmptyTensorList', 'EmptyTensorList', [elementShape]));
+        'EmptyTensorList',
+        'EmptyTensorList',
+        [elementShape],
+        {'element_dtype': element_dtype, 'shape_type': shape_type}));
   }
 
-  Output<T> batchMatrixSolveLs<T, fast>(
-      Output<T> matrix, Output<fast> rhs, Output<dynamic> l2Regularizer) {
-    return addOperation(new OperationDescription('BatchMatrixSolveLs',
-        'BatchMatrixSolveLs', [matrix, rhs, l2Regularizer]));
-  }
-
-  Output<Ncontext_sparse> parseSingleSequenceExample<
-          Ncontext_sparse,
-          Ncontext_dense,
-          Nfeature_list_sparse,
-          Nfeature_list_dense,
-          context_sparse_types,
-          Tcontext_dense,
-          feature_list_dense_types,
-          context_dense_shapes,
-          feature_list_sparse_types,
-          feature_list_dense_shapes>(
-      Output<String> serialized,
-      Output<String> featureListDenseMissingAssumedEmpty,
-      Output<String> contextSparseKeys,
-      Output<String> contextDenseKeys,
-      Output<String> featureListSparseKeys,
-      Output<String> featureListDenseKeys,
-      Output<Ncontext_sparse> contextDenseDefaults,
-      Output<String> debugName) {
+  @Deprecated('DEPRECATED at GraphDef version 13: Use MatrixSolveLs instead.')
+  Output<T> batchMatrixSolveLs<T>(
+      Output<T> matrix, Output<T> rhs, Output l2Regularizer,
+      {bool fast: true}) {
     return addOperation(new OperationDescription(
-        'ParseSingleSequenceExample', 'ParseSingleSequenceExample', [
-      serialized,
-      featureListDenseMissingAssumedEmpty,
-      contextSparseKeys,
-      contextDenseKeys,
-      featureListSparseKeys,
-      featureListDenseKeys,
-      contextDenseDefaults,
-      debugName
-    ]));
-  }
-
-  Output<Tkeys> lookupTableExport<Tkeys, Tvalues>(Output<String> tableHandle) {
-    return addOperation(new OperationDescription(
-        'LookupTableExport', 'LookupTableExport', [tableHandle]));
+        'BatchMatrixSolveLs',
+        'BatchMatrixSolveLs',
+        [matrix, rhs, l2Regularizer],
+        {'T': T, 'fast': fast}));
   }
 
   Output<Tparams> gatherV2<Tparams, Tindices, Taxis>(
-      Output<Tparams> params, Output<Tindices> indices, Output<Taxis> axis) {
+      Output<Tparams> params, Output<Tparams> indices, Output<Tparams> axis) {
     return addOperation(new OperationDescription(
-        'GatherV2', 'GatherV2', [params, indices, axis]));
+        'GatherV2',
+        'GatherV2',
+        [params, indices, axis],
+        {'Tparams': Tparams, 'Tindices': Tindices, 'Taxis': Taxis}));
   }
 
-  Output<compute_uv> batchSvd<compute_uv, full_matrices, T>(
-      Output<compute_uv> input) {
-    return addOperation(
-        new OperationDescription('BatchSvd', 'BatchSvd', [input]));
+  @Deprecated('DEPRECATED at GraphDef version 13: Use MatrixSolve instead.')
+  Output<T> batchMatrixSolve<T>(Output<T> matrix, Output<T> rhs,
+      {bool adjoint: false}) {
+    return addOperation(new OperationDescription('BatchMatrixSolve',
+        'BatchMatrixSolve', [matrix, rhs], {'adjoint': adjoint, 'T': T}));
   }
 
-  Output<adjoint> batchMatrixSolve<adjoint, T>(
-      Output<adjoint> matrix, Output<T> rhs) {
-    return addOperation(new OperationDescription(
-        'BatchMatrixSolve', 'BatchMatrixSolve', [matrix, rhs]));
-  }
-
-  Output<T> applyProximalAdagrad<T, use_locking>(
-      Output<T> var_,
-      Output<use_locking> accum,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> grad) {
-    return addOperation(new OperationDescription('ApplyProximalAdagrad',
-        'ApplyProximalAdagrad', [var_, accum, lr, l1, l2, grad]));
-  }
-
-  Output<T> sparseSegmentMeanGrad<T, Tidx>(Output<T> grad, Output<Tidx> indices,
+  Output<T> sparseSegmentMeanGrad<T, Tidx>(Output<T> grad, Output<T> indices,
       Output<int> segmentIds, Output<int> outputDim0) {
-    return addOperation(new OperationDescription('SparseSegmentMeanGrad',
-        'SparseSegmentMeanGrad', [grad, indices, segmentIds, outputDim0]));
-  }
-
-  Output<compute_uv> svd<compute_uv, full_matrices, T>(
-      Output<compute_uv> input) {
-    return addOperation(new OperationDescription('Svd', 'Svd', [input]));
-  }
-
-  Output<full_matrices> qr<full_matrices, T>(Output<full_matrices> input) {
-    return addOperation(new OperationDescription('Qr', 'Qr', [input]));
-  }
-
-  Output<int> sparseCross<N, hashed_output, num_buckets, hash_key, sparse_types,
-          dense_types, out_type, internal_type>(Output<int> indices,
-      Output<N> values, Output<int> shapes, Output<hashed_output> denseInputs) {
     return addOperation(new OperationDescription(
-        'SparseCross', 'SparseCross', [indices, values, shapes, denseInputs]));
+        'SparseSegmentMeanGrad',
+        'SparseSegmentMeanGrad',
+        [grad, indices, segmentIds, outputDim0],
+        {'T': T, 'Tidx': Tidx}));
   }
 
-  Output<N> pack<N, T, axis>(Output<N> values) {
-    return addOperation(new OperationDescription('Pack', 'Pack', [values]));
-  }
-
-  Output barrierClose<cancel_pending_enqueues>(Output<String> handle) {
-    return addOperation(
-        new OperationDescription('BarrierClose', 'BarrierClose', [handle]));
-  }
-
-  Output<compute_v> selfAdjointEigV2<compute_v, T>(Output<compute_v> input) {
+  Output<T> pack<T>(List<Output<T>> values, {@required int n, int axis: 0}) {
     return addOperation(new OperationDescription(
-        'SelfAdjointEigV2', 'SelfAdjointEigV2', [input]));
+        'Pack', 'Pack', [values], {'N': n, 'T': T, 'axis': axis}));
   }
 
   Output<T> choleskyGrad<T>(Output<T> l, Output<T> grad) {
-    return addOperation(
-        new OperationDescription('CholeskyGrad', 'CholeskyGrad', [l, grad]));
-  }
-
-  Output<double> quantizedConcat<N, T>(Output<int> concatDim, Output<N> values,
-      Output<double> inputMins, Output<double> inputMaxes) {
-    return addOperation(new OperationDescription('QuantizedConcat',
-        'QuantizedConcat', [concatDim, values, inputMins, inputMaxes]));
+    return addOperation(new OperationDescription(
+        'CholeskyGrad', 'CholeskyGrad', [l, grad], {'T': T}));
   }
 
   Output<Tparams> gatherNd<Tparams, Tindices>(
-      Output<Tparams> params, Output<Tindices> indices) {
-    return addOperation(
-        new OperationDescription('GatherNd', 'GatherNd', [params, indices]));
+      Output<Tparams> params, Output<Tparams> indices) {
+    return addOperation(new OperationDescription('GatherNd', 'GatherNd',
+        [params, indices], {'Tparams': Tparams, 'Tindices': Tindices}));
   }
 
-  Output<T> maxPool<T, ksize, strides, padding, data_format>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('MaxPool', 'MaxPool', [input]));
-  }
-
-  Output orderedMapClear<capacity, memory_limit, dtypes, container,
-      shared_name>() {
-    return addOperation(
-        new OperationDescription('OrderedMapClear', 'OrderedMapClear', []));
-  }
-
-  Output queueCloseV2<cancel_pending_enqueues>(Output<dynamic> handle) {
-    return addOperation(
-        new OperationDescription('QueueCloseV2', 'QueueCloseV2', [handle]));
+  Output queueCloseV2(Output handle, {bool cancelPendingEnqueues: false}) {
+    return addOperation(new OperationDescription('QueueCloseV2', 'QueueCloseV2',
+        [handle], {'cancel_pending_enqueues': cancelPendingEnqueues}));
   }
 
   Output<T> matrixExponential<T>(Output<T> input) {
     return addOperation(new OperationDescription(
-        'MatrixExponential', 'MatrixExponential', [input]));
+        'MatrixExponential', 'MatrixExponential', [input], {'T': T}));
   }
 
   Output<T> matrixDeterminant<T>(Output<T> input) {
     return addOperation(new OperationDescription(
-        'MatrixDeterminant', 'MatrixDeterminant', [input]));
+        'MatrixDeterminant', 'MatrixDeterminant', [input], {'T': T}));
   }
 
   Output<T> shape<T, out_type>(Output<T> input) {
-    return addOperation(new OperationDescription('Shape', 'Shape', [input]));
+    return addOperation(new OperationDescription(
+        'Shape', 'Shape', [input], {'T': T, 'out_type': out_type}));
   }
 
   Output<T> asinh<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Asinh', 'Asinh', [x]));
+    return addOperation(
+        new OperationDescription('Asinh', 'Asinh', [x], {'T': T}));
   }
 
-  Output<Tin> lookupTableFindV2<Tin, Tout>(Output<dynamic> tableHandle,
-      Output<Tin> keys, Output<Tout> defaultValue) {
-    return addOperation(new OperationDescription('LookupTableFindV2',
-        'LookupTableFindV2', [tableHandle, keys, defaultValue]));
+  Output<Tin> lookupTableFindV2<Tin, Tout>(
+      Output tableHandle, Output<Tin> keys, Output<Tin> defaultValue) {
+    return addOperation(new OperationDescription(
+        'LookupTableFindV2',
+        'LookupTableFindV2',
+        [tableHandle, keys, defaultValue],
+        {'Tin': Tin, 'Tout': Tout}));
   }
 
   Output<int> where<T>(Output<T> input) {
-    return addOperation(new OperationDescription('Where', 'Where', [input]));
+    return addOperation(
+        new OperationDescription('Where', 'Where', [input], {'T': T}));
   }
 
-  Output<T> applyFtrlV2<T, use_locking>(
-      Output<T> var_,
-      Output<use_locking> accum,
-      Output<use_locking> linear,
-      Output<use_locking> grad,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> l2Shrinkage,
-      Output<use_locking> lrPower) {
-    return addOperation(new OperationDescription('ApplyFtrlV2', 'ApplyFtrlV2',
-        [var_, accum, linear, grad, lr, l1, l2, l2Shrinkage, lrPower]));
-  }
-
+  @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayCloseV3')
   Output tensorArrayCloseV2(Output<String> handle) {
     return addOperation(new OperationDescription(
-        'TensorArrayCloseV2', 'TensorArrayCloseV2', [handle]));
+        'TensorArrayCloseV2', 'TensorArrayCloseV2', [handle], {}));
   }
 
-  Output<ksize> avgPool3DGrad<ksize, strides, padding, data_format, T>(
-      Output<int> origInputShape, Output<ksize> grad) {
+  Output<String> audioSummaryV2(
+      Output<String> tag, Output<double> tensor, Output<double> sampleRate,
+      {int maxOutputs: 3}) {
     return addOperation(new OperationDescription(
-        'AvgPool3DGrad', 'AvgPool3DGrad', [origInputShape, grad]));
+        'AudioSummaryV2',
+        'AudioSummaryV2',
+        [tag, tensor, sampleRate],
+        {'max_outputs': maxOutputs}));
   }
 
-  Output readerReset(Output<String> readerHandle) {
-    return addOperation(
-        new OperationDescription('ReaderReset', 'ReaderReset', [readerHandle]));
-  }
-
-  Output<int> sparseSlice<T>(Output<int> indices, Output<T> values,
-      Output<int> shape, Output<int> start, Output<int> size) {
-    return addOperation(new OperationDescription(
-        'SparseSlice', 'SparseSlice', [indices, values, shape, start, size]));
-  }
-
-  Output<ksize> avgPool<ksize, strides, padding, data_format, T>(
-      Output<ksize> value) {
-    return addOperation(
-        new OperationDescription('AvgPool', 'AvgPool', [value]));
-  }
-
-  Output<String> audioSummaryV2<max_outputs>(
-      Output<String> tag, Output<double> tensor, Output<double> sampleRate) {
-    return addOperation(new OperationDescription(
-        'AudioSummaryV2', 'AudioSummaryV2', [tag, tensor, sampleRate]));
-  }
-
+  @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayReadV3')
   Output<dtype> tensorArrayReadV2<dtype>(
       Output<String> handle, Output<int> index, Output<double> flowIn) {
+    return addOperation(new OperationDescription('TensorArrayReadV2',
+        'TensorArrayReadV2', [handle, index, flowIn], {'dtype': dtype}));
+  }
+
+  Output readerRestoreStateV2(Output readerHandle, Output<String> state) {
+    return addOperation(new OperationDescription('ReaderRestoreStateV2',
+        'ReaderRestoreStateV2', [readerHandle, state], {}));
+  }
+
+  Output<int> setSize<T>(
+      Output<int> setIndices, Output<T> setValues, Output<int> setShape,
+      {bool validateIndices: true}) {
     return addOperation(new OperationDescription(
-        'TensorArrayReadV2', 'TensorArrayReadV2', [handle, index, flowIn]));
+        'SetSize',
+        'SetSize',
+        [setIndices, setValues, setShape],
+        {'validate_indices': validateIndices, 'T': T}));
   }
 
-  Output<capacity>
-      stagePeek<capacity, memory_limit, dtypes, container, shared_name>(
-          Output<int> index) {
-    return addOperation(
-        new OperationDescription('StagePeek', 'StagePeek', [index]));
-  }
-
-  Output readerRestoreStateV2(
-      Output<dynamic> readerHandle, Output<String> state) {
-    return addOperation(new OperationDescription(
-        'ReaderRestoreStateV2', 'ReaderRestoreStateV2', [readerHandle, state]));
-  }
-
-  Output<int> setSize<validate_indices, T>(Output<int> setIndices,
-      Output<validate_indices> setValues, Output<int> setShape) {
-    return addOperation(new OperationDescription(
-        'SetSize', 'SetSize', [setIndices, setValues, setShape]));
-  }
-
+  @Deprecated('DEPRECATED at GraphDef version 13: Use Cholesky instead.')
   Output<T> batchCholesky<T>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('BatchCholesky', 'BatchCholesky', [input]));
-  }
-
-  Output<dtype> tensorArrayGather<dtype, element_shape>(
-      Output<String> handle, Output<int> indices, Output<double> flowIn) {
     return addOperation(new OperationDescription(
-        'TensorArrayGather', 'TensorArrayGather', [handle, indices, flowIn]));
+        'BatchCholesky', 'BatchCholesky', [input], {'T': T}));
   }
 
-  Output<double> resizeArea<T, align_corners>(
-      Output<T> images, Output<int> size) {
-    return addOperation(
-        new OperationDescription('ResizeArea', 'ResizeArea', [images, size]));
+  Output<double> resizeArea<T>(Output<T> images, Output<int> size,
+      {bool alignCorners: false}) {
+    return addOperation(new OperationDescription('ResizeArea', 'ResizeArea',
+        [images, size], {'T': T, 'align_corners': alignCorners}));
   }
 
-  Output readerRestoreState(Output<String> readerHandle, Output<String> state) {
+  Output<T> matrixTriangularSolve<T>(Output<T> matrix, Output<T> rhs,
+      {bool lower: true, bool adjoint: false}) {
     return addOperation(new OperationDescription(
-        'ReaderRestoreState', 'ReaderRestoreState', [readerHandle, state]));
-  }
-
-  Output<String> readerSerializeState(Output<String> readerHandle) {
-    return addOperation(new OperationDescription(
-        'ReaderSerializeState', 'ReaderSerializeState', [readerHandle]));
-  }
-
-  Output<lower> matrixTriangularSolve<lower, adjoint, T>(
-      Output<lower> matrix, Output<adjoint> rhs) {
-    return addOperation(new OperationDescription(
-        'MatrixTriangularSolve', 'MatrixTriangularSolve', [matrix, rhs]));
-  }
-
-  Output<String> readerRead(
-      Output<String> readerHandle, Output<String> queueHandle) {
-    return addOperation(new OperationDescription(
-        'ReaderRead', 'ReaderRead', [readerHandle, queueHandle]));
+        'MatrixTriangularSolve',
+        'MatrixTriangularSolve',
+        [matrix, rhs],
+        {'lower': lower, 'adjoint': adjoint, 'T': T}));
   }
 
   Output<T> select<T>(Output<bool> condition, Output<T> t, Output<T> e) {
-    return addOperation(
-        new OperationDescription('Select', 'Select', [condition, t, e]));
-  }
-
-  Output<T> sparseAddGrad<T>(Output<T> backpropValGrad, Output<int> aIndices,
-      Output<int> bIndices, Output<int> sumIndices) {
-    return addOperation(new OperationDescription('SparseAddGrad',
-        'SparseAddGrad', [backpropValGrad, aIndices, bIndices, sumIndices]));
+    return addOperation(new OperationDescription(
+        'Select', 'Select', [condition, t, e], {'T': T}));
   }
 
   Output<T> log<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Log', 'Log', [x]));
+    return addOperation(new OperationDescription('Log', 'Log', [x], {'T': T}));
   }
 
-  Output<double> iRFFT2D(Output<dynamic> input, Output<int> fftLength) {
+  Output<double> iRFFT2D(Output input, Output<int> fftLength) {
     return addOperation(
-        new OperationDescription('IRFFT2D', 'IRFFT2D', [input, fftLength]));
+        new OperationDescription('IRFFT2D', 'IRFFT2D', [input, fftLength], {}));
   }
 
-  Output<dynamic> mutableDenseHashTableV2<
-      container,
-      shared_name,
-      use_node_name_sharing,
-      key_dtype,
-      value_dtype,
-      value_shape,
-      initial_num_buckets,
-      max_load_factor>(Output<container> emptyKey) {
+  Output mutableDenseHashTableV2<key_dtype, value_dtype>(
+      Output<key_dtype> emptyKey,
+      {String container,
+      String sharedName,
+      bool useNodeNameSharing: false,
+      List valueShape,
+      int initialNumBuckets: 131072,
+      double maxLoadFactor: 0.800000011920929}) {
     return addOperation(new OperationDescription(
-        'MutableDenseHashTableV2', 'MutableDenseHashTableV2', [emptyKey]));
+        'MutableDenseHashTableV2', 'MutableDenseHashTableV2', [
+      emptyKey
+    ], {
+      'container': container,
+      'shared_name': sharedName,
+      'use_node_name_sharing': useNodeNameSharing,
+      'key_dtype': key_dtype,
+      'value_dtype': value_dtype,
+      'value_shape': valueShape,
+      'initial_num_buckets': initialNumBuckets,
+      'max_load_factor': maxLoadFactor
+    }));
   }
 
-  Output<String> fixedLengthRecordReader<header_bytes, record_bytes,
-      footer_bytes, hop_bytes, container, shared_name>() {
-    return addOperation(new OperationDescription(
-        'FixedLengthRecordReader', 'FixedLengthRecordReader', []));
-  }
-
-  Output<String> recordInput<
-      file_pattern,
-      file_random_seed,
-      file_shuffle_shift_ratio,
-      file_buffer_size,
-      file_parallelism,
-      batch_size,
-      compression_type>() {
+  Output<String> recordInput(
+      {@required String filePattern,
+      int fileRandomSeed: 301,
+      double fileShuffleShiftRatio: 0.0,
+      int fileBufferSize: 10000,
+      int fileParallelism: 16,
+      int batchSize: 32,
+      String compressionType}) {
     return addOperation(
-        new OperationDescription('RecordInput', 'RecordInput', []));
+        new OperationDescription('RecordInput', 'RecordInput', [], {
+      'file_pattern': filePattern,
+      'file_random_seed': fileRandomSeed,
+      'file_shuffle_shift_ratio': fileShuffleShiftRatio,
+      'file_buffer_size': fileBufferSize,
+      'file_parallelism': fileParallelism,
+      'batch_size': batchSize,
+      'compression_type': compressionType
+    }));
   }
 
-  Output<String> textLineReader<skip_header_lines, container, shared_name>() {
-    return addOperation(
-        new OperationDescription('TextLineReader', 'TextLineReader', []));
-  }
-
-  Output<dt> restoreSlice<dt, preferred_shard>(Output<String> filePattern,
-      Output<String> tensorName, Output<String> shapeAndSlice) {
-    return addOperation(new OperationDescription('RestoreSlice', 'RestoreSlice',
-        [filePattern, tensorName, shapeAndSlice]));
-  }
-
-  Output save<T>(
-      Output<String> filename, Output<String> tensorNames, Output<T> data) {
+  Output<dt> restoreSlice<dt>(Output<String> filePattern,
+      Output<String> tensorName, Output<String> shapeAndSlice,
+      {int preferredShard: -1}) {
     return addOperation(new OperationDescription(
-        'Save', 'Save', [filename, tensorNames, data]));
-  }
-
-  Output<T> refExit<T>(Output<T> data) {
-    return addOperation(new OperationDescription('RefExit', 'RefExit', [data]));
+        'RestoreSlice',
+        'RestoreSlice',
+        [filePattern, tensorName, shapeAndSlice],
+        {'dt': dt, 'preferred_shard': preferredShard}));
   }
 
   Output<bool> notEqual<T>(Output<T> x, Output<T> y) {
     return addOperation(
-        new OperationDescription('NotEqual', 'NotEqual', [x, y]));
+        new OperationDescription('NotEqual', 'NotEqual', [x, y], {'T': T}));
   }
 
-  Output<int> nonMaxSuppression<iou_threshold>(
-      Output<double> boxes, Output<double> scores, Output<int> maxOutputSize) {
-    return addOperation(new OperationDescription('NonMaxSuppression',
-        'NonMaxSuppression', [boxes, scores, maxOutputSize]));
-  }
-
-  Output<dynamic>
-      fIFOQueueV2<component_types, shapes, capacity, container, shared_name>() {
-    return addOperation(
-        new OperationDescription('FIFOQueueV2', 'FIFOQueueV2', []));
+  Output<int> nonMaxSuppression(
+      Output<double> boxes, Output<double> scores, Output<int> maxOutputSize,
+      {double iouThreshold: 0.5}) {
+    return addOperation(new OperationDescription(
+        'NonMaxSuppression',
+        'NonMaxSuppression',
+        [boxes, scores, maxOutputSize],
+        {'iou_threshold': iouThreshold}));
   }
 
   Output<T> batchToSpaceND<T, Tblock_shape, Tcrops>(
-      Output<T> input, Output<Tblock_shape> blockShape, Output<Tcrops> crops) {
+      Output<T> input, Output<T> blockShape, Output<T> crops) {
     return addOperation(new OperationDescription(
-        'BatchToSpaceND', 'BatchToSpaceND', [input, blockShape, crops]));
+        'BatchToSpaceND',
+        'BatchToSpaceND',
+        [input, blockShape, crops],
+        {'T': T, 'Tblock_shape': Tblock_shape, 'Tcrops': Tcrops}));
   }
 
-  Output<double> cropAndResizeGradBoxes<T, method>(Output<double> grads,
-      Output<T> image, Output<double> boxes, Output<int> boxInd) {
-    return addOperation(new OperationDescription('CropAndResizeGradBoxes',
-        'CropAndResizeGradBoxes', [grads, image, boxes, boxInd]));
+  Output<double> cropAndResizeGradBoxes<T>(Output<double> grads,
+      Output<T> image, Output<double> boxes, Output<int> boxInd,
+      {String method: 'bilinear'}) {
+    return addOperation(new OperationDescription(
+        'CropAndResizeGradBoxes',
+        'CropAndResizeGradBoxes',
+        [grads, image, boxes, boxInd],
+        {'T': T, 'method': method}));
   }
 
-  Output<double> extractGlimpse<centered, normalized, uniform_noise>(
-      Output<double> input, Output<int> size, Output<double> offsets) {
+  Output<double> extractGlimpse(
+      Output<double> input, Output<int> size, Output<double> offsets,
+      {bool centered: true, bool normalized: true, bool uniformNoise: true}) {
     return addOperation(new OperationDescription(
-        'ExtractGlimpse', 'ExtractGlimpse', [input, size, offsets]));
+        'ExtractGlimpse', 'ExtractGlimpse', [
+      input,
+      size,
+      offsets
+    ], {
+      'centered': centered,
+      'normalized': normalized,
+      'uniform_noise': uniformNoise
+    }));
   }
 
   Output<T> rightShift<T>(Output<T> x, Output<T> y) {
     return addOperation(
-        new OperationDescription('RightShift', 'RightShift', [x, y]));
+        new OperationDescription('RightShift', 'RightShift', [x, y], {'T': T}));
   }
 
-  Output<dynamic> decodeBmp<channels>(Output<String> contents) {
-    return addOperation(
-        new OperationDescription('DecodeBmp', 'DecodeBmp', [contents]));
+  Output decodeBmp(Output<String> contents, {int channels: 0}) {
+    return addOperation(new OperationDescription(
+        'DecodeBmp', 'DecodeBmp', [contents], {'channels': channels}));
   }
 
-  Output<double> sampleDistortedBoundingBox<
-          T,
-          seed,
-          seed2,
-          min_object_covered,
-          aspect_ratio_range,
-          area_range,
-          max_attempts,
-          use_image_if_no_bounding_boxes>(
-      Output<T> imageSize, Output<double> boundingBoxes) {
-    return addOperation(new OperationDescription('SampleDistortedBoundingBox',
-        'SampleDistortedBoundingBox', [imageSize, boundingBoxes]));
-  }
-
+  @Deprecated(
+      'DEPRECATED at GraphDef version 13: Use MatrixDeterminant instead.')
   Output<T> batchMatrixDeterminant<T>(Output<T> input) {
     return addOperation(new OperationDescription(
-        'BatchMatrixDeterminant', 'BatchMatrixDeterminant', [input]));
+        'BatchMatrixDeterminant', 'BatchMatrixDeterminant', [input], {'T': T}));
   }
 
-  Output<component_types> queueDequeueUpToV2<component_types, timeout_ms>(
-      Output<dynamic> handle, Output<int> n) {
-    return addOperation(new OperationDescription(
-        'QueueDequeueUpToV2', 'QueueDequeueUpToV2', [handle, n]));
-  }
-
-  Output<dynamic> batchIFFT(Output<dynamic> input) {
+  @Deprecated('DEPRECATED at GraphDef version 15: Use IFFT')
+  Output batchIFFT(Output input) {
     return addOperation(
-        new OperationDescription('BatchIFFT', 'BatchIFFT', [input]));
+        new OperationDescription('BatchIFFT', 'BatchIFFT', [input], {}));
   }
 
-  Output<T> listDiff<T, out_idx>(Output<T> x, Output<out_idx> y) {
-    return addOperation(
-        new OperationDescription('ListDiff', 'ListDiff', [x, y]));
-  }
-
+  @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayScatterV3')
   Output<double> tensorArrayScatterV2<T>(Output<String> handle,
       Output<int> indices, Output<T> value, Output<double> flowIn) {
     return addOperation(new OperationDescription('TensorArrayScatterV2',
-        'TensorArrayScatterV2', [handle, indices, value, flowIn]));
+        'TensorArrayScatterV2', [handle, indices, value, flowIn], {'T': T}));
   }
 
   Output<T> rGBToHSV<T>(Output<T> images) {
     return addOperation(
-        new OperationDescription('RGBToHSV', 'RGBToHSV', [images]));
+        new OperationDescription('RGBToHSV', 'RGBToHSV', [images], {'T': T}));
   }
 
-  Output<dynamic> decodeGif(Output<String> contents) {
+  Output decodeGif(Output<String> contents) {
     return addOperation(
-        new OperationDescription('DecodeGif', 'DecodeGif', [contents]));
+        new OperationDescription('DecodeGif', 'DecodeGif', [contents], {}));
   }
 
-  Output assignSubVariableOp<dtype>(
-      Output<dynamic> resource, Output<dtype> value) {
-    return addOperation(new OperationDescription(
-        'AssignSubVariableOp', 'AssignSubVariableOp', [resource, value]));
-  }
-
-  Output<T> fusedBatchNormGrad<T, epsilon, data_format, is_training>(
-      Output<T> yBackprop,
-      Output<epsilon> x,
-      Output<data_format> scale,
-      Output<is_training> reserveSpace1,
-      Output<is_training> reserveSpace2) {
-    return addOperation(new OperationDescription(
-        'FusedBatchNormGrad',
-        'FusedBatchNormGrad',
-        [yBackprop, x, scale, reserveSpace1, reserveSpace2]));
+  Output assignSubVariableOp<dtype>(Output resource, Output<dtype> value) {
+    return addOperation(new OperationDescription('AssignSubVariableOp',
+        'AssignSubVariableOp', [resource, value], {'dtype': dtype}));
   }
 
   Output<Tidx> unravelIndex<Tidx>(Output<Tidx> indices, Output<Tidx> dims) {
     return addOperation(new OperationDescription(
-        'UnravelIndex', 'UnravelIndex', [indices, dims]));
+        'UnravelIndex', 'UnravelIndex', [indices, dims], {'Tidx': Tidx}));
   }
 
-  Output<OUT_TYPE> decodeCSV<OUT_TYPE, field_delim, use_quote_delim, na_value>(
-      Output<String> records, Output<OUT_TYPE> recordDefaults) {
-    return addOperation(new OperationDescription(
-        'DecodeCSV', 'DecodeCSV', [records, recordDefaults]));
+  Output<T> enter<T>(Output<T> data,
+      {@required String frameName,
+      bool isConstant: false,
+      int parallelIterations: 10}) {
+    return addOperation(new OperationDescription('Enter', 'Enter', [
+      data
+    ], {
+      'T': T,
+      'frame_name': frameName,
+      'is_constant': isConstant,
+      'parallel_iterations': parallelIterations
+    }));
   }
 
-  Output<T> enter<T, frame_name, is_constant, parallel_iterations>(
-      Output<T> data) {
-    return addOperation(new OperationDescription('Enter', 'Enter', [data]));
-  }
-
-  Output<String> encodePng<compression, T>(Output<compression> image) {
-    return addOperation(
-        new OperationDescription('EncodePng', 'EncodePng', [image]));
+  Output<String> encodePng<T>(Output<T> image, {int compression: -1}) {
+    return addOperation(new OperationDescription('EncodePng', 'EncodePng',
+        [image], {'compression': compression, 'T': T}));
   }
 
   Output<T> serializeManySparse<T, out_type>(Output<int> sparseIndices,
       Output<T> sparseValues, Output<int> sparseShape) {
-    return addOperation(new OperationDescription('SerializeManySparse',
-        'SerializeManySparse', [sparseIndices, sparseValues, sparseShape]));
+    return addOperation(new OperationDescription(
+        'SerializeManySparse',
+        'SerializeManySparse',
+        [sparseIndices, sparseValues, sparseShape],
+        {'T': T, 'out_type': out_type}));
   }
 
-  Output<dynamic> tensorListFromTensor<element_dtype, shape_type>(
-      Output<element_dtype> tensor, Output<shape_type> elementShape) {
-    return addOperation(new OperationDescription('TensorListFromTensor',
-        'TensorListFromTensor', [tensor, elementShape]));
+  Output tensorListFromTensor<element_dtype, shape_type>(
+      Output<element_dtype> tensor, Output<element_dtype> elementShape) {
+    return addOperation(new OperationDescription(
+        'TensorListFromTensor',
+        'TensorListFromTensor',
+        [tensor, elementShape],
+        {'element_dtype': element_dtype, 'shape_type': shape_type}));
   }
 
   Output<double> adjustSaturation(Output<double> images, Output<double> scale) {
     return addOperation(new OperationDescription(
-        'AdjustSaturation', 'AdjustSaturation', [images, scale]));
+        'AdjustSaturation', 'AdjustSaturation', [images, scale], {}));
   }
 
   Output<double> adjustContrastv2(
       Output<double> images, Output<double> contrastFactor) {
     return addOperation(new OperationDescription(
-        'AdjustContrastv2', 'AdjustContrastv2', [images, contrastFactor]));
+        'AdjustContrastv2', 'AdjustContrastv2', [images, contrastFactor], {}));
   }
 
   Output<output_type> extractJpegShape<output_type>(Output<String> contents) {
-    return addOperation(new OperationDescription(
-        'ExtractJpegShape', 'ExtractJpegShape', [contents]));
+    return addOperation(new OperationDescription('ExtractJpegShape',
+        'ExtractJpegShape', [contents], {'output_type': output_type}));
   }
 
-  Output<int> tensorArrayConcat<dtype, element_shape_except0>(
-      Output<String> handle, Output<double> flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayConcat', 'TensorArrayConcat', [handle, flowIn]));
-  }
-
-  Output<dynamic> decodeAndCropJpeg<
-      channels,
-      ratio,
-      fancy_upscaling,
-      try_recover_truncated,
-      acceptable_fraction,
-      dct_method>(Output<String> contents, Output<int> cropWindow) {
-    return addOperation(new OperationDescription(
-        'DecodeAndCropJpeg', 'DecodeAndCropJpeg', [contents, cropWindow]));
-  }
-
-  Output<dynamic> decodeJpeg<
-      channels,
-      ratio,
-      fancy_upscaling,
-      try_recover_truncated,
-      acceptable_fraction,
-      dct_method>(Output<String> contents) {
+  Output decodeAndCropJpeg(Output<String> contents, Output<int> cropWindow,
+      {int channels: 0,
+      int ratio: 1,
+      bool fancyUpscaling: true,
+      bool tryRecoverTruncated: false,
+      double acceptableFraction: 1.0,
+      String dctMethod}) {
     return addOperation(
-        new OperationDescription('DecodeJpeg', 'DecodeJpeg', [contents]));
+        new OperationDescription('DecodeAndCropJpeg', 'DecodeAndCropJpeg', [
+      contents,
+      cropWindow
+    ], {
+      'channels': channels,
+      'ratio': ratio,
+      'fancy_upscaling': fancyUpscaling,
+      'try_recover_truncated': tryRecoverTruncated,
+      'acceptable_fraction': acceptableFraction,
+      'dct_method': dctMethod
+    }));
   }
 
-  Output<int> orderedMapIncompleteSize<capacity, memory_limit, dtypes,
-      container, shared_name>() {
-    return addOperation(new OperationDescription(
-        'OrderedMapIncompleteSize', 'OrderedMapIncompleteSize', []));
+  Output decodeJpeg(Output<String> contents,
+      {int channels: 0,
+      int ratio: 1,
+      bool fancyUpscaling: true,
+      bool tryRecoverTruncated: false,
+      double acceptableFraction: 1.0,
+      String dctMethod}) {
+    return addOperation(new OperationDescription('DecodeJpeg', 'DecodeJpeg', [
+      contents
+    ], {
+      'channels': channels,
+      'ratio': ratio,
+      'fancy_upscaling': fancyUpscaling,
+      'try_recover_truncated': tryRecoverTruncated,
+      'acceptable_fraction': acceptableFraction,
+      'dct_method': dctMethod
+    }));
   }
 
-  Output<int> lookupTableSizeV2(Output<dynamic> tableHandle) {
+  Output<int> lookupTableSizeV2(Output tableHandle) {
     return addOperation(new OperationDescription(
-        'LookupTableSizeV2', 'LookupTableSizeV2', [tableHandle]));
-  }
-
-  Output enqueueInQueueDataset<Tcomponents>(
-      Output<dynamic> queue, Output<Tcomponents> components) {
-    return addOperation(new OperationDescription(
-        'EnqueueInQueueDataset', 'EnqueueInQueueDataset', [queue, components]));
+        'LookupTableSizeV2', 'LookupTableSizeV2', [tableHandle], {}));
   }
 
   Output lookupTableImportV2<Tin, Tout>(
-      Output<dynamic> tableHandle, Output<Tin> keys, Output<Tout> values) {
-    return addOperation(new OperationDescription('LookupTableImportV2',
-        'LookupTableImportV2', [tableHandle, keys, values]));
-  }
-
-  Output tensorArrayCloseV3(Output<dynamic> handle) {
+      Output tableHandle, Output<Tin> keys, Output<Tin> values) {
     return addOperation(new OperationDescription(
-        'TensorArrayCloseV3', 'TensorArrayCloseV3', [handle]));
+        'LookupTableImportV2',
+        'LookupTableImportV2',
+        [tableHandle, keys, values],
+        {'Tin': Tin, 'Tout': Tout}));
   }
 
-  Output saveV2<dtypes>(Output<String> prefix, Output<String> tensorNames,
-      Output<String> shapeAndSlices, Output<dtypes> tensors) {
+  Output tensorArrayCloseV3(Output handle) {
     return addOperation(new OperationDescription(
-        'SaveV2', 'SaveV2', [prefix, tensorNames, shapeAndSlices, tensors]));
+        'TensorArrayCloseV3', 'TensorArrayCloseV3', [handle], {}));
   }
 
-  Output orderedMapStage<capacity, memory_limit, dtypes, fake_dtypes, container,
-          shared_name>(
-      Output<int> key, Output<int> indices, Output<capacity> values) {
-    return addOperation(new OperationDescription(
-        'OrderedMapStage', 'OrderedMapStage', [key, indices, values]));
-  }
-
-  Output send<T, tensor_name, send_device, send_device_incarnation, recv_device,
-      client_terminated>(Output<T> tensor) {
-    return addOperation(new OperationDescription('_Send', '_Send', [tensor]));
-  }
-
-  Output<dynamic>
-      prependFromQueueAndPaddedBatchDataset<Toutput_types, output_shapes, N>(
-          Output<dynamic> inputDataset,
-          Output<int> batchSize,
-          Output<int> paddedShapes,
-          Output<Toutput_types> paddingValues) {
-    return addOperation(new OperationDescription(
-        'PrependFromQueueAndPaddedBatchDataset',
-        'PrependFromQueueAndPaddedBatchDataset',
-        [inputDataset, batchSize, paddedShapes, paddingValues]));
-  }
-
-  Output<overlapping> fractionalMaxPoolGrad<overlapping, T>(
-      Output<overlapping> origInput,
+  Output<T> fractionalMaxPoolGrad<T>(
+      Output<T> origInput,
       Output<T> origOutput,
       Output<T> outBackprop,
       Output<int> rowPoolingSequence,
-      Output<int> colPoolingSequence) {
+      Output<int> colPoolingSequence,
+      {bool overlapping: false}) {
     return addOperation(new OperationDescription(
         'FractionalMaxPoolGrad', 'FractionalMaxPoolGrad', [
       origInput,
@@ -3610,166 +2696,177 @@ class Graph extends _Graph {
       outBackprop,
       rowPoolingSequence,
       colPoolingSequence
-    ]));
+    ], {
+      'overlapping': overlapping,
+      'T': T
+    }));
   }
 
   Output iteratorSetStatsAggregator(
-      Output<dynamic> iteratorHandle, Output<dynamic> statsAggregatorHandle) {
-    return addOperation(new OperationDescription('IteratorSetStatsAggregator',
-        'IteratorSetStatsAggregator', [iteratorHandle, statsAggregatorHandle]));
+      Output iteratorHandle, Output statsAggregatorHandle) {
+    return addOperation(new OperationDescription(
+        'IteratorSetStatsAggregator',
+        'IteratorSetStatsAggregator',
+        [iteratorHandle, statsAggregatorHandle],
+        {}));
   }
 
-  Output<String> encodeJpeg<
-      format,
-      quality,
-      progressive,
-      optimize_size,
-      chroma_downsampling,
-      density_unit,
-      x_density,
-      y_density,
-      xmp_metadata>(Output<dynamic> image) {
-    return addOperation(
-        new OperationDescription('EncodeJpeg', 'EncodeJpeg', [image]));
+  Output<String> encodeJpeg(Output image,
+      {String format,
+      int quality: 95,
+      bool progressive: false,
+      bool optimizeSize: false,
+      bool chromaDownsampling: true,
+      String densityUnit: 'in',
+      int xDensity: 300,
+      int yDensity: 300,
+      String xmpMetadata}) {
+    return addOperation(new OperationDescription('EncodeJpeg', 'EncodeJpeg', [
+      image
+    ], {
+      'format': format,
+      'quality': quality,
+      'progressive': progressive,
+      'optimize_size': optimizeSize,
+      'chroma_downsampling': chromaDownsampling,
+      'density_unit': densityUnit,
+      'x_density': xDensity,
+      'y_density': yDensity,
+      'xmp_metadata': xmpMetadata
+    }));
   }
 
   Output<int> rank<T>(Output<T> input) {
-    return addOperation(new OperationDescription('Rank', 'Rank', [input]));
-  }
-
-  Output<int> stringSplit<skip_empty>(
-      Output<String> input, Output<String> delimiter) {
-    return addOperation(new OperationDescription(
-        'StringSplit', 'StringSplit', [input, delimiter]));
-  }
-
-  Output resourceScatterUpdate<dtype, Tindices>(Output<dynamic> resource,
-      Output<dtype> indices, Output<Tindices> updates) {
-    return addOperation(new OperationDescription('ResourceScatterUpdate',
-        'ResourceScatterUpdate', [resource, indices, updates]));
-  }
-
-  Output<double> threadUnsafeUnigramCandidateSampler<num_true, num_sampled,
-      unique, range_max, seed, seed2>(Output<int> trueClasses) {
-    return addOperation(new OperationDescription(
-        'ThreadUnsafeUnigramCandidateSampler',
-        'ThreadUnsafeUnigramCandidateSampler',
-        [trueClasses]));
-  }
-
-  Output stackCloseV2(Output<dynamic> handle) {
     return addOperation(
-        new OperationDescription('StackCloseV2', 'StackCloseV2', [handle]));
+        new OperationDescription('Rank', 'Rank', [input], {'T': T}));
+  }
+
+  Output resourceScatterUpdate<dtype, Tindices>(
+      Output resource, Output<dtype> indices, Output<dtype> updates) {
+    return addOperation(new OperationDescription(
+        'ResourceScatterUpdate',
+        'ResourceScatterUpdate',
+        [resource, indices, updates],
+        {'dtype': dtype, 'Tindices': Tindices}));
+  }
+
+  Output stackCloseV2(Output handle) {
+    return addOperation(
+        new OperationDescription('StackCloseV2', 'StackCloseV2', [handle], {}));
   }
 
   Output<T> abs<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Abs', 'Abs', [x]));
+    return addOperation(new OperationDescription('Abs', 'Abs', [x], {'T': T}));
   }
 
-  Output<validate_indices> gather<validate_indices, Tparams, Tindices>(
-      Output<validate_indices> params, Output<Tparams> indices) {
-    return addOperation(
-        new OperationDescription('Gather', 'Gather', [params, indices]));
+  Output<Tparams> gather<Tparams, Tindices>(
+      Output<Tparams> params, Output<Tparams> indices,
+      {bool validateIndices: true}) {
+    return addOperation(new OperationDescription('Gather', 'Gather', [
+      params,
+      indices
+    ], {
+      'validate_indices': validateIndices,
+      'Tparams': Tparams,
+      'Tindices': Tindices
+    }));
   }
 
   Output<dtype> tensorArrayReadV3<dtype>(
-      Output<dynamic> handle, Output<int> index, Output<double> flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayReadV3', 'TensorArrayReadV3', [handle, index, flowIn]));
+      Output handle, Output<int> index, Output<double> flowIn) {
+    return addOperation(new OperationDescription('TensorArrayReadV3',
+        'TensorArrayReadV3', [handle, index, flowIn], {'dtype': dtype}));
   }
 
-  Output resourceSparseApplyFtrlV2<T, Tindices, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> accum,
-      Output<dynamic> linear,
+  Output resourceSparseApplyFtrlV2<T, Tindices>(
+      Output var_,
+      Output accum,
+      Output linear,
       Output<T> grad,
-      Output<Tindices> indices,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> l2Shrinkage,
-      Output<use_locking> lrPower) {
+      Output<T> indices,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> l2Shrinkage,
+      Output<T> lrPower,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
-        'ResourceSparseApplyFtrlV2', 'ResourceSparseApplyFtrlV2', [
-      var_,
-      accum,
-      linear,
-      grad,
-      indices,
-      lr,
-      l1,
-      l2,
-      l2Shrinkage,
-      lrPower
-    ]));
+        'ResourceSparseApplyFtrlV2',
+        'ResourceSparseApplyFtrlV2',
+        [var_, accum, linear, grad, indices, lr, l1, l2, l2Shrinkage, lrPower],
+        {'T': T, 'Tindices': Tindices, 'use_locking': useLocking}));
   }
 
   Output<String> encodeWav(Output<double> audio, Output<int> sampleRate) {
     return addOperation(new OperationDescription(
-        'EncodeWav', 'EncodeWav', [audio, sampleRate]));
+        'EncodeWav', 'EncodeWav', [audio, sampleRate], {}));
   }
 
-  Output<dynamic> statsAggregatorHandle<container, shared_name>() {
+  Output statsAggregatorHandle({String container, String sharedName}) {
     return addOperation(new OperationDescription(
-        'StatsAggregatorHandle', 'StatsAggregatorHandle', []));
+        'StatsAggregatorHandle',
+        'StatsAggregatorHandle',
+        [],
+        {'container': container, 'shared_name': sharedName}));
   }
 
-  Output<T> randomCrop<T, seed, seed2>(Output<T> image, Output<int> size) {
-    return addOperation(
-        new OperationDescription('RandomCrop', 'RandomCrop', [image, size]));
+  @Deprecated(
+      'DEPRECATED at GraphDef version 8: Random crop is now pure Python')
+  Output<T> randomCrop<T>(Output<T> image, Output<int> size,
+      {int seed: 0, int seed2: 0}) {
+    return addOperation(new OperationDescription('RandomCrop', 'RandomCrop',
+        [image, size], {'T': T, 'seed': seed, 'seed2': seed2}));
   }
 
   Output<T> diag<T>(Output<T> diagonal) {
-    return addOperation(new OperationDescription('Diag', 'Diag', [diagonal]));
+    return addOperation(
+        new OperationDescription('Diag', 'Diag', [diagonal], {'T': T}));
   }
 
   Output<element_dtype> tensorListGetItem<element_dtype>(
-      Output<dynamic> inputHandle, Output<int> index) {
+      Output inputHandle, Output<int> index) {
     return addOperation(new OperationDescription(
-        'TensorListGetItem', 'TensorListGetItem', [inputHandle, index]));
+        'TensorListGetItem',
+        'TensorListGetItem',
+        [inputHandle, index],
+        {'element_dtype': element_dtype}));
   }
 
-  Output<T> sparseSegmentSqrtNGrad<T, Tidx>(Output<T> grad,
-      Output<Tidx> indices, Output<int> segmentIds, Output<int> outputDim0) {
-    return addOperation(new OperationDescription('SparseSegmentSqrtNGrad',
-        'SparseSegmentSqrtNGrad', [grad, indices, segmentIds, outputDim0]));
-  }
-
-  Output<bool> varIsInitializedOp(Output<dynamic> resource) {
+  Output<T> sparseSegmentSqrtNGrad<T, Tidx>(Output<T> grad, Output<T> indices,
+      Output<int> segmentIds, Output<int> outputDim0) {
     return addOperation(new OperationDescription(
-        'VarIsInitializedOp', 'VarIsInitializedOp', [resource]));
+        'SparseSegmentSqrtNGrad',
+        'SparseSegmentSqrtNGrad',
+        [grad, indices, segmentIds, outputDim0],
+        {'T': T, 'Tidx': Tidx}));
   }
 
-  Output<double> fakeQuantWithMinMaxVarsPerChannel<num_bits, narrow_range>(
-      Output<double> inputs, Output<double> min, Output<double> max) {
+  Output<bool> varIsInitializedOp(Output resource) {
+    return addOperation(new OperationDescription(
+        'VarIsInitializedOp', 'VarIsInitializedOp', [resource], {}));
+  }
+
+  Output<double> fakeQuantWithMinMaxVarsPerChannel(
+      Output<double> inputs, Output<double> min, Output<double> max,
+      {int numBits: 8, bool narrowRange: false}) {
     return addOperation(new OperationDescription(
         'FakeQuantWithMinMaxVarsPerChannel',
         'FakeQuantWithMinMaxVarsPerChannel',
-        [inputs, min, max]));
+        [inputs, min, max],
+        {'num_bits': numBits, 'narrow_range': narrowRange}));
   }
 
-  Output<output_types> iteratorGetNext<output_types, output_shapes>(
-      Output<dynamic> iterator) {
-    return addOperation(new OperationDescription(
-        'IteratorGetNext', 'IteratorGetNext', [iterator]));
-  }
-
-  Output<dynamic> oneShotIterator<dataset_factory, output_types, output_shapes,
-      container, shared_name>() {
-    return addOperation(
-        new OperationDescription('OneShotIterator', 'OneShotIterator', []));
-  }
-
-  Output resourceSparseApplyAdagradDA<T, Tindices, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> gradientAccumulator,
-      Output<dynamic> gradientSquaredAccumulator,
+  Output resourceSparseApplyAdagradDA<T, Tindices>(
+      Output var_,
+      Output gradientAccumulator,
+      Output gradientSquaredAccumulator,
       Output<T> grad,
-      Output<Tindices> indices,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<int> globalStep) {
+      Output<T> indices,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<int> globalStep,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceSparseApplyAdagradDA', 'ResourceSparseApplyAdagradDA', [
       var_,
@@ -3781,37 +2878,25 @@ class Graph extends _Graph {
       l1,
       l2,
       globalStep
-    ]));
+    ], {
+      'T': T,
+      'Tindices': Tindices,
+      'use_locking': useLocking
+    }));
   }
 
-  Output<dynamic> tFRecordDataset(Output<String> filenames,
+  Output tFRecordDataset(Output<String> filenames,
       Output<String> compressionType, Output<int> bufferSize) {
     return addOperation(new OperationDescription('TFRecordDataset',
-        'TFRecordDataset', [filenames, compressionType, bufferSize]));
+        'TFRecordDataset', [filenames, compressionType, bufferSize], {}));
   }
 
-  Output<T> switch_<T>(Output<T> data, Output<bool> pred) {
-    return addOperation(
-        new OperationDescription('Switch', 'Switch', [data, pred]));
+  Output<T> linSpace<T, Tidx>(Output<T> start, Output<T> stop, Output<T> num) {
+    return addOperation(new OperationDescription(
+        'LinSpace', 'LinSpace', [start, stop, num], {'T': T, 'Tidx': Tidx}));
   }
 
-  Output<T> linSpace<T, Tidx>(
-      Output<T> start, Output<Tidx> stop, Output<Tidx> num) {
-    return addOperation(
-        new OperationDescription('LinSpace', 'LinSpace', [start, stop, num]));
-  }
-
-  Output<double> cTCLoss<preprocess_collapse_repeated, ctc_merge_repeated,
-          ignore_longer_outputs_than_inputs>(
-      Output<double> inputs,
-      Output<int> labelsIndices,
-      Output<int> labelsValues,
-      Output<int> sequenceLength) {
-    return addOperation(new OperationDescription('CTCLoss', 'CTCLoss',
-        [inputs, labelsIndices, labelsValues, sequenceLength]));
-  }
-
-  Output<dynamic> fixedLengthRecordDataset(
+  Output fixedLengthRecordDataset(
       Output<String> filenames,
       Output<int> headerBytes,
       Output<int> recordBytes,
@@ -3820,554 +2905,257 @@ class Graph extends _Graph {
     return addOperation(new OperationDescription(
         'FixedLengthRecordDataset',
         'FixedLengthRecordDataset',
-        [filenames, headerBytes, recordBytes, footerBytes, bufferSize]));
-  }
-
-  Output<T> sparseApplyProximalAdagrad<T, Tindices, use_locking>(
-      Output<T> var_,
-      Output<Tindices> accum,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> grad,
-      Output<use_locking> indices) {
-    return addOperation(new OperationDescription(
-        'SparseApplyProximalAdagrad',
-        'SparseApplyProximalAdagrad',
-        [var_, accum, lr, l1, l2, grad, indices]));
-  }
-
-  Output<int>
-      mapSize<capacity, memory_limit, dtypes, container, shared_name>() {
-    return addOperation(new OperationDescription('MapSize', 'MapSize', []));
+        [filenames, headerBytes, recordBytes, footerBytes, bufferSize],
+        {}));
   }
 
   Output<T> sinh<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Sinh', 'Sinh', [x]));
+    return addOperation(
+        new OperationDescription('Sinh', 'Sinh', [x], {'T': T}));
   }
 
+  @Deprecated('DEPRECATED at GraphDef version 14: Use MatrixDiag')
   Output<T> batchMatrixDiag<T>(Output<T> diagonal) {
     return addOperation(new OperationDescription(
-        'BatchMatrixDiag', 'BatchMatrixDiag', [diagonal]));
+        'BatchMatrixDiag', 'BatchMatrixDiag', [diagonal], {'T': T}));
   }
 
-  Output<dynamic> sqlDataset<output_types, output_shapes>(
-      Output<String> driverName,
-      Output<String> dataSourceName,
-      Output<String> query) {
-    return addOperation(new OperationDescription(
-        'SqlDataset', 'SqlDataset', [driverName, dataSourceName, query]));
+  Output<T> segmentSum<T, Tindices>(Output<T> data, Output<T> segmentIds) {
+    return addOperation(new OperationDescription('SegmentSum', 'SegmentSum',
+        [data, segmentIds], {'T': T, 'Tindices': Tindices}));
   }
 
-  Output<T> segmentSum<T, Tindices>(
-      Output<T> data, Output<Tindices> segmentIds) {
-    return addOperation(new OperationDescription(
-        'SegmentSum', 'SegmentSum', [data, segmentIds]));
-  }
-
-  Output<dynamic> textLineDataset(Output<String> filenames,
+  Output textLineDataset(Output<String> filenames,
       Output<String> compressionType, Output<int> bufferSize) {
     return addOperation(new OperationDescription('TextLineDataset',
-        'TextLineDataset', [filenames, compressionType, bufferSize]));
+        'TextLineDataset', [filenames, compressionType, bufferSize], {}));
   }
 
-  Output<T> dataFormatDimMap<T, src_format, dst_format>(Output<T> x) {
-    return addOperation(
-        new OperationDescription('DataFormatDimMap', 'DataFormatDimMap', [x]));
-  }
-
-  Output stackClose(Output<String> handle) {
-    return addOperation(
-        new OperationDescription('StackClose', 'StackClose', [handle]));
+  Output<T> dataFormatDimMap<T>(Output<T> x,
+      {String srcFormat: 'NHWC', String dstFormat: 'NCHW'}) {
+    return addOperation(new OperationDescription(
+        'DataFormatDimMap',
+        'DataFormatDimMap',
+        [x],
+        {'T': T, 'src_format': srcFormat, 'dst_format': dstFormat}));
   }
 
   Output<T> sparseSegmentMeanWithNumSegments<T, Tidx, Tnumsegments>(
       Output<T> data,
-      Output<Tidx> indices,
+      Output<T> indices,
       Output<int> segmentIds,
-      Output<Tnumsegments> numSegments) {
+      Output<T> numSegments) {
     return addOperation(new OperationDescription(
         'SparseSegmentMeanWithNumSegments',
         'SparseSegmentMeanWithNumSegments',
-        [data, indices, segmentIds, numSegments]));
+        [data, indices, segmentIds, numSegments],
+        {'T': T, 'Tidx': Tidx, 'Tnumsegments': Tnumsegments}));
   }
 
-  Output<double> resizeBicubic<T, align_corners>(
-      Output<T> images, Output<int> size) {
+  Output<double> resizeBicubic<T>(Output<T> images, Output<int> size,
+      {bool alignCorners: false}) {
     return addOperation(new OperationDescription(
-        'ResizeBicubic', 'ResizeBicubic', [images, size]));
+        'ResizeBicubic',
+        'ResizeBicubic',
+        [images, size],
+        {'T': T, 'align_corners': alignCorners}));
   }
 
   Output<T> hSVToRGB<T>(Output<T> images) {
     return addOperation(
-        new OperationDescription('HSVToRGB', 'HSVToRGB', [images]));
+        new OperationDescription('HSVToRGB', 'HSVToRGB', [images], {'T': T}));
   }
 
-  Output<int> sparseReduceMaxSparse<keep_dims, T>(
-      Output<int> inputIndices,
-      Output<keep_dims> inputValues,
-      Output<int> inputShape,
-      Output<int> reductionAxes) {
+  Output<T> maxPoolV2<T>(
+      Output<T> input, Output<int> ksize, Output<int> strides,
+      {@required String padding, String dataFormat: 'NHWC'}) {
     return addOperation(new OperationDescription(
-        'SparseReduceMaxSparse',
-        'SparseReduceMaxSparse',
-        [inputIndices, inputValues, inputShape, reductionAxes]));
+        'MaxPoolV2',
+        'MaxPoolV2',
+        [input, ksize, strides],
+        {'T': T, 'padding': padding, 'data_format': dataFormat}));
   }
 
-  Output<dynamic> cacheDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset, Output<String> filename) {
+  Output<S> randomPoissonV2<S, R, dtype>(Output<S> shape, Output<S> rate,
+      {int seed: 0, int seed2: 0}) {
     return addOperation(new OperationDescription(
-        'CacheDataset', 'CacheDataset', [inputDataset, filename]));
+        'RandomPoissonV2',
+        'RandomPoissonV2',
+        [shape, rate],
+        {'seed': seed, 'seed2': seed2, 'S': S, 'R': R, 'dtype': dtype}));
   }
 
-  Output<T> maxPoolV2<T, padding, data_format>(
-      Output<T> input, Output<int> ksize, Output<int> strides) {
+  Output<T> unpack<T>(Output<T> value, {@required int num, int axis: 0}) {
     return addOperation(new OperationDescription(
-        'MaxPoolV2', 'MaxPoolV2', [input, ksize, strides]));
+        'Unpack', 'Unpack', [value], {'num': num, 'T': T, 'axis': axis}));
   }
 
-  Output<double> quantizedMul<T1, T2, Toutput>(
-      Output<T1> x,
-      Output<T2> y,
-      Output<double> minX,
-      Output<double> maxX,
-      Output<double> minY,
-      Output<double> maxY) {
-    return addOperation(new OperationDescription(
-        'QuantizedMul', 'QuantizedMul', [x, y, minX, maxX, minY, maxY]));
+  @Deprecated('DEPRECATED at GraphDef version 13: Use MatrixInverse instead.')
+  Output<T> batchMatrixInverse<T>(Output<T> input, {bool adjoint: false}) {
+    return addOperation(new OperationDescription('BatchMatrixInverse',
+        'BatchMatrixInverse', [input], {'adjoint': adjoint, 'T': T}));
   }
 
-  Output<dynamic> shuffleAndRepeatDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset,
-      Output<int> bufferSize,
-      Output<int> seed,
-      Output<int> seed2,
-      Output<int> count) {
-    return addOperation(new OperationDescription(
-        'ShuffleAndRepeatDataset',
-        'ShuffleAndRepeatDataset',
-        [inputDataset, bufferSize, seed, seed2, count]));
-  }
-
-  Output<dynamic> rangeDataset<output_types, output_shapes>(
-      Output<int> start, Output<int> stop, Output<int> step) {
-    return addOperation(new OperationDescription(
-        'RangeDataset', 'RangeDataset', [start, stop, step]));
-  }
-
-  Output<seed> randomPoissonV2<seed, seed2, S, R, dtype>(
-      Output<seed> shape, Output<seed2> rate) {
-    return addOperation(new OperationDescription(
-        'RandomPoissonV2', 'RandomPoissonV2', [shape, rate]));
-  }
-
-  Output<dynamic>
-      shuffleDataset<reshuffle_each_iteration, output_types, output_shapes>(
-          Output<dynamic> inputDataset,
-          Output<int> bufferSize,
-          Output<int> seed,
-          Output<int> seed2) {
-    return addOperation(new OperationDescription('ShuffleDataset',
-        'ShuffleDataset', [inputDataset, bufferSize, seed, seed2]));
-  }
-
-  Output<int> readerNumRecordsProduced(Output<String> readerHandle) {
-    return addOperation(new OperationDescription('ReaderNumRecordsProduced',
-        'ReaderNumRecordsProduced', [readerHandle]));
-  }
-
-  Output<element_dtype> tensorListPopBack<element_dtype>(
-      Output<dynamic> inputHandle) {
-    return addOperation(new OperationDescription(
-        'TensorListPopBack', 'TensorListPopBack', [inputHandle]));
-  }
-
-  Output<dynamic> takeDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset, Output<int> count) {
-    return addOperation(new OperationDescription(
-        'TakeDataset', 'TakeDataset', [inputDataset, count]));
-  }
-
-  Output<String> readerReadUpToV2(Output<dynamic> readerHandle,
-      Output<dynamic> queueHandle, Output<int> numRecords) {
-    return addOperation(new OperationDescription('ReaderReadUpToV2',
-        'ReaderReadUpToV2', [readerHandle, queueHandle, numRecords]));
-  }
-
-  Output<component_types> queueDequeueV2<component_types, timeout_ms>(
-      Output<dynamic> handle) {
-    return addOperation(
-        new OperationDescription('QueueDequeueV2', 'QueueDequeueV2', [handle]));
-  }
-
-  Output<String> readerReadUpTo(Output<String> readerHandle,
-      Output<String> queueHandle, Output<int> numRecords) {
-    return addOperation(new OperationDescription('ReaderReadUpTo',
-        'ReaderReadUpTo', [readerHandle, queueHandle, numRecords]));
-  }
-
-  Output<num> unpack<num, T, axis>(Output<num> value) {
-    return addOperation(new OperationDescription('Unpack', 'Unpack', [value]));
-  }
-
-  Output<dynamic> concatenateDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset, Output<dynamic> anotherDataset) {
-    return addOperation(new OperationDescription('ConcatenateDataset',
-        'ConcatenateDataset', [inputDataset, anotherDataset]));
-  }
-
-  Output<T> conv2DBackpropFilter<T, strides, use_cudnn_on_gpu, padding,
-          data_format, dilations>(
-      Output<T> input, Output<int> filterSizes, Output<strides> outBackprop) {
-    return addOperation(new OperationDescription('Conv2DBackpropFilter',
-        'Conv2DBackpropFilter', [input, filterSizes, outBackprop]));
-  }
-
-  Output<output_types> iteratorGetNextSync<output_types, output_shapes>(
-      Output<dynamic> iterator) {
-    return addOperation(new OperationDescription(
-        'IteratorGetNextSync', 'IteratorGetNextSync', [iterator]));
-  }
-
-  Output<adjoint> batchMatrixInverse<adjoint, T>(Output<adjoint> input) {
-    return addOperation(new OperationDescription(
-        'BatchMatrixInverse', 'BatchMatrixInverse', [input]));
-  }
-
-  Output<T> sparseApplyCenteredRMSProp<T, Tindices, use_locking>(
-      Output<T> var_,
-      Output<Tindices> mg,
-      Output<use_locking> ms,
-      Output<use_locking> mom,
-      Output<use_locking> lr,
-      Output<use_locking> rho,
-      Output<use_locking> momentum,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad,
-      Output<use_locking> indices) {
-    return addOperation(new OperationDescription(
-        'SparseApplyCenteredRMSProp',
-        'SparseApplyCenteredRMSProp',
-        [var_, mg, ms, mom, lr, rho, momentum, epsilon, grad, indices]));
-  }
-
-  Output resourceSparseApplyCenteredRMSProp<T, Tindices, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> mg,
-      Output<dynamic> ms,
-      Output<dynamic> mom,
+  Output resourceSparseApplyCenteredRMSProp<T, Tindices>(
+      Output var_,
+      Output mg,
+      Output ms,
+      Output mom,
       Output<T> lr,
-      Output<Tindices> rho,
-      Output<use_locking> momentum,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad,
-      Output<use_locking> indices) {
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
+      Output<T> indices,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceSparseApplyCenteredRMSProp',
         'ResourceSparseApplyCenteredRMSProp',
-        [var_, mg, ms, mom, lr, rho, momentum, epsilon, grad, indices]));
+        [var_, mg, ms, mom, lr, rho, momentum, epsilon, grad, indices],
+        {'T': T, 'Tindices': Tindices, 'use_locking': useLocking}));
   }
 
-  Output<int> queueSizeV2(Output<dynamic> handle) {
+  Output<int> queueSizeV2(Output handle) {
     return addOperation(
-        new OperationDescription('QueueSizeV2', 'QueueSizeV2', [handle]));
+        new OperationDescription('QueueSizeV2', 'QueueSizeV2', [handle], {}));
   }
 
-  Output<int> fractionalAvgPool<pooling_ratio, pseudo_random, overlapping,
-      deterministic, seed, seed2, T>(Output<pooling_ratio> value) {
+  Output mergeV2Checkpoints(
+      Output<String> checkpointPrefixes, Output<String> destinationPrefix,
+      {bool deleteOldDirs: true}) {
     return addOperation(new OperationDescription(
-        'FractionalAvgPool', 'FractionalAvgPool', [value]));
+        'MergeV2Checkpoints',
+        'MergeV2Checkpoints',
+        [checkpointPrefixes, destinationPrefix],
+        {'delete_old_dirs': deleteOldDirs}));
   }
 
-  Output<dynamic> randomDataset<output_types, output_shapes>(
-      Output<int> seed, Output<int> seed2) {
-    return addOperation(new OperationDescription(
-        'RandomDataset', 'RandomDataset', [seed, seed2]));
-  }
-
-  Output mergeV2Checkpoints<delete_old_dirs>(
-      Output<String> checkpointPrefixes, Output<String> destinationPrefix) {
-    return addOperation(new OperationDescription('MergeV2Checkpoints',
-        'MergeV2Checkpoints', [checkpointPrefixes, destinationPrefix]));
-  }
-
-  Output queueClose<cancel_pending_enqueues>(Output<String> handle) {
+  Output<T> addN<T>(List<Output<T>> inputs, {@required int n}) {
     return addOperation(
-        new OperationDescription('QueueClose', 'QueueClose', [handle]));
+        new OperationDescription('AddN', 'AddN', [inputs], {'N': n, 'T': T}));
   }
 
-  Output<String> randomShuffleQueue<component_types, shapes, capacity,
-      min_after_dequeue, seed, seed2, container, shared_name>() {
-    return addOperation(new OperationDescription(
-        'RandomShuffleQueue', 'RandomShuffleQueue', []));
-  }
-
-  Output<dtypes> restoreV2<dtypes>(Output<String> prefix,
-      Output<String> tensorNames, Output<String> shapeAndSlices) {
-    return addOperation(new OperationDescription(
-        'RestoreV2', 'RestoreV2', [prefix, tensorNames, shapeAndSlices]));
-  }
-
-  Output<dynamic> denseToSparseBatchDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset,
-      Output<int> batchSize,
-      Output<int> rowShape) {
-    return addOperation(new OperationDescription('DenseToSparseBatchDataset',
-        'DenseToSparseBatchDataset', [inputDataset, batchSize, rowShape]));
-  }
-
-  Output<N> addN<N, T>(Output<N> inputs) {
-    return addOperation(new OperationDescription('AddN', 'AddN', [inputs]));
-  }
-
-  Output<String> tensorArrayV2<dtype, element_shape, dynamic_size,
-      clear_after_read, tensor_array_name>(Output<int> size) {
+  @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayV3')
+  Output<String> tensorArrayV2<dtype>(Output<int> size,
+      {List elementShape,
+      bool dynamicSize: false,
+      bool clearAfterRead: true,
+      String tensorArrayName}) {
     return addOperation(
-        new OperationDescription('TensorArrayV2', 'TensorArrayV2', [size]));
-  }
-
-  Output<dynamic>
-      filterDataset<predicate, Targuments, output_types, output_shapes>(
-          Output<dynamic> inputDataset, Output<predicate> otherArguments) {
-    return addOperation(new OperationDescription(
-        'FilterDataset', 'FilterDataset', [inputDataset, otherArguments]));
-  }
-
-  Output<dynamic> interleaveDataset<f, Targuments, output_types, output_shapes>(
-      Output<dynamic> inputDataset,
-      Output<f> otherArguments,
-      Output<int> cycleLength,
-      Output<int> blockLength) {
-    return addOperation(new OperationDescription(
-        'InterleaveDataset',
-        'InterleaveDataset',
-        [inputDataset, otherArguments, cycleLength, blockLength]));
-  }
-
-  Output<dynamic> prefetchDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset, Output<int> bufferSize) {
-    return addOperation(new OperationDescription(
-        'PrefetchDataset', 'PrefetchDataset', [inputDataset, bufferSize]));
+        new OperationDescription('TensorArrayV2', 'TensorArrayV2', [
+      size
+    ], {
+      'dtype': dtype,
+      'element_shape': elementShape,
+      'dynamic_size': dynamicSize,
+      'clear_after_read': clearAfterRead,
+      'tensor_array_name': tensorArrayName
+    }));
   }
 
   Output<Tidx> range<Tidx>(
       Output<Tidx> start, Output<Tidx> limit, Output<Tidx> delta) {
-    return addOperation(
-        new OperationDescription('Range', 'Range', [start, limit, delta]));
-  }
-
-  Output<dynamic> sparseTensorSliceDataset<Tvalues>(
-      Output<int> indices, Output<Tvalues> values, Output<int> denseShape) {
-    return addOperation(new OperationDescription('SparseTensorSliceDataset',
-        'SparseTensorSliceDataset', [indices, values, denseShape]));
-  }
-
-  Output<dynamic> randomShuffleQueueV2<component_types, shapes, capacity,
-      min_after_dequeue, seed, seed2, container, shared_name>() {
     return addOperation(new OperationDescription(
-        'RandomShuffleQueueV2', 'RandomShuffleQueueV2', []));
+        'Range', 'Range', [start, limit, delta], {'Tidx': Tidx}));
   }
 
-  Output<double> tensorArrayWriteV3<T>(Output<dynamic> handle,
-      Output<int> index, Output<T> value, Output<double> flowIn) {
+  Output sparseTensorSliceDataset<Tvalues>(
+      Output<int> indices, Output<Tvalues> values, Output<int> denseShape) {
+    return addOperation(new OperationDescription(
+        'SparseTensorSliceDataset',
+        'SparseTensorSliceDataset',
+        [indices, values, denseShape],
+        {'Tvalues': Tvalues}));
+  }
+
+  Output<double> tensorArrayWriteV3<T>(Output handle, Output<int> index,
+      Output<T> value, Output<double> flowIn) {
     return addOperation(new OperationDescription('TensorArrayWriteV3',
-        'TensorArrayWriteV3', [handle, index, value, flowIn]));
-  }
-
-  Output<int> refMerge<T, N>(Output<T> inputs) {
-    return addOperation(
-        new OperationDescription('RefMerge', 'RefMerge', [inputs]));
-  }
-
-  Output<dynamic> bytesProducedStatsDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset, Output<String> tag) {
-    return addOperation(new OperationDescription('BytesProducedStatsDataset',
-        'BytesProducedStatsDataset', [inputDataset, tag]));
+        'TensorArrayWriteV3', [handle, index, value, flowIn], {'T': T}));
   }
 
   Output<String> histogramSummary<T>(Output<String> tag, Output<T> values) {
     return addOperation(new OperationDescription(
-        'HistogramSummary', 'HistogramSummary', [tag, values]));
+        'HistogramSummary', 'HistogramSummary', [tag, values], {'T': T}));
   }
 
-  Output<elem_type> stackPopV2<elem_type>(Output<dynamic> handle) {
-    return addOperation(
-        new OperationDescription('StackPopV2', 'StackPopV2', [handle]));
-  }
-
-  Output<depth_radius> lRN<depth_radius, bias, alpha, beta, T>(
-      Output<depth_radius> input) {
-    return addOperation(new OperationDescription('LRN', 'LRN', [input]));
-  }
-
-  Output<T> conv3DBackpropInputV2<T, strides, padding, data_format, dilations>(
-      Output<int> inputSizes, Output<T> filter, Output<strides> outBackprop) {
-    return addOperation(new OperationDescription('Conv3DBackpropInputV2',
-        'Conv3DBackpropInputV2', [inputSizes, filter, outBackprop]));
-  }
-
-  Output<dynamic> skipDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset, Output<int> count) {
+  Output<elem_type> stackPopV2<elem_type>(Output handle) {
     return addOperation(new OperationDescription(
-        'SkipDataset', 'SkipDataset', [inputDataset, count]));
+        'StackPopV2', 'StackPopV2', [handle], {'elem_type': elem_type}));
   }
 
-  Output sparseAccumulatorApplyGradient<dtype, has_known_shape>(
-      Output<String> handle,
-      Output<int> localStep,
-      Output<int> gradientIndices,
-      Output<dtype> gradientValues,
-      Output<int> gradientShape) {
-    return addOperation(new OperationDescription(
-        'SparseAccumulatorApplyGradient',
-        'SparseAccumulatorApplyGradient',
-        [handle, localStep, gradientIndices, gradientValues, gradientShape]));
+  Output<T> lRN<T>(Output<T> input,
+      {int depthRadius: 5,
+      double bias: 1.0,
+      double alpha: 1.0,
+      double beta: 0.5}) {
+    return addOperation(new OperationDescription('LRN', 'LRN', [
+      input
+    ], {
+      'depth_radius': depthRadius,
+      'bias': bias,
+      'alpha': alpha,
+      'beta': beta,
+      'T': T
+    }));
   }
 
-  Output<String> statsAggregatorSummary(Output<dynamic> iterator) {
+  Output<String> statsAggregatorSummary(Output iterator) {
     return addOperation(new OperationDescription(
-        'StatsAggregatorSummary', 'StatsAggregatorSummary', [iterator]));
+        'StatsAggregatorSummary', 'StatsAggregatorSummary', [iterator], {}));
   }
 
   Output<bool> equal<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('Equal', 'Equal', [x, y]));
-  }
-
-  Output<int> sparseToSparseSetOperation<set_operation, validate_indices, T>(
-      Output<int> set1Indices,
-      Output<set_operation> set1Values,
-      Output<int> set1Shape,
-      Output<int> set2Indices,
-      Output<validate_indices> set2Values,
-      Output<int> set2Shape) {
-    return addOperation(new OperationDescription(
-        'SparseToSparseSetOperation', 'SparseToSparseSetOperation', [
-      set1Indices,
-      set1Values,
-      set1Shape,
-      set2Indices,
-      set2Values,
-      set2Shape
-    ]));
+    return addOperation(
+        new OperationDescription('Equal', 'Equal', [x, y], {'T': T}));
   }
 
   Output lookupTableInsertV2<Tin, Tout>(
-      Output<dynamic> tableHandle, Output<Tin> keys, Output<Tout> values) {
-    return addOperation(new OperationDescription('LookupTableInsertV2',
-        'LookupTableInsertV2', [tableHandle, keys, values]));
-  }
-
-  Output barrierInsertMany<T, component_index>(
-      Output<String> handle, Output<String> keys, Output<T> values) {
+      Output tableHandle, Output<Tin> keys, Output<Tin> values) {
     return addOperation(new OperationDescription(
-        'BarrierInsertMany', 'BarrierInsertMany', [handle, keys, values]));
+        'LookupTableInsertV2',
+        'LookupTableInsertV2',
+        [tableHandle, keys, values],
+        {'Tin': Tin, 'Tout': Tout}));
   }
 
+  @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArraySplitV3')
   Output<double> tensorArraySplitV2<T>(Output<String> handle, Output<T> value,
       Output<int> lengths, Output<double> flowIn) {
     return addOperation(new OperationDescription('TensorArraySplitV2',
-        'TensorArraySplitV2', [handle, value, lengths, flowIn]));
+        'TensorArraySplitV2', [handle, value, lengths, flowIn], {'T': T}));
   }
 
-  Output<capacity>
-      orderedMapUnstage<capacity, memory_limit, dtypes, container, shared_name>(
-          Output<int> key, Output<int> indices) {
-    return addOperation(new OperationDescription(
-        'OrderedMapUnstage', 'OrderedMapUnstage', [key, indices]));
-  }
-
-  Output<dynamic> batchFFT2D(Output<dynamic> input) {
+  @Deprecated('DEPRECATED at GraphDef version 15: Use FFT2D')
+  Output batchFFT2D(Output input) {
     return addOperation(
-        new OperationDescription('BatchFFT2D', 'BatchFFT2D', [input]));
+        new OperationDescription('BatchFFT2D', 'BatchFFT2D', [input], {}));
   }
 
-  Output<int> mapIncompleteSize<capacity, memory_limit, dtypes, container,
-      shared_name>() {
-    return addOperation(
-        new OperationDescription('MapIncompleteSize', 'MapIncompleteSize', []));
-  }
-
+  @Deprecated(
+      'DEPRECATED at GraphDef version 11: Use SelfAdjointEigV2 instead.')
   Output<T> selfAdjointEig<T>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('SelfAdjointEig', 'SelfAdjointEig', [input]));
-  }
-
-  Output readerResetV2(Output<dynamic> readerHandle) {
     return addOperation(new OperationDescription(
-        'ReaderResetV2', 'ReaderResetV2', [readerHandle]));
+        'SelfAdjointEig', 'SelfAdjointEig', [input], {'T': T}));
   }
 
-  Output<int>
-      orderedMapSize<capacity, memory_limit, dtypes, container, shared_name>() {
-    return addOperation(
-        new OperationDescription('OrderedMapSize', 'OrderedMapSize', []));
-  }
-
-  Output<T> refNextIteration<T>(Output<T> data) {
+  Output readerResetV2(Output readerHandle) {
     return addOperation(new OperationDescription(
-        'RefNextIteration', 'RefNextIteration', [data]));
+        'ReaderResetV2', 'ReaderResetV2', [readerHandle], {}));
   }
 
-  Output<capacity>
-      orderedMapPeek<capacity, memory_limit, dtypes, container, shared_name>(
-          Output<int> key, Output<int> indices) {
-    return addOperation(new OperationDescription(
-        'OrderedMapPeek', 'OrderedMapPeek', [key, indices]));
-  }
-
-  Output<int> deserializeSparse<dtype, Tserialized>(
-      Output<dtype> serializedSparse) {
-    return addOperation(new OperationDescription(
-        'DeserializeSparse', 'DeserializeSparse', [serializedSparse]));
-  }
-
-  Output mapClear<capacity, memory_limit, dtypes, container, shared_name>() {
-    return addOperation(new OperationDescription('MapClear', 'MapClear', []));
-  }
-
-  Output<component_types> queueDequeue<component_types, timeout_ms>(
-      Output<String> handle) {
+  Output rFFT2D(Output<double> input, Output<int> fftLength) {
     return addOperation(
-        new OperationDescription('QueueDequeue', 'QueueDequeue', [handle]));
-  }
-
-  Output<dynamic> rFFT2D(Output<double> input, Output<int> fftLength) {
-    return addOperation(
-        new OperationDescription('RFFT2D', 'RFFT2D', [input, fftLength]));
-  }
-
-  Output<ksize> maxPoolGradGradWithArgmax<ksize, strides, padding, Targmax, T>(
-      Output<ksize> input, Output<strides> grad, Output<padding> argmax) {
-    return addOperation(new OperationDescription('MaxPoolGradGradWithArgmax',
-        'MaxPoolGradGradWithArgmax', [input, grad, argmax]));
+        new OperationDescription('RFFT2D', 'RFFT2D', [input, fftLength], {}));
   }
 
   Output<bool> less<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('Less', 'Less', [x, y]));
-  }
-
-  Output<int> denseToDenseSetOperation<set_operation, validate_indices, T>(
-      Output<set_operation> set1, Output<validate_indices> set2) {
-    return addOperation(new OperationDescription(
-        'DenseToDenseSetOperation', 'DenseToDenseSetOperation', [set1, set2]));
-  }
-
-  Output<T> softmaxCrossEntropyWithLogits<T>(
-      Output<T> features, Output<T> labels) {
-    return addOperation(new OperationDescription(
-        'SoftmaxCrossEntropyWithLogits',
-        'SoftmaxCrossEntropyWithLogits',
-        [features, labels]));
-  }
-
-  Output<output_types> datasetToSingleElement<output_types, output_shapes>(
-      Output<dynamic> dataset) {
-    return addOperation(new OperationDescription(
-        'DatasetToSingleElement', 'DatasetToSingleElement', [dataset]));
+    return addOperation(
+        new OperationDescription('Less', 'Less', [x, y], {'T': T}));
   }
 
   Output createSummaryFileWriter(
-      Output<dynamic> writer,
+      Output writer,
       Output<String> logdir,
       Output<int> maxQueue,
       Output<int> flushMillis,
@@ -4375,841 +3163,486 @@ class Graph extends _Graph {
     return addOperation(new OperationDescription(
         'CreateSummaryFileWriter',
         'CreateSummaryFileWriter',
-        [writer, logdir, maxQueue, flushMillis, filenameSuffix]));
+        [writer, logdir, maxQueue, flushMillis, filenameSuffix],
+        {}));
   }
 
-  Output<bool> queueIsClosedV2(Output<dynamic> handle) {
+  Output<bool> queueIsClosedV2(Output handle) {
     return addOperation(new OperationDescription(
-        'QueueIsClosedV2', 'QueueIsClosedV2', [handle]));
+        'QueueIsClosedV2', 'QueueIsClosedV2', [handle], {}));
   }
 
-  Output<keep_dims> sparseReduceSum<keep_dims, T>(
-      Output<int> inputIndices,
-      Output<keep_dims> inputValues,
-      Output<int> inputShape,
-      Output<int> reductionAxes) {
+  Output<T> sparseReduceSum<T>(Output<int> inputIndices, Output<T> inputValues,
+      Output<int> inputShape, Output<int> reductionAxes,
+      {bool keepDims: false}) {
     return addOperation(new OperationDescription(
         'SparseReduceSum',
         'SparseReduceSum',
-        [inputIndices, inputValues, inputShape, reductionAxes]));
+        [inputIndices, inputValues, inputShape, reductionAxes],
+        {'keep_dims': keepDims, 'T': T}));
   }
 
   Output<T> zeta<T>(Output<T> x, Output<T> q) {
-    return addOperation(new OperationDescription('Zeta', 'Zeta', [x, q]));
-  }
-
-  Output<String> tensorArrayGradV2<source>(
-      Output<String> handle, Output<double> flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayGradV2', 'TensorArrayGradV2', [handle, flowIn]));
-  }
-
-  Output<N> shapeN<N, T, out_type>(Output<N> input) {
-    return addOperation(new OperationDescription('ShapeN', 'ShapeN', [input]));
-  }
-
-  Output<String> imageSummary<max_images, T, bad_color>(
-      Output<String> tag, Output<max_images> tensor) {
-    return addOperation(new OperationDescription(
-        'ImageSummary', 'ImageSummary', [tag, tensor]));
-  }
-
-  Output<dynamic> wholeFileReaderV2<container, shared_name>() {
     return addOperation(
-        new OperationDescription('WholeFileReaderV2', 'WholeFileReaderV2', []));
+        new OperationDescription('Zeta', 'Zeta', [x, q], {'T': T}));
   }
 
-  Output<capacity>
-      mapUnstageNoKey<capacity, memory_limit, dtypes, container, shared_name>(
-          Output<int> indices) {
+  @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayGradV3')
+  Output<String> tensorArrayGradV2(Output<String> handle, Output<double> flowIn,
+      {@required String source}) {
+    return addOperation(new OperationDescription('TensorArrayGradV2',
+        'TensorArrayGradV2', [handle, flowIn], {'source': source}));
+  }
+
+  Output<T> shapeN<T, out_type>(List<Output<T>> input, {@required int n}) {
     return addOperation(new OperationDescription(
-        'MapUnstageNoKey', 'MapUnstageNoKey', [indices]));
+        'ShapeN', 'ShapeN', [input], {'N': n, 'T': T, 'out_type': out_type}));
   }
 
-  Output<double> mfcc<upper_frequency_limit, lower_frequency_limit,
-          filterbank_channel_count, dct_coefficient_count>(
-      Output<double> spectrogram, Output<int> sampleRate) {
-    return addOperation(
-        new OperationDescription('Mfcc', 'Mfcc', [spectrogram, sampleRate]));
+  Output<String> imageSummary<T>(Output<String> tag, Output<T> tensor,
+      {int maxImages: 3, Output badColor}) {
+    return addOperation(new OperationDescription(
+        'ImageSummary',
+        'ImageSummary',
+        [tag, tensor],
+        {'max_images': maxImages, 'T': T, 'bad_color': badColor}));
   }
 
+  Output wholeFileReaderV2({String container, String sharedName}) {
+    return addOperation(new OperationDescription(
+        'WholeFileReaderV2',
+        'WholeFileReaderV2',
+        [],
+        {'container': container, 'shared_name': sharedName}));
+  }
+
+  Output<double> mfcc(Output<double> spectrogram, Output<int> sampleRate,
+      {double upperFrequencyLimit: 4000.0,
+      double lowerFrequencyLimit: 20.0,
+      int filterbankChannelCount: 40,
+      int dctCoefficientCount: 13}) {
+    return addOperation(new OperationDescription('Mfcc', 'Mfcc', [
+      spectrogram,
+      sampleRate
+    ], {
+      'upper_frequency_limit': upperFrequencyLimit,
+      'lower_frequency_limit': lowerFrequencyLimit,
+      'filterbank_channel_count': filterbankChannelCount,
+      'dct_coefficient_count': dctCoefficientCount
+    }));
+  }
+
+  @Deprecated('DEPRECATED at GraphDef version 14: Use MatrixDiagPart')
   Output<T> batchMatrixDiagPart<T>(Output<T> input) {
     return addOperation(new OperationDescription(
-        'BatchMatrixDiagPart', 'BatchMatrixDiagPart', [input]));
+        'BatchMatrixDiagPart', 'BatchMatrixDiagPart', [input], {'T': T}));
   }
 
+  @Deprecated('DEPRECATED at GraphDef version 2: Use AdjustContrastv2 instead')
   Output<double> adjustContrast<T>(
       Output<T> images,
       Output<double> contrastFactor,
       Output<double> minValue,
       Output<double> maxValue) {
-    return addOperation(new OperationDescription('AdjustContrast',
-        'AdjustContrast', [images, contrastFactor, minValue, maxValue]));
-  }
-
-  Output<T> resizeNearestNeighbor<T, align_corners>(
-      Output<T> images, Output<int> size) {
     return addOperation(new OperationDescription(
-        'ResizeNearestNeighbor', 'ResizeNearestNeighbor', [images, size]));
+        'AdjustContrast',
+        'AdjustContrast',
+        [images, contrastFactor, minValue, maxValue],
+        {'T': T}));
   }
 
-  Output<Nsparse>
-      parseExample<Nsparse, Ndense, sparse_types, Tdense, dense_shapes>(
-          Output<String> serialized,
-          Output<String> names,
-          Output<String> sparseKeys,
-          Output<String> denseKeys,
-          Output<Nsparse> denseDefaults) {
-    return addOperation(new OperationDescription('ParseExample', 'ParseExample',
-        [serialized, names, sparseKeys, denseKeys, denseDefaults]));
+  Output<T> resizeNearestNeighbor<T>(Output<T> images, Output<int> size,
+      {bool alignCorners: false}) {
+    return addOperation(new OperationDescription(
+        'ResizeNearestNeighbor',
+        'ResizeNearestNeighbor',
+        [images, size],
+        {'T': T, 'align_corners': alignCorners}));
   }
 
   Output<T> atanh<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Atanh', 'Atanh', [x]));
+    return addOperation(
+        new OperationDescription('Atanh', 'Atanh', [x], {'T': T}));
   }
 
-  Output makeIterator(Output<dynamic> dataset, Output<dynamic> iterator) {
+  Output makeIterator(Output dataset, Output iterator) {
     return addOperation(new OperationDescription(
-        'MakeIterator', 'MakeIterator', [dataset, iterator]));
+        'MakeIterator', 'MakeIterator', [dataset, iterator], {}));
   }
 
-  Output<seed> parameterizedTruncatedNormal<seed, seed2, dtype, T>(
-      Output<seed> shape,
-      Output<seed2> means,
+  Output<dtype> parameterizedTruncatedNormal<dtype, T>(
+      Output<dtype> shape,
+      Output<dtype> means,
       Output<dtype> stdevs,
-      Output<T> minvals,
-      Output<T> maxvals) {
+      Output<dtype> minvals,
+      Output<dtype> maxvals,
+      {int seed: 0,
+      int seed2: 0}) {
     return addOperation(new OperationDescription(
         'ParameterizedTruncatedNormal',
         'ParameterizedTruncatedNormal',
-        [shape, means, stdevs, minvals, maxvals]));
+        [shape, means, stdevs, minvals, maxvals],
+        {'seed': seed, 'seed2': seed2, 'dtype': dtype, 'T': T}));
   }
 
-  Output<dynamic>
-      parallelInterleaveDataset<f, Targuments, output_types, output_shapes>(
-          Output<dynamic> inputDataset,
-          Output<f> otherArguments,
-          Output<int> cycleLength,
-          Output<int> blockLength,
-          Output<bool> sloppy,
-          Output<int> bufferOutputElements,
-          Output<int> prefetchInputElements) {
-    return addOperation(new OperationDescription(
-        'ParallelInterleaveDataset', 'ParallelInterleaveDataset', [
-      inputDataset,
-      otherArguments,
-      cycleLength,
-      blockLength,
-      sloppy,
-      bufferOutputElements,
-      prefetchInputElements
-    ]));
-  }
-
-  Output<double> cTCGreedyDecoder<merge_repeated>(
-      Output<double> inputs, Output<int> sequenceLength) {
-    return addOperation(new OperationDescription(
-        'CTCGreedyDecoder', 'CTCGreedyDecoder', [inputs, sequenceLength]));
-  }
-
-  Output<int>
-      stageSize<capacity, memory_limit, dtypes, container, shared_name>() {
-    return addOperation(new OperationDescription('StageSize', 'StageSize', []));
-  }
-
-  Output assignAddVariableOp<dtype>(
-      Output<dynamic> resource, Output<dtype> value) {
-    return addOperation(new OperationDescription(
-        'AssignAddVariableOp', 'AssignAddVariableOp', [resource, value]));
-  }
-
-  Output<T> depthwiseConv2dNativeBackpropInput<T, strides, padding, data_format,
-          dilations>(
-      Output<int> inputSizes, Output<T> filter, Output<strides> outBackprop) {
-    return addOperation(new OperationDescription(
-        'DepthwiseConv2dNativeBackpropInput',
-        'DepthwiseConv2dNativeBackpropInput',
-        [inputSizes, filter, outBackprop]));
+  Output assignAddVariableOp<dtype>(Output resource, Output<dtype> value) {
+    return addOperation(new OperationDescription('AssignAddVariableOp',
+        'AssignAddVariableOp', [resource, value], {'dtype': dtype}));
   }
 
   Output<bool> isNan<T>(Output<T> x) {
-    return addOperation(new OperationDescription('IsNan', 'IsNan', [x]));
+    return addOperation(
+        new OperationDescription('IsNan', 'IsNan', [x], {'T': T}));
   }
 
-  Output<dynamic> tensorListPushBack<element_dtype>(
-      Output<dynamic> inputHandle, Output<element_dtype> tensor) {
+  Output tensorListPushBack<element_dtype>(
+      Output inputHandle, Output<element_dtype> tensor) {
     return addOperation(new OperationDescription(
-        'TensorListPushBack', 'TensorListPushBack', [inputHandle, tensor]));
+        'TensorListPushBack',
+        'TensorListPushBack',
+        [inputHandle, tensor],
+        {'element_dtype': element_dtype}));
   }
 
   Output<T> reciprocalGrad<T>(Output<T> y, Output<T> dy) {
-    return addOperation(
-        new OperationDescription('ReciprocalGrad', 'ReciprocalGrad', [y, dy]));
-  }
-
-  Output<double> quantizedReshape<T, Tshape>(Output<T> tensor,
-      Output<Tshape> shape, Output<double> inputMin, Output<double> inputMax) {
-    return addOperation(new OperationDescription('QuantizedReshape',
-        'QuantizedReshape', [tensor, shape, inputMin, inputMax]));
-  }
-
-  Output<dynamic> mapDataset<f, Targuments, output_types, output_shapes>(
-      Output<dynamic> inputDataset, Output<f> otherArguments) {
     return addOperation(new OperationDescription(
-        'MapDataset', 'MapDataset', [inputDataset, otherArguments]));
-  }
-
-  Output<capacity>
-      unstage<capacity, memory_limit, dtypes, container, shared_name>() {
-    return addOperation(new OperationDescription('Unstage', 'Unstage', []));
-  }
-
-  Output stage<capacity, memory_limit, dtypes, container, shared_name>(
-      Output<capacity> values) {
-    return addOperation(new OperationDescription('Stage', 'Stage', [values]));
-  }
-
-  Output<dynamic> tensorSliceDataset<Toutput_types, output_shapes>(
-      Output<Toutput_types> components) {
-    return addOperation(new OperationDescription(
-        'TensorSliceDataset', 'TensorSliceDataset', [components]));
+        'ReciprocalGrad', 'ReciprocalGrad', [y, dy], {'T': T}));
   }
 
   Output deleteSessionTensor(Output<String> handle) {
     return addOperation(new OperationDescription(
-        'DeleteSessionTensor', 'DeleteSessionTensor', [handle]));
+        'DeleteSessionTensor', 'DeleteSessionTensor', [handle], {}));
   }
 
-  Output<dynamic> getSessionHandleV2<T>(Output<T> value) {
+  Output getSessionHandleV2<T>(Output<T> value) {
     return addOperation(new OperationDescription(
-        'GetSessionHandleV2', 'GetSessionHandleV2', [value]));
+        'GetSessionHandleV2', 'GetSessionHandleV2', [value], {'T': T}));
   }
 
-  Output<dynamic> tensorDataset<Toutput_types, output_shapes>(
-      Output<Toutput_types> components) {
-    return addOperation(new OperationDescription(
-        'TensorDataset', 'TensorDataset', [components]));
-  }
-
+  @Deprecated('DEPRECATED at GraphDef version 14: Use MatrixBandPart')
   Output<T> batchMatrixBandPart<T>(
       Output<T> input, Output<int> numLower, Output<int> numUpper) {
     return addOperation(new OperationDescription('BatchMatrixBandPart',
-        'BatchMatrixBandPart', [input, numLower, numUpper]));
+        'BatchMatrixBandPart', [input, numLower, numUpper], {'T': T}));
   }
 
   Output<T> div<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('Div', 'Div', [x, y]));
+    return addOperation(
+        new OperationDescription('Div', 'Div', [x, y], {'T': T}));
   }
 
   /// Also removes it from the resource manager. To reopen, use another
   /// CreateSummaryFileWriter op.
-  Output closeSummaryWriter(Output<dynamic> writer) {
+  Output closeSummaryWriter(Output writer) {
     return addOperation(new OperationDescription(
-        'CloseSummaryWriter', 'CloseSummaryWriter', [writer]));
+        'CloseSummaryWriter', 'CloseSummaryWriter', [writer], {}));
   }
 
+  @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArraySizeV3')
   Output<int> tensorArraySizeV2(Output<String> handle, Output<double> flowIn) {
     return addOperation(new OperationDescription(
-        'TensorArraySizeV2', 'TensorArraySizeV2', [handle, flowIn]));
+        'TensorArraySizeV2', 'TensorArraySizeV2', [handle, flowIn], {}));
   }
 
   Output<T> floorMod<T>(Output<T> x, Output<T> y) {
     return addOperation(
-        new OperationDescription('FloorMod', 'FloorMod', [x, y]));
+        new OperationDescription('FloorMod', 'FloorMod', [x, y], {'T': T}));
   }
 
   Output<String> matchingFiles(Output<String> pattern) {
-    return addOperation(
-        new OperationDescription('MatchingFiles', 'MatchingFiles', [pattern]));
+    return addOperation(new OperationDescription(
+        'MatchingFiles', 'MatchingFiles', [pattern], {}));
   }
 
-  Output<dt> restore<dt, preferred_shard>(
-      Output<String> filePattern, Output<String> tensorName) {
+  Output<dt> restore<dt>(Output<String> filePattern, Output<String> tensorName,
+      {int preferredShard: -1}) {
     return addOperation(new OperationDescription(
-        'Restore', 'Restore', [filePattern, tensorName]));
+        'Restore',
+        'Restore',
+        [filePattern, tensorName],
+        {'dt': dt, 'preferred_shard': preferredShard}));
   }
 
   Output<T> tanh<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Tanh', 'Tanh', [x]));
-  }
-
-  Output<T> cropAndResizeGradImage<T, method>(Output<double> grads,
-      Output<double> boxes, Output<int> boxInd, Output<int> imageSize) {
-    return addOperation(new OperationDescription('CropAndResizeGradImage',
-        'CropAndResizeGradImage', [grads, boxes, boxInd, imageSize]));
-  }
-
-  Output<dtype> accumulatorTakeGradient<dtype>(
-      Output<String> handle, Output<int> numRequired) {
-    return addOperation(new OperationDescription('AccumulatorTakeGradient',
-        'AccumulatorTakeGradient', [handle, numRequired]));
-  }
-
-  Output<T> stridedSliceAssign<T, Index, begin_mask, end_mask, ellipsis_mask,
-          new_axis_mask, shrink_axis_mask>(
-      Output<T> ref,
-      Output<Index> begin,
-      Output<begin_mask> end,
-      Output<end_mask> strides,
-      Output<ellipsis_mask> value) {
-    return addOperation(new OperationDescription('StridedSliceAssign',
-        'StridedSliceAssign', [ref, begin, end, strides, value]));
-  }
-
-  Output<double> computeAccidentalHits<num_true, seed, seed2>(
-      Output<int> trueClasses, Output<int> sampledCandidates) {
-    return addOperation(new OperationDescription('ComputeAccidentalHits',
-        'ComputeAccidentalHits', [trueClasses, sampledCandidates]));
-  }
-
-  Output<dynamic> varHandleOp<container, shared_name, dtype, shape>() {
     return addOperation(
-        new OperationDescription('VarHandleOp', 'VarHandleOp', []));
+        new OperationDescription('Tanh', 'Tanh', [x], {'T': T}));
   }
 
-  Output<dynamic> rFFT3D(Output<double> input, Output<int> fftLength) {
+  Output<T> cropAndResizeGradImage<T>(Output<double> grads,
+      Output<double> boxes, Output<int> boxInd, Output<int> imageSize,
+      {String method: 'bilinear'}) {
+    return addOperation(new OperationDescription(
+        'CropAndResizeGradImage',
+        'CropAndResizeGradImage',
+        [grads, boxes, boxInd, imageSize],
+        {'T': T, 'method': method}));
+  }
+
+  Output varHandleOp<dtype>(
+      {String container, String sharedName, @required List shape}) {
     return addOperation(
-        new OperationDescription('RFFT3D', 'RFFT3D', [input, fftLength]));
+        new OperationDescription('VarHandleOp', 'VarHandleOp', [], {
+      'container': container,
+      'shared_name': sharedName,
+      'dtype': dtype,
+      'shape': shape
+    }));
   }
 
-  Output<dtype> tensorArrayGatherV2<dtype, element_shape>(
-      Output<String> handle, Output<int> indices, Output<double> flowIn) {
-    return addOperation(new OperationDescription('TensorArrayGatherV2',
-        'TensorArrayGatherV2', [handle, indices, flowIn]));
-  }
-
-  Output<num_partitions> dynamicPartition<num_partitions, T>(
-      Output<num_partitions> data, Output<int> partitions) {
-    return addOperation(new OperationDescription(
-        'DynamicPartition', 'DynamicPartition', [data, partitions]));
-  }
-
-  Output<String> fakeQueue(Output<dynamic> resource) {
+  Output rFFT3D(Output<double> input, Output<int> fftLength) {
     return addOperation(
-        new OperationDescription('FakeQueue', 'FakeQueue', [resource]));
+        new OperationDescription('RFFT3D', 'RFFT3D', [input, fftLength], {}));
   }
 
-  Output<dtype> tensorArrayPack<dtype, element_shape>(
-      Output<String> handle, Output<double> flowIn) {
+  @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayGatherV3')
+  Output<dtype> tensorArrayGatherV2<dtype>(
+      Output<String> handle, Output<int> indices, Output<double> flowIn,
+      {List elementShape}) {
     return addOperation(new OperationDescription(
-        'TensorArrayPack', 'TensorArrayPack', [handle, flowIn]));
+        'TensorArrayGatherV2',
+        'TensorArrayGatherV2',
+        [handle, indices, flowIn],
+        {'dtype': dtype, 'element_shape': elementShape}));
   }
 
-  Output<T> dilation2DBackpropFilter<T, strides, rates, padding>(
-      Output<T> input, Output<strides> filter, Output<rates> outBackprop) {
-    return addOperation(new OperationDescription('Dilation2DBackpropFilter',
-        'Dilation2DBackpropFilter', [input, filter, outBackprop]));
-  }
-
-  Output<compute_v> batchSelfAdjointEigV2<compute_v, T>(
-      Output<compute_v> input) {
+  Output<T> dynamicPartition<T>(Output<T> data, Output<int> partitions,
+      {@required int numPartitions}) {
     return addOperation(new OperationDescription(
-        'BatchSelfAdjointEigV2', 'BatchSelfAdjointEigV2', [input]));
+        'DynamicPartition',
+        'DynamicPartition',
+        [data, partitions],
+        {'num_partitions': numPartitions, 'T': T}));
   }
 
   Output<T> tanhGrad<T>(Output<T> y, Output<T> dy) {
     return addOperation(
-        new OperationDescription('TanhGrad', 'TanhGrad', [y, dy]));
+        new OperationDescription('TanhGrad', 'TanhGrad', [y, dy], {'T': T}));
   }
 
   Output<bool> loopCond(Output<bool> input) {
     return addOperation(
-        new OperationDescription('LoopCond', 'LoopCond', [input]));
+        new OperationDescription('LoopCond', 'LoopCond', [input], {}));
   }
 
-  Output<dynamic>
-      parallelMapDataset<f, Targuments, output_types, output_shapes>(
-          Output<dynamic> inputDataset,
-          Output<f> otherArguments,
-          Output<int> numParallelCalls) {
-    return addOperation(new OperationDescription(
-        'ParallelMapDataset',
-        'ParallelMapDataset',
-        [inputDataset, otherArguments, numParallelCalls]));
-  }
-
-  Output<keep_dims> sparseReduceMax<keep_dims, T>(
-      Output<int> inputIndices,
-      Output<keep_dims> inputValues,
-      Output<int> inputShape,
-      Output<int> reductionAxes) {
+  Output<T> sparseReduceMax<T>(Output<int> inputIndices, Output<T> inputValues,
+      Output<int> inputShape, Output<int> reductionAxes,
+      {bool keepDims: false}) {
     return addOperation(new OperationDescription(
         'SparseReduceMax',
         'SparseReduceMax',
-        [inputIndices, inputValues, inputShape, reductionAxes]));
+        [inputIndices, inputValues, inputShape, reductionAxes],
+        {'keep_dims': keepDims, 'T': T}));
   }
 
-  Output<T> unsortedSegmentMax<T, Tindices, Tnumsegments>(Output<T> data,
-      Output<Tindices> segmentIds, Output<Tnumsegments> numSegments) {
-    return addOperation(new OperationDescription('UnsortedSegmentMax',
-        'UnsortedSegmentMax', [data, segmentIds, numSegments]));
-  }
-
-  Output<double> audioSpectrogram<window_size, stride, magnitude_squared>(
-      Output<double> input) {
+  Output<T> unsortedSegmentMax<T, Tindices, Tnumsegments>(
+      Output<T> data, Output<T> segmentIds, Output<T> numSegments) {
     return addOperation(new OperationDescription(
-        'AudioSpectrogram', 'AudioSpectrogram', [input]));
+        'UnsortedSegmentMax',
+        'UnsortedSegmentMax',
+        [data, segmentIds, numSegments],
+        {'T': T, 'Tindices': Tindices, 'Tnumsegments': Tnumsegments}));
   }
 
-  Output<dtype> tensorArrayRead<dtype>(
-      Output<String> handle, Output<int> index, Output<double> flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayRead', 'TensorArrayRead', [handle, index, flowIn]));
-  }
-
-  Output stageClear<capacity, memory_limit, dtypes, container, shared_name>() {
+  Output<double> audioSpectrogram(Output<double> input,
+      {@required int windowSize,
+      @required int stride,
+      bool magnitudeSquared: false}) {
     return addOperation(
-        new OperationDescription('StageClear', 'StageClear', []));
+        new OperationDescription('AudioSpectrogram', 'AudioSpectrogram', [
+      input
+    ], {
+      'window_size': windowSize,
+      'stride': stride,
+      'magnitude_squared': magnitudeSquared
+    }));
   }
 
-  Output<String> mutableHashTable<container, shared_name, use_node_name_sharing,
-      key_dtype, value_dtype>() {
-    return addOperation(
-        new OperationDescription('MutableHashTable', 'MutableHashTable', []));
-  }
-
-  Output<dynamic>
-      scanDataset<f, Tstate, Targuments, output_types, output_shapes>(
-          Output<dynamic> inputDataset,
-          Output<f> initialState,
-          Output<Tstate> otherArguments) {
-    return addOperation(new OperationDescription('ScanDataset', 'ScanDataset',
-        [inputDataset, initialState, otherArguments]));
-  }
-
-  Output<int> tensorArraySizeV3(Output<dynamic> handle, Output<double> flowIn) {
+  Output<int> tensorArraySizeV3(Output handle, Output<double> flowIn) {
     return addOperation(new OperationDescription(
-        'TensorArraySizeV3', 'TensorArraySizeV3', [handle, flowIn]));
+        'TensorArraySizeV3', 'TensorArraySizeV3', [handle, flowIn], {}));
   }
 
-  Output<T> applyAdam<T, use_locking, use_nesterov>(
-      Output<T> var_,
-      Output<use_locking> m,
-      Output<use_nesterov> v,
-      Output<use_nesterov> beta1Power,
-      Output<use_nesterov> beta2Power,
-      Output<use_nesterov> lr,
-      Output<use_nesterov> beta1,
-      Output<use_nesterov> beta2,
-      Output<use_nesterov> epsilon,
-      Output<use_nesterov> grad) {
-    return addOperation(new OperationDescription('ApplyAdam', 'ApplyAdam',
-        [var_, m, v, beta1Power, beta2Power, lr, beta1, beta2, epsilon, grad]));
-  }
-
-  Output<String> mergeSummary<N>(Output<String> inputs) {
-    return addOperation(
-        new OperationDescription('MergeSummary', 'MergeSummary', [inputs]));
-  }
-
-  /// *NOTE*: `Mul` supports broadcasting. More about broadcasting
-  /// [here](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
-  Output<dynamic> mklMul<T>(
-      Output<T> x, Output<T> y, Output<dynamic> mklX, Output<dynamic> mklY) {
-    return addOperation(
-        new OperationDescription('_MklMul', '_MklMul', [x, y, mklX, mklY]));
-  }
-
-  Output queueEnqueueManyV2<Tcomponents, timeout_ms>(
-      Output<dynamic> handle, Output<Tcomponents> components) {
+  Output<String> mergeSummary(List<Output<String>> inputs, {@required int n}) {
     return addOperation(new OperationDescription(
-        'QueueEnqueueManyV2', 'QueueEnqueueManyV2', [handle, components]));
+        'MergeSummary', 'MergeSummary', [inputs], {'N': n}));
   }
 
-  Output<dynamic> fFT(Output<dynamic> input) {
-    return addOperation(new OperationDescription('FFT', 'FFT', [input]));
+  Output fFT(Output input) {
+    return addOperation(new OperationDescription('FFT', 'FFT', [input], {}));
   }
 
-  Output<int> tensorArrayConcatV3<dtype, element_shape_except0>(
-      Output<dynamic> handle, Output<double> flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayConcatV3', 'TensorArrayConcatV3', [handle, flowIn]));
-  }
-
-  Output resourceApplyAdadelta<T, use_locking>(
-      Output<dynamic> var_,
-      Output<dynamic> accum,
-      Output<dynamic> accumUpdate,
-      Output<T> lr,
-      Output<use_locking> rho,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad) {
+  Output resourceApplyAdadelta<T>(Output var_, Output accum, Output accumUpdate,
+      Output<T> lr, Output<T> rho, Output<T> epsilon, Output<T> grad,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceApplyAdadelta',
         'ResourceApplyAdadelta',
-        [var_, accum, accumUpdate, lr, rho, epsilon, grad]));
-  }
-
-  Output<T> debugGradientRefIdentity<T>(Output<T> input) {
-    return addOperation(new OperationDescription(
-        'DebugGradientRefIdentity', 'DebugGradientRefIdentity', [input]));
-  }
-
-  Output<double> tensorArrayGradV3<source>(
-      Output<dynamic> handle, Output<double> flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayGradV3', 'TensorArrayGradV3', [handle, flowIn]));
-  }
-
-  Output<T> refSwitch<T>(Output<T> data, Output<bool> pred) {
-    return addOperation(
-        new OperationDescription('RefSwitch', 'RefSwitch', [data, pred]));
+        [var_, accum, accumUpdate, lr, rho, epsilon, grad],
+        {'T': T, 'use_locking': useLocking}));
   }
 
   Output<T> floorDiv<T>(Output<T> x, Output<T> y) {
     return addOperation(
-        new OperationDescription('FloorDiv', 'FloorDiv', [x, y]));
-  }
-
-  Output<T> applyAdagradDA<T, use_locking>(
-      Output<T> var_,
-      Output<use_locking> gradientAccumulator,
-      Output<use_locking> gradientSquaredAccumulator,
-      Output<use_locking> grad,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<int> globalStep) {
-    return addOperation(
-        new OperationDescription('ApplyAdagradDA', 'ApplyAdagradDA', [
-      var_,
-      gradientAccumulator,
-      gradientSquaredAccumulator,
-      grad,
-      lr,
-      l1,
-      l2,
-      globalStep
-    ]));
+        new OperationDescription('FloorDiv', 'FloorDiv', [x, y], {'T': T}));
   }
 
   Output<T> square<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Square', 'Square', [x]));
-  }
-
-  Output<String> identityReader<container, shared_name>() {
     return addOperation(
-        new OperationDescription('IdentityReader', 'IdentityReader', []));
+        new OperationDescription('Square', 'Square', [x], {'T': T}));
   }
 
-  Output<double> tensorArrayScatterV3<T>(Output<dynamic> handle,
-      Output<int> indices, Output<T> value, Output<double> flowIn) {
+  Output<double> tensorArrayScatterV3<T>(Output handle, Output<int> indices,
+      Output<T> value, Output<double> flowIn) {
     return addOperation(new OperationDescription('TensorArrayScatterV3',
-        'TensorArrayScatterV3', [handle, indices, value, flowIn]));
+        'TensorArrayScatterV3', [handle, indices, value, flowIn], {'T': T}));
   }
 
   Output<T> biasAddV1<T>(Output<T> value, Output<T> bias) {
-    return addOperation(
-        new OperationDescription('BiasAddV1', 'BiasAddV1', [value, bias]));
+    return addOperation(new OperationDescription(
+        'BiasAddV1', 'BiasAddV1', [value, bias], {'T': T}));
   }
 
   Output<bool> logicalOr(Output<bool> x, Output<bool> y) {
     return addOperation(
-        new OperationDescription('LogicalOr', 'LogicalOr', [x, y]));
+        new OperationDescription('LogicalOr', 'LogicalOr', [x, y], {}));
   }
 
-  Output<T> stackPush<T, swap_memory>(Output<String> handle, Output<T> elem) {
+  Output tFRecordReaderV2(
+      {String container, String sharedName, String compressionType}) {
     return addOperation(
-        new OperationDescription('StackPush', 'StackPush', [handle, elem]));
+        new OperationDescription('TFRecordReaderV2', 'TFRecordReaderV2', [], {
+      'container': container,
+      'shared_name': sharedName,
+      'compression_type': compressionType
+    }));
   }
 
-  Output<dynamic> tFRecordReaderV2<container, shared_name, compression_type>() {
-    return addOperation(
-        new OperationDescription('TFRecordReaderV2', 'TFRecordReaderV2', []));
-  }
-
-  Output<double> logUniformCandidateSampler<num_true, num_sampled, unique,
-      range_max, seed, seed2>(Output<int> trueClasses) {
-    return addOperation(new OperationDescription('LogUniformCandidateSampler',
-        'LogUniformCandidateSampler', [trueClasses]));
-  }
-
-  Output<dynamic> paddingFIFOQueueV2<component_types, shapes, capacity,
-      container, shared_name>() {
+  Output<T> dynamicStitch<T>(List<Output<int>> indices, List<Output<T>> data,
+      {@required int n}) {
     return addOperation(new OperationDescription(
-        'PaddingFIFOQueueV2', 'PaddingFIFOQueueV2', []));
-  }
-
-  Output<Tin> lookupTableFind<Tin, Tout>(
-      Output<String> tableHandle, Output<Tin> keys, Output<Tout> defaultValue) {
-    return addOperation(new OperationDescription('LookupTableFind',
-        'LookupTableFind', [tableHandle, keys, defaultValue]));
-  }
-
-  Output<N> dynamicStitch<N, T>(Output<int> indices, Output<N> data) {
-    return addOperation(new OperationDescription(
-        'DynamicStitch', 'DynamicStitch', [indices, data]));
-  }
-
-  Output<T> sparseApplyAdadelta<T, Tindices, use_locking>(
-      Output<T> var_,
-      Output<Tindices> accum,
-      Output<use_locking> accumUpdate,
-      Output<use_locking> lr,
-      Output<use_locking> rho,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad,
-      Output<use_locking> indices) {
-    return addOperation(new OperationDescription(
-        'SparseApplyAdadelta',
-        'SparseApplyAdadelta',
-        [var_, accum, accumUpdate, lr, rho, epsilon, grad, indices]));
-  }
-
-  Output<int> sparseReshape(
-      Output<int> inputIndices, Output<int> inputShape, Output<int> newShape) {
-    return addOperation(new OperationDescription('SparseReshape',
-        'SparseReshape', [inputIndices, inputShape, newShape]));
+        'DynamicStitch', 'DynamicStitch', [indices, data], {'N': n, 'T': T}));
   }
 
   Output<T> complexAbs<T, Tout>(Output<T> x) {
-    return addOperation(
-        new OperationDescription('ComplexAbs', 'ComplexAbs', [x]));
+    return addOperation(new OperationDescription(
+        'ComplexAbs', 'ComplexAbs', [x], {'T': T, 'Tout': Tout}));
   }
 
   Output<T> serializeSparse<T, out_type>(Output<int> sparseIndices,
       Output<T> sparseValues, Output<int> sparseShape) {
-    return addOperation(new OperationDescription('SerializeSparse',
-        'SerializeSparse', [sparseIndices, sparseValues, sparseShape]));
+    return addOperation(new OperationDescription(
+        'SerializeSparse',
+        'SerializeSparse',
+        [sparseIndices, sparseValues, sparseShape],
+        {'T': T, 'out_type': out_type}));
   }
 
   Output<T> bitwiseXor<T>(Output<T> x, Output<T> y) {
     return addOperation(
-        new OperationDescription('BitwiseXor', 'BitwiseXor', [x, y]));
+        new OperationDescription('BitwiseXor', 'BitwiseXor', [x, y], {'T': T}));
   }
 
-  Output<int> sparseAdd<T, Treal>(
-      Output<int> aIndices,
-      Output<T> aValues,
-      Output<int> aShape,
-      Output<int> bIndices,
-      Output<Treal> bValues,
-      Output<int> bShape,
-      Output<Treal> thresh) {
-    return addOperation(new OperationDescription('SparseAdd', 'SparseAdd',
-        [aIndices, aValues, aShape, bIndices, bValues, bShape, thresh]));
-  }
-
-  Output<dynamic> tensorListSetItem<element_dtype>(Output<dynamic> inputHandle,
-      Output<int> index, Output<element_dtype> item) {
+  Output tensorListSetItem<element_dtype>(
+      Output inputHandle, Output<int> index, Output<element_dtype> item) {
     return addOperation(new OperationDescription(
-        'TensorListSetItem', 'TensorListSetItem', [inputHandle, index, item]));
+        'TensorListSetItem',
+        'TensorListSetItem',
+        [inputHandle, index, item],
+        {'element_dtype': element_dtype}));
   }
 
-  Output<dynamic>
-      mapAndBatchDataset<f, Targuments, output_types, output_shapes>(
-          Output<dynamic> inputDataset,
-          Output<f> otherArguments,
-          Output<int> batchSize,
-          Output<int> numParallelBatches) {
-    return addOperation(new OperationDescription(
-        'MapAndBatchDataset',
-        'MapAndBatchDataset',
-        [inputDataset, otherArguments, batchSize, numParallelBatches]));
-  }
-
-  Output<String> stack<elem_type, stack_name>() {
-    return addOperation(new OperationDescription('Stack', 'Stack', []));
-  }
-
-  Output<String> tFRecordReader<container, shared_name, compression_type>() {
+  @Deprecated('DEPRECATED at GraphDef version 15: Use FFT')
+  Output batchFFT(Output input) {
     return addOperation(
-        new OperationDescription('TFRecordReader', 'TFRecordReader', []));
+        new OperationDescription('BatchFFT', 'BatchFFT', [input], {}));
   }
 
-  Output<component_types> queueDequeueMany<component_types, timeout_ms>(
-      Output<String> handle, Output<int> n) {
-    return addOperation(new OperationDescription(
-        'QueueDequeueMany', 'QueueDequeueMany', [handle, n]));
-  }
-
-  Output<int> deserializeManySparse<dtype>(Output<String> serializedSparse) {
-    return addOperation(new OperationDescription(
-        'DeserializeManySparse', 'DeserializeManySparse', [serializedSparse]));
-  }
-
-  Output<String>
-      sparseConditionalAccumulator<dtype, shape, container, shared_name>() {
-    return addOperation(new OperationDescription(
-        'SparseConditionalAccumulator', 'SparseConditionalAccumulator', []));
-  }
-
-  Output<String>
-      conditionalAccumulator<dtype, shape, container, shared_name>() {
-    return addOperation(new OperationDescription(
-        'ConditionalAccumulator', 'ConditionalAccumulator', []));
-  }
-
-  Output<dynamic> batchFFT(Output<dynamic> input) {
-    return addOperation(
-        new OperationDescription('BatchFFT', 'BatchFFT', [input]));
-  }
-
-  Output<int> accumulatorNumAccumulated(Output<String> handle) {
-    return addOperation(new OperationDescription(
-        'AccumulatorNumAccumulated', 'AccumulatorNumAccumulated', [handle]));
-  }
-
+  @Deprecated(
+      'DEPRECATED at GraphDef version 11: Use SelfAdjointEigV2 instead.')
   Output<T> batchSelfAdjointEig<T>(Output<T> input) {
     return addOperation(new OperationDescription(
-        'BatchSelfAdjointEig', 'BatchSelfAdjointEig', [input]));
+        'BatchSelfAdjointEig', 'BatchSelfAdjointEig', [input], {'T': T}));
   }
 
   Output<T> minimum<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('Minimum', 'Minimum', [x, y]));
-  }
-
-  Output<bool> queueIsClosed(Output<String> handle) {
     return addOperation(
-        new OperationDescription('QueueIsClosed', 'QueueIsClosed', [handle]));
+        new OperationDescription('Minimum', 'Minimum', [x, y], {'T': T}));
   }
 
-  Output<double> tensorArraySplitV3<T>(Output<dynamic> handle, Output<T> value,
+  Output<double> tensorArraySplitV3<T>(Output handle, Output<T> value,
       Output<int> lengths, Output<double> flowIn) {
     return addOperation(new OperationDescription('TensorArraySplitV3',
-        'TensorArraySplitV3', [handle, value, lengths, flowIn]));
+        'TensorArraySplitV3', [handle, value, lengths, flowIn], {'T': T}));
   }
 
-  Output<T> sparseApplyFtrl<T, Tindices, use_locking>(
-      Output<T> var_,
-      Output<Tindices> accum,
-      Output<use_locking> linear,
-      Output<use_locking> grad,
-      Output<use_locking> indices,
-      Output<use_locking> lr,
-      Output<use_locking> l1,
-      Output<use_locking> l2,
-      Output<use_locking> lrPower) {
-    return addOperation(new OperationDescription(
-        'SparseApplyFtrl',
-        'SparseApplyFtrl',
-        [var_, accum, linear, grad, indices, lr, l1, l2, lrPower]));
-  }
-
-  Output resourceSparseApplyProximalGradientDescent<T, Tindices, use_locking>(
-      Output<dynamic> var_,
+  Output resourceSparseApplyProximalGradientDescent<T, Tindices>(
+      Output var_,
       Output<T> alpha,
-      Output<Tindices> l1,
-      Output<use_locking> l2,
-      Output<use_locking> grad,
-      Output<use_locking> indices) {
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> grad,
+      Output<T> indices,
+      {bool useLocking: false}) {
     return addOperation(new OperationDescription(
         'ResourceSparseApplyProximalGradientDescent',
         'ResourceSparseApplyProximalGradientDescent',
-        [var_, alpha, l1, l2, grad, indices]));
+        [var_, alpha, l1, l2, grad, indices],
+        {'T': T, 'Tindices': Tindices, 'use_locking': useLocking}));
   }
 
   Output<T> sparseSegmentSum<T, Tidx>(
-      Output<T> data, Output<Tidx> indices, Output<int> segmentIds) {
+      Output<T> data, Output<T> indices, Output<int> segmentIds) {
     return addOperation(new OperationDescription(
-        'SparseSegmentSum', 'SparseSegmentSum', [data, indices, segmentIds]));
-  }
-
-  Output<String>
-      fIFOQueue<component_types, shapes, capacity, container, shared_name>() {
-    return addOperation(new OperationDescription('FIFOQueue', 'FIFOQueue', []));
-  }
-
-  Output<capacity> orderedMapUnstageNoKey<capacity, memory_limit, dtypes,
-      container, shared_name>(Output<int> indices) {
-    return addOperation(new OperationDescription(
-        'OrderedMapUnstageNoKey', 'OrderedMapUnstageNoKey', [indices]));
+        'SparseSegmentSum',
+        'SparseSegmentSum',
+        [data, indices, segmentIds],
+        {'T': T, 'Tidx': Tidx}));
   }
 
   Output<T> rint<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Rint', 'Rint', [x]));
+    return addOperation(
+        new OperationDescription('Rint', 'Rint', [x], {'T': T}));
   }
 
-  Output abort<error_msg, exit_without_error>() {
-    return addOperation(new OperationDescription('Abort', 'Abort', []));
-  }
-
-  Output<int> merge<T, N>(Output<T> inputs) {
-    return addOperation(new OperationDescription('Merge', 'Merge', [inputs]));
-  }
-
-  Output<ksizes> extractImagePatches<ksizes, strides, rates, T, padding>(
-      Output<ksizes> images) {
-    return addOperation(new OperationDescription(
-        'ExtractImagePatches', 'ExtractImagePatches', [images]));
-  }
-
-  Output<double> fixedUnigramCandidateSampler<
-      num_true,
-      num_sampled,
-      unique,
-      range_max,
-      vocab_file,
-      distortion,
-      num_reserved_ids,
-      num_shards,
-      shard,
-      unigrams,
-      seed,
-      seed2>(Output<int> trueClasses) {
-    return addOperation(new OperationDescription('FixedUnigramCandidateSampler',
-        'FixedUnigramCandidateSampler', [trueClasses]));
+  Output abort({String errorMsg, bool exitWithoutError: false}) {
+    return addOperation(new OperationDescription('Abort', 'Abort', [],
+        {'error_msg': errorMsg, 'exit_without_error': exitWithoutError}));
   }
 
   Output<String> shardedFilename(
       Output<String> basename, Output<int> shard, Output<int> numShards) {
+    return addOperation(new OperationDescription('ShardedFilename',
+        'ShardedFilename', [basename, shard, numShards], {}));
+  }
+
+  Output<T> matrixInverse<T>(Output<T> input, {bool adjoint: false}) {
+    return addOperation(new OperationDescription('MatrixInverse',
+        'MatrixInverse', [input], {'adjoint': adjoint, 'T': T}));
+  }
+
+  @Deprecated('DEPRECATED at GraphDef version 25: Replaced by RandomPoissonV2')
+  Output<S> randomPoisson<S, dtype>(Output<S> shape, Output<S> rate,
+      {int seed: 0, int seed2: 0}) {
     return addOperation(new OperationDescription(
-        'ShardedFilename', 'ShardedFilename', [basename, shard, numShards]));
-  }
-
-  Output<adjoint> matrixInverse<adjoint, T>(Output<adjoint> input) {
-    return addOperation(
-        new OperationDescription('MatrixInverse', 'MatrixInverse', [input]));
-  }
-
-  Output<seed> randomPoisson<seed, seed2, S, dtype>(
-      Output<seed> shape, Output<seed2> rate) {
-    return addOperation(new OperationDescription(
-        'RandomPoisson', 'RandomPoisson', [shape, rate]));
-  }
-
-  Output<String> paddingFIFOQueue<component_types, shapes, capacity, container,
-      shared_name>() {
-    return addOperation(
-        new OperationDescription('PaddingFIFOQueue', 'PaddingFIFOQueue', []));
-  }
-
-  Output<T> conv3DBackpropInput<T, strides, padding>(
-      Output<T> input, Output<strides> filter, Output<padding> outBackprop) {
-    return addOperation(new OperationDescription('Conv3DBackpropInput',
-        'Conv3DBackpropInput', [input, filter, outBackprop]));
-  }
-
-  Output<T> depthwiseConv2dNative<T, strides, padding, data_format, dilations>(
-      Output<T> input, Output<strides> filter) {
-    return addOperation(new OperationDescription(
-        'DepthwiseConv2dNative', 'DepthwiseConv2dNative', [input, filter]));
-  }
-
-  Output<double> learnedUnigramCandidateSampler<num_true, num_sampled, unique,
-      range_max, seed, seed2>(Output<int> trueClasses) {
-    return addOperation(new OperationDescription(
-        'LearnedUnigramCandidateSampler',
-        'LearnedUnigramCandidateSampler',
-        [trueClasses]));
-  }
-
-  Output queueEnqueueMany<Tcomponents, timeout_ms>(
-      Output<String> handle, Output<Tcomponents> components) {
-    return addOperation(new OperationDescription(
-        'QueueEnqueueMany', 'QueueEnqueueMany', [handle, components]));
+        'RandomPoisson',
+        'RandomPoisson',
+        [shape, rate],
+        {'seed': seed, 'seed2': seed2, 'S': S, 'dtype': dtype}));
   }
 
   Output noOp() {
-    return addOperation(new OperationDescription('NoOp', 'NoOp', []));
+    return addOperation(new OperationDescription('NoOp', 'NoOp', [], {}));
   }
 
-  Output<double> loadAndRemapMatrix<num_rows, num_cols, max_rows_in_memory>(
+  Output<double> loadAndRemapMatrix(
       Output<String> ckptPath,
       Output<String> oldTensorName,
       Output<int> rowRemapping,
       Output<int> colRemapping,
-      Output<double> initializingValues) {
+      Output<double> initializingValues,
+      {@required int numRows,
+      @required int numCols,
+      int maxRowsInMemory: -1}) {
     return addOperation(new OperationDescription(
         'LoadAndRemapMatrix', 'LoadAndRemapMatrix', [
       ckptPath,
@@ -5217,470 +3650,252 @@ class Graph extends _Graph {
       rowRemapping,
       colRemapping,
       initializingValues
-    ]));
+    ], {
+      'num_rows': numRows,
+      'num_cols': numCols,
+      'max_rows_in_memory': maxRowsInMemory
+    }));
   }
 
-  Output<T> spaceToBatchND<T, Tblock_shape, Tpaddings>(Output<T> input,
-      Output<Tblock_shape> blockShape, Output<Tpaddings> paddings) {
+  Output<T> spaceToBatchND<T, Tblock_shape, Tpaddings>(
+      Output<T> input, Output<T> blockShape, Output<T> paddings) {
     return addOperation(new OperationDescription(
-        'SpaceToBatchND', 'SpaceToBatchND', [input, blockShape, paddings]));
+        'SpaceToBatchND',
+        'SpaceToBatchND',
+        [input, blockShape, paddings],
+        {'T': T, 'Tblock_shape': Tblock_shape, 'Tpaddings': Tpaddings}));
   }
 
-  Output<T> resizeNearestNeighborGrad<T, align_corners>(
-      Output<T> grads, Output<int> size) {
-    return addOperation(new OperationDescription('ResizeNearestNeighborGrad',
-        'ResizeNearestNeighborGrad', [grads, size]));
-  }
-
-  Output<double>
-      allCandidateSampler<num_true, num_sampled, unique, seed, seed2>(
-          Output<int> trueClasses) {
+  Output<T> resizeNearestNeighborGrad<T>(Output<T> grads, Output<int> size,
+      {bool alignCorners: false}) {
     return addOperation(new OperationDescription(
-        'AllCandidateSampler', 'AllCandidateSampler', [trueClasses]));
+        'ResizeNearestNeighborGrad',
+        'ResizeNearestNeighborGrad',
+        [grads, size],
+        {'T': T, 'align_corners': alignCorners}));
   }
 
-  Output queueEnqueueV2<Tcomponents, timeout_ms>(
-      Output<dynamic> handle, Output<Tcomponents> components) {
+  Output<double> resizeBilinear<T>(Output<T> images, Output<int> size,
+      {bool alignCorners: false}) {
     return addOperation(new OperationDescription(
-        'QueueEnqueueV2', 'QueueEnqueueV2', [handle, components]));
+        'ResizeBilinear',
+        'ResizeBilinear',
+        [images, size],
+        {'T': T, 'align_corners': alignCorners}));
   }
 
-  Output<dynamic> batchDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset, Output<int> batchSize) {
+  Output<double> fakeQuantWithMinMaxVars(
+      Output<double> inputs, Output<double> min, Output<double> max,
+      {int numBits: 8, bool narrowRange: false}) {
     return addOperation(new OperationDescription(
-        'BatchDataset', 'BatchDataset', [inputDataset, batchSize]));
-  }
-
-  Output<dynamic> repeatDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset, Output<int> count) {
-    return addOperation(new OperationDescription(
-        'RepeatDataset', 'RepeatDataset', [inputDataset, count]));
-  }
-
-  Output<component_types> queueDequeueManyV2<component_types, timeout_ms>(
-      Output<dynamic> handle, Output<int> n) {
-    return addOperation(new OperationDescription(
-        'QueueDequeueManyV2', 'QueueDequeueManyV2', [handle, n]));
-  }
-
-  Output<T> logMatrixDeterminant<T>(Output<T> input) {
-    return addOperation(new OperationDescription(
-        'LogMatrixDeterminant', 'LogMatrixDeterminant', [input]));
-  }
-
-  Output<shape> temporaryVariable<shape, dtype, var_name>() {
-    return addOperation(
-        new OperationDescription('TemporaryVariable', 'TemporaryVariable', []));
-  }
-
-  Output<double> resizeBilinear<T, align_corners>(
-      Output<T> images, Output<int> size) {
-    return addOperation(new OperationDescription(
-        'ResizeBilinear', 'ResizeBilinear', [images, size]));
-  }
-
-  Output<double> fakeQuantWithMinMaxVars<num_bits, narrow_range>(
-      Output<double> inputs, Output<double> min, Output<double> max) {
-    return addOperation(new OperationDescription('FakeQuantWithMinMaxVars',
-        'FakeQuantWithMinMaxVars', [inputs, min, max]));
-  }
-
-  Output<int> barrierIncompleteSize(Output<String> handle) {
-    return addOperation(new OperationDescription(
-        'BarrierIncompleteSize', 'BarrierIncompleteSize', [handle]));
+        'FakeQuantWithMinMaxVars',
+        'FakeQuantWithMinMaxVars',
+        [inputs, min, max],
+        {'num_bits': numBits, 'narrow_range': narrowRange}));
   }
 
   Output<bool> logicalNot(Output<bool> x) {
     return addOperation(
-        new OperationDescription('LogicalNot', 'LogicalNot', [x]));
+        new OperationDescription('LogicalNot', 'LogicalNot', [x], {}));
   }
 
-  Output<T> sparseApplyAdagrad<T, Tindices, use_locking>(
-      Output<T> var_,
-      Output<Tindices> accum,
-      Output<use_locking> lr,
-      Output<use_locking> grad,
-      Output<use_locking> indices) {
-    return addOperation(new OperationDescription('SparseApplyAdagrad',
-        'SparseApplyAdagrad', [var_, accum, lr, grad, indices]));
-  }
-
-  Output<int> queueSize(Output<String> handle) {
-    return addOperation(
-        new OperationDescription('QueueSize', 'QueueSize', [handle]));
-  }
-
-  Output<double> sdcaOptimizer<
-          loss_type,
-          adaptative,
-          num_sparse_features,
-          num_sparse_features_with_values,
-          num_dense_features,
-          l1,
-          l2,
-          num_loss_partitions,
-          num_inner_iterations>(
-      Output<int> sparseExampleIndices,
-      Output<int> sparseFeatureIndices,
-      Output<double> sparseFeatureValues,
-      Output<double> denseFeatures,
-      Output<double> exampleWeights,
-      Output<double> exampleLabels,
-      Output<int> sparseIndices,
-      Output<double> sparseWeights,
-      Output<double> denseWeights,
-      Output<double> exampleStateData) {
-    return addOperation(
-        new OperationDescription('SdcaOptimizer', 'SdcaOptimizer', [
-      sparseExampleIndices,
-      sparseFeatureIndices,
-      sparseFeatureValues,
-      denseFeatures,
-      exampleWeights,
-      exampleLabels,
-      sparseIndices,
-      sparseWeights,
-      denseWeights,
-      exampleStateData
-    ]));
-  }
-
-  Output<dynamic> iFFT(Output<dynamic> input) {
-    return addOperation(new OperationDescription('IFFT', 'IFFT', [input]));
+  Output iFFT(Output input) {
+    return addOperation(new OperationDescription('IFFT', 'IFFT', [input], {}));
   }
 
   Output<T> atan<T>(Output<T> x) {
-    return addOperation(new OperationDescription('Atan', 'Atan', [x]));
+    return addOperation(
+        new OperationDescription('Atan', 'Atan', [x], {'T': T}));
   }
 
-  Output<double>
-      fakeQuantWithMinMaxArgsGradient<min, max, num_bits, narrow_range>(
-          Output<double> gradients, Output<double> inputs) {
+  Output<double> fakeQuantWithMinMaxArgsGradient(
+      Output<double> gradients, Output<double> inputs,
+      {double min: -6.0,
+      double max: 6.0,
+      int numBits: 8,
+      bool narrowRange: false}) {
     return addOperation(new OperationDescription(
-        'FakeQuantWithMinMaxArgsGradient',
-        'FakeQuantWithMinMaxArgsGradient',
-        [gradients, inputs]));
+        'FakeQuantWithMinMaxArgsGradient', 'FakeQuantWithMinMaxArgsGradient', [
+      gradients,
+      inputs
+    ], {
+      'min': min,
+      'max': max,
+      'num_bits': numBits,
+      'narrow_range': narrowRange
+    }));
   }
 
-  Output<int> tensorListLength(Output<dynamic> inputHandle) {
+  Output<int> tensorListLength(Output inputHandle) {
     return addOperation(new OperationDescription(
-        'TensorListLength', 'TensorListLength', [inputHandle]));
-  }
-
-  Output<dynamic> latencyStatsDataset<output_types, output_shapes>(
-      Output<dynamic> inputDataset, Output<String> tag) {
-    return addOperation(new OperationDescription(
-        'LatencyStatsDataset', 'LatencyStatsDataset', [inputDataset, tag]));
+        'TensorListLength', 'TensorListLength', [inputHandle], {}));
   }
 
   Output<T> pow<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('Pow', 'Pow', [x, y]));
-  }
-
-  Output<T> applyRMSProp<T, use_locking>(
-      Output<T> var_,
-      Output<use_locking> ms,
-      Output<use_locking> mom,
-      Output<use_locking> lr,
-      Output<use_locking> rho,
-      Output<use_locking> momentum,
-      Output<use_locking> epsilon,
-      Output<use_locking> grad) {
-    return addOperation(new OperationDescription('ApplyRMSProp', 'ApplyRMSProp',
-        [var_, ms, mom, lr, rho, momentum, epsilon, grad]));
-  }
-
-  Output<T> stackPushV2<T, swap_memory>(
-      Output<dynamic> handle, Output<T> elem) {
     return addOperation(
-        new OperationDescription('StackPushV2', 'StackPushV2', [handle, elem]));
+        new OperationDescription('Pow', 'Pow', [x, y], {'T': T}));
   }
 
-  Output<dynamic> mutexLock(Output<dynamic> mutex) {
+  Output<T> stackPushV2<T>(Output handle, Output<T> elem,
+      {bool swapMemory: false}) {
+    return addOperation(new OperationDescription('StackPushV2', 'StackPushV2',
+        [handle, elem], {'T': T, 'swap_memory': swapMemory}));
+  }
+
+  Output mutexLock(Output mutex) {
     return addOperation(
-        new OperationDescription('MutexLock', 'MutexLock', [mutex]));
+        new OperationDescription('MutexLock', 'MutexLock', [mutex], {}));
   }
 
-  Output<ksize> maxPoolGradWithArgmax<ksize, strides, padding, Targmax, T>(
-      Output<ksize> input, Output<strides> grad, Output<padding> argmax) {
-    return addOperation(new OperationDescription('MaxPoolGradWithArgmax',
-        'MaxPoolGradWithArgmax', [input, grad, argmax]));
+  Output fFT2D(Output input) {
+    return addOperation(
+        new OperationDescription('FFT2D', 'FFT2D', [input], {}));
   }
 
-  Output<dynamic> fFT2D(Output<dynamic> input) {
-    return addOperation(new OperationDescription('FFT2D', 'FFT2D', [input]));
-  }
-
-  Output<dynamic> mutexV2<container, shared_name>() {
-    return addOperation(new OperationDescription('MutexV2', 'MutexV2', []));
+  Output mutexV2({String container, String sharedName}) {
+    return addOperation(new OperationDescription('MutexV2', 'MutexV2', [],
+        {'container': container, 'shared_name': sharedName}));
   }
 
   Output<int> nonMaxSuppressionV2(Output<double> boxes, Output<double> scores,
       Output<int> maxOutputSize, Output<double> iouThreshold) {
-    return addOperation(new OperationDescription('NonMaxSuppressionV2',
-        'NonMaxSuppressionV2', [boxes, scores, maxOutputSize, iouThreshold]));
-  }
-
-  Output<int> bucketize<T, boundaries>(Output<T> input) {
-    return addOperation(
-        new OperationDescription('Bucketize', 'Bucketize', [input]));
+    return addOperation(new OperationDescription(
+        'NonMaxSuppressionV2',
+        'NonMaxSuppressionV2',
+        [boxes, scores, maxOutputSize, iouThreshold],
+        {}));
   }
 
   Output<T> drawBoundingBoxes<T>(Output<T> images, Output<double> boxes) {
     return addOperation(new OperationDescription(
-        'DrawBoundingBoxes', 'DrawBoundingBoxes', [images, boxes]));
+        'DrawBoundingBoxes', 'DrawBoundingBoxes', [images, boxes], {'T': T}));
   }
 
-  Output<ksize> maxPoolWithArgmax<ksize, strides, Targmax, padding, T>(
-      Output<ksize> input) {
+  Output initializeTableFromTextFileV2(
+      Output tableHandle, Output<String> filename,
+      {@required int keyIndex,
+      @required int valueIndex,
+      int vocabSize: -1,
+      String delimiter: '	'}) {
     return addOperation(new OperationDescription(
-        'MaxPoolWithArgmax', 'MaxPoolWithArgmax', [input]));
-  }
-
-  Output<dynamic> priorityQueueV2<component_types, shapes, capacity, container,
-      shared_name>() {
-    return addOperation(
-        new OperationDescription('PriorityQueueV2', 'PriorityQueueV2', []));
-  }
-
-  Output<T> refEnter<T, frame_name, is_constant, parallel_iterations>(
-      Output<T> data) {
-    return addOperation(
-        new OperationDescription('RefEnter', 'RefEnter', [data]));
-  }
-
-  Output<double> tensorArraySplit<T>(Output<String> handle, Output<T> value,
-      Output<int> lengths, Output<double> flowIn) {
-    return addOperation(new OperationDescription('TensorArraySplit',
-        'TensorArraySplit', [handle, value, lengths, flowIn]));
-  }
-
-  Output<double> quantizedAvgPool<T, ksize, strides, padding>(
-      Output<T> input, Output<double> minInput, Output<double> maxInput) {
-    return addOperation(new OperationDescription(
-        'QuantizedAvgPool', 'QuantizedAvgPool', [input, minInput, maxInput]));
-  }
-
-  Output<T> applyPowerSign<T, use_locking>(
-      Output<T> var_,
-      Output<use_locking> m,
-      Output<use_locking> lr,
-      Output<use_locking> logbase,
-      Output<use_locking> signDecay,
-      Output<use_locking> beta,
-      Output<use_locking> grad) {
-    return addOperation(new OperationDescription('ApplyPowerSign',
-        'ApplyPowerSign', [var_, m, lr, logbase, signDecay, beta, grad]));
-  }
-
-  Output initializeTableFromTextFileV2<key_index, value_index, vocab_size,
-      delimiter>(Output<dynamic> tableHandle, Output<String> filename) {
-    return addOperation(new OperationDescription(
-        'InitializeTableFromTextFileV2',
-        'InitializeTableFromTextFileV2',
-        [tableHandle, filename]));
+        'InitializeTableFromTextFileV2', 'InitializeTableFromTextFileV2', [
+      tableHandle,
+      filename
+    ], {
+      'key_index': keyIndex,
+      'value_index': valueIndex,
+      'vocab_size': vocabSize,
+      'delimiter': delimiter
+    }));
   }
 
   Output<T> exit<T>(Output<T> data) {
-    return addOperation(new OperationDescription('Exit', 'Exit', [data]));
-  }
-
-  Output accumulatorSetGlobalStep(
-      Output<String> handle, Output<int> newGlobalStep) {
-    return addOperation(new OperationDescription('AccumulatorSetGlobalStep',
-        'AccumulatorSetGlobalStep', [handle, newGlobalStep]));
-  }
-
-  Output<exclusive> cumprod<exclusive, reverse, T, Tidx>(
-      Output<exclusive> x, Output<reverse> axis) {
     return addOperation(
-        new OperationDescription('Cumprod', 'Cumprod', [x, axis]));
+        new OperationDescription('Exit', 'Exit', [data], {'T': T}));
   }
 
-  Output<String> readerReadV2(
-      Output<dynamic> readerHandle, Output<dynamic> queueHandle) {
+  Output<T> cumprod<T, Tidx>(Output<T> x, Output<T> axis,
+      {bool exclusive: false, bool reverse: false}) {
     return addOperation(new OperationDescription(
-        'ReaderReadV2', 'ReaderReadV2', [readerHandle, queueHandle]));
+        'Cumprod',
+        'Cumprod',
+        [x, axis],
+        {'exclusive': exclusive, 'reverse': reverse, 'T': T, 'Tidx': Tidx}));
   }
 
-  Output<T> refSelect<T, N>(Output<int> index, Output<T> inputs) {
-    return addOperation(
-        new OperationDescription('RefSelect', 'RefSelect', [index, inputs]));
-  }
-
-  Output<seq_dim> reverseSequence<seq_dim, batch_dim, T, Tlen>(
-      Output<seq_dim> input, Output<batch_dim> seqLengths) {
+  Output<T> reverseSequence<T, Tlen>(Output<T> input, Output<T> seqLengths,
+      {@required int seqDim, int batchDim: 0}) {
     return addOperation(new OperationDescription(
-        'ReverseSequence', 'ReverseSequence', [input, seqLengths]));
+        'ReverseSequence',
+        'ReverseSequence',
+        [input, seqLengths],
+        {'seq_dim': seqDim, 'batch_dim': batchDim, 'T': T, 'Tlen': Tlen}));
   }
 
-  Output<dtype> tensorArrayGatherV3<dtype, element_shape>(
-      Output<dynamic> handle, Output<int> indices, Output<double> flowIn) {
-    return addOperation(new OperationDescription('TensorArrayGatherV3',
-        'TensorArrayGatherV3', [handle, indices, flowIn]));
-  }
-
-  Output<String> priorityQueue<component_types, shapes, capacity, container,
-      shared_name>() {
-    return addOperation(
-        new OperationDescription('PriorityQueue', 'PriorityQueue', []));
+  Output<dtype> tensorArrayGatherV3<dtype>(
+      Output handle, Output<int> indices, Output<double> flowIn,
+      {List elementShape}) {
+    return addOperation(new OperationDescription(
+        'TensorArrayGatherV3',
+        'TensorArrayGatherV3',
+        [handle, indices, flowIn],
+        {'dtype': dtype, 'element_shape': elementShape}));
   }
 
   Output<bool> greater<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('Greater', 'Greater', [x, y]));
-  }
-
-  Output<int> readerNumWorkUnitsCompleted(Output<String> readerHandle) {
-    return addOperation(new OperationDescription('ReaderNumWorkUnitsCompleted',
-        'ReaderNumWorkUnitsCompleted', [readerHandle]));
-  }
-
-  Output<int> decodeWav<desired_channels, desired_samples>(
-      Output<String> contents) {
     return addOperation(
-        new OperationDescription('DecodeWav', 'DecodeWav', [contents]));
+        new OperationDescription('Greater', 'Greater', [x, y], {'T': T}));
   }
 
-  Output<int> stringToHashBucketFast<num_buckets>(Output<String> input) {
+  Output<int> stringToHashBucketFast(Output<String> input,
+      {@required int numBuckets}) {
+    return addOperation(new OperationDescription('StringToHashBucketFast',
+        'StringToHashBucketFast', [input], {'num_buckets': numBuckets}));
+  }
+
+  Output<T> unbatchGrad<T>(Output<T> originalInput, Output<int> batchIndex,
+      Output<T> grad, Output<int> id,
+      {String container, String sharedName}) {
     return addOperation(new OperationDescription(
-        'StringToHashBucketFast', 'StringToHashBucketFast', [input]));
+        'UnbatchGrad',
+        'UnbatchGrad',
+        [originalInput, batchIndex, grad, id],
+        {'container': container, 'shared_name': sharedName, 'T': T}));
   }
 
-  Output<container> unbatchGrad<container, shared_name, T>(
-      Output<container> originalInput,
-      Output<int> batchIndex,
-      Output<shared_name> grad,
-      Output<int> id) {
+  Output<T> argMin<T, Tidx, output_type>(Output<T> input, Output<T> dimension) {
     return addOperation(new OperationDescription(
-        'UnbatchGrad', 'UnbatchGrad', [originalInput, batchIndex, grad, id]));
-  }
-
-  Output<T> argMin<T, Tidx, output_type>(
-      Output<T> input, Output<Tidx> dimension) {
-    return addOperation(
-        new OperationDescription('ArgMin', 'ArgMin', [input, dimension]));
-  }
-
-  Output<dynamic> groupByWindowDataset<
-          key_func,
-          reduce_func,
-          window_size_func,
-          Tkey_func_other_arguments,
-          Treduce_func_other_arguments,
-          Twindow_size_func_other_arguments,
-          output_types,
-          output_shapes>(
-      Output<dynamic> inputDataset,
-      Output<key_func> keyFuncOtherArguments,
-      Output<reduce_func> reduceFuncOtherArguments,
-      Output<window_size_func> windowSizeFuncOtherArguments) {
-    return addOperation(new OperationDescription(
-        'GroupByWindowDataset', 'GroupByWindowDataset', [
-      inputDataset,
-      keyFuncOtherArguments,
-      reduceFuncOtherArguments,
-      windowSizeFuncOtherArguments
-    ]));
-  }
-
-  Output<int> fractionalMaxPool<pooling_ratio, pseudo_random, overlapping,
-      deterministic, seed, seed2, T>(Output<pooling_ratio> value) {
-    return addOperation(new OperationDescription(
-        'FractionalMaxPool', 'FractionalMaxPool', [value]));
+        'ArgMin',
+        'ArgMin',
+        [input, dimension],
+        {'T': T, 'Tidx': Tidx, 'output_type': output_type}));
   }
 
   Output<T> reciprocal<T>(Output<T> x) {
     return addOperation(
-        new OperationDescription('Reciprocal', 'Reciprocal', [x]));
+        new OperationDescription('Reciprocal', 'Reciprocal', [x], {'T': T}));
   }
 
-  Output<int> readerNumWorkUnitsCompletedV2(Output<dynamic> readerHandle) {
+  Output<int> readerNumWorkUnitsCompletedV2(Output readerHandle) {
     return addOperation(new OperationDescription(
         'ReaderNumWorkUnitsCompletedV2',
         'ReaderNumWorkUnitsCompletedV2',
-        [readerHandle]));
+        [readerHandle],
+        {}));
   }
 
-  Output<int>
-      generateVocabRemapping<new_vocab_offset, num_new_vocab, old_vocab_size>(
-          Output<String> newVocabFile, Output<String> oldVocabFile) {
-    return addOperation(new OperationDescription('GenerateVocabRemapping',
-        'GenerateVocabRemapping', [newVocabFile, oldVocabFile]));
+  Output<T> unsortedSegmentProd<T, Tindices, Tnumsegments>(
+      Output<T> data, Output<T> segmentIds, Output<T> numSegments) {
+    return addOperation(new OperationDescription(
+        'UnsortedSegmentProd',
+        'UnsortedSegmentProd',
+        [data, segmentIds, numSegments],
+        {'T': T, 'Tindices': Tindices, 'Tnumsegments': Tnumsegments}));
   }
 
-  Output<T> unsortedSegmentProd<T, Tindices, Tnumsegments>(Output<T> data,
-      Output<Tindices> segmentIds, Output<Tnumsegments> numSegments) {
-    return addOperation(new OperationDescription('UnsortedSegmentProd',
-        'UnsortedSegmentProd', [data, segmentIds, numSegments]));
-  }
-
-  Output<T>
-      fusedResizeAndPadConv2D<T, resize_align_corners, mode, strides, padding>(
-          Output<T> input,
-          Output<int> size,
-          Output<int> paddings,
-          Output<resize_align_corners> filter) {
-    return addOperation(new OperationDescription('FusedResizeAndPadConv2D',
-        'FusedResizeAndPadConv2D', [input, size, paddings, filter]));
-  }
-
-  Output<bool> inTopK<k, T>(Output<double> predictions, Output<k> targets) {
-    return addOperation(
-        new OperationDescription('InTopK', 'InTopK', [predictions, targets]));
+  Output<bool> inTopK<T>(Output<double> predictions, Output<T> targets,
+      {@required int k}) {
+    return addOperation(new OperationDescription(
+        'InTopK', 'InTopK', [predictions, targets], {'k': k, 'T': T}));
   }
 
   Output<T> sub<T>(Output<T> x, Output<T> y) {
-    return addOperation(new OperationDescription('Sub', 'Sub', [x, y]));
+    return addOperation(
+        new OperationDescription('Sub', 'Sub', [x, y], {'T': T}));
   }
 
   Output<T> angle<T, Tout>(Output<T> input) {
-    return addOperation(new OperationDescription('Angle', 'Angle', [input]));
-  }
-
-  Output<double> tensorArrayUnpack<T>(
-      Output<String> handle, Output<T> value, Output<double> flowIn) {
     return addOperation(new OperationDescription(
-        'TensorArrayUnpack', 'TensorArrayUnpack', [handle, value, flowIn]));
+        'Angle', 'Angle', [input], {'T': T, 'Tout': Tout}));
   }
 
-  Output<String> iteratorToStringHandle(Output<dynamic> resourceHandle) {
-    return addOperation(new OperationDescription(
-        'IteratorToStringHandle', 'IteratorToStringHandle', [resourceHandle]));
+  Output<String> iteratorToStringHandle(Output resourceHandle) {
+    return addOperation(new OperationDescription('IteratorToStringHandle',
+        'IteratorToStringHandle', [resourceHandle], {}));
   }
 
-  Output<int> sparseAccumulatorTakeGradient<dtype>(
-      Output<String> handle, Output<int> numRequired) {
-    return addOperation(new OperationDescription(
-        'SparseAccumulatorTakeGradient',
-        'SparseAccumulatorTakeGradient',
-        [handle, numRequired]));
-  }
-
-  Output<T> conjugateTranspose<T, Tperm>(Output<T> x, Output<Tperm> perm) {
-    return addOperation(new OperationDescription(
-        'ConjugateTranspose', 'ConjugateTranspose', [x, perm]));
-  }
-
-  Output<capacity>
-      mapPeek<capacity, memory_limit, dtypes, container, shared_name>(
-          Output<int> key, Output<int> indices) {
-    return addOperation(
-        new OperationDescription('MapPeek', 'MapPeek', [key, indices]));
-  }
-
-  Output<T> destroyTemporaryVariable<T, var_name>(Output<T> ref) {
-    return addOperation(new OperationDescription(
-        'DestroyTemporaryVariable', 'DestroyTemporaryVariable', [ref]));
-  }
-
-  Output<int> takeManySparseFromTensorsMap<dtype, container, shared_name>(
-      Output<int> sparseHandles) {
-    return addOperation(new OperationDescription('TakeManySparseFromTensorsMap',
-        'TakeManySparseFromTensorsMap', [sparseHandles]));
-  }
-
-  Output<String> wholeFileReader<container, shared_name>() {
-    return addOperation(
-        new OperationDescription('WholeFileReader', 'WholeFileReader', []));
+  Output<T> conjugateTranspose<T, Tperm>(Output<T> x, Output<T> perm) {
+    return addOperation(new OperationDescription('ConjugateTranspose',
+        'ConjugateTranspose', [x, perm], {'T': T, 'Tperm': Tperm}));
   }
 }
