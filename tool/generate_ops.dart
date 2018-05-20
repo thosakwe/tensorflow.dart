@@ -15,9 +15,17 @@ List<String> getDocs(String s) {
 }
 
 String escapeName(String name) {
-  return const ['assert', 'const', 'if', 'else', 'switch', 'var', 'while']
-          .contains(name)
-      ? name + '_'
+  return const [
+    'assert',
+    'const',
+    'if',
+    'else',
+    'switch',
+    'var',
+    'while',
+    'sourceOutput'
+  ].contains(name)
+      ? name + '\$'
       : name;
 }
 
@@ -68,9 +76,12 @@ main() async {
     bool v() {
       // Ignore operations with unsupported attributes.
       if (o.attr.any((a) => dartType(a.type) == null)) {
-        var unsupported =
-            o.attr.where((a) => dartType(a.type) == null).toList();
-        print('Omitting ${o.name}: unsupported types'); //: $unsupported');
+        var unsupported = o.attr
+            .where((a) => dartType(a.type) == null)
+            .map((a) => '${a.name} => ${a.type}')
+            .toList();
+        print('Omitting ${o
+            .name}: unsupported types $unsupported'); //: $unsupported');
         return false;
       }
 
@@ -81,10 +92,10 @@ main() async {
       //}
 
       // Dart does not support multiple outputs.
-      if (o.outputArg.length > 1) {
-        print('Omitting ${o.name} with ${o.outputArg.length} outputs');
-        return false;
-      }
+      //if (o.outputArg.length > 1) {
+      //  print('Omitting ${o.name} with ${o.outputArg.length} outputs');
+      //  return false;
+      //}
 
       return true;
     }
@@ -96,8 +107,8 @@ main() async {
 
   print('Found ${publicOps.length} ops');
 
-  var lib = new Library((b) {
-    b.body.add(new Class((b) {
+  var lib = new Library((libBuilder) {
+    libBuilder.body.add(new Class((b) {
       b
         ..name = 'Graph'
         ..extend = new Reference('_Graph');
@@ -144,12 +155,12 @@ main() async {
               literal(op.name),
               refer('_scope').property('uniqueName')([literal(op.name)]),
             ])
-            .assignVar('op')
+            .assignVar('op\$')
             .statement);
 
-        b.methods.add(new Method((b) {
+        b.methods.add(new Method((method) {
           var name = new ReCase(op.name).camelCase;
-          b
+          method
             ..docs.addAll(getDocs(op.summary))
             ..docs.addAll(getDocs(op.description))
             ..returns = new Reference('Output')
@@ -157,10 +168,10 @@ main() async {
 
           if (op.inputArg.any((a) => a.type == tf.DataType.DT_INVALID) ||
               op.outputArg.any((a) => a.type == tf.DataType.DT_INVALID))
-            b.types.add(refer('T'));
+            method.types.add(refer('T'));
 
           if (op.hasDeprecation())
-            b.annotations.add(new Reference('Deprecated').call([
+            method.annotations.add(new Reference('Deprecated').call([
               literal(
                   'DEPRECATED at GraphDef version ${op.deprecation.version}:' +
                       ' ${op.deprecation.explanation}')
@@ -169,10 +180,53 @@ main() async {
           var typeAttr = op.attr.where((o) => o.type == 'type').toList();
           var paramAttr = op.attr.where((o) => o.type != 'type').toList();
           var inputs = <String>[], attributes = <String, Expression>{};
+          String outputTypeName;
 
-          for (var output in op.outputArg) {
-            // TODO: Handle multiple?
-            b.returns = convertType(output.type, 0, typeAttr);
+          var hasT = op.attr
+                  .any((attr) => (attr.name == 'T' && attr.type == 'type')) ||
+              op.inputArg.any((a) => a.type == tf.DataType.DT_INVALID) ||
+              op.outputArg.any((a) => a.type == tf.DataType.DT_INVALID);
+
+          if (op.outputArg.isEmpty)
+            method.returns = refer('void');
+          else if (op.outputArg.length == 1)
+            method.returns = convertType(op.outputArg[0].type, 0, typeAttr);
+          else {
+            // Create a custom output class.
+            outputTypeName = new ReCase(op.name).pascalCase + 'Output';
+            method.returns = refer(outputTypeName);
+
+            libBuilder.body.add(new Class((b) {
+              b.name = escapeName(outputTypeName);
+
+              // Add a `T` if necessary.
+              if (hasT) b.types.add(refer('T'));
+
+              // Add a field + constructor parameter for each argument.
+              b.constructors.add(new Constructor((constructor) {
+                int i = 0;
+
+                constructor.requiredParameters.add(new Parameter((p) => p
+                  ..name = 'sourceOutput'
+                  ..toThis = true));
+
+                b.fields.add(new Field((b) => b
+                  ..name = 'sourceOutput'
+                  ..type = refer('Output')));
+
+                for (var output in op.outputArg) {
+                  b.fields.add(new Field((b) {
+                    b
+                      ..name = escapeName(new ReCase(output.name).camelCase)
+                      ..modifier = FieldModifier.final$
+                      ..type = convertType(output.type, i++, typeAttr);
+                    constructor.requiredParameters.add(new Parameter((p) => p
+                      ..name = b.name
+                      ..toThis = true));
+                  }));
+                }
+              }));
+            }));
           }
 
           // All inputs should be tf.Output or []tf.Output
@@ -194,13 +248,13 @@ main() async {
                   */
             }
 
-            b.requiredParameters.add(new Parameter((b) {
+            method.requiredParameters.add(new Parameter((b) {
               b
                 ..name = escapeName(new ReCase(input.name).camelCase)
                 ..type = type;
             }));
 
-            body.add(refer('op')
+            body.add(refer('op\$')
                 .property(isList ? 'addInputList' : 'addInput')
                 .call([refer(name)]).statement);
           }
@@ -209,7 +263,7 @@ main() async {
             if (attr.name == 'T' && attr.type == 'type') continue;
 
             var paramName = escapeName(new ReCase(attr.name).camelCase);
-            b.optionalParameters.add(new Parameter((b) {
+            method.optionalParameters.add(new Parameter((b) {
               b
                 ..name = paramName
                 ..named = true
@@ -236,7 +290,7 @@ main() async {
               setAttr.write(attrType(attr.type));
               if (attr.type.startsWith('list')) setAttr.write('List');
 
-              body.add(refer('op')
+              body.add(refer('op\$')
                   .property(setAttr.toString())
                   .call([literal(attr.name), refer(b.name)]).statement);
             }));
@@ -281,13 +335,29 @@ main() async {
             attributes[attr.name] = refer(paramName);
           }
           */
-          body.add(refer('op')
-              .property('finish')
-              .call([])
-              .index(literal(op.outputArg.length - 1))
-              .returned
-              .statement);
-          b.body = new Block.of(body);
+          var retVal = refer('op\$').property('finish').call([]);
+
+          if (op.outputArg.isEmpty) {
+            body.add(retVal.statement);
+          } else {
+            if (op.outputArg.length <= 1) {
+              retVal = retVal.index(literal(op.outputArg.length - 1));
+            } else {
+              body.add(retVal.assignVar('result\$').statement);
+              var args = <Expression>[refer('result\$')];
+
+              for (int i = 0; i < op.outputArg.length; i++) {
+                //var output = op.outputArg[i];
+                args.add(refer('result\$').index(literal(i)));
+              }
+              retVal = refer(outputTypeName)
+                  .newInstance(args, {}, hasT ? [refer('T')] : []);
+            }
+
+            body.add(retVal.returned.statement);
+          }
+
+          method.body = new Block.of(body);
         }));
       }
     }));
