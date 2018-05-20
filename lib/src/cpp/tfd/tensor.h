@@ -11,6 +11,7 @@
 namespace tfd
 {
     void Constant(Dart_NativeArguments arguments);
+    void Tensors_string(Dart_NativeArguments arguments);
 }
 
 #endif //TENSORFLOW_DART_TENSOR_H

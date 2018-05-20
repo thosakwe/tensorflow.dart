@@ -3,5 +3,5 @@ import 'package:test/test.dart';
 
 void main() {
   test('constructor', () => new Graph());
-  test('delete', () => new Graph().delete());
+  test('close', () => new Graph().close());
 }

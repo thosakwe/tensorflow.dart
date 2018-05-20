@@ -1,5 +1,6 @@
 part of tensorflow;
 
+/*
 /// TF_DataType holds the type for a scalar value.  E.g., one slot in a tensor.
 /// The enum values here are identical to corresponding values in types.proto.
 enum DataTypea {
@@ -47,7 +48,7 @@ enum DataTypea {
   variant,
   uInt32,
   uInt64,
-}
+}*/
 
 /// TF_Code holds an error code.  The enum values here are identical to
 /// corresponding values in error_codes.proto.
@@ -79,10 +80,11 @@ Code _codeFrom(int value) {
   return Code.values[value];
 }
 
+/*
 int _dataTypeToInt(DataType type) {
   return DataType.values.indexOf(type) + 1;
 }
 
 DataType _dataTypeFrom(int value) {
   return DataType.values[value - 1];
-}
+}*/

@@ -6,6 +6,9 @@ class TensorFlowException implements Exception {
 
   TensorFlowException(this.code, this.message);
 
+  factory TensorFlowException._(int code, String message) =>
+      new TensorFlowException(_codeFrom(code), message);
+
   @override
   String toString() {
     return 'TensorFlow exception: $code: $message';

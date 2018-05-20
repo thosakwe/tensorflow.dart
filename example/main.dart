@@ -1,11 +1,9 @@
-import 'package:tensorflow/tensorflow.dart' as tf;
+import 'package:tensorflow/tensorflow.dart';
 
 main() {
-  var graph = new tf.Graph();
-  var result = graph.run(
-    graph.constant('Hello, Tensorflow!'),
-  );
-
-  print('Tensorflow version: ${tf.version}');
+  var graph = new Graph();
+  var hello = graph.constant('Hello, Tensorflow!');
+  var result = hello.run();
+  print('Tensorflow version: ${tensorFlowVersion}');
   print('Result: $result');
 }

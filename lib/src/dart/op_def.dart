@@ -3,1859 +3,2654 @@
 part of tensorflow;
 
 class Graph extends _Graph {
-  Output fractionalAvgPoolGrad(Output origInputTensorShape, Output outBackprop,
-      Output rowPoolingSequence, Output colPoolingSequence,
+  Graph() : super();
+
+  Graph._fromPointer(int _pointer) : super._fromPointer(_pointer);
+
+  /// Import a serialized representation of a TensorFlow graph.
+  static Graph importGraphDef(GraphDef graphDef, {String prefix}) {
+    return _Graph.importGraphDef(graphDef, prefix: prefix);
+  }
+
+  Output<T> fractionalAvgPoolGrad<T>(
+      Output<int> origInputTensorShape,
+      Output<T> outBackprop,
+      Output<int> rowPoolingSequence,
+      Output<int> colPoolingSequence,
       {bool overlapping: false}) {
-    return addOperation(new OperationDescription(
-        'FractionalAvgPoolGrad', _scope.uniqueName('FractionalAvgPoolGrad'), [
-      origInputTensorShape,
-      outBackprop,
-      rowPoolingSequence,
-      colPoolingSequence
-    ], {
-      'overlapping': overlapping
-    }));
+    var op = newOperation(
+        'FractionalAvgPoolGrad', _scope.uniqueName('FractionalAvgPoolGrad'));
+    op.addInput(origInputTensorShape);
+    op.addInput(outBackprop);
+    op.addInput(rowPoolingSequence);
+    op.addInput(colPoolingSequence);
+    op.setAttrBool('overlapping', overlapping);
+    return op.finish()[0];
   }
 
-  Output nthElement(Output input, Output n, {bool reverse: false}) {
-    return addOperation(new OperationDescription('NthElement',
-        _scope.uniqueName('NthElement'), [input, n], {'reverse': reverse}));
+  Output<T> nthElement<T>(Output<T> input, Output<int> n,
+      {bool reverse: false}) {
+    var op = newOperation('NthElement', _scope.uniqueName('NthElement'));
+    op.addInput(input);
+    op.addInput(n);
+    op.setAttrBool('reverse', reverse);
+    return op.finish()[0];
   }
 
-  Output inTopKV2(Output predictions, Output targets, Output k) {
-    return addOperation(new OperationDescription('InTopKV2',
-        _scope.uniqueName('InTopKV2'), [predictions, targets, k], {}));
+  Output<bool> inTopKV2<T>(
+      Output<double> predictions, Output<T> targets, Output<T> k) {
+    var op = newOperation('InTopKV2', _scope.uniqueName('InTopKV2'));
+    op.addInput(predictions);
+    op.addInput(targets);
+    op.addInput(k);
+    return op.finish()[0];
   }
 
-  Output logSoftmax(Output logits) {
-    return addOperation(new OperationDescription(
-        'LogSoftmax', _scope.uniqueName('LogSoftmax'), [logits], {}));
+  Output<T> logSoftmax<T>(Output<T> logits) {
+    var op = newOperation('LogSoftmax', _scope.uniqueName('LogSoftmax'));
+    op.addInput(logits);
+    return op.finish()[0];
   }
 
-  Output softmax(Output logits) {
-    return addOperation(new OperationDescription(
-        'Softmax', _scope.uniqueName('Softmax'), [logits], {}));
+  Output<T> softmax<T>(Output<T> logits) {
+    var op = newOperation('Softmax', _scope.uniqueName('Softmax'));
+    op.addInput(logits);
+    return op.finish()[0];
   }
 
-  Output softsignGrad(Output gradients, Output features) {
-    return addOperation(new OperationDescription('SoftsignGrad',
-        _scope.uniqueName('SoftsignGrad'), [gradients, features], {}));
+  Output<T> softsignGrad<T>(Output<T> gradients, Output<T> features) {
+    var op = newOperation('SoftsignGrad', _scope.uniqueName('SoftsignGrad'));
+    op.addInput(gradients);
+    op.addInput(features);
+    return op.finish()[0];
   }
 
-  Output softplusGrad(Output gradients, Output features) {
-    return addOperation(new OperationDescription('SoftplusGrad',
-        _scope.uniqueName('SoftplusGrad'), [gradients, features], {}));
+  Output<T> softplusGrad<T>(Output<T> gradients, Output<T> features) {
+    var op = newOperation('SoftplusGrad', _scope.uniqueName('SoftplusGrad'));
+    op.addInput(gradients);
+    op.addInput(features);
+    return op.finish()[0];
   }
 
-  Output seluGrad(Output gradients, Output outputs) {
-    return addOperation(new OperationDescription(
-        'SeluGrad', _scope.uniqueName('SeluGrad'), [gradients, outputs], {}));
+  Output<T> seluGrad<T>(Output<T> gradients, Output<T> outputs) {
+    var op = newOperation('SeluGrad', _scope.uniqueName('SeluGrad'));
+    op.addInput(gradients);
+    op.addInput(outputs);
+    return op.finish()[0];
   }
 
-  Output selu(Output features) {
-    return addOperation(new OperationDescription(
-        'Selu', _scope.uniqueName('Selu'), [features], {}));
+  Output<T> selu<T>(Output<T> features) {
+    var op = newOperation('Selu', _scope.uniqueName('Selu'));
+    op.addInput(features);
+    return op.finish()[0];
   }
 
-  Output eluGrad(Output gradients, Output outputs) {
-    return addOperation(new OperationDescription(
-        'EluGrad', _scope.uniqueName('EluGrad'), [gradients, outputs], {}));
+  Output<T> eluGrad<T>(Output<T> gradients, Output<T> outputs) {
+    var op = newOperation('EluGrad', _scope.uniqueName('EluGrad'));
+    op.addInput(gradients);
+    op.addInput(outputs);
+    return op.finish()[0];
   }
 
-  Output relu6Grad(Output gradients, Output features) {
-    return addOperation(new OperationDescription('Relu6Grad',
-        _scope.uniqueName('Relu6Grad'), [gradients, features], {}));
+  Output<T> relu6Grad<T>(Output<T> gradients, Output<T> features) {
+    var op = newOperation('Relu6Grad', _scope.uniqueName('Relu6Grad'));
+    op.addInput(gradients);
+    op.addInput(features);
+    return op.finish()[0];
   }
 
-  Output reluGrad(Output gradients, Output features) {
-    return addOperation(new OperationDescription(
-        'ReluGrad', _scope.uniqueName('ReluGrad'), [gradients, features], {}));
+  Output<T> reluGrad<T>(Output<T> gradients, Output<T> features) {
+    var op = newOperation('ReluGrad', _scope.uniqueName('ReluGrad'));
+    op.addInput(gradients);
+    op.addInput(features);
+    return op.finish()[0];
   }
 
-  Output all(Output input, Output reductionIndices,
+  Output<bool> all<T>(Output<bool> input, Output<T> reductionIndices,
       {bool keepDims: false, DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'All',
-        _scope.uniqueName('All'),
-        [input, reductionIndices],
-        {'keep_dims': keepDims, 'Tidx': tidx}));
+    var op = newOperation('All', _scope.uniqueName('All'));
+    op.addInput(input);
+    op.addInput(reductionIndices);
+    op.setAttrBool('keep_dims', keepDims);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output maxPoolGradGradV2(Output origInput, Output origOutput, Output grad,
-      Output ksize, Output strides,
-      {@required String padding, String dataFormat: 'NHWC'}) {
-    return addOperation(new OperationDescription(
-        'MaxPoolGradGradV2',
-        _scope.uniqueName('MaxPoolGradGradV2'),
-        [origInput, origOutput, grad, ksize, strides],
-        {'padding': padding, 'data_format': dataFormat}));
+  Output<T> dilation2DBackpropInput<T>(
+      Output<T> input, Output<T> filter, Output<T> outBackprop,
+      {List<int> strides, List<int> rates, String padding}) {
+    var op = newOperation('Dilation2DBackpropInput',
+        _scope.uniqueName('Dilation2DBackpropInput'));
+    op.addInput(input);
+    op.addInput(filter);
+    op.addInput(outBackprop);
+    op.setAttrIntList('strides', strides);
+    op.setAttrIntList('rates', rates);
+    op.setAttrString('padding', padding);
+    return op.finish()[0];
   }
 
-  Output maxPoolGradV2(Output origInput, Output origOutput, Output grad,
-      Output ksize, Output strides,
-      {@required String padding, String dataFormat: 'NHWC'}) {
-    return addOperation(new OperationDescription(
-        'MaxPoolGradV2',
-        _scope.uniqueName('MaxPoolGradV2'),
-        [origInput, origOutput, grad, ksize, strides],
-        {'padding': padding, 'data_format': dataFormat}));
+  Output<T> maxPoolGradGradV2<T>(Output<T> origInput, Output<T> origOutput,
+      Output<T> grad, Output<int> ksize, Output<int> strides,
+      {String padding, String dataFormat: 'NHWC'}) {
+    var op = newOperation(
+        'MaxPoolGradGradV2', _scope.uniqueName('MaxPoolGradGradV2'));
+    op.addInput(origInput);
+    op.addInput(origOutput);
+    op.addInput(grad);
+    op.addInput(ksize);
+    op.addInput(strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
   }
 
-  Output roll(Output input, Output shift, Output axis,
-      {@required DataType tshift, @required DataType taxis}) {
-    return addOperation(new OperationDescription(
-        'Roll',
-        _scope.uniqueName('Roll'),
-        [input, shift, axis],
-        {'Tshift': tshift, 'Taxis': taxis}));
+  Output<T> maxPoolGradGrad<T>(
+      Output<T> origInput, Output<T> origOutput, Output<T> grad,
+      {List<int> ksize,
+      List<int> strides,
+      String padding,
+      String dataFormat: 'NHWC'}) {
+    var op =
+        newOperation('MaxPoolGradGrad', _scope.uniqueName('MaxPoolGradGrad'));
+    op.addInput(origInput);
+    op.addInput(origOutput);
+    op.addInput(grad);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
   }
 
-  Output lRNGrad(Output inputGrads, Output inputImage, Output outputImage,
+  Output<T> maxPoolGradV2<T>(Output<T> origInput, Output<T> origOutput,
+      Output<T> grad, Output<int> ksize, Output<int> strides,
+      {String padding, String dataFormat: 'NHWC'}) {
+    var op = newOperation('MaxPoolGradV2', _scope.uniqueName('MaxPoolGradV2'));
+    op.addInput(origInput);
+    op.addInput(origOutput);
+    op.addInput(grad);
+    op.addInput(ksize);
+    op.addInput(strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
+  }
+
+  Output<T> roll<T>(Output<T> input, Output<T> shift, Output<T> axis,
+      {DataType tshift, DataType taxis}) {
+    var op = newOperation('Roll', _scope.uniqueName('Roll'));
+    op.addInput(input);
+    op.addInput(shift);
+    op.addInput(axis);
+    op.setAttrType('Tshift', tshift);
+    op.setAttrType('Taxis', taxis);
+    return op.finish()[0];
+  }
+
+  Output<T> maxPoolGrad<T>(
+      Output<T> origInput, Output<T> origOutput, Output<T> grad,
+      {List<int> ksize,
+      List<int> strides,
+      String padding,
+      String dataFormat: 'NHWC'}) {
+    var op = newOperation('MaxPoolGrad', _scope.uniqueName('MaxPoolGrad'));
+    op.addInput(origInput);
+    op.addInput(origOutput);
+    op.addInput(grad);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
+  }
+
+  Output<T> lRNGrad<T>(
+      Output<T> inputGrads, Output<T> inputImage, Output<T> outputImage,
       {int depthRadius: 5,
       double bias: 1.0,
       double alpha: 1.0,
       double beta: 0.5}) {
-    return addOperation(new OperationDescription(
-        'LRNGrad', _scope.uniqueName('LRNGrad'), [
-      inputGrads,
-      inputImage,
-      outputImage
-    ], {
-      'depth_radius': depthRadius,
-      'bias': bias,
-      'alpha': alpha,
-      'beta': beta
-    }));
+    var op = newOperation('LRNGrad', _scope.uniqueName('LRNGrad'));
+    op.addInput(inputGrads);
+    op.addInput(inputImage);
+    op.addInput(outputImage);
+    op.setAttrInt('depth_radius', depthRadius);
+    op.setAttrFloat('bias', bias);
+    op.setAttrFloat('alpha', alpha);
+    op.setAttrFloat('beta', beta);
+    return op.finish()[0];
   }
 
-  Output cropAndResize(
-      Output image, Output boxes, Output boxInd, Output cropSize,
+  Output<T> maxPool3DGradGrad<T>(
+      Output<T> origInput, Output<T> origOutput, Output<T> grad,
+      {List<int> ksize,
+      List<int> strides,
+      String padding,
+      String dataFormat: 'NDHWC'}) {
+    var op = newOperation(
+        'MaxPool3DGradGrad', _scope.uniqueName('MaxPool3DGradGrad'));
+    op.addInput(origInput);
+    op.addInput(origOutput);
+    op.addInput(grad);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
+  }
+
+  @Deprecated('DEPRECATED at GraphDef version 10: Use Conv3DBackpropFilterV2')
+  Output<T> conv3DBackpropFilter<T>(
+      Output<T> input, Output<T> filter, Output<T> outBackprop,
+      {List<int> strides, String padding}) {
+    var op = newOperation(
+        'Conv3DBackpropFilter', _scope.uniqueName('Conv3DBackpropFilter'));
+    op.addInput(input);
+    op.addInput(filter);
+    op.addInput(outBackprop);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    return op.finish()[0];
+  }
+
+  Output<T> conv3D<T>(Output<T> input, Output<T> filter,
+      {List<int> strides,
+      String padding,
+      String dataFormat: 'NDHWC',
+      List<int> dilations}) {
+    var op = newOperation('Conv3D', _scope.uniqueName('Conv3D'));
+    op.addInput(input);
+    op.addInput(filter);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    op.setAttrIntList('dilations', dilations);
+    return op.finish()[0];
+  }
+
+  Output<double> cropAndResize<T>(Output<T> image, Output<double> boxes,
+      Output<int> boxInd, Output<int> cropSize,
       {String method: 'bilinear', double extrapolationValue: 0.0}) {
-    return addOperation(new OperationDescription(
-        'CropAndResize',
-        _scope.uniqueName('CropAndResize'),
-        [image, boxes, boxInd, cropSize],
-        {'method': method, 'extrapolation_value': extrapolationValue}));
+    var op = newOperation('CropAndResize', _scope.uniqueName('CropAndResize'));
+    op.addInput(image);
+    op.addInput(boxes);
+    op.addInput(boxInd);
+    op.addInput(cropSize);
+    op.setAttrString('method', method);
+    op.setAttrFloat('extrapolation_value', extrapolationValue);
+    return op.finish()[0];
   }
 
-  Output expm1(Output x) {
-    return addOperation(
-        new OperationDescription('Expm1', _scope.uniqueName('Expm1'), [x], {}));
+  Output<T> depthwiseConv2dNativeBackpropFilter<T>(
+      Output<T> input, Output<int> filterSizes, Output<T> outBackprop,
+      {List<int> strides,
+      String padding,
+      String dataFormat: 'NHWC',
+      List<int> dilations}) {
+    var op = newOperation('DepthwiseConv2dNativeBackpropFilter',
+        _scope.uniqueName('DepthwiseConv2dNativeBackpropFilter'));
+    op.addInput(input);
+    op.addInput(filterSizes);
+    op.addInput(outBackprop);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    op.setAttrIntList('dilations', dilations);
+    return op.finish()[0];
   }
 
-  Output biasAdd(Output value, Output bias, {String dataFormat: 'NHWC'}) {
-    return addOperation(new OperationDescription(
-        'BiasAdd',
-        _scope.uniqueName('BiasAdd'),
-        [value, bias],
-        {'data_format': dataFormat}));
+  Output<T> expm1<T>(Output<T> x) {
+    var op = newOperation('Expm1', _scope.uniqueName('Expm1'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output sin(Output x) {
-    return addOperation(
-        new OperationDescription('Sin', _scope.uniqueName('Sin'), [x], {}));
+  Output<T> conv2DBackpropInput<T>(
+      Output<int> inputSizes, Output<T> filter, Output<T> outBackprop,
+      {List<int> strides,
+      bool useCudnnOnGpu: true,
+      String padding,
+      String dataFormat: 'NHWC',
+      List<int> dilations}) {
+    var op = newOperation(
+        'Conv2DBackpropInput', _scope.uniqueName('Conv2DBackpropInput'));
+    op.addInput(inputSizes);
+    op.addInput(filter);
+    op.addInput(outBackprop);
+    op.setAttrIntList('strides', strides);
+    op.setAttrBool('use_cudnn_on_gpu', useCudnnOnGpu);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    op.setAttrIntList('dilations', dilations);
+    return op.finish()[0];
   }
 
-  Output sparseMatMul(Output a, Output b,
+  Output<T> conv2D<T>(Output<T> input, Output<T> filter,
+      {List<int> strides,
+      bool useCudnnOnGpu: true,
+      String padding,
+      String dataFormat: 'NHWC',
+      List<int> dilations}) {
+    var op = newOperation('Conv2D', _scope.uniqueName('Conv2D'));
+    op.addInput(input);
+    op.addInput(filter);
+    op.setAttrIntList('strides', strides);
+    op.setAttrBool('use_cudnn_on_gpu', useCudnnOnGpu);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    op.setAttrIntList('dilations', dilations);
+    return op.finish()[0];
+  }
+
+  Output<T> biasAdd<T>(Output<T> value, Output<T> bias,
+      {String dataFormat: 'NHWC'}) {
+    var op = newOperation('BiasAdd', _scope.uniqueName('BiasAdd'));
+    op.addInput(value);
+    op.addInput(bias);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
+  }
+
+  Output<T> sin<T>(Output<T> x) {
+    var op = newOperation('Sin', _scope.uniqueName('Sin'));
+    op.addInput(x);
+    return op.finish()[0];
+  }
+
+  Output<double> sparseMatMul<T>(Output<T> a, Output<T> b,
       {bool transposeA: false,
       bool transposeB: false,
       bool aIsSparse: false,
       bool bIsSparse: false,
       DataType ta: DataType.DT_FLOAT,
       DataType tb: DataType.DT_FLOAT}) {
-    return addOperation(new OperationDescription(
-        'SparseMatMul', _scope.uniqueName('SparseMatMul'), [
-      a,
-      b
-    ], {
-      'transpose_a': transposeA,
-      'transpose_b': transposeB,
-      'a_is_sparse': aIsSparse,
-      'b_is_sparse': bIsSparse,
-      'Ta': ta,
-      'Tb': tb
-    }));
+    var op = newOperation('SparseMatMul', _scope.uniqueName('SparseMatMul'));
+    op.addInput(a);
+    op.addInput(b);
+    op.setAttrBool('transpose_a', transposeA);
+    op.setAttrBool('transpose_b', transposeB);
+    op.setAttrBool('a_is_sparse', aIsSparse);
+    op.setAttrBool('b_is_sparse', bIsSparse);
+    op.setAttrType('Ta', ta);
+    op.setAttrType('Tb', tb);
+    return op.finish()[0];
   }
 
-  Output readVariableOp(Output resource, {@required DataType dtype}) {
-    return addOperation(new OperationDescription('ReadVariableOp',
-        _scope.uniqueName('ReadVariableOp'), [resource], {'dtype': dtype}));
+  Output<T> readVariableOp<T>(Output resource, {DataType dtype}) {
+    dtype ??= inferType(resource);
+    var op =
+        newOperation('ReadVariableOp', _scope.uniqueName('ReadVariableOp'));
+    op.addInput(resource);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output lgamma(Output x) {
-    return addOperation(new OperationDescription(
-        'Lgamma', _scope.uniqueName('Lgamma'), [x], {}));
+  Output<T> lgamma<T>(Output<T> x) {
+    var op = newOperation('Lgamma', _scope.uniqueName('Lgamma'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output compareAndBitpack(Output input, Output threshold) {
-    return addOperation(new OperationDescription('CompareAndBitpack',
-        _scope.uniqueName('CompareAndBitpack'), [input, threshold], {}));
+  Output compareAndBitpack<T>(Output<T> input, Output<T> threshold) {
+    var op = newOperation(
+        'CompareAndBitpack', _scope.uniqueName('CompareAndBitpack'));
+    op.addInput(input);
+    op.addInput(threshold);
+    return op.finish()[0];
   }
 
-  Output cumsum(Output x, Output axis,
+  Output<T> cumsum<T>(Output<T> x, Output<T> axis,
       {bool exclusive: false,
       bool reverse: false,
       DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'Cumsum',
-        _scope.uniqueName('Cumsum'),
-        [x, axis],
-        {'exclusive': exclusive, 'reverse': reverse, 'Tidx': tidx}));
+    var op = newOperation('Cumsum', _scope.uniqueName('Cumsum'));
+    op.addInput(x);
+    op.addInput(axis);
+    op.setAttrBool('exclusive', exclusive);
+    op.setAttrBool('reverse', reverse);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output bincount(Output arr, Output size, Output weights) {
-    return addOperation(new OperationDescription(
-        'Bincount', _scope.uniqueName('Bincount'), [arr, size, weights], {}));
+  Output<T> bincount<T>(Output<int> arr, Output<int> size, Output<T> weights) {
+    var op = newOperation('Bincount', _scope.uniqueName('Bincount'));
+    op.addInput(arr);
+    op.addInput(size);
+    op.addInput(weights);
+    return op.finish()[0];
   }
 
-  Output cross(Output a, Output b) {
-    return addOperation(new OperationDescription(
-        'Cross', _scope.uniqueName('Cross'), [a, b], {}));
+  Output<T> cross<T>(Output<T> a, Output<T> b) {
+    var op = newOperation('Cross', _scope.uniqueName('Cross'));
+    op.addInput(a);
+    op.addInput(b);
+    return op.finish()[0];
   }
 
-  Output conj(Output input) {
-    return addOperation(new OperationDescription(
-        'Conj', _scope.uniqueName('Conj'), [input], {}));
+  Output<T> conj<T>(Output<T> input) {
+    var op = newOperation('Conj', _scope.uniqueName('Conj'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output real(Output input, {DataType tout: DataType.DT_FLOAT}) {
-    return addOperation(new OperationDescription(
-        'Real', _scope.uniqueName('Real'), [input], {'Tout': tout}));
+  Output<T> real<T>(Output<T> input, {DataType tout: DataType.DT_FLOAT}) {
+    var op = newOperation('Real', _scope.uniqueName('Real'));
+    op.addInput(input);
+    op.setAttrType('Tout', tout);
+    return op.finish()[0];
   }
 
-  Output dequantize(Output input, Output minRange, Output maxRange,
+  Output<double> dequantize<T>(
+      Output<T> input, Output<double> minRange, Output<double> maxRange,
       {String mode: 'MIN_COMBINED'}) {
-    return addOperation(new OperationDescription(
-        'Dequantize',
-        _scope.uniqueName('Dequantize'),
-        [input, minRange, maxRange],
-        {'mode': mode}));
+    var op = newOperation('Dequantize', _scope.uniqueName('Dequantize'));
+    op.addInput(input);
+    op.addInput(minRange);
+    op.addInput(maxRange);
+    op.setAttrString('mode', mode);
+    return op.finish()[0];
   }
 
-  Output complex(Output real, Output imag,
+  Output<T> complex<T>(Output<T> real, Output<T> imag,
       {DataType tout: DataType.DT_COMPLEX64}) {
-    return addOperation(new OperationDescription(
-        'Complex', _scope.uniqueName('Complex'), [real, imag], {'Tout': tout}));
+    var op = newOperation('Complex', _scope.uniqueName('Complex'));
+    op.addInput(real);
+    op.addInput(imag);
+    op.setAttrType('Tout', tout);
+    return op.finish()[0];
   }
 
-  Output any(Output input, Output reductionIndices,
+  Output<bool> any<T>(Output<bool> input, Output<T> reductionIndices,
       {bool keepDims: false, DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'Any',
-        _scope.uniqueName('Any'),
-        [input, reductionIndices],
-        {'keep_dims': keepDims, 'Tidx': tidx}));
+    var op = newOperation('Any', _scope.uniqueName('Any'));
+    op.addInput(input);
+    op.addInput(reductionIndices);
+    op.setAttrBool('keep_dims', keepDims);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output sparseSegmentMean(Output data, Output indices, Output segmentIds,
+  Output<T> sparseSegmentMean<T>(
+      Output<T> data, Output<T> indices, Output<int> segmentIds,
       {DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'SparseSegmentMean',
-        _scope.uniqueName('SparseSegmentMean'),
-        [data, indices, segmentIds],
-        {'Tidx': tidx}));
+    var op = newOperation(
+        'SparseSegmentMean', _scope.uniqueName('SparseSegmentMean'));
+    op.addInput(data);
+    op.addInput(indices);
+    op.addInput(segmentIds);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output sparseSegmentSumWithNumSegments(
-      Output data, Output indices, Output segmentIds, Output numSegments,
+  Output<T> sparseSegmentSumWithNumSegments<T>(Output<T> data,
+      Output<T> indices, Output<int> segmentIds, Output<T> numSegments,
       {DataType tidx: DataType.DT_INT32,
       DataType tnumsegments: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'SparseSegmentSumWithNumSegments',
-        _scope.uniqueName('SparseSegmentSumWithNumSegments'),
-        [data, indices, segmentIds, numSegments],
-        {'Tidx': tidx, 'Tnumsegments': tnumsegments}));
+    var op = newOperation('SparseSegmentSumWithNumSegments',
+        _scope.uniqueName('SparseSegmentSumWithNumSegments'));
+    op.addInput(data);
+    op.addInput(indices);
+    op.addInput(segmentIds);
+    op.addInput(numSegments);
+    op.setAttrType('Tidx', tidx);
+    op.setAttrType('Tnumsegments', tnumsegments);
+    return op.finish()[0];
   }
 
-  Output unsortedSegmentSum(Output data, Output segmentIds, Output numSegments,
-      {@required DataType tindices, DataType tnumsegments: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'UnsortedSegmentSum',
-        _scope.uniqueName('UnsortedSegmentSum'),
-        [data, segmentIds, numSegments],
-        {'Tindices': tindices, 'Tnumsegments': tnumsegments}));
+  Output<T> unsortedSegmentSum<T>(
+      Output<T> data, Output<T> segmentIds, Output<T> numSegments,
+      {DataType tindices, DataType tnumsegments: DataType.DT_INT32}) {
+    var op = newOperation(
+        'UnsortedSegmentSum', _scope.uniqueName('UnsortedSegmentSum'));
+    op.addInput(data);
+    op.addInput(segmentIds);
+    op.addInput(numSegments);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrType('Tnumsegments', tnumsegments);
+    return op.finish()[0];
   }
 
-  Output atan2(Output y, Output x) {
-    return addOperation(new OperationDescription(
-        'Atan2', _scope.uniqueName('Atan2'), [y, x], {}));
+  Output<T> atan2<T>(Output<T> y, Output<T> x) {
+    var op = newOperation('Atan2', _scope.uniqueName('Atan2'));
+    op.addInput(y);
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output segmentProd(Output data, Output segmentIds,
-      {@required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'SegmentProd',
-        _scope.uniqueName('SegmentProd'),
-        [data, segmentIds],
-        {'Tindices': tindices}));
+  Output<T> segmentProd<T>(Output<T> data, Output<T> segmentIds,
+      {DataType tindices}) {
+    var op = newOperation('SegmentProd', _scope.uniqueName('SegmentProd'));
+    op.addInput(data);
+    op.addInput(segmentIds);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
   }
 
-  Output resizeBilinearGrad(Output grads, Output originalImage,
+  Output<T> resizeBilinearGrad<T>(Output<double> grads, Output<T> originalImage,
       {bool alignCorners: false}) {
-    return addOperation(new OperationDescription(
-        'ResizeBilinearGrad',
-        _scope.uniqueName('ResizeBilinearGrad'),
-        [grads, originalImage],
-        {'align_corners': alignCorners}));
+    var op = newOperation(
+        'ResizeBilinearGrad', _scope.uniqueName('ResizeBilinearGrad'));
+    op.addInput(grads);
+    op.addInput(originalImage);
+    op.setAttrBool('align_corners', alignCorners);
+    return op.finish()[0];
   }
 
-  Output max(Output input, Output reductionIndices,
+  Output<T> max<T>(Output<T> input, Output<T> reductionIndices,
       {bool keepDims: false, DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'Max',
-        _scope.uniqueName('Max'),
-        [input, reductionIndices],
-        {'keep_dims': keepDims, 'Tidx': tidx}));
+    var op = newOperation('Max', _scope.uniqueName('Max'));
+    op.addInput(input);
+    op.addInput(reductionIndices);
+    op.setAttrBool('keep_dims', keepDims);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output getSessionTensor(Output handle, {@required DataType dtype}) {
-    return addOperation(new OperationDescription('GetSessionTensor',
-        _scope.uniqueName('GetSessionTensor'), [handle], {'dtype': dtype}));
+  Output<T> getSessionTensor<T>(Output<String> handle, {DataType dtype}) {
+    dtype ??= inferType(handle);
+    var op =
+        newOperation('GetSessionTensor', _scope.uniqueName('GetSessionTensor'));
+    op.addInput(handle);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output min(Output input, Output reductionIndices,
+  Output<T> min<T>(Output<T> input, Output<T> reductionIndices,
       {bool keepDims: false, DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'Min',
-        _scope.uniqueName('Min'),
-        [input, reductionIndices],
-        {'keep_dims': keepDims, 'Tidx': tidx}));
+    var op = newOperation('Min', _scope.uniqueName('Min'));
+    op.addInput(input);
+    op.addInput(reductionIndices);
+    op.setAttrBool('keep_dims', keepDims);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output accumulatorApplyGradient(
-      Output handle, Output localStep, Output gradient,
-      {@required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'AccumulatorApplyGradient',
-        _scope.uniqueName('AccumulatorApplyGradient'),
-        [handle, localStep, gradient],
-        {'dtype': dtype}));
+  Output accumulatorApplyGradient<T>(
+      Output<String> handle, Output<int> localStep, Output<T> gradient,
+      {DataType dtype}) {
+    dtype ??= inferType(handle);
+    var op = newOperation('AccumulatorApplyGradient',
+        _scope.uniqueName('AccumulatorApplyGradient'));
+    op.addInput(handle);
+    op.addInput(localStep);
+    op.addInput(gradient);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[-1];
   }
 
-  Output prod(Output input, Output reductionIndices,
+  Output<T> prod<T>(Output<T> input, Output<T> reductionIndices,
       {bool keepDims: false, DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'Prod',
-        _scope.uniqueName('Prod'),
-        [input, reductionIndices],
-        {'keep_dims': keepDims, 'Tidx': tidx}));
+    var op = newOperation('Prod', _scope.uniqueName('Prod'));
+    op.addInput(input);
+    op.addInput(reductionIndices);
+    op.setAttrBool('keep_dims', keepDims);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output sum(Output input, Output reductionIndices,
+  Output<T> sum<T>(Output<T> input, Output<T> reductionIndices,
       {bool keepDims: false, DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'Sum',
-        _scope.uniqueName('Sum'),
-        [input, reductionIndices],
-        {'keep_dims': keepDims, 'Tidx': tidx}));
+    var op = newOperation('Sum', _scope.uniqueName('Sum'));
+    op.addInput(input);
+    op.addInput(reductionIndices);
+    op.setAttrBool('keep_dims', keepDims);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output relu(Output features) {
-    return addOperation(new OperationDescription(
-        'Relu', _scope.uniqueName('Relu'), [features], {}));
+  Output<T> relu<T>(Output<T> features) {
+    var op = newOperation('Relu', _scope.uniqueName('Relu'));
+    op.addInput(features);
+    return op.finish()[0];
   }
 
-  Output matMul(Output a, Output b,
+  Output<T> matMul<T>(Output<T> a, Output<T> b,
       {bool transposeA: false, bool transposeB: false}) {
-    return addOperation(new OperationDescription(
-        'MatMul',
-        _scope.uniqueName('MatMul'),
-        [a, b],
-        {'transpose_a': transposeA, 'transpose_b': transposeB}));
+    var op = newOperation('MatMul', _scope.uniqueName('MatMul'));
+    op.addInput(a);
+    op.addInput(b);
+    op.setAttrBool('transpose_a', transposeA);
+    op.setAttrBool('transpose_b', transposeB);
+    return op.finish()[0];
   }
 
-  Output logicalAnd(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'LogicalAnd', _scope.uniqueName('LogicalAnd'), [x, y], {}));
+  Output<bool> logicalAnd(Output<bool> x, Output<bool> y) {
+    var op = newOperation('LogicalAnd', _scope.uniqueName('LogicalAnd'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
   /// Writes a `GraphDef` protocol buffer to a `SummaryWriter`.
-  Output writeGraphSummary(Output writer, Output step, Output tensor) {
-    return addOperation(new OperationDescription('WriteGraphSummary',
-        _scope.uniqueName('WriteGraphSummary'), [writer, step, tensor], {}));
+  Output writeGraphSummary(
+      Output writer, Output<int> step, Output<String> tensor) {
+    var op = newOperation(
+        'WriteGraphSummary', _scope.uniqueName('WriteGraphSummary'));
+    op.addInput(writer);
+    op.addInput(step);
+    op.addInput(tensor);
+    return op.finish()[-1];
   }
 
-  Output approximateEqual(Output x, Output y,
+  Output<bool> approximateEqual<T>(Output<T> x, Output<T> y,
       {double tolerance: 0.000009999999747378752}) {
-    return addOperation(new OperationDescription(
-        'ApproximateEqual',
-        _scope.uniqueName('ApproximateEqual'),
-        [x, y],
-        {'tolerance': tolerance}));
+    var op =
+        newOperation('ApproximateEqual', _scope.uniqueName('ApproximateEqual'));
+    op.addInput(x);
+    op.addInput(y);
+    op.setAttrFloat('tolerance', tolerance);
+    return op.finish()[0];
   }
 
-  Output greaterEqual(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'GreaterEqual', _scope.uniqueName('GreaterEqual'), [x, y], {}));
+  Output<bool> greaterEqual<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('GreaterEqual', _scope.uniqueName('GreaterEqual'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output polygamma(Output a, Output x) {
-    return addOperation(new OperationDescription(
-        'Polygamma', _scope.uniqueName('Polygamma'), [a, x], {}));
+  Output<T> polygamma<T>(Output<T> a, Output<T> x) {
+    var op = newOperation('Polygamma', _scope.uniqueName('Polygamma'));
+    op.addInput(a);
+    op.addInput(x);
+    return op.finish()[0];
   }
 
   /// Outputs a `tf.Event` protocol buffer.
   /// When CreateSummaryDbWriter is being used, this op can be useful for
   /// importing data from event logs.
-  Output importEvent(Output writer, Output event) {
-    return addOperation(new OperationDescription(
-        'ImportEvent', _scope.uniqueName('ImportEvent'), [writer, event], {}));
+  Output importEvent(Output writer, Output<String> event) {
+    var op = newOperation('ImportEvent', _scope.uniqueName('ImportEvent'));
+    op.addInput(writer);
+    op.addInput(event);
+    return op.finish()[-1];
   }
 
-  Output igamma(Output a, Output x) {
-    return addOperation(new OperationDescription(
-        'Igamma', _scope.uniqueName('Igamma'), [a, x], {}));
+  Output<T> igamma<T>(Output<T> a, Output<T> x) {
+    var op = newOperation('Igamma', _scope.uniqueName('Igamma'));
+    op.addInput(a);
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output igammac(Output a, Output x) {
-    return addOperation(new OperationDescription(
-        'Igammac', _scope.uniqueName('Igammac'), [a, x], {}));
+  Output<T> igammac<T>(Output<T> a, Output<T> x) {
+    var op = newOperation('Igammac', _scope.uniqueName('Igammac'));
+    op.addInput(a);
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output mod(Output x, Output y) {
-    return addOperation(
-        new OperationDescription('Mod', _scope.uniqueName('Mod'), [x, y], {}));
+  Output<T> mod<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('Mod', _scope.uniqueName('Mod'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output maximum(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'Maximum', _scope.uniqueName('Maximum'), [x, y], {}));
+  Output<T> maximum<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('Maximum', _scope.uniqueName('Maximum'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output squaredDifference(Output x, Output y) {
-    return addOperation(new OperationDescription('SquaredDifference',
-        _scope.uniqueName('SquaredDifference'), [x, y], {}));
+  Output<T> squaredDifference<T>(Output<T> x, Output<T> y) {
+    var op = newOperation(
+        'SquaredDifference', _scope.uniqueName('SquaredDifference'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output resourceCountUpTo(Output resource, {@required int limit}) {
-    return addOperation(new OperationDescription('ResourceCountUpTo',
-        _scope.uniqueName('ResourceCountUpTo'), [resource], {'limit': limit}));
+  Output<T> resourceCountUpTo<T>(Output resource, {int limit}) {
+    var op = newOperation(
+        'ResourceCountUpTo', _scope.uniqueName('ResourceCountUpTo'));
+    op.addInput(resource);
+    op.setAttrInt('limit', limit);
+    return op.finish()[0];
   }
 
-  Output realDiv(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'RealDiv', _scope.uniqueName('RealDiv'), [x, y], {}));
+  Output<T> realDiv<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('RealDiv', _scope.uniqueName('RealDiv'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output truncateDiv(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'TruncateDiv', _scope.uniqueName('TruncateDiv'), [x, y], {}));
+  Output<T> truncateDiv<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('TruncateDiv', _scope.uniqueName('TruncateDiv'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output asString(Output input,
+  Output<T> conv3DBackpropFilterV2<T>(
+      Output<T> input, Output<int> filterSizes, Output<T> outBackprop,
+      {List<int> strides,
+      String padding,
+      String dataFormat: 'NDHWC',
+      List<int> dilations}) {
+    var op = newOperation(
+        'Conv3DBackpropFilterV2', _scope.uniqueName('Conv3DBackpropFilterV2'));
+    op.addInput(input);
+    op.addInput(filterSizes);
+    op.addInput(outBackprop);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    op.setAttrIntList('dilations', dilations);
+    return op.finish()[0];
+  }
+
+  Output<String> asString<T>(Output<T> input,
       {int precision: -1,
       bool scientific: false,
       bool shortest: false,
       int width: -1,
       String fill}) {
-    return addOperation(
-        new OperationDescription('AsString', _scope.uniqueName('AsString'), [
-      input
-    ], {
-      'precision': precision,
-      'scientific': scientific,
-      'shortest': shortest,
-      'width': width,
-      'fill': fill
-    }));
+    var op = newOperation('AsString', _scope.uniqueName('AsString'));
+    op.addInput(input);
+    op.setAttrInt('precision', precision);
+    op.setAttrBool('scientific', scientific);
+    op.setAttrBool('shortest', shortest);
+    op.setAttrInt('width', width);
+    op.setAttrString('fill', fill);
+    return op.finish()[0];
   }
 
-  Output addV2(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'AddV2', _scope.uniqueName('AddV2'), [x, y], {}));
+  Output<T> addV2<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('AddV2', _scope.uniqueName('AddV2'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output resourceGather(Output resource, Output indices,
-      {bool validateIndices: true,
-      @required DataType dtype,
-      @required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'ResourceGather', _scope.uniqueName('ResourceGather'), [
-      resource,
-      indices
-    ], {
-      'validate_indices': validateIndices,
-      'dtype': dtype,
-      'Tindices': tindices
-    }));
+  Output<T> resourceGather<T>(Output resource, Output<T> indices,
+      {bool validateIndices: true, DataType dtype, DataType tindices}) {
+    dtype ??= inferType(resource);
+    var op =
+        newOperation('ResourceGather', _scope.uniqueName('ResourceGather'));
+    op.addInput(resource);
+    op.addInput(indices);
+    op.setAttrBool('validate_indices', validateIndices);
+    op.setAttrType('dtype', dtype);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
   }
 
-  Output add(Output x, Output y) {
-    return addOperation(
-        new OperationDescription('Add', _scope.uniqueName('Add'), [x, y], {}));
+  Output<T> add<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('Add', _scope.uniqueName('Add'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output floor(Output x) {
-    return addOperation(
-        new OperationDescription('Floor', _scope.uniqueName('Floor'), [x], {}));
+  Output<T> floor<T>(Output<T> x) {
+    var op = newOperation('Floor', _scope.uniqueName('Floor'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output ceil(Output x) {
-    return addOperation(
-        new OperationDescription('Ceil', _scope.uniqueName('Ceil'), [x], {}));
+  Output<T> ceil<T>(Output<T> x) {
+    var op = newOperation('Ceil', _scope.uniqueName('Ceil'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output isInf(Output x) {
-    return addOperation(
-        new OperationDescription('IsInf', _scope.uniqueName('IsInf'), [x], {}));
+  Output<T> maxPool3D<T>(Output<T> input,
+      {List<int> ksize,
+      List<int> strides,
+      String padding,
+      String dataFormat: 'NDHWC'}) {
+    var op = newOperation('MaxPool3D', _scope.uniqueName('MaxPool3D'));
+    op.addInput(input);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
   }
 
-  Output padV2(Output input, Output paddings, Output constantValues,
+  Output<bool> isInf<T>(Output<T> x) {
+    var op = newOperation('IsInf', _scope.uniqueName('IsInf'));
+    op.addInput(x);
+    return op.finish()[0];
+  }
+
+  Output<T> padV2<T>(
+      Output<T> input, Output<T> paddings, Output<T> constantValues,
       {DataType tpaddings: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'PadV2',
-        _scope.uniqueName('PadV2'),
-        [input, paddings, constantValues],
-        {'Tpaddings': tpaddings}));
+    var op = newOperation('PadV2', _scope.uniqueName('PadV2'));
+    op.addInput(input);
+    op.addInput(paddings);
+    op.addInput(constantValues);
+    op.setAttrType('Tpaddings', tpaddings);
+    return op.finish()[0];
   }
 
-  Output cos(Output x) {
-    return addOperation(
-        new OperationDescription('Cos', _scope.uniqueName('Cos'), [x], {}));
+  Output<T> cos<T>(Output<T> x) {
+    var op = newOperation('Cos', _scope.uniqueName('Cos'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 16: Use TensorArrayV3')
-  Output tensorArray(Output size,
-      {@required DataType dtype,
+  Output<String> tensorArray(Output<int> size,
+      {DataType dtype,
       bool dynamicSize: false,
       bool clearAfterRead: true,
       String tensorArrayName,
-      List<int> elementShape}) {
-    return addOperation(new OperationDescription(
-        'TensorArray', _scope.uniqueName('TensorArray'), [
-      size
-    ], {
-      'dtype': dtype,
-      'dynamic_size': dynamicSize,
-      'clear_after_read': clearAfterRead,
-      'tensor_array_name': tensorArrayName,
-      'element_shape': elementShape
-    }));
+      Shape elementShape}) {
+    dtype ??= inferType(size);
+    var op = newOperation('TensorArray', _scope.uniqueName('TensorArray'));
+    op.addInput(size);
+    op.setAttrType('dtype', dtype);
+    op.setAttrBool('dynamic_size', dynamicSize);
+    op.setAttrBool('clear_after_read', clearAfterRead);
+    op.setAttrString('tensor_array_name', tensorArrayName);
+    op.setAttrShape('element_shape', elementShape);
+    return op.finish()[0];
   }
 
-  Output variable(
-      {@required List<int> shape,
+  Output<T> variable<T>(
+      {Shape shape,
       @required DataType dtype,
       String container,
       String sharedName}) {
-    return addOperation(new OperationDescription(
-        'Variable', _scope.uniqueName('Variable'), [], {
-      'shape': shape,
-      'dtype': dtype,
-      'container': container,
-      'shared_name': sharedName
-    }));
+    var op = newOperation('Variable', _scope.uniqueName('Variable'));
+    op.setAttrShape('shape', shape);
+    op.setAttrType('dtype', dtype);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output sigmoidGrad(Output y, Output dy) {
-    return addOperation(new OperationDescription(
-        'SigmoidGrad', _scope.uniqueName('SigmoidGrad'), [y, dy], {}));
+  Output<T> sigmoidGrad<T>(Output<T> y, Output<T> dy) {
+    var op = newOperation('SigmoidGrad', _scope.uniqueName('SigmoidGrad'));
+    op.addInput(y);
+    op.addInput(dy);
+    return op.finish()[0];
   }
 
-  Output digamma(Output x) {
-    return addOperation(new OperationDescription(
-        'Digamma', _scope.uniqueName('Digamma'), [x], {}));
+  Output<T> digamma<T>(Output<T> x) {
+    var op = newOperation('Digamma', _scope.uniqueName('Digamma'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output acosh(Output x) {
-    return addOperation(
-        new OperationDescription('Acosh', _scope.uniqueName('Acosh'), [x], {}));
+  Output<T> acosh<T>(Output<T> x) {
+    var op = newOperation('Acosh', _scope.uniqueName('Acosh'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output resourceApplyProximalAdagrad(
-      Output var_, Output accum, Output lr, Output l1, Output l2, Output grad,
+  Output resourceApplyProximalAdagrad<T>(Output var_, Output accum,
+      Output<T> lr, Output<T> l1, Output<T> l2, Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyProximalAdagrad',
-        _scope.uniqueName('ResourceApplyProximalAdagrad'),
-        [var_, accum, lr, l1, l2, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation('ResourceApplyProximalAdagrad',
+        _scope.uniqueName('ResourceApplyProximalAdagrad'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output asin(Output x) {
-    return addOperation(
-        new OperationDescription('Asin', _scope.uniqueName('Asin'), [x], {}));
+  Output<T> asin<T>(Output<T> x) {
+    var op = newOperation('Asin', _scope.uniqueName('Asin'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output log1p(Output x) {
-    return addOperation(
-        new OperationDescription('Log1p', _scope.uniqueName('Log1p'), [x], {}));
+  Output<T> log1p<T>(Output<T> x) {
+    var op = newOperation('Log1p', _scope.uniqueName('Log1p'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 16: Use TensorArraySizeV3')
-  Output tensorArraySize(Output handle, Output flowIn) {
-    return addOperation(new OperationDescription('TensorArraySize',
-        _scope.uniqueName('TensorArraySize'), [handle, flowIn], {}));
+  Output<int> tensorArraySize(Output<String> handle, Output<double> flowIn) {
+    var op =
+        newOperation('TensorArraySize', _scope.uniqueName('TensorArraySize'));
+    op.addInput(handle);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output exp(Output x) {
-    return addOperation(
-        new OperationDescription('Exp', _scope.uniqueName('Exp'), [x], {}));
+  Output<T> exp<T>(Output<T> x) {
+    var op = newOperation('Exp', _scope.uniqueName('Exp'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output mutableHashTableOfTensors(
+  Output<String> mutableHashTableOfTensors(
       {String container,
       String sharedName,
       bool useNodeNameSharing: false,
-      @required DataType keyDtype,
-      @required DataType valueDtype,
-      List<int> valueShape}) {
-    return addOperation(new OperationDescription('MutableHashTableOfTensors',
-        _scope.uniqueName('MutableHashTableOfTensors'), [], {
-      'container': container,
-      'shared_name': sharedName,
-      'use_node_name_sharing': useNodeNameSharing,
-      'key_dtype': keyDtype,
-      'value_dtype': valueDtype,
-      'value_shape': valueShape
-    }));
+      DataType keyDtype,
+      DataType valueDtype,
+      Shape valueShape}) {
+    var op = newOperation('MutableHashTableOfTensors',
+        _scope.uniqueName('MutableHashTableOfTensors'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrBool('use_node_name_sharing', useNodeNameSharing);
+    op.setAttrType('key_dtype', keyDtype);
+    op.setAttrType('value_dtype', valueDtype);
+    op.setAttrShape('value_shape', valueShape);
+    return op.finish()[0];
   }
 
-  Output scatterNdAdd(Output ref, Output indices, Output updates,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ScatterNdAdd',
-        _scope.uniqueName('ScatterNdAdd'),
-        [ref, indices, updates],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> scatterNdAdd<T>(Output<T> ref, Output<T> indices, Output<T> updates,
+      {DataType tindices, bool useLocking: false}) {
+    var op = newOperation('ScatterNdAdd', _scope.uniqueName('ScatterNdAdd'));
+    op.addInput(ref);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
+  }
+
+  Output<T> dilation2D<T>(Output<T> input, Output<T> filter,
+      {List<int> strides, List<int> rates, String padding}) {
+    var op = newOperation('Dilation2D', _scope.uniqueName('Dilation2D'));
+    op.addInput(input);
+    op.addInput(filter);
+    op.setAttrIntList('strides', strides);
+    op.setAttrIntList('rates', rates);
+    op.setAttrString('padding', padding);
+    return op.finish()[0];
   }
 
   Output deserializeIterator(Output resourceHandle, Output serialized) {
-    return addOperation(new OperationDescription(
-        'DeserializeIterator',
-        _scope.uniqueName('DeserializeIterator'),
-        [resourceHandle, serialized],
-        {}));
+    var op = newOperation(
+        'DeserializeIterator', _scope.uniqueName('DeserializeIterator'));
+    op.addInput(resourceHandle);
+    op.addInput(serialized);
+    return op.finish()[-1];
   }
 
-  Output rsqrtGrad(Output y, Output dy) {
-    return addOperation(new OperationDescription(
-        'RsqrtGrad', _scope.uniqueName('RsqrtGrad'), [y, dy], {}));
+  Output<T> rsqrtGrad<T>(Output<T> y, Output<T> dy) {
+    var op = newOperation('RsqrtGrad', _scope.uniqueName('RsqrtGrad'));
+    op.addInput(y);
+    op.addInput(dy);
+    return op.finish()[0];
   }
 
-  Output rsqrt(Output x) {
-    return addOperation(
-        new OperationDescription('Rsqrt', _scope.uniqueName('Rsqrt'), [x], {}));
+  Output<T> rsqrt<T>(Output<T> x) {
+    var op = newOperation('Rsqrt', _scope.uniqueName('Rsqrt'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output initializeTableFromTextFile(Output tableHandle, Output filename,
-      {@required int keyIndex,
-      @required int valueIndex,
+  Output initializeTableFromTextFile(
+      Output<String> tableHandle, Output<String> filename,
+      {int keyIndex,
+      int valueIndex,
       int vocabSize: -1,
       String delimiter: '	'}) {
-    return addOperation(new OperationDescription('InitializeTableFromTextFile',
-        _scope.uniqueName('InitializeTableFromTextFile'), [
-      tableHandle,
-      filename
-    ], {
-      'key_index': keyIndex,
-      'value_index': valueIndex,
-      'vocab_size': vocabSize,
-      'delimiter': delimiter
-    }));
+    var op = newOperation('InitializeTableFromTextFile',
+        _scope.uniqueName('InitializeTableFromTextFile'));
+    op.addInput(tableHandle);
+    op.addInput(filename);
+    op.setAttrInt('key_index', keyIndex);
+    op.setAttrInt('value_index', valueIndex);
+    op.setAttrInt('vocab_size', vocabSize);
+    op.setAttrString('delimiter', delimiter);
+    return op.finish()[-1];
   }
 
-  Output sqrtGrad(Output y, Output dy) {
-    return addOperation(new OperationDescription(
-        'SqrtGrad', _scope.uniqueName('SqrtGrad'), [y, dy], {}));
+  Output<T> sqrtGrad<T>(Output<T> y, Output<T> dy) {
+    var op = newOperation('SqrtGrad', _scope.uniqueName('SqrtGrad'));
+    op.addInput(y);
+    op.addInput(dy);
+    return op.finish()[0];
   }
 
-  Output invGrad(Output y, Output dy) {
-    return addOperation(new OperationDescription(
-        'InvGrad', _scope.uniqueName('InvGrad'), [y, dy], {}));
+  Output<T> invGrad<T>(Output<T> y, Output<T> dy) {
+    var op = newOperation('InvGrad', _scope.uniqueName('InvGrad'));
+    op.addInput(y);
+    op.addInput(dy);
+    return op.finish()[0];
   }
 
-  Output inv(Output x) {
-    return addOperation(
-        new OperationDescription('Inv', _scope.uniqueName('Inv'), [x], {}));
+  Output<T> inv<T>(Output<T> x) {
+    var op = newOperation('Inv', _scope.uniqueName('Inv'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output accumulateNV2(List<Output> inputs,
-      {@required int n, @required List<int> shape}) {
-    return addOperation(new OperationDescription(
-        'AccumulateNV2',
-        _scope.uniqueName('AccumulateNV2'),
-        [inputs],
-        {'N': n, 'shape': shape}));
+  Output<T> accumulateNV2<T>(List<Output<T>> inputs, {int n, Shape shape}) {
+    var op = newOperation('AccumulateNV2', _scope.uniqueName('AccumulateNV2'));
+    op.addInputList(inputs);
+    op.setAttrInt('N', n);
+    op.setAttrShape('shape', shape);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 14: Use MatrixSetDiag')
-  Output batchMatrixSetDiag(Output input, Output diagonal) {
-    return addOperation(new OperationDescription('BatchMatrixSetDiag',
-        _scope.uniqueName('BatchMatrixSetDiag'), [input, diagonal], {}));
+  Output<T> batchMatrixSetDiag<T>(Output<T> input, Output<T> diagonal) {
+    var op = newOperation(
+        'BatchMatrixSetDiag', _scope.uniqueName('BatchMatrixSetDiag'));
+    op.addInput(input);
+    op.addInput(diagonal);
+    return op.finish()[0];
   }
 
-  Output segmentMean(Output data, Output segmentIds,
-      {@required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'SegmentMean',
-        _scope.uniqueName('SegmentMean'),
-        [data, segmentIds],
-        {'Tindices': tindices}));
+  Output<T> segmentMean<T>(Output<T> data, Output<T> segmentIds,
+      {DataType tindices}) {
+    var op = newOperation('SegmentMean', _scope.uniqueName('SegmentMean'));
+    op.addInput(data);
+    op.addInput(segmentIds);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 22: Replaced by QuantizeAndDequantizeV2')
-  Output quantizeAndDequantize(Output input,
+  Output<T> quantizeAndDequantize<T>(Output<T> input,
       {bool signedInput: true,
       int numBits: 8,
       bool rangeGiven: false,
       double inputMin: 0.0,
       double inputMax: 0.0}) {
-    return addOperation(new OperationDescription(
-        'QuantizeAndDequantize', _scope.uniqueName('QuantizeAndDequantize'), [
-      input
-    ], {
-      'signed_input': signedInput,
-      'num_bits': numBits,
-      'range_given': rangeGiven,
-      'input_min': inputMin,
-      'input_max': inputMax
-    }));
+    var op = newOperation(
+        'QuantizeAndDequantize', _scope.uniqueName('QuantizeAndDequantize'));
+    op.addInput(input);
+    op.setAttrBool('signed_input', signedInput);
+    op.setAttrInt('num_bits', numBits);
+    op.setAttrBool('range_given', rangeGiven);
+    op.setAttrFloat('input_min', inputMin);
+    op.setAttrFloat('input_max', inputMax);
+    return op.finish()[0];
   }
 
-  Output sparseSegmentSqrtN(Output data, Output indices, Output segmentIds,
+  Output<T> sparseSegmentSqrtN<T>(
+      Output<T> data, Output<T> indices, Output<int> segmentIds,
       {DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'SparseSegmentSqrtN',
-        _scope.uniqueName('SparseSegmentSqrtN'),
-        [data, indices, segmentIds],
-        {'Tidx': tidx}));
+    var op = newOperation(
+        'SparseSegmentSqrtN', _scope.uniqueName('SparseSegmentSqrtN'));
+    op.addInput(data);
+    op.addInput(indices);
+    op.addInput(segmentIds);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output depthToSpace(Output input,
-      {@required int blockSize, String dataFormat: 'NHWC'}) {
-    return addOperation(new OperationDescription(
-        'DepthToSpace',
-        _scope.uniqueName('DepthToSpace'),
-        [input],
-        {'block_size': blockSize, 'data_format': dataFormat}));
+  Output<T> depthToSpace<T>(Output<T> input,
+      {int blockSize, String dataFormat: 'NHWC'}) {
+    var op = newOperation('DepthToSpace', _scope.uniqueName('DepthToSpace'));
+    op.addInput(input);
+    op.setAttrInt('block_size', blockSize);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
   }
 
-  Output spaceToDepth(Output input,
-      {@required int blockSize, String dataFormat: 'NHWC'}) {
-    return addOperation(new OperationDescription(
-        'SpaceToDepth',
-        _scope.uniqueName('SpaceToDepth'),
-        [input],
-        {'block_size': blockSize, 'data_format': dataFormat}));
+  Output<T> spaceToDepth<T>(Output<T> input,
+      {int blockSize, String dataFormat: 'NHWC'}) {
+    var op = newOperation('SpaceToDepth', _scope.uniqueName('SpaceToDepth'));
+    op.addInput(input);
+    op.setAttrInt('block_size', blockSize);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
   }
 
-  Output quantizeAndDequantizeV3(
-      Output input, Output inputMin, Output inputMax, Output numBits,
+  Output<T> quantizeAndDequantizeV3<T>(Output<T> input, Output<T> inputMin,
+      Output<T> inputMax, Output<int> numBits,
       {bool signedInput: true, bool rangeGiven: true}) {
-    return addOperation(new OperationDescription(
-        'QuantizeAndDequantizeV3',
-        _scope.uniqueName('QuantizeAndDequantizeV3'),
-        [input, inputMin, inputMax, numBits],
-        {'signed_input': signedInput, 'range_given': rangeGiven}));
+    var op = newOperation('QuantizeAndDequantizeV3',
+        _scope.uniqueName('QuantizeAndDequantizeV3'));
+    op.addInput(input);
+    op.addInput(inputMin);
+    op.addInput(inputMax);
+    op.addInput(numBits);
+    op.setAttrBool('signed_input', signedInput);
+    op.setAttrBool('range_given', rangeGiven);
+    return op.finish()[0];
   }
 
-  Output mul(Output x, Output y) {
-    return addOperation(
-        new OperationDescription('Mul', _scope.uniqueName('Mul'), [x, y], {}));
+  Output<T> mul<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('Mul', _scope.uniqueName('Mul'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output batchToSpace(Output input, Output crops,
-      {@required int blockSize, DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'BatchToSpace',
-        _scope.uniqueName('BatchToSpace'),
-        [input, crops],
-        {'block_size': blockSize, 'Tidx': tidx}));
+  Output<T> batchToSpace<T>(Output<T> input, Output<T> crops,
+      {int blockSize, DataType tidx: DataType.DT_INT32}) {
+    var op = newOperation('BatchToSpace', _scope.uniqueName('BatchToSpace'));
+    op.addInput(input);
+    op.addInput(crops);
+    op.setAttrInt('block_size', blockSize);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output spaceToBatch(Output input, Output paddings,
-      {DataType tpaddings: DataType.DT_INT32, @required int blockSize}) {
-    return addOperation(new OperationDescription(
-        'SpaceToBatch',
-        _scope.uniqueName('SpaceToBatch'),
-        [input, paddings],
-        {'Tpaddings': tpaddings, 'block_size': blockSize}));
+  Output<T> spaceToBatch<T>(Output<T> input, Output<T> paddings,
+      {DataType tpaddings: DataType.DT_INT32, int blockSize}) {
+    var op = newOperation('SpaceToBatch', _scope.uniqueName('SpaceToBatch'));
+    op.addInput(input);
+    op.addInput(paddings);
+    op.setAttrType('Tpaddings', tpaddings);
+    op.setAttrInt('block_size', blockSize);
+    return op.finish()[0];
   }
 
-  Output expandDims(Output input, Output dim,
+  Output<T> squeeze<T>(Output<T> input, {List<int> squeezeDims}) {
+    var op = newOperation('Squeeze', _scope.uniqueName('Squeeze'));
+    op.addInput(input);
+    op.setAttrIntList('squeeze_dims', squeezeDims);
+    return op.finish()[0];
+  }
+
+  Output<T> expandDims<T>(Output<T> input, Output<T> dim,
       {DataType tdim: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('ExpandDims',
-        _scope.uniqueName('ExpandDims'), [input, dim], {'Tdim': tdim}));
+    var op = newOperation('ExpandDims', _scope.uniqueName('ExpandDims'));
+    op.addInput(input);
+    op.addInput(dim);
+    op.setAttrType('Tdim', tdim);
+    return op.finish()[0];
   }
 
-  Output placeholderWithDefault(Output input,
-      {@required DataType dtype, @required List<int> shape}) {
-    return addOperation(new OperationDescription(
-        'PlaceholderWithDefault',
-        _scope.uniqueName('PlaceholderWithDefault'),
-        [input],
-        {'dtype': dtype, 'shape': shape}));
+  Output<T> placeholderWithDefault<T>(Output<T> input,
+      {DataType dtype, Shape shape}) {
+    dtype ??= inferType(input);
+    var op = newOperation(
+        'PlaceholderWithDefault', _scope.uniqueName('PlaceholderWithDefault'));
+    op.addInput(input);
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('shape', shape);
+    return op.finish()[0];
   }
 
-  Output applyMomentum(
-      Output var_, Output accum, Output lr, Output grad, Output momentum,
+  Output<T> applyMomentum<T>(Output<T> var_, Output<T> accum, Output<T> lr,
+      Output<T> grad, Output<T> momentum,
       {bool useLocking: false, bool useNesterov: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyMomentum',
-        _scope.uniqueName('ApplyMomentum'),
-        [var_, accum, lr, grad, momentum],
-        {'use_locking': useLocking, 'use_nesterov': useNesterov}));
+    var op = newOperation('ApplyMomentum', _scope.uniqueName('ApplyMomentum'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(grad);
+    op.addInput(momentum);
+    op.setAttrBool('use_locking', useLocking);
+    op.setAttrBool('use_nesterov', useNesterov);
+    return op.finish()[0];
   }
 
-  Output acos(Output x) {
-    return addOperation(
-        new OperationDescription('Acos', _scope.uniqueName('Acos'), [x], {}));
+  Output<T> acos<T>(Output<T> x) {
+    var op = newOperation('Acos', _scope.uniqueName('Acos'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output placeholder({@required DataType dtype, List<int> shape}) {
-    return addOperation(new OperationDescription(
-        'Placeholder',
-        _scope.uniqueName('Placeholder'),
-        [],
-        {'dtype': dtype, 'shape': shape}));
+  Output<T> placeholder<T>({@required DataType dtype, Shape shape}) {
+    var op = newOperation('Placeholder', _scope.uniqueName('Placeholder'));
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('shape', shape);
+    return op.finish()[0];
   }
 
-  Output mirrorPadGrad(Output input, Output paddings,
-      {DataType tpaddings: DataType.DT_INT32, @required String mode}) {
-    return addOperation(new OperationDescription(
-        'MirrorPadGrad',
-        _scope.uniqueName('MirrorPadGrad'),
-        [input, paddings],
-        {'Tpaddings': tpaddings, 'mode': mode}));
+  Output<T> mirrorPadGrad<T>(Output<T> input, Output<T> paddings,
+      {DataType tpaddings: DataType.DT_INT32, String mode}) {
+    var op = newOperation('MirrorPadGrad', _scope.uniqueName('MirrorPadGrad'));
+    op.addInput(input);
+    op.addInput(paddings);
+    op.setAttrType('Tpaddings', tpaddings);
+    op.setAttrString('mode', mode);
+    return op.finish()[0];
   }
 
-  Output matrixSolveLs(Output matrix, Output rhs, Output l2Regularizer,
+  Output<T> matrixSolveLs<T>(
+      Output<T> matrix, Output<T> rhs, Output l2Regularizer,
       {bool fast: true}) {
-    return addOperation(new OperationDescription(
-        'MatrixSolveLs',
-        _scope.uniqueName('MatrixSolveLs'),
-        [matrix, rhs, l2Regularizer],
-        {'fast': fast}));
+    var op = newOperation('MatrixSolveLs', _scope.uniqueName('MatrixSolveLs'));
+    op.addInput(matrix);
+    op.addInput(rhs);
+    op.addInput(l2Regularizer);
+    op.setAttrBool('fast', fast);
+    return op.finish()[0];
   }
 
-  Output mirrorPad(Output input, Output paddings,
-      {DataType tpaddings: DataType.DT_INT32, @required String mode}) {
-    return addOperation(new OperationDescription(
-        'MirrorPad',
-        _scope.uniqueName('MirrorPad'),
-        [input, paddings],
-        {'Tpaddings': tpaddings, 'mode': mode}));
+  Output<T> mirrorPad<T>(Output<T> input, Output<T> paddings,
+      {DataType tpaddings: DataType.DT_INT32, String mode}) {
+    var op = newOperation('MirrorPad', _scope.uniqueName('MirrorPad'));
+    op.addInput(input);
+    op.addInput(paddings);
+    op.setAttrType('Tpaddings', tpaddings);
+    op.setAttrString('mode', mode);
+    return op.finish()[0];
   }
 
-  Output pad(Output input, Output paddings,
+  Output<T> pad<T>(Output<T> input, Output<T> paddings,
       {DataType tpaddings: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('Pad',
-        _scope.uniqueName('Pad'), [input, paddings], {'Tpaddings': tpaddings}));
+    var op = newOperation('Pad', _scope.uniqueName('Pad'));
+    op.addInput(input);
+    op.addInput(paddings);
+    op.setAttrType('Tpaddings', tpaddings);
+    return op.finish()[0];
   }
 
-  Output broadcastArgs(Output s0, Output s1) {
-    return addOperation(new OperationDescription(
-        'BroadcastArgs', _scope.uniqueName('BroadcastArgs'), [s0, s1], {}));
+  Output<T> broadcastArgs<T>(Output<T> s0, Output<T> s1) {
+    var op = newOperation('BroadcastArgs', _scope.uniqueName('BroadcastArgs'));
+    op.addInput(s0);
+    op.addInput(s1);
+    return op.finish()[0];
   }
 
-  Output resourceStridedSliceAssign(
-      Output ref, Output begin, Output end, Output strides, Output value,
-      {@required DataType index,
+  Output resourceStridedSliceAssign<T>(Output ref, Output<T> begin,
+      Output<T> end, Output<T> strides, Output<T> value,
+      {DataType index,
       int beginMask: 0,
       int endMask: 0,
       int ellipsisMask: 0,
       int newAxisMask: 0,
       int shrinkAxisMask: 0}) {
-    return addOperation(new OperationDescription('ResourceStridedSliceAssign',
-        _scope.uniqueName('ResourceStridedSliceAssign'), [
-      ref,
-      begin,
-      end,
-      strides,
-      value
-    ], {
-      'Index': index,
-      'begin_mask': beginMask,
-      'end_mask': endMask,
-      'ellipsis_mask': ellipsisMask,
-      'new_axis_mask': newAxisMask,
-      'shrink_axis_mask': shrinkAxisMask
-    }));
+    var op = newOperation('ResourceStridedSliceAssign',
+        _scope.uniqueName('ResourceStridedSliceAssign'));
+    op.addInput(ref);
+    op.addInput(begin);
+    op.addInput(end);
+    op.addInput(strides);
+    op.addInput(value);
+    op.setAttrType('Index', index);
+    op.setAttrInt('begin_mask', beginMask);
+    op.setAttrInt('end_mask', endMask);
+    op.setAttrInt('ellipsis_mask', ellipsisMask);
+    op.setAttrInt('new_axis_mask', newAxisMask);
+    op.setAttrInt('shrink_axis_mask', shrinkAxisMask);
+    return op.finish()[-1];
   }
 
-  Output truncateMod(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'TruncateMod', _scope.uniqueName('TruncateMod'), [x, y], {}));
+  Output<T> truncateMod<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('TruncateMod', _scope.uniqueName('TruncateMod'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output resourceApplyFtrl(Output var_, Output accum, Output linear,
-      Output grad, Output lr, Output l1, Output l2, Output lrPower,
+  Output resourceApplyFtrl<T>(
+      Output var_,
+      Output accum,
+      Output linear,
+      Output<T> grad,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> lrPower,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyFtrl',
-        _scope.uniqueName('ResourceApplyFtrl'),
-        [var_, accum, linear, grad, lr, l1, l2, lrPower],
-        {'use_locking': useLocking}));
+    var op = newOperation(
+        'ResourceApplyFtrl', _scope.uniqueName('ResourceApplyFtrl'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(linear);
+    op.addInput(grad);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(lrPower);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output stridedSliceGrad(
-      Output shape, Output begin, Output end, Output strides, Output dy,
-      {@required DataType index,
+  Output<T> stridedSliceGrad<T>(Output<T> shape, Output<T> begin, Output<T> end,
+      Output<T> strides, Output<T> dy,
+      {DataType index,
       int beginMask: 0,
       int endMask: 0,
       int ellipsisMask: 0,
       int newAxisMask: 0,
       int shrinkAxisMask: 0}) {
-    return addOperation(new OperationDescription(
-        'StridedSliceGrad', _scope.uniqueName('StridedSliceGrad'), [
-      shape,
-      begin,
-      end,
-      strides,
-      dy
-    ], {
-      'Index': index,
-      'begin_mask': beginMask,
-      'end_mask': endMask,
-      'ellipsis_mask': ellipsisMask,
-      'new_axis_mask': newAxisMask,
-      'shrink_axis_mask': shrinkAxisMask
-    }));
+    var op =
+        newOperation('StridedSliceGrad', _scope.uniqueName('StridedSliceGrad'));
+    op.addInput(shape);
+    op.addInput(begin);
+    op.addInput(end);
+    op.addInput(strides);
+    op.addInput(dy);
+    op.setAttrType('Index', index);
+    op.setAttrInt('begin_mask', beginMask);
+    op.setAttrInt('end_mask', endMask);
+    op.setAttrInt('ellipsis_mask', ellipsisMask);
+    op.setAttrInt('new_axis_mask', newAxisMask);
+    op.setAttrInt('shrink_axis_mask', shrinkAxisMask);
+    return op.finish()[0];
   }
 
-  Output stridedSlice(Output input, Output begin, Output end, Output strides,
-      {@required DataType index,
+  Output<T> stridedSlice<T>(
+      Output<T> input, Output<T> begin, Output<T> end, Output<T> strides,
+      {DataType index,
       int beginMask: 0,
       int endMask: 0,
       int ellipsisMask: 0,
       int newAxisMask: 0,
       int shrinkAxisMask: 0}) {
-    return addOperation(new OperationDescription(
-        'StridedSlice', _scope.uniqueName('StridedSlice'), [
-      input,
-      begin,
-      end,
-      strides
-    ], {
-      'Index': index,
-      'begin_mask': beginMask,
-      'end_mask': endMask,
-      'ellipsis_mask': ellipsisMask,
-      'new_axis_mask': newAxisMask,
-      'shrink_axis_mask': shrinkAxisMask
-    }));
+    var op = newOperation('StridedSlice', _scope.uniqueName('StridedSlice'));
+    op.addInput(input);
+    op.addInput(begin);
+    op.addInput(end);
+    op.addInput(strides);
+    op.setAttrType('Index', index);
+    op.setAttrInt('begin_mask', beginMask);
+    op.setAttrInt('end_mask', endMask);
+    op.setAttrInt('ellipsis_mask', ellipsisMask);
+    op.setAttrInt('new_axis_mask', newAxisMask);
+    op.setAttrInt('shrink_axis_mask', shrinkAxisMask);
+    return op.finish()[0];
   }
 
-  Output lMDBReader({String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'LMDBReader',
-        _scope.uniqueName('LMDBReader'),
-        [],
-        {'container': container, 'shared_name': sharedName}));
+  Output<String> lMDBReader({String container, String sharedName}) {
+    var op = newOperation('LMDBReader', _scope.uniqueName('LMDBReader'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output slice(Output input, Output begin, Output size,
-      {@required DataType index}) {
-    return addOperation(new OperationDescription('Slice',
-        _scope.uniqueName('Slice'), [input, begin, size], {'Index': index}));
+  Output<T> slice<T>(Output<T> input, Output<T> begin, Output<T> size,
+      {DataType index}) {
+    var op = newOperation('Slice', _scope.uniqueName('Slice'));
+    op.addInput(input);
+    op.addInput(begin);
+    op.addInput(size);
+    op.setAttrType('Index', index);
+    return op.finish()[0];
   }
 
-  Output scatterNd(Output indices, Output updates, Output shape,
-      {@required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'ScatterNd',
-        _scope.uniqueName('ScatterNd'),
-        [indices, updates, shape],
-        {'Tindices': tindices}));
+  Output<T> scatterNd<T>(Output<T> indices, Output<T> updates, Output<T> shape,
+      {DataType tindices}) {
+    var op = newOperation('ScatterNd', _scope.uniqueName('ScatterNd'));
+    op.addInput(indices);
+    op.addInput(updates);
+    op.addInput(shape);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
   }
 
-  Output argMax(Output input, Output dimension,
+  Output<T> argMax<T>(Output<T> input, Output<T> dimension,
       {DataType tidx: DataType.DT_INT32,
       DataType outputType: DataType.DT_INT64}) {
-    return addOperation(new OperationDescription(
-        'ArgMax',
-        _scope.uniqueName('ArgMax'),
-        [input, dimension],
-        {'Tidx': tidx, 'output_type': outputType}));
+    var op = newOperation('ArgMax', _scope.uniqueName('ArgMax'));
+    op.addInput(input);
+    op.addInput(dimension);
+    op.setAttrType('Tidx', tidx);
+    op.setAttrType('output_type', outputType);
+    return op.finish()[0];
   }
 
-  Output reshape(Output tensor, Output shape,
+  Output<T> reshape<T>(Output<T> tensor, Output<T> shape,
       {DataType tshape: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('Reshape',
-        _scope.uniqueName('Reshape'), [tensor, shape], {'Tshape': tshape}));
+    var op = newOperation('Reshape', _scope.uniqueName('Reshape'));
+    op.addInput(tensor);
+    op.addInput(shape);
+    op.setAttrType('Tshape', tshape);
+    return op.finish()[0];
   }
 
-  Output checkNumerics(Output tensor, {@required String message}) {
-    return addOperation(new OperationDescription('CheckNumerics',
-        _scope.uniqueName('CheckNumerics'), [tensor], {'message': message}));
+  Output<T> checkNumerics<T>(Output<T> tensor, {String message}) {
+    var op = newOperation('CheckNumerics', _scope.uniqueName('CheckNumerics'));
+    op.addInput(tensor);
+    op.setAttrString('message', message);
+    return op.finish()[0];
   }
 
-  Output stopGradient(Output input) {
-    return addOperation(new OperationDescription(
-        'StopGradient', _scope.uniqueName('StopGradient'), [input], {}));
+  Output<T> stopGradient<T>(Output<T> input) {
+    var op = newOperation('StopGradient', _scope.uniqueName('StopGradient'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output debugGradientIdentity(Output input) {
-    return addOperation(new OperationDescription('DebugGradientIdentity',
-        _scope.uniqueName('DebugGradientIdentity'), [input], {}));
+  Output<T> debugGradientIdentity<T>(Output<T> input) {
+    var op = newOperation(
+        'DebugGradientIdentity', _scope.uniqueName('DebugGradientIdentity'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output refIdentity(Output input) {
-    return addOperation(new OperationDescription(
-        'RefIdentity', _scope.uniqueName('RefIdentity'), [input], {}));
+  Output<T> refIdentity<T>(Output<T> input) {
+    var op = newOperation('RefIdentity', _scope.uniqueName('RefIdentity'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output round(Output x) {
-    return addOperation(
-        new OperationDescription('Round', _scope.uniqueName('Round'), [x], {}));
+  Output zipDataset(List<Output> inputDatasets,
+      {List<DataType> outputTypes, List<Shape> outputShapes, int n}) {
+    var op = newOperation('ZipDataset', _scope.uniqueName('ZipDataset'));
+    op.addInputList(inputDatasets);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    op.setAttrInt('N', n);
+    return op.finish()[0];
   }
 
-  Output sparseTensorDenseAdd(
-      Output aIndices, Output aValues, Output aShape, Output b,
-      {@required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'SparseTensorDenseAdd',
-        _scope.uniqueName('SparseTensorDenseAdd'),
-        [aIndices, aValues, aShape, b],
-        {'Tindices': tindices}));
+  Output<T> round<T>(Output<T> x) {
+    var op = newOperation('Round', _scope.uniqueName('Round'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output snapshot(Output input) {
-    return addOperation(new OperationDescription(
-        'Snapshot', _scope.uniqueName('Snapshot'), [input], {}));
+  Output<T> identityN<T>(List<Output<T>> input, {List<DataType> t}) {
+    var op = newOperation('IdentityN', _scope.uniqueName('IdentityN'));
+    op.addInputList(input);
+    op.setAttrTypeList('T', t);
+    return op.finish()[0];
   }
 
-  Output size(Output input, {DataType outType: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'Size', _scope.uniqueName('Size'), [input], {'out_type': outType}));
+  Output<T> sparseTensorDenseAdd<T>(
+      Output<T> aIndices, Output<T> aValues, Output<T> aShape, Output<T> b,
+      {DataType tindices}) {
+    var op = newOperation(
+        'SparseTensorDenseAdd', _scope.uniqueName('SparseTensorDenseAdd'));
+    op.addInput(aIndices);
+    op.addInput(aValues);
+    op.addInput(aShape);
+    op.addInput(b);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
   }
 
-  Output scalarSummary(Output tags, Output values) {
-    return addOperation(new OperationDescription('ScalarSummary',
-        _scope.uniqueName('ScalarSummary'), [tags, values], {}));
+  Output<T> snapshot<T>(Output<T> input) {
+    var op = newOperation('Snapshot', _scope.uniqueName('Snapshot'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output identity(Output input) {
-    return addOperation(new OperationDescription(
-        'Identity', _scope.uniqueName('Identity'), [input], {}));
+  Output<T> size<T>(Output<T> input, {DataType outType: DataType.DT_INT32}) {
+    var op = newOperation('Size', _scope.uniqueName('Size'));
+    op.addInput(input);
+    op.setAttrType('out_type', outType);
+    return op.finish()[0];
   }
 
-  Output reverseV2(Output tensor, Output axis,
+  Output<String> scalarSummary<T>(Output<String> tags, Output<T> values) {
+    var op = newOperation('ScalarSummary', _scope.uniqueName('ScalarSummary'));
+    op.addInput(tags);
+    op.addInput(values);
+    return op.finish()[0];
+  }
+
+  Output<T> identity<T>(Output<T> input) {
+    var op = newOperation('Identity', _scope.uniqueName('Identity'));
+    op.addInput(input);
+    return op.finish()[0];
+  }
+
+  Output<T> reverseV2<T>(Output<T> tensor, Output<T> axis,
       {DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('ReverseV2',
-        _scope.uniqueName('ReverseV2'), [tensor, axis], {'Tidx': tidx}));
+    var op = newOperation('ReverseV2', _scope.uniqueName('ReverseV2'));
+    op.addInput(tensor);
+    op.addInput(axis);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output reverse(Output tensor, Output dims) {
-    return addOperation(new OperationDescription(
-        'Reverse', _scope.uniqueName('Reverse'), [tensor, dims], {}));
+  Output<T> reverse<T>(Output<T> tensor, Output<bool> dims) {
+    var op = newOperation('Reverse', _scope.uniqueName('Reverse'));
+    op.addInput(tensor);
+    op.addInput(dims);
+    return op.finish()[0];
   }
 
-  Output matrixDiagPart(Output input) {
-    return addOperation(new OperationDescription(
-        'MatrixDiagPart', _scope.uniqueName('MatrixDiagPart'), [input], {}));
+  Output<T> matrixDiagPart<T>(Output<T> input) {
+    var op =
+        newOperation('MatrixDiagPart', _scope.uniqueName('MatrixDiagPart'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output matrixSetDiag(Output input, Output diagonal) {
-    return addOperation(new OperationDescription('MatrixSetDiag',
-        _scope.uniqueName('MatrixSetDiag'), [input, diagonal], {}));
+  Output<T> matrixSetDiag<T>(Output<T> input, Output<T> diagonal) {
+    var op = newOperation('MatrixSetDiag', _scope.uniqueName('MatrixSetDiag'));
+    op.addInput(input);
+    op.addInput(diagonal);
+    return op.finish()[0];
   }
 
-  Output statelessTruncatedNormal(Output shape, Output seed,
+  Output<T> statelessTruncatedNormal<T>(Output<T> shape, Output<T> seed,
       {DataType dtype: DataType.DT_FLOAT, DataType tseed: DataType.DT_INT64}) {
-    return addOperation(new OperationDescription(
-        'StatelessTruncatedNormal',
-        _scope.uniqueName('StatelessTruncatedNormal'),
-        [shape, seed],
-        {'dtype': dtype, 'Tseed': tseed}));
+    dtype ??= inferType(shape);
+    var op = newOperation('StatelessTruncatedNormal',
+        _scope.uniqueName('StatelessTruncatedNormal'));
+    op.addInput(shape);
+    op.addInput(seed);
+    op.setAttrType('dtype', dtype);
+    op.setAttrType('Tseed', tseed);
+    return op.finish()[0];
   }
 
-  Output matrixDiag(Output diagonal) {
-    return addOperation(new OperationDescription(
-        'MatrixDiag', _scope.uniqueName('MatrixDiag'), [diagonal], {}));
+  Output<T> matrixDiag<T>(Output<T> diagonal) {
+    var op = newOperation('MatrixDiag', _scope.uniqueName('MatrixDiag'));
+    op.addInput(diagonal);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 23: Placeholder now behaves the same as PlaceholderV2.')
-  Output placeholderV2({@required DataType dtype, @required List<int> shape}) {
-    return addOperation(new OperationDescription(
-        'PlaceholderV2',
-        _scope.uniqueName('PlaceholderV2'),
-        [],
-        {'dtype': dtype, 'shape': shape}));
+  Output<T> placeholderV2<T>({@required DataType dtype, Shape shape}) {
+    var op = newOperation('PlaceholderV2', _scope.uniqueName('PlaceholderV2'));
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('shape', shape);
+    return op.finish()[0];
   }
 
-  Output diagPart(Output input) {
-    return addOperation(new OperationDescription(
-        'DiagPart', _scope.uniqueName('DiagPart'), [input], {}));
+  Output<T> diagPart<T>(Output<T> input) {
+    var op = newOperation('DiagPart', _scope.uniqueName('DiagPart'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output onesLike(Output x) {
-    return addOperation(new OperationDescription(
-        'OnesLike', _scope.uniqueName('OnesLike'), [x], {}));
+  Output<T> onesLike<T>(Output<T> x) {
+    var op = newOperation('OnesLike', _scope.uniqueName('OnesLike'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output guaranteeConst(Output input) {
-    return addOperation(new OperationDescription(
-        'GuaranteeConst', _scope.uniqueName('GuaranteeConst'), [input], {}));
+  Output<T> guaranteeConst<T>(Output<T> input) {
+    var op =
+        newOperation('GuaranteeConst', _scope.uniqueName('GuaranteeConst'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output immutableConst(
-      {@required DataType dtype,
-      @required List<int> shape,
-      @required String memoryRegionName}) {
-    return addOperation(new OperationDescription(
-        'ImmutableConst', _scope.uniqueName('ImmutableConst'), [], {
-      'dtype': dtype,
-      'shape': shape,
-      'memory_region_name': memoryRegionName
-    }));
+  Output<T> immutableConst<T>(
+      {@required DataType dtype, Shape shape, String memoryRegionName}) {
+    var op =
+        newOperation('ImmutableConst', _scope.uniqueName('ImmutableConst'));
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('shape', shape);
+    op.setAttrString('memory_region_name', memoryRegionName);
+    return op.finish()[0];
   }
 
-  Output fill(Output dims, Output value,
+  Output<T> fill<T>(Output<T> dims, Output<T> value,
       {DataType indexType: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('Fill',
-        _scope.uniqueName('Fill'), [dims, value], {'index_type': indexType}));
+    var op = newOperation('Fill', _scope.uniqueName('Fill'));
+    op.addInput(dims);
+    op.addInput(value);
+    op.setAttrType('index_type', indexType);
+    return op.finish()[0];
   }
 
-  Output applyCenteredRMSProp(Output var_, Output mg, Output ms, Output mom,
-      Output lr, Output rho, Output momentum, Output epsilon, Output grad,
+  Output<T> applyCenteredRMSProp<T>(
+      Output<T> var_,
+      Output<T> mg,
+      Output<T> ms,
+      Output<T> mom,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyCenteredRMSProp',
-        _scope.uniqueName('ApplyCenteredRMSProp'),
-        [var_, mg, ms, mom, lr, rho, momentum, epsilon, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation(
+        'ApplyCenteredRMSProp', _scope.uniqueName('ApplyCenteredRMSProp'));
+    op.addInput(var_);
+    op.addInput(mg);
+    op.addInput(ms);
+    op.addInput(mom);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(momentum);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output const_({@required Output value, @required DataType dtype}) {
-    return addOperation(new OperationDescription('Const',
-        _scope.uniqueName('Const'), [], {'value': value, 'dtype': dtype}));
+  Output<T> const_<T>({Tensor value, @required DataType dtype}) {
+    var op = newOperation('Const', _scope.uniqueName('Const'));
+    op.setAttrTensor('value', value);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output splitV(Output value, Output sizeSplits, Output splitDim,
-      {@required int numSplit, DataType tlen: DataType.DT_INT64}) {
-    return addOperation(new OperationDescription(
-        'SplitV',
-        _scope.uniqueName('SplitV'),
-        [value, sizeSplits, splitDim],
-        {'num_split': numSplit, 'Tlen': tlen}));
+  Output<T> splitV<T>(
+      Output<T> value, Output<T> sizeSplits, Output<int> splitDim,
+      {int numSplit, DataType tlen: DataType.DT_INT64}) {
+    var op = newOperation('SplitV', _scope.uniqueName('SplitV'));
+    op.addInput(value);
+    op.addInput(sizeSplits);
+    op.addInput(splitDim);
+    op.setAttrInt('num_split', numSplit);
+    op.setAttrType('Tlen', tlen);
+    return op.finish()[0];
   }
 
-  Output split(Output splitDim, Output value, {@required int numSplit}) {
-    return addOperation(new OperationDescription(
-        'Split',
-        _scope.uniqueName('Split'),
-        [splitDim, value],
-        {'num_split': numSplit}));
+  Output<T> split<T>(Output<int> splitDim, Output<T> value, {int numSplit}) {
+    var op = newOperation('Split', _scope.uniqueName('Split'));
+    op.addInput(splitDim);
+    op.addInput(value);
+    op.setAttrInt('num_split', numSplit);
+    return op.finish()[0];
   }
 
-  Output concatV2(List<Output> values, Output axis,
-      {@required int n, DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('ConcatV2',
-        _scope.uniqueName('ConcatV2'), [values, axis], {'N': n, 'Tidx': tidx}));
+  @Deprecated(
+      'DEPRECATED at GraphDef version 19: Moving word2vec into tensorflow_models/tutorials and deprecating its ops here as a result')
+  Output negTrain(Output<double> wIn, Output<double> wOut, Output<int> examples,
+      Output<int> labels, Output<double> lr,
+      {List<int> vocabCount, int numNegativeSamples}) {
+    var op = newOperation('NegTrain', _scope.uniqueName('NegTrain'));
+    op.addInput(wIn);
+    op.addInput(wOut);
+    op.addInput(examples);
+    op.addInput(labels);
+    op.addInput(lr);
+    op.setAttrIntList('vocab_count', vocabCount);
+    op.setAttrInt('num_negative_samples', numNegativeSamples);
+    return op.finish()[-1];
   }
 
-  Output resourceApplyPowerSign(Output var_, Output m, Output lr,
-      Output logbase, Output signDecay, Output beta, Output grad,
+  Output<T> concatV2<T>(List<Output<T>> values, Output<T> axis,
+      {int n, DataType tidx: DataType.DT_INT32}) {
+    var op = newOperation('ConcatV2', _scope.uniqueName('ConcatV2'));
+    op.addInputList(values);
+    op.addInput(axis);
+    op.setAttrInt('N', n);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
+  }
+
+  Output resourceApplyPowerSign<T>(Output var_, Output m, Output<T> lr,
+      Output<T> logbase, Output<T> signDecay, Output<T> beta, Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyPowerSign',
-        _scope.uniqueName('ResourceApplyPowerSign'),
-        [var_, m, lr, logbase, signDecay, beta, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation(
+        'ResourceApplyPowerSign', _scope.uniqueName('ResourceApplyPowerSign'));
+    op.addInput(var_);
+    op.addInput(m);
+    op.addInput(lr);
+    op.addInput(logbase);
+    op.addInput(signDecay);
+    op.addInput(beta);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output concat(Output concatDim, List<Output> values, {@required int n}) {
-    return addOperation(new OperationDescription(
-        'Concat', _scope.uniqueName('Concat'), [concatDim, values], {'N': n}));
+  Output<T> concat<T>(Output<int> concatDim, List<Output<T>> values, {int n}) {
+    var op = newOperation('Concat', _scope.uniqueName('Concat'));
+    op.addInput(concatDim);
+    op.addInputList(values);
+    op.setAttrInt('N', n);
+    return op.finish()[0];
   }
 
-  Output leftShift(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'LeftShift', _scope.uniqueName('LeftShift'), [x, y], {}));
+  Output<T> leftShift<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('LeftShift', _scope.uniqueName('LeftShift'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 19: Use TensorArrayGradV3')
-  Output tensorArrayScatter(
-      Output handle, Output indices, Output value, Output flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayScatter',
-        _scope.uniqueName('TensorArrayScatter'),
-        [handle, indices, value, flowIn],
-        {}));
+  Output<double> tensorArrayScatter<T>(Output<String> handle,
+      Output<int> indices, Output<T> value, Output<double> flowIn) {
+    var op = newOperation(
+        'TensorArrayScatter', _scope.uniqueName('TensorArrayScatter'));
+    op.addInput(handle);
+    op.addInput(indices);
+    op.addInput(value);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output bitwiseOr(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'BitwiseOr', _scope.uniqueName('BitwiseOr'), [x, y], {}));
+  Output<T> bitwiseOr<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('BitwiseOr', _scope.uniqueName('BitwiseOr'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output applyAddSign(Output var_, Output m, Output lr, Output alpha,
-      Output signDecay, Output beta, Output grad,
+  Output<T> applyAddSign<T>(Output<T> var_, Output<T> m, Output<T> lr,
+      Output<T> alpha, Output<T> signDecay, Output<T> beta, Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyAddSign',
-        _scope.uniqueName('ApplyAddSign'),
-        [var_, m, lr, alpha, signDecay, beta, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation('ApplyAddSign', _scope.uniqueName('ApplyAddSign'));
+    op.addInput(var_);
+    op.addInput(m);
+    op.addInput(lr);
+    op.addInput(alpha);
+    op.addInput(signDecay);
+    op.addInput(beta);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output bitwiseAnd(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'BitwiseAnd', _scope.uniqueName('BitwiseAnd'), [x, y], {}));
+  Output<T> bitwiseAnd<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('BitwiseAnd', _scope.uniqueName('BitwiseAnd'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output populationCount(Output x) {
-    return addOperation(new OperationDescription(
-        'PopulationCount', _scope.uniqueName('PopulationCount'), [x], {}));
+  Output populationCount<T>(Output<T> x) {
+    var op =
+        newOperation('PopulationCount', _scope.uniqueName('PopulationCount'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output decodePng(Output contents,
+  Output<T> decodePng<T>(Output<String> contents,
       {int channels: 0, DataType dtype: DataType.DT_UINT8}) {
-    return addOperation(new OperationDescription(
-        'DecodePng',
-        _scope.uniqueName('DecodePng'),
-        [contents],
-        {'channels': channels, 'dtype': dtype}));
+    dtype ??= inferType(contents);
+    var op = newOperation('DecodePng', _scope.uniqueName('DecodePng'));
+    op.addInput(contents);
+    op.setAttrInt('channels', channels);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output invert(Output x) {
-    return addOperation(new OperationDescription(
-        'Invert', _scope.uniqueName('Invert'), [x], {}));
+  Output<T> invert<T>(Output<T> x) {
+    var op = newOperation('Invert', _scope.uniqueName('Invert'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output fact() {
-    return addOperation(
-        new OperationDescription('Fact', _scope.uniqueName('Fact'), [], {}));
+  Output<String> fact() {
+    var op = newOperation('Fact', _scope.uniqueName('Fact'));
+    return op.finish()[0];
   }
 
-  Output resizeBicubicGrad(Output grads, Output originalImage,
+  Output<T> resizeBicubicGrad<T>(Output<double> grads, Output<T> originalImage,
       {bool alignCorners: false}) {
-    return addOperation(new OperationDescription(
-        'ResizeBicubicGrad',
-        _scope.uniqueName('ResizeBicubicGrad'),
-        [grads, originalImage],
-        {'align_corners': alignCorners}));
+    var op = newOperation(
+        'ResizeBicubicGrad', _scope.uniqueName('ResizeBicubicGrad'));
+    op.addInput(grads);
+    op.addInput(originalImage);
+    op.setAttrBool('align_corners', alignCorners);
+    return op.finish()[0];
   }
 
-  Output sparseApplyMomentum(Output var_, Output accum, Output lr, Output grad,
-      Output indices, Output momentum,
-      {@required DataType tindices,
-      bool useLocking: false,
-      bool useNesterov: false}) {
-    return addOperation(new OperationDescription(
-        'SparseApplyMomentum', _scope.uniqueName('SparseApplyMomentum'), [
-      var_,
-      accum,
-      lr,
-      grad,
-      indices,
-      momentum
-    ], {
-      'Tindices': tindices,
-      'use_locking': useLocking,
-      'use_nesterov': useNesterov
-    }));
+  Output<T> sparseApplyMomentum<T>(Output<T> var_, Output<T> accum,
+      Output<T> lr, Output<T> grad, Output<T> indices, Output<T> momentum,
+      {DataType tindices, bool useLocking: false, bool useNesterov: false}) {
+    var op = newOperation(
+        'SparseApplyMomentum', _scope.uniqueName('SparseApplyMomentum'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.addInput(momentum);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    op.setAttrBool('use_nesterov', useNesterov);
+    return op.finish()[0];
   }
 
   Output serializeIterator(Output resourceHandle) {
-    return addOperation(new OperationDescription('SerializeIterator',
-        _scope.uniqueName('SerializeIterator'), [resourceHandle], {}));
+    var op = newOperation(
+        'SerializeIterator', _scope.uniqueName('SerializeIterator'));
+    op.addInput(resourceHandle);
+    return op.finish()[0];
   }
 
-  Output resourceApplyCenteredRMSProp(
+  Output resourceApplyCenteredRMSProp<T>(
       Output var_,
       Output mg,
       Output ms,
       Output mom,
-      Output lr,
-      Output rho,
-      Output momentum,
-      Output epsilon,
-      Output grad,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyCenteredRMSProp',
-        _scope.uniqueName('ResourceApplyCenteredRMSProp'),
-        [var_, mg, ms, mom, lr, rho, momentum, epsilon, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation('ResourceApplyCenteredRMSProp',
+        _scope.uniqueName('ResourceApplyCenteredRMSProp'));
+    op.addInput(var_);
+    op.addInput(mg);
+    op.addInput(ms);
+    op.addInput(mom);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(momentum);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output resourceApplyRMSProp(Output var_, Output ms, Output mom, Output lr,
-      Output rho, Output momentum, Output epsilon, Output grad,
+  Output<T> maxPool3DGrad<T>(
+      Output<T> origInput, Output<T> origOutput, Output<T> grad,
+      {List<int> ksize,
+      List<int> strides,
+      String padding,
+      String dataFormat: 'NDHWC',
+      DataType tInput: DataType.DT_FLOAT}) {
+    var op = newOperation('MaxPool3DGrad', _scope.uniqueName('MaxPool3DGrad'));
+    op.addInput(origInput);
+    op.addInput(origOutput);
+    op.addInput(grad);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    op.setAttrType('TInput', tInput);
+    return op.finish()[0];
+  }
+
+  Output resourceApplyRMSProp<T>(
+      Output var_,
+      Output ms,
+      Output mom,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyRMSProp',
-        _scope.uniqueName('ResourceApplyRMSProp'),
-        [var_, ms, mom, lr, rho, momentum, epsilon, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation(
+        'ResourceApplyRMSProp', _scope.uniqueName('ResourceApplyRMSProp'));
+    op.addInput(var_);
+    op.addInput(ms);
+    op.addInput(mom);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(momentum);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output zerosLike(Output x) {
-    return addOperation(new OperationDescription(
-        'ZerosLike', _scope.uniqueName('ZerosLike'), [x], {}));
+  Output<T> zerosLike<T>(Output<T> x) {
+    var op = newOperation('ZerosLike', _scope.uniqueName('ZerosLike'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output concatOffset(Output concatDim, List<Output> shape, {@required int n}) {
-    return addOperation(new OperationDescription('ConcatOffset',
-        _scope.uniqueName('ConcatOffset'), [concatDim, shape], {'N': n}));
+  Output<int> concatOffset(Output<int> concatDim, List<Output<int>> shape,
+      {int n}) {
+    var op = newOperation('ConcatOffset', _scope.uniqueName('ConcatOffset'));
+    op.addInput(concatDim);
+    op.addInputList(shape);
+    op.setAttrInt('N', n);
+    return op.finish()[0];
   }
 
-  Output sigmoid(Output x) {
-    return addOperation(new OperationDescription(
-        'Sigmoid', _scope.uniqueName('Sigmoid'), [x], {}));
+  Output<T> sigmoid<T>(Output<T> x) {
+    var op = newOperation('Sigmoid', _scope.uniqueName('Sigmoid'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output resourceSparseApplyAdadelta(
+  Output resourceSparseApplyAdadelta<T>(
       Output var_,
       Output accum,
       Output accumUpdate,
-      Output lr,
-      Output rho,
-      Output epsilon,
-      Output grad,
-      Output indices,
-      {@required DataType tindices,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> epsilon,
+      Output<T> grad,
+      Output<T> indices,
+      {DataType tindices,
       bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceSparseApplyAdadelta',
-        _scope.uniqueName('ResourceSparseApplyAdadelta'),
-        [var_, accum, accumUpdate, lr, rho, epsilon, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+    var op = newOperation('ResourceSparseApplyAdadelta',
+        _scope.uniqueName('ResourceSparseApplyAdadelta'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(accumUpdate);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output resourceApplyAdam(
+  Output resourceApplyAdam<T>(
       Output var_,
       Output m,
       Output v,
-      Output beta1Power,
-      Output beta2Power,
-      Output lr,
-      Output beta1,
-      Output beta2,
-      Output epsilon,
-      Output grad,
+      Output<T> beta1Power,
+      Output<T> beta2Power,
+      Output<T> lr,
+      Output<T> beta1,
+      Output<T> beta2,
+      Output<T> epsilon,
+      Output<T> grad,
       {bool useLocking: false,
       bool useNesterov: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyAdam',
-        _scope.uniqueName('ResourceApplyAdam'),
-        [var_, m, v, beta1Power, beta2Power, lr, beta1, beta2, epsilon, grad],
-        {'use_locking': useLocking, 'use_nesterov': useNesterov}));
+    var op = newOperation(
+        'ResourceApplyAdam', _scope.uniqueName('ResourceApplyAdam'));
+    op.addInput(var_);
+    op.addInput(m);
+    op.addInput(v);
+    op.addInput(beta1Power);
+    op.addInput(beta2Power);
+    op.addInput(lr);
+    op.addInput(beta1);
+    op.addInput(beta2);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    op.setAttrBool('use_nesterov', useNesterov);
+    return op.finish()[-1];
   }
 
-  Output resourceSparseApplyMomentum(Output var_, Output accum, Output lr,
-      Output grad, Output indices, Output momentum,
-      {@required DataType tindices,
-      bool useLocking: false,
-      bool useNesterov: false}) {
-    return addOperation(new OperationDescription('ResourceSparseApplyMomentum',
-        _scope.uniqueName('ResourceSparseApplyMomentum'), [
-      var_,
-      accum,
-      lr,
-      grad,
-      indices,
-      momentum
-    ], {
-      'Tindices': tindices,
-      'use_locking': useLocking,
-      'use_nesterov': useNesterov
-    }));
+  Output resourceSparseApplyMomentum<T>(Output var_, Output accum, Output<T> lr,
+      Output<T> grad, Output<T> indices, Output<T> momentum,
+      {DataType tindices, bool useLocking: false, bool useNesterov: false}) {
+    var op = newOperation('ResourceSparseApplyMomentum',
+        _scope.uniqueName('ResourceSparseApplyMomentum'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.addInput(momentum);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    op.setAttrBool('use_nesterov', useNesterov);
+    return op.finish()[-1];
   }
 
-  Output resourceApplyMomentum(
-      Output var_, Output accum, Output lr, Output grad, Output momentum,
+  Output resourceApplyMomentum<T>(Output var_, Output accum, Output<T> lr,
+      Output<T> grad, Output<T> momentum,
       {bool useLocking: false, bool useNesterov: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyMomentum',
-        _scope.uniqueName('ResourceApplyMomentum'),
-        [var_, accum, lr, grad, momentum],
-        {'use_locking': useLocking, 'use_nesterov': useNesterov}));
+    var op = newOperation(
+        'ResourceApplyMomentum', _scope.uniqueName('ResourceApplyMomentum'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(grad);
+    op.addInput(momentum);
+    op.setAttrBool('use_locking', useLocking);
+    op.setAttrBool('use_nesterov', useNesterov);
+    return op.finish()[-1];
   }
 
-  Output parallelConcat(List<Output> values,
-      {@required int n, @required List<int> shape}) {
-    return addOperation(new OperationDescription(
-        'ParallelConcat',
-        _scope.uniqueName('ParallelConcat'),
-        [values],
-        {'N': n, 'shape': shape}));
+  Output<T> parallelConcat<T>(List<Output<T>> values, {int n, Shape shape}) {
+    var op =
+        newOperation('ParallelConcat', _scope.uniqueName('ParallelConcat'));
+    op.addInputList(values);
+    op.setAttrInt('N', n);
+    op.setAttrShape('shape', shape);
+    return op.finish()[0];
   }
 
-  Output editDistance(
-      Output hypothesisIndices,
-      Output hypothesisValues,
-      Output hypothesisShape,
-      Output truthIndices,
-      Output truthValues,
-      Output truthShape,
+  Output<T> avgPoolGrad<T>(Output<int> origInputShape, Output<T> grad,
+      {List<int> ksize,
+      List<int> strides,
+      String padding,
+      String dataFormat: 'NHWC'}) {
+    var op = newOperation('AvgPoolGrad', _scope.uniqueName('AvgPoolGrad'));
+    op.addInput(origInputShape);
+    op.addInput(grad);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
+  }
+
+  Output<double> editDistance<T>(
+      Output<int> hypothesisIndices,
+      Output<T> hypothesisValues,
+      Output<int> hypothesisShape,
+      Output<int> truthIndices,
+      Output<T> truthValues,
+      Output<int> truthShape,
       {bool normalize: true}) {
-    return addOperation(new OperationDescription(
-        'EditDistance', _scope.uniqueName('EditDistance'), [
-      hypothesisIndices,
-      hypothesisValues,
-      hypothesisShape,
-      truthIndices,
-      truthValues,
-      truthShape
-    ], {
-      'normalize': normalize
-    }));
+    var op = newOperation('EditDistance', _scope.uniqueName('EditDistance'));
+    op.addInput(hypothesisIndices);
+    op.addInput(hypothesisValues);
+    op.addInput(hypothesisShape);
+    op.addInput(truthIndices);
+    op.addInput(truthValues);
+    op.addInput(truthShape);
+    op.setAttrBool('normalize', normalize);
+    return op.finish()[0];
   }
 
-  Output resourceApplyFtrlV2(
+  Output resourceApplyFtrlV2<T>(
       Output var_,
       Output accum,
       Output linear,
-      Output grad,
-      Output lr,
-      Output l1,
-      Output l2,
-      Output l2Shrinkage,
-      Output lrPower,
+      Output<T> grad,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> l2Shrinkage,
+      Output<T> lrPower,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyFtrlV2',
-        _scope.uniqueName('ResourceApplyFtrlV2'),
-        [var_, accum, linear, grad, lr, l1, l2, l2Shrinkage, lrPower],
-        {'use_locking': useLocking}));
+    var op = newOperation(
+        'ResourceApplyFtrlV2', _scope.uniqueName('ResourceApplyFtrlV2'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(linear);
+    op.addInput(grad);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(l2Shrinkage);
+    op.addInput(lrPower);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output stackPop(Output handle, {@required DataType elemType}) {
-    return addOperation(new OperationDescription('StackPop',
-        _scope.uniqueName('StackPop'), [handle], {'elem_type': elemType}));
+  Output<T> stackPop<T>(Output<String> handle, {DataType elemType}) {
+    var op = newOperation('StackPop', _scope.uniqueName('StackPop'));
+    op.addInput(handle);
+    op.setAttrType('elem_type', elemType);
+    return op.finish()[0];
   }
 
-  Output sparseApplyFtrlV2(
+  Output<T> sparseApplyFtrlV2<T>(
+      Output<T> var_,
+      Output<T> accum,
+      Output<T> linear,
+      Output<T> grad,
+      Output<T> indices,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> l2Shrinkage,
+      Output<T> lrPower,
+      {DataType tindices,
+      bool useLocking: false}) {
+    var op = newOperation(
+        'SparseApplyFtrlV2', _scope.uniqueName('SparseApplyFtrlV2'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(linear);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(l2Shrinkage);
+    op.addInput(lrPower);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
+  }
+
+  Output resourceSparseApplyFtrl<T>(
       Output var_,
       Output accum,
       Output linear,
-      Output grad,
-      Output indices,
-      Output lr,
-      Output l1,
-      Output l2,
-      Output l2Shrinkage,
-      Output lrPower,
-      {@required DataType tindices,
+      Output<T> grad,
+      Output<T> indices,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> lrPower,
+      {DataType tindices,
       bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'SparseApplyFtrlV2',
-        _scope.uniqueName('SparseApplyFtrlV2'),
-        [var_, accum, linear, grad, indices, lr, l1, l2, l2Shrinkage, lrPower],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+    var op = newOperation('ResourceSparseApplyFtrl',
+        _scope.uniqueName('ResourceSparseApplyFtrl'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(linear);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(lrPower);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output resourceSparseApplyFtrl(
-      Output var_,
-      Output accum,
-      Output linear,
-      Output grad,
-      Output indices,
-      Output lr,
-      Output l1,
-      Output l2,
-      Output lrPower,
-      {@required DataType tindices,
-      bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceSparseApplyFtrl',
-        _scope.uniqueName('ResourceSparseApplyFtrl'),
-        [var_, accum, linear, grad, indices, lr, l1, l2, lrPower],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> sign<T>(Output<T> x) {
+    var op = newOperation('Sign', _scope.uniqueName('Sign'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output sign(Output x) {
-    return addOperation(
-        new OperationDescription('Sign', _scope.uniqueName('Sign'), [x], {}));
-  }
-
-  Output resourceApplyAddSign(Output var_, Output m, Output lr, Output alpha,
-      Output signDecay, Output beta, Output grad,
+  Output resourceApplyAddSign<T>(Output var_, Output m, Output<T> lr,
+      Output<T> alpha, Output<T> signDecay, Output<T> beta, Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyAddSign',
-        _scope.uniqueName('ResourceApplyAddSign'),
-        [var_, m, lr, alpha, signDecay, beta, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation(
+        'ResourceApplyAddSign', _scope.uniqueName('ResourceApplyAddSign'));
+    op.addInput(var_);
+    op.addInput(m);
+    op.addInput(lr);
+    op.addInput(alpha);
+    op.addInput(signDecay);
+    op.addInput(beta);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output neg(Output x) {
-    return addOperation(
-        new OperationDescription('Neg', _scope.uniqueName('Neg'), [x], {}));
+  Output<T> neg<T>(Output<T> x) {
+    var op = newOperation('Neg', _scope.uniqueName('Neg'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output resourceSparseApplyProximalAdagrad(Output var_, Output accum,
-      Output lr, Output l1, Output l2, Output grad, Output indices,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceSparseApplyProximalAdagrad',
-        _scope.uniqueName('ResourceSparseApplyProximalAdagrad'),
-        [var_, accum, lr, l1, l2, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<String> barrier(
+      {List<DataType> componentTypes,
+      List<Shape> shapes,
+      int capacity: -1,
+      String container,
+      String sharedName}) {
+    var op = newOperation('Barrier', _scope.uniqueName('Barrier'));
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrShapeList('shapes', shapes);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output bitcast(Output input, {@required DataType type}) {
-    return addOperation(new OperationDescription(
-        'Bitcast', _scope.uniqueName('Bitcast'), [input], {'type': type}));
+  Output resourceSparseApplyProximalAdagrad<T>(
+      Output var_,
+      Output accum,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> grad,
+      Output<T> indices,
+      {DataType tindices,
+      bool useLocking: false}) {
+    var op = newOperation('ResourceSparseApplyProximalAdagrad',
+        _scope.uniqueName('ResourceSparseApplyProximalAdagrad'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output sparseToDense(Output sparseIndices, Output outputShape,
-      Output sparseValues, Output defaultValue,
-      {bool validateIndices: true, @required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'SparseToDense',
-        _scope.uniqueName('SparseToDense'),
-        [sparseIndices, outputShape, sparseValues, defaultValue],
-        {'validate_indices': validateIndices, 'Tindices': tindices}));
+  Output<T> bitcast<T>(Output<T> input, {DataType type}) {
+    var op = newOperation('Bitcast', _scope.uniqueName('Bitcast'));
+    op.addInput(input);
+    op.setAttrType('type', type);
+    return op.finish()[0];
   }
 
-  Output resourceApplyAdagradDA(
+  Output<T> sparseToDense<T>(Output<T> sparseIndices, Output<T> outputShape,
+      Output<T> sparseValues, Output<T> defaultValue,
+      {bool validateIndices: true, DataType tindices}) {
+    var op = newOperation('SparseToDense', _scope.uniqueName('SparseToDense'));
+    op.addInput(sparseIndices);
+    op.addInput(outputShape);
+    op.addInput(sparseValues);
+    op.addInput(defaultValue);
+    op.setAttrBool('validate_indices', validateIndices);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
+  }
+
+  Output resourceApplyAdagradDA<T>(
       Output var_,
       Output gradientAccumulator,
       Output gradientSquaredAccumulator,
-      Output grad,
-      Output lr,
-      Output l1,
-      Output l2,
-      Output globalStep,
+      Output<T> grad,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<int> globalStep,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyAdagradDA', _scope.uniqueName('ResourceApplyAdagradDA'), [
-      var_,
-      gradientAccumulator,
-      gradientSquaredAccumulator,
-      grad,
-      lr,
-      l1,
-      l2,
-      globalStep
-    ], {
-      'use_locking': useLocking
-    }));
+    var op = newOperation(
+        'ResourceApplyAdagradDA', _scope.uniqueName('ResourceApplyAdagradDA'));
+    op.addInput(var_);
+    op.addInput(gradientAccumulator);
+    op.addInput(gradientSquaredAccumulator);
+    op.addInput(grad);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(globalStep);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output sparseApplyAdagradDA(
-      Output var_,
-      Output gradientAccumulator,
-      Output gradientSquaredAccumulator,
-      Output grad,
-      Output indices,
-      Output lr,
-      Output l1,
-      Output l2,
-      Output globalStep,
-      {@required DataType tindices,
+  Output<T> sparseApplyAdagradDA<T>(
+      Output<T> var_,
+      Output<T> gradientAccumulator,
+      Output<T> gradientSquaredAccumulator,
+      Output<T> grad,
+      Output<T> indices,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<int> globalStep,
+      {DataType tindices,
       bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'SparseApplyAdagradDA', _scope.uniqueName('SparseApplyAdagradDA'), [
-      var_,
-      gradientAccumulator,
-      gradientSquaredAccumulator,
-      grad,
-      indices,
-      lr,
-      l1,
-      l2,
-      globalStep
-    ], {
-      'Tindices': tindices,
-      'use_locking': useLocking
-    }));
+    var op = newOperation(
+        'SparseApplyAdagradDA', _scope.uniqueName('SparseApplyAdagradDA'));
+    op.addInput(var_);
+    op.addInput(gradientAccumulator);
+    op.addInput(gradientSquaredAccumulator);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(globalStep);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output resourceSparseApplyAdagrad(
-      Output var_, Output accum, Output lr, Output grad, Output indices,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceSparseApplyAdagrad',
-        _scope.uniqueName('ResourceSparseApplyAdagrad'),
-        [var_, accum, lr, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output resourceSparseApplyAdagrad<T>(Output var_, Output accum, Output<T> lr,
+      Output<T> grad, Output<T> indices,
+      {DataType tindices, bool useLocking: false}) {
+    var op = newOperation('ResourceSparseApplyAdagrad',
+        _scope.uniqueName('ResourceSparseApplyAdagrad'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output sqrt(Output x) {
-    return addOperation(
-        new OperationDescription('Sqrt', _scope.uniqueName('Sqrt'), [x], {}));
+  Output<T> sqrt<T>(Output<T> x) {
+    var op = newOperation('Sqrt', _scope.uniqueName('Sqrt'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output resourceApplyAdagrad(Output var_, Output accum, Output lr, Output grad,
+  Output resourceApplyAdagrad<T>(
+      Output var_, Output accum, Output<T> lr, Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyAdagrad',
-        _scope.uniqueName('ResourceApplyAdagrad'),
-        [var_, accum, lr, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation(
+        'ResourceApplyAdagrad', _scope.uniqueName('ResourceApplyAdagrad'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output applyAdadelta(Output var_, Output accum, Output accumUpdate, Output lr,
-      Output rho, Output epsilon, Output grad,
+  Output<T> applyAdadelta<T>(
+      Output<T> var_,
+      Output<T> accum,
+      Output<T> accumUpdate,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> epsilon,
+      Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyAdadelta',
-        _scope.uniqueName('ApplyAdadelta'),
-        [var_, accum, accumUpdate, lr, rho, epsilon, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation('ApplyAdadelta', _scope.uniqueName('ApplyAdadelta'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(accumUpdate);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output cholesky(Output input) {
-    return addOperation(new OperationDescription(
-        'Cholesky', _scope.uniqueName('Cholesky'), [input], {}));
+  Output<T> cholesky<T>(Output<T> input) {
+    var op = newOperation('Cholesky', _scope.uniqueName('Cholesky'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output sparseSegmentSqrtNWithNumSegments(
-      Output data, Output indices, Output segmentIds, Output numSegments,
+  Output<T> sparseSegmentSqrtNWithNumSegments<T>(Output<T> data,
+      Output<T> indices, Output<int> segmentIds, Output<T> numSegments,
       {DataType tidx: DataType.DT_INT32,
       DataType tnumsegments: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'SparseSegmentSqrtNWithNumSegments',
-        _scope.uniqueName('SparseSegmentSqrtNWithNumSegments'),
-        [data, indices, segmentIds, numSegments],
-        {'Tidx': tidx, 'Tnumsegments': tnumsegments}));
+    var op = newOperation('SparseSegmentSqrtNWithNumSegments',
+        _scope.uniqueName('SparseSegmentSqrtNWithNumSegments'));
+    op.addInput(data);
+    op.addInput(indices);
+    op.addInput(segmentIds);
+    op.addInput(numSegments);
+    op.setAttrType('Tidx', tidx);
+    op.setAttrType('Tnumsegments', tnumsegments);
+    return op.finish()[0];
   }
 
-  Output resourceApplyProximalGradientDescent(
-      Output var_, Output alpha, Output l1, Output l2, Output delta,
+  Output resourceApplyProximalGradientDescent<T>(
+      Output var_, Output<T> alpha, Output<T> l1, Output<T> l2, Output<T> delta,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyProximalGradientDescent',
-        _scope.uniqueName('ResourceApplyProximalGradientDescent'),
-        [var_, alpha, l1, l2, delta],
-        {'use_locking': useLocking}));
+    var op = newOperation('ResourceApplyProximalGradientDescent',
+        _scope.uniqueName('ResourceApplyProximalGradientDescent'));
+    op.addInput(var_);
+    op.addInput(alpha);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(delta);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output tile(Output input, Output multiples,
+  Output<T> tile<T>(Output<T> input, Output<T> multiples,
       {DataType tmultiples: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'Tile',
-        _scope.uniqueName('Tile'),
-        [input, multiples],
-        {'Tmultiples': tmultiples}));
+    var op = newOperation('Tile', _scope.uniqueName('Tile'));
+    op.addInput(input);
+    op.addInput(multiples);
+    op.setAttrType('Tmultiples', tmultiples);
+    return op.finish()[0];
   }
 
-  Output sparseApplyProximalGradientDescent(Output var_, Output alpha,
-      Output l1, Output l2, Output grad, Output indices,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'SparseApplyProximalGradientDescent',
-        _scope.uniqueName('SparseApplyProximalGradientDescent'),
-        [var_, alpha, l1, l2, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> sparseApplyProximalGradientDescent<T>(
+      Output<T> var_,
+      Output<T> alpha,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> grad,
+      Output<T> indices,
+      {DataType tindices,
+      bool useLocking: false}) {
+    var op = newOperation('SparseApplyProximalGradientDescent',
+        _scope.uniqueName('SparseApplyProximalGradientDescent'));
+    op.addInput(var_);
+    op.addInput(alpha);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output applyProximalGradientDescent(
-      Output var_, Output alpha, Output l1, Output l2, Output delta,
+  Output queueEnqueue<T>(Output<String> handle, List<Output<T>> components,
+      {List<DataType> tcomponents, int timeoutMs: -1}) {
+    var op = newOperation('QueueEnqueue', _scope.uniqueName('QueueEnqueue'));
+    op.addInput(handle);
+    op.addInputList(components);
+    op.setAttrTypeList('Tcomponents', tcomponents);
+    op.setAttrInt('timeout_ms', timeoutMs);
+    return op.finish()[-1];
+  }
+
+  Output<int> stringToHashBucketStrong(Output<String> input,
+      {int numBuckets, List<int> key}) {
+    var op = newOperation('StringToHashBucketStrong',
+        _scope.uniqueName('StringToHashBucketStrong'));
+    op.addInput(input);
+    op.setAttrInt('num_buckets', numBuckets);
+    op.setAttrIntList('key', key);
+    return op.finish()[0];
+  }
+
+  Output<T> applyProximalGradientDescent<T>(Output<T> var_, Output<T> alpha,
+      Output<T> l1, Output<T> l2, Output<T> delta,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyProximalGradientDescent',
-        _scope.uniqueName('ApplyProximalGradientDescent'),
-        [var_, alpha, l1, l2, delta],
-        {'use_locking': useLocking}));
+    var op = newOperation('ApplyProximalGradientDescent',
+        _scope.uniqueName('ApplyProximalGradientDescent'));
+    op.addInput(var_);
+    op.addInput(alpha);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(delta);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output matrixLogarithm(Output input) {
-    return addOperation(new OperationDescription(
-        'MatrixLogarithm', _scope.uniqueName('MatrixLogarithm'), [input], {}));
+  Output<T> matrixLogarithm<T>(Output<T> input) {
+    var op =
+        newOperation('MatrixLogarithm', _scope.uniqueName('MatrixLogarithm'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output resourceApplyGradientDescent(Output var_, Output alpha, Output delta,
+  Output resourceApplyGradientDescent<T>(
+      Output var_, Output<T> alpha, Output<T> delta,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyGradientDescent',
-        _scope.uniqueName('ResourceApplyGradientDescent'),
-        [var_, alpha, delta],
-        {'use_locking': useLocking}));
+    var op = newOperation('ResourceApplyGradientDescent',
+        _scope.uniqueName('ResourceApplyGradientDescent'));
+    op.addInput(var_);
+    op.addInput(alpha);
+    op.addInput(delta);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output cosh(Output x) {
-    return addOperation(
-        new OperationDescription('Cosh', _scope.uniqueName('Cosh'), [x], {}));
+  Output<T> cosh<T>(Output<T> x) {
+    var op = newOperation('Cosh', _scope.uniqueName('Cosh'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output applyGradientDescent(Output var_, Output alpha, Output delta,
+  Output<T> applyGradientDescent<T>(
+      Output<T> var_, Output<T> alpha, Output<T> delta,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyGradientDescent',
-        _scope.uniqueName('ApplyGradientDescent'),
-        [var_, alpha, delta],
-        {'use_locking': useLocking}));
+    var op = newOperation(
+        'ApplyGradientDescent', _scope.uniqueName('ApplyGradientDescent'));
+    op.addInput(var_);
+    op.addInput(alpha);
+    op.addInput(delta);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output l2Loss(Output t) {
-    return addOperation(new OperationDescription(
-        'L2Loss', _scope.uniqueName('L2Loss'), [t], {}));
+  Output<T> l2Loss<T>(Output<T> t) {
+    var op = newOperation('L2Loss', _scope.uniqueName('L2Loss'));
+    op.addInput(t);
+    return op.finish()[0];
   }
 
-  Output cast(Output x, {@required DataType srcT, @required DataType dstT}) {
-    return addOperation(new OperationDescription(
-        'Cast', _scope.uniqueName('Cast'), [x], {'SrcT': srcT, 'DstT': dstT}));
+  Output<T> cast<T>(Output<T> x, {DataType srcT, DataType dstT}) {
+    var op = newOperation('Cast', _scope.uniqueName('Cast'));
+    op.addInput(x);
+    op.setAttrType('SrcT', srcT);
+    op.setAttrType('DstT', dstT);
+    return op.finish()[0];
   }
 
-  Output segmentMax(Output data, Output segmentIds,
-      {@required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'SegmentMax',
-        _scope.uniqueName('SegmentMax'),
-        [data, segmentIds],
-        {'Tindices': tindices}));
+  Output<T> segmentMax<T>(Output<T> data, Output<T> segmentIds,
+      {DataType tindices}) {
+    var op = newOperation('SegmentMax', _scope.uniqueName('SegmentMax'));
+    op.addInput(data);
+    op.addInput(segmentIds);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
   }
 
-  Output countUpTo(Output ref, {@required int limit}) {
-    return addOperation(new OperationDescription(
-        'CountUpTo', _scope.uniqueName('CountUpTo'), [ref], {'limit': limit}));
+  Output<T> countUpTo<T>(Output<T> ref, {int limit}) {
+    var op = newOperation('CountUpTo', _scope.uniqueName('CountUpTo'));
+    op.addInput(ref);
+    op.setAttrInt('limit', limit);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 9: Use tf.nn.batch_normalization()')
-  Output batchNormWithGlobalNormalization(
-      Output t, Output m, Output v, Output beta, Output gamma,
-      {@required double varianceEpsilon,
-      @required bool scaleAfterNormalization}) {
-    return addOperation(new OperationDescription(
-        'BatchNormWithGlobalNormalization',
-        _scope.uniqueName('BatchNormWithGlobalNormalization'), [
-      t,
-      m,
-      v,
-      beta,
-      gamma
-    ], {
-      'variance_epsilon': varianceEpsilon,
-      'scale_after_normalization': scaleAfterNormalization
-    }));
+  Output<T> batchNormWithGlobalNormalization<T>(
+      Output<T> t, Output<T> m, Output<T> v, Output<T> beta, Output<T> gamma,
+      {double varianceEpsilon, bool scaleAfterNormalization}) {
+    var op = newOperation('BatchNormWithGlobalNormalization',
+        _scope.uniqueName('BatchNormWithGlobalNormalization'));
+    op.addInput(t);
+    op.addInput(m);
+    op.addInput(v);
+    op.addInput(beta);
+    op.addInput(gamma);
+    op.setAttrFloat('variance_epsilon', varianceEpsilon);
+    op.setAttrBool('scale_after_normalization', scaleAfterNormalization);
+    return op.finish()[0];
   }
 
-  Output fakeQuantWithMinMaxArgs(Output inputs,
+  Output<double> fakeQuantWithMinMaxArgs(Output<double> inputs,
       {double min: -6.0,
       double max: 6.0,
       int numBits: 8,
       bool narrowRange: false}) {
-    return addOperation(new OperationDescription('FakeQuantWithMinMaxArgs',
-        _scope.uniqueName('FakeQuantWithMinMaxArgs'), [
-      inputs
-    ], {
-      'min': min,
-      'max': max,
-      'num_bits': numBits,
-      'narrow_range': narrowRange
-    }));
+    var op = newOperation('FakeQuantWithMinMaxArgs',
+        _scope.uniqueName('FakeQuantWithMinMaxArgs'));
+    op.addInput(inputs);
+    op.setAttrFloat('min', min);
+    op.setAttrFloat('max', max);
+    op.setAttrInt('num_bits', numBits);
+    op.setAttrBool('narrow_range', narrowRange);
+    return op.finish()[0];
   }
 
-  Output resourceScatterNdUpdate(Output ref, Output indices, Output updates,
-      {@required DataType tindices, bool useLocking: true}) {
-    return addOperation(new OperationDescription(
-        'ResourceScatterNdUpdate',
-        _scope.uniqueName('ResourceScatterNdUpdate'),
-        [ref, indices, updates],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output resourceScatterNdUpdate<T>(
+      Output ref, Output<T> indices, Output<T> updates,
+      {DataType tindices, bool useLocking: true}) {
+    var op = newOperation('ResourceScatterNdUpdate',
+        _scope.uniqueName('ResourceScatterNdUpdate'));
+    op.addInput(ref);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output scatterNdUpdate(Output ref, Output indices, Output updates,
-      {@required DataType tindices, bool useLocking: true}) {
-    return addOperation(new OperationDescription(
-        'ScatterNdUpdate',
-        _scope.uniqueName('ScatterNdUpdate'),
-        [ref, indices, updates],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> scatterNdUpdate<T>(
+      Output<T> ref, Output<T> indices, Output<T> updates,
+      {DataType tindices, bool useLocking: true}) {
+    var op =
+        newOperation('ScatterNdUpdate', _scope.uniqueName('ScatterNdUpdate'));
+    op.addInput(ref);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output scatterMul(Output ref, Output indices, Output updates,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ScatterMul',
-        _scope.uniqueName('ScatterMul'),
-        [ref, indices, updates],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> scatterMul<T>(Output<T> ref, Output<T> indices, Output<T> updates,
+      {DataType tindices, bool useLocking: false}) {
+    var op = newOperation('ScatterMul', _scope.uniqueName('ScatterMul'));
+    op.addInput(ref);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output scatterSub(Output ref, Output indices, Output updates,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ScatterSub',
-        _scope.uniqueName('ScatterSub'),
-        [ref, indices, updates],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> scatterSub<T>(Output<T> ref, Output<T> indices, Output<T> updates,
+      {DataType tindices, bool useLocking: false}) {
+    var op = newOperation('ScatterSub', _scope.uniqueName('ScatterSub'));
+    op.addInput(ref);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 13: Use MatrixTriangularSolve instead.')
-  Output batchMatrixTriangularSolve(Output matrix, Output rhs,
+  Output<T> batchMatrixTriangularSolve<T>(Output<T> matrix, Output<T> rhs,
       {bool lower: true, bool adjoint: false}) {
-    return addOperation(new OperationDescription(
-        'BatchMatrixTriangularSolve',
-        _scope.uniqueName('BatchMatrixTriangularSolve'),
-        [matrix, rhs],
-        {'lower': lower, 'adjoint': adjoint}));
+    var op = newOperation('BatchMatrixTriangularSolve',
+        _scope.uniqueName('BatchMatrixTriangularSolve'));
+    op.addInput(matrix);
+    op.addInput(rhs);
+    op.setAttrBool('lower', lower);
+    op.setAttrBool('adjoint', adjoint);
+    return op.finish()[0];
   }
 
-  Output mean(Output input, Output reductionIndices,
+  Output<T> mean<T>(Output<T> input, Output<T> reductionIndices,
       {bool keepDims: false, DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'Mean',
-        _scope.uniqueName('Mean'),
-        [input, reductionIndices],
-        {'keep_dims': keepDims, 'Tidx': tidx}));
+    var op = newOperation('Mean', _scope.uniqueName('Mean'));
+    op.addInput(input);
+    op.addInput(reductionIndices);
+    op.setAttrBool('keep_dims', keepDims);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output scatterAdd(Output ref, Output indices, Output updates,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ScatterAdd',
-        _scope.uniqueName('ScatterAdd'),
-        [ref, indices, updates],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> scatterAdd<T>(Output<T> ref, Output<T> indices, Output<T> updates,
+      {DataType tindices, bool useLocking: false}) {
+    var op = newOperation('ScatterAdd', _scope.uniqueName('ScatterAdd'));
+    op.addInput(ref);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output scatterUpdate(Output ref, Output indices, Output updates,
-      {@required DataType tindices, bool useLocking: true}) {
-    return addOperation(new OperationDescription(
-        'ScatterUpdate',
-        _scope.uniqueName('ScatterUpdate'),
-        [ref, indices, updates],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> scatterUpdate<T>(
+      Output<T> ref, Output<T> indices, Output<T> updates,
+      {DataType tindices, bool useLocking: true}) {
+    var op = newOperation('ScatterUpdate', _scope.uniqueName('ScatterUpdate'));
+    op.addInput(ref);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output assignSub(Output ref, Output value, {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'AssignSub',
-        _scope.uniqueName('AssignSub'),
-        [ref, value],
-        {'use_locking': useLocking}));
+  Output<T> assignSub<T>(Output<T> ref, Output<T> value,
+      {bool useLocking: false}) {
+    var op = newOperation('AssignSub', _scope.uniqueName('AssignSub'));
+    op.addInput(ref);
+    op.addInput(value);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output assignAdd(Output ref, Output value, {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'AssignAdd',
-        _scope.uniqueName('AssignAdd'),
-        [ref, value],
-        {'use_locking': useLocking}));
+  Output<T> assignAdd<T>(Output<T> ref, Output<T> value,
+      {bool useLocking: false}) {
+    var op = newOperation('AssignAdd', _scope.uniqueName('AssignAdd'));
+    op.addInput(ref);
+    op.addInput(value);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output betainc(Output a, Output b, Output x) {
-    return addOperation(new OperationDescription(
-        'Betainc', _scope.uniqueName('Betainc'), [a, b, x], {}));
+  Output<T> betainc<T>(Output<T> a, Output<T> b, Output<T> x) {
+    var op = newOperation('Betainc', _scope.uniqueName('Betainc'));
+    op.addInput(a);
+    op.addInput(b);
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output assign(Output ref, Output value,
+  Output<T> assign<T>(Output<T> ref, Output<T> value,
       {bool validateShape: true, bool useLocking: true}) {
-    return addOperation(new OperationDescription(
-        'Assign',
-        _scope.uniqueName('Assign'),
-        [ref, value],
-        {'validate_shape': validateShape, 'use_locking': useLocking}));
+    var op = newOperation('Assign', _scope.uniqueName('Assign'));
+    op.addInput(ref);
+    op.addInput(value);
+    op.setAttrBool('validate_shape', validateShape);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output isVariableInitialized(Output ref, {@required DataType dtype}) {
-    return addOperation(new OperationDescription('IsVariableInitialized',
-        _scope.uniqueName('IsVariableInitialized'), [ref], {'dtype': dtype}));
+  Output<bool> isVariableInitialized<T>(Output<T> ref, {DataType dtype}) {
+    dtype ??= inferType(ref);
+    var op = newOperation(
+        'IsVariableInitialized', _scope.uniqueName('IsVariableInitialized'));
+    op.addInput(ref);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output variableV2(
-      {@required List<int> shape,
+  Output<T> variableV2<T>(
+      {Shape shape,
       @required DataType dtype,
       String container,
       String sharedName}) {
-    return addOperation(new OperationDescription(
-        'VariableV2', _scope.uniqueName('VariableV2'), [], {
-      'shape': shape,
-      'dtype': dtype,
-      'container': container,
-      'shared_name': sharedName
-    }));
+    var op = newOperation('VariableV2', _scope.uniqueName('VariableV2'));
+    op.setAttrShape('shape', shape);
+    op.setAttrType('dtype', dtype);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
+  }
+
+  Output iteratorFromStringHandle(Output<String> stringHandle,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('IteratorFromStringHandle',
+        _scope.uniqueName('IteratorFromStringHandle'));
+    op.addInput(stringHandle);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
   /// Writes a `Summary` protocol buffer with audio.
@@ -1868,39 +2663,54 @@ class Graph extends _Graph {
   /// *  If `max_outputs` is 1, the summary value tag is '*tag*/audio'.
   /// *  If `max_outputs` is greater than 1, the summary value tags are
   /// generated sequentially as '*tag*/audio/0', '*tag*/audio/1', etc.
-  Output writeAudioSummary(
-      Output writer, Output step, Output tag, Output tensor, Output sampleRate,
+  Output writeAudioSummary(Output writer, Output<int> step, Output<String> tag,
+      Output<double> tensor, Output<double> sampleRate,
       {int maxOutputs: 3}) {
-    return addOperation(new OperationDescription(
-        'WriteAudioSummary',
-        _scope.uniqueName('WriteAudioSummary'),
-        [writer, step, tag, tensor, sampleRate],
-        {'max_outputs': maxOutputs}));
+    var op = newOperation(
+        'WriteAudioSummary', _scope.uniqueName('WriteAudioSummary'));
+    op.addInput(writer);
+    op.addInput(step);
+    op.addInput(tag);
+    op.addInput(tensor);
+    op.addInput(sampleRate);
+    op.setAttrInt('max_outputs', maxOutputs);
+    return op.finish()[-1];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 16: Use TensorArrayCloseV3')
-  Output tensorArrayClose(Output handle) {
-    return addOperation(new OperationDescription('TensorArrayClose',
-        _scope.uniqueName('TensorArrayClose'), [handle], {}));
+  Output tensorArrayClose(Output<String> handle) {
+    var op =
+        newOperation('TensorArrayClose', _scope.uniqueName('TensorArrayClose'));
+    op.addInput(handle);
+    return op.finish()[-1];
   }
 
-  Output matrixBandPart(Output input, Output numLower, Output numUpper,
+  Output<T> matrixBandPart<T>(
+      Output<T> input, Output<T> numLower, Output<T> numUpper,
       {DataType tindex: DataType.DT_INT64}) {
-    return addOperation(new OperationDescription(
-        'MatrixBandPart',
-        _scope.uniqueName('MatrixBandPart'),
-        [input, numLower, numUpper],
-        {'Tindex': tindex}));
+    var op =
+        newOperation('MatrixBandPart', _scope.uniqueName('MatrixBandPart'));
+    op.addInput(input);
+    op.addInput(numLower);
+    op.addInput(numUpper);
+    op.setAttrType('Tindex', tindex);
+    return op.finish()[0];
   }
 
-  Output matrixSolve(Output matrix, Output rhs, {bool adjoint: false}) {
-    return addOperation(new OperationDescription('MatrixSolve',
-        _scope.uniqueName('MatrixSolve'), [matrix, rhs], {'adjoint': adjoint}));
+  Output<T> matrixSolve<T>(Output<T> matrix, Output<T> rhs,
+      {bool adjoint: false}) {
+    var op = newOperation('MatrixSolve', _scope.uniqueName('MatrixSolve'));
+    op.addInput(matrix);
+    op.addInput(rhs);
+    op.setAttrBool('adjoint', adjoint);
+    return op.finish()[0];
   }
 
-  Output writeFile(Output filename, Output contents) {
-    return addOperation(new OperationDescription(
-        'WriteFile', _scope.uniqueName('WriteFile'), [filename, contents], {}));
+  Output writeFile(Output<String> filename, Output<String> contents) {
+    var op = newOperation('WriteFile', _scope.uniqueName('WriteFile'));
+    op.addInput(filename);
+    op.addInput(contents);
+    return op.finish()[-1];
   }
 
   /// Writes a `Summary` protocol buffer with images.
@@ -1930,19 +2740,24 @@ class Graph extends _Graph {
   /// pixel in the output image).  Non-finite values in the input tensor are
   /// replaced by this tensor in the output image.  The default value is the color
   /// red.
-  Output writeImageSummary(
-      Output writer, Output step, Output tag, Output tensor, Output badColor,
+  Output writeImageSummary<T>(Output writer, Output<int> step,
+      Output<String> tag, Output<T> tensor, Output badColor,
       {int maxImages: 3}) {
-    return addOperation(new OperationDescription(
-        'WriteImageSummary',
-        _scope.uniqueName('WriteImageSummary'),
-        [writer, step, tag, tensor, badColor],
-        {'max_images': maxImages}));
+    var op = newOperation(
+        'WriteImageSummary', _scope.uniqueName('WriteImageSummary'));
+    op.addInput(writer);
+    op.addInput(step);
+    op.addInput(tag);
+    op.addInput(tensor);
+    op.addInput(badColor);
+    op.setAttrInt('max_images', maxImages);
+    return op.finish()[-1];
   }
 
-  Output tan(Output x) {
-    return addOperation(
-        new OperationDescription('Tan', _scope.uniqueName('Tan'), [x], {}));
+  Output<T> tan<T>(Output<T> x) {
+    var op = newOperation('Tan', _scope.uniqueName('Tan'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
   /// Writes a `Summary` protocol buffer with a histogram.
@@ -1950,37 +2765,45 @@ class Graph extends _Graph {
   /// [`Summary`](https://www.tensorflow.org/code/tensorflow/core/framework/summary.proto)
   /// has one summary value containing a histogram for `values`.
   /// This op reports an `InvalidArgument` error if any value is not finite.
-  Output writeHistogramSummary(
-      Output writer, Output step, Output tag, Output values) {
-    return addOperation(new OperationDescription(
-        'WriteHistogramSummary',
-        _scope.uniqueName('WriteHistogramSummary'),
-        [writer, step, tag, values],
-        {}));
+  Output writeHistogramSummary<T>(
+      Output writer, Output<int> step, Output<String> tag, Output<T> values) {
+    var op = newOperation(
+        'WriteHistogramSummary', _scope.uniqueName('WriteHistogramSummary'));
+    op.addInput(writer);
+    op.addInput(step);
+    op.addInput(tag);
+    op.addInput(values);
+    return op.finish()[-1];
   }
 
-  Output batchMatMul(Output x, Output y, {bool adjX: false, bool adjY: false}) {
-    return addOperation(new OperationDescription(
-        'BatchMatMul',
-        _scope.uniqueName('BatchMatMul'),
-        [x, y],
-        {'adj_x': adjX, 'adj_y': adjY}));
+  Output<T> batchMatMul<T>(Output<T> x, Output<T> y,
+      {bool adjX: false, bool adjY: false}) {
+    var op = newOperation('BatchMatMul', _scope.uniqueName('BatchMatMul'));
+    op.addInput(x);
+    op.addInput(y);
+    op.setAttrBool('adj_x', adjX);
+    op.setAttrBool('adj_y', adjY);
+    return op.finish()[0];
   }
 
   /// Outputs a `Summary` protocol buffer with a tensor.
-  Output writeSummary(Output writer, Output step, Output tensor, Output tag,
-      Output summaryMetadata) {
-    return addOperation(new OperationDescription(
-        'WriteSummary',
-        _scope.uniqueName('WriteSummary'),
-        [writer, step, tensor, tag, summaryMetadata],
-        {}));
+  Output writeSummary<T>(Output writer, Output<int> step, Output<T> tensor,
+      Output<String> tag, Output<String> summaryMetadata) {
+    var op = newOperation('WriteSummary', _scope.uniqueName('WriteSummary'));
+    op.addInput(writer);
+    op.addInput(step);
+    op.addInput(tensor);
+    op.addInput(tag);
+    op.addInput(summaryMetadata);
+    return op.finish()[-1];
   }
 
   /// Flushes the writer's unwritten events.
   Output flushSummaryWriter(Output writer) {
-    return addOperation(new OperationDescription('FlushSummaryWriter',
-        _scope.uniqueName('FlushSummaryWriter'), [writer], {}));
+    var op = newOperation(
+        'FlushSummaryWriter', _scope.uniqueName('FlushSummaryWriter'));
+    op.addInput(writer);
+    return op.finish()[-1];
   }
 
   /// Creates summary database writer accessible by given resource handle.
@@ -1989,1489 +2812,2224 @@ class Graph extends _Graph {
   /// will create the schema if it doesn't exist. Entries in the Users,
   /// Experiments, and Runs tables will be created automatically if they
   /// don't already exist.
-  Output createSummaryDbWriter(Output writer, Output dbUri,
-      Output experimentName, Output runName, Output userName) {
-    return addOperation(new OperationDescription(
-        'CreateSummaryDbWriter',
-        _scope.uniqueName('CreateSummaryDbWriter'),
-        [writer, dbUri, experimentName, runName, userName],
-        {}));
+  Output createSummaryDbWriter(
+      Output writer,
+      Output<String> dbUri,
+      Output<String> experimentName,
+      Output<String> runName,
+      Output<String> userName) {
+    var op = newOperation(
+        'CreateSummaryDbWriter', _scope.uniqueName('CreateSummaryDbWriter'));
+    op.addInput(writer);
+    op.addInput(dbUri);
+    op.addInput(experimentName);
+    op.addInput(runName);
+    op.addInput(userName);
+    return op.finish()[-1];
   }
 
-  Output sparseApplyRMSProp(Output var_, Output ms, Output mom, Output lr,
-      Output rho, Output momentum, Output epsilon, Output grad, Output indices,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'SparseApplyRMSProp',
-        _scope.uniqueName('SparseApplyRMSProp'),
-        [var_, ms, mom, lr, rho, momentum, epsilon, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> sparseApplyRMSProp<T>(
+      Output<T> var_,
+      Output<T> ms,
+      Output<T> mom,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
+      Output<T> indices,
+      {DataType tindices,
+      bool useLocking: false}) {
+    var op = newOperation(
+        'SparseApplyRMSProp', _scope.uniqueName('SparseApplyRMSProp'));
+    op.addInput(var_);
+    op.addInput(ms);
+    op.addInput(mom);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(momentum);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
   /// Returns a handle to be used to access a summary writer.
   /// The summary writer is an in-graph resource which can be used by ops to write
   /// summaries to event files.
   Output summaryWriter({String sharedName, String container}) {
-    return addOperation(new OperationDescription(
-        'SummaryWriter',
-        _scope.uniqueName('SummaryWriter'),
-        [],
-        {'shared_name': sharedName, 'container': container}));
+    var op = newOperation('SummaryWriter', _scope.uniqueName('SummaryWriter'));
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrString('container', container);
+    return op.finish()[0];
   }
 
-  Output substr(Output input, Output pos, Output len) {
-    return addOperation(new OperationDescription(
-        'Substr', _scope.uniqueName('Substr'), [input, pos, len], {}));
+  Output<String> substr<T>(Output<String> input, Output<T> pos, Output<T> len) {
+    var op = newOperation('Substr', _scope.uniqueName('Substr'));
+    op.addInput(input);
+    op.addInput(pos);
+    op.addInput(len);
+    return op.finish()[0];
   }
 
-  Output decodeBase64(Output input) {
-    return addOperation(new OperationDescription(
-        'DecodeBase64', _scope.uniqueName('DecodeBase64'), [input], {}));
+  Output<String> decodeBase64(Output<String> input) {
+    var op = newOperation('DecodeBase64', _scope.uniqueName('DecodeBase64'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output encodeBase64(Output input, {bool pad: false}) {
-    return addOperation(new OperationDescription('EncodeBase64',
-        _scope.uniqueName('EncodeBase64'), [input], {'pad': pad}));
+  Output<String> encodeBase64(Output<String> input, {bool pad: false}) {
+    var op = newOperation('EncodeBase64', _scope.uniqueName('EncodeBase64'));
+    op.addInput(input);
+    op.setAttrBool('pad', pad);
+    return op.finish()[0];
   }
 
-  Output stringJoin(List<Output> inputs, {@required int n, String separator}) {
-    return addOperation(new OperationDescription(
-        'StringJoin',
-        _scope.uniqueName('StringJoin'),
-        [inputs],
-        {'N': n, 'separator': separator}));
+  Output<String> stringJoin(List<Output<String>> inputs,
+      {int n, String separator}) {
+    var op = newOperation('StringJoin', _scope.uniqueName('StringJoin'));
+    op.addInputList(inputs);
+    op.setAttrInt('N', n);
+    op.setAttrString('separator', separator);
+    return op.finish()[0];
   }
 
-  Output softsign(Output features) {
-    return addOperation(new OperationDescription(
-        'Softsign', _scope.uniqueName('Softsign'), [features], {}));
+  Output<T> softsign<T>(Output<T> features) {
+    var op = newOperation('Softsign', _scope.uniqueName('Softsign'));
+    op.addInput(features);
+    return op.finish()[0];
   }
 
-  Output stringToHashBucket(Output stringTensor, {@required int numBuckets}) {
-    return addOperation(new OperationDescription(
-        'StringToHashBucket',
-        _scope.uniqueName('StringToHashBucket'),
-        [stringTensor],
-        {'num_buckets': numBuckets}));
+  Output<int> stringToHashBucket(Output<String> stringTensor,
+      {int numBuckets}) {
+    var op = newOperation(
+        'StringToHashBucket', _scope.uniqueName('StringToHashBucket'));
+    op.addInput(stringTensor);
+    op.setAttrInt('num_buckets', numBuckets);
+    return op.finish()[0];
   }
 
-  Output isFinite(Output x) {
-    return addOperation(new OperationDescription(
-        'IsFinite', _scope.uniqueName('IsFinite'), [x], {}));
+  Output<bool> isFinite<T>(Output<T> x) {
+    var op = newOperation('IsFinite', _scope.uniqueName('IsFinite'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output regexReplace(Output input, Output pattern, Output rewrite,
+  Output<String> regexReplace(
+      Output<String> input, Output<String> pattern, Output<String> rewrite,
       {bool replaceGlobal: true}) {
-    return addOperation(new OperationDescription(
-        'RegexReplace',
-        _scope.uniqueName('RegexReplace'),
-        [input, pattern, rewrite],
-        {'replace_global': replaceGlobal}));
+    var op = newOperation('RegexReplace', _scope.uniqueName('RegexReplace'));
+    op.addInput(input);
+    op.addInput(pattern);
+    op.addInput(rewrite);
+    op.setAttrBool('replace_global', replaceGlobal);
+    return op.finish()[0];
   }
 
-  Output applyAdagrad(Output var_, Output accum, Output lr, Output grad,
+  Output<T> applyAdagrad<T>(
+      Output<T> var_, Output<T> accum, Output<T> lr, Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyAdagrad',
-        _scope.uniqueName('ApplyAdagrad'),
-        [var_, accum, lr, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation('ApplyAdagrad', _scope.uniqueName('ApplyAdagrad'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output statelessRandomNormal(Output shape, Output seed,
+  Output<T> statelessRandomNormal<T>(Output<T> shape, Output<T> seed,
       {DataType dtype: DataType.DT_FLOAT, DataType tseed: DataType.DT_INT64}) {
-    return addOperation(new OperationDescription(
-        'StatelessRandomNormal',
-        _scope.uniqueName('StatelessRandomNormal'),
-        [shape, seed],
-        {'dtype': dtype, 'Tseed': tseed}));
+    dtype ??= inferType(shape);
+    var op = newOperation(
+        'StatelessRandomNormal', _scope.uniqueName('StatelessRandomNormal'));
+    op.addInput(shape);
+    op.addInput(seed);
+    op.setAttrType('dtype', dtype);
+    op.setAttrType('Tseed', tseed);
+    return op.finish()[0];
   }
 
-  Output statelessRandomUniform(Output shape, Output seed,
+  Output<T> statelessRandomUniform<T>(Output<T> shape, Output<T> seed,
       {DataType dtype: DataType.DT_FLOAT, DataType tseed: DataType.DT_INT64}) {
-    return addOperation(new OperationDescription(
-        'StatelessRandomUniform',
-        _scope.uniqueName('StatelessRandomUniform'),
-        [shape, seed],
-        {'dtype': dtype, 'Tseed': tseed}));
+    dtype ??= inferType(shape);
+    var op = newOperation(
+        'StatelessRandomUniform', _scope.uniqueName('StatelessRandomUniform'));
+    op.addInput(shape);
+    op.addInput(seed);
+    op.setAttrType('dtype', dtype);
+    op.setAttrType('Tseed', tseed);
+    return op.finish()[0];
   }
 
-  Output randomGamma(Output shape, Output alpha,
-      {int seed: 0, int seed2: 0, @required DataType s}) {
-    return addOperation(new OperationDescription(
-        'RandomGamma',
-        _scope.uniqueName('RandomGamma'),
-        [shape, alpha],
-        {'seed': seed, 'seed2': seed2, 'S': s}));
+  Output<T> randomGamma<T>(Output<T> shape, Output<T> alpha,
+      {int seed: 0, int seed2: 0, DataType s}) {
+    var op = newOperation('RandomGamma', _scope.uniqueName('RandomGamma'));
+    op.addInput(shape);
+    op.addInput(alpha);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    op.setAttrType('S', s);
+    return op.finish()[0];
   }
 
-  Output randomShuffle(Output value, {int seed: 0, int seed2: 0}) {
-    return addOperation(new OperationDescription(
-        'RandomShuffle',
-        _scope.uniqueName('RandomShuffle'),
-        [value],
-        {'seed': seed, 'seed2': seed2}));
+  Output<T> randomShuffle<T>(Output<T> value, {int seed: 0, int seed2: 0}) {
+    var op = newOperation('RandomShuffle', _scope.uniqueName('RandomShuffle'));
+    op.addInput(value);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    return op.finish()[0];
   }
 
-  Output invertPermutation(Output x) {
-    return addOperation(new OperationDescription(
-        'InvertPermutation', _scope.uniqueName('InvertPermutation'), [x], {}));
+  Output<T> invertPermutation<T>(Output<T> x) {
+    var op = newOperation(
+        'InvertPermutation', _scope.uniqueName('InvertPermutation'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output readFile(Output filename) {
-    return addOperation(new OperationDescription(
-        'ReadFile', _scope.uniqueName('ReadFile'), [filename], {}));
+  Output<String> readFile(Output<String> filename) {
+    var op = newOperation('ReadFile', _scope.uniqueName('ReadFile'));
+    op.addInput(filename);
+    return op.finish()[0];
   }
 
-  Output truncatedNormal(Output shape,
-      {int seed: 0, int seed2: 0, @required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'TruncatedNormal',
-        _scope.uniqueName('TruncatedNormal'),
-        [shape],
-        {'seed': seed, 'seed2': seed2, 'dtype': dtype}));
+  Output<T> truncatedNormal<T>(Output<T> shape,
+      {int seed: 0, int seed2: 0, DataType dtype}) {
+    dtype ??= inferType(shape);
+    var op =
+        newOperation('TruncatedNormal', _scope.uniqueName('TruncatedNormal'));
+    op.addInput(shape);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output erf(Output x) {
-    return addOperation(
-        new OperationDescription('Erf', _scope.uniqueName('Erf'), [x], {}));
+  Output<T> erf<T>(Output<T> x) {
+    var op = newOperation('Erf', _scope.uniqueName('Erf'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output randomStandardNormal(Output shape,
-      {int seed: 0, int seed2: 0, @required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'RandomStandardNormal',
-        _scope.uniqueName('RandomStandardNormal'),
-        [shape],
-        {'seed': seed, 'seed2': seed2, 'dtype': dtype}));
+  Output<T> randomStandardNormal<T>(Output<T> shape,
+      {int seed: 0, int seed2: 0, DataType dtype}) {
+    dtype ??= inferType(shape);
+    var op = newOperation(
+        'RandomStandardNormal', _scope.uniqueName('RandomStandardNormal'));
+    op.addInput(shape);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output erfc(Output x) {
-    return addOperation(
-        new OperationDescription('Erfc', _scope.uniqueName('Erfc'), [x], {}));
+  Output<T> erfc<T>(Output<T> x) {
+    var op = newOperation('Erfc', _scope.uniqueName('Erfc'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output randomUniformInt(Output shape, Output minval, Output maxval,
-      {int seed: 0, int seed2: 0, @required DataType tout}) {
-    return addOperation(new OperationDescription(
-        'RandomUniformInt',
-        _scope.uniqueName('RandomUniformInt'),
-        [shape, minval, maxval],
-        {'seed': seed, 'seed2': seed2, 'Tout': tout}));
+  Output<T> randomUniformInt<T>(
+      Output<T> shape, Output<T> minval, Output<T> maxval,
+      {int seed: 0, int seed2: 0, DataType tout}) {
+    var op =
+        newOperation('RandomUniformInt', _scope.uniqueName('RandomUniformInt'));
+    op.addInput(shape);
+    op.addInput(minval);
+    op.addInput(maxval);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    op.setAttrType('Tout', tout);
+    return op.finish()[0];
   }
 
-  Output randomUniform(Output shape,
-      {int seed: 0, int seed2: 0, @required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'RandomUniform',
-        _scope.uniqueName('RandomUniform'),
-        [shape],
-        {'seed': seed, 'seed2': seed2, 'dtype': dtype}));
+  Output<T> randomUniform<T>(Output<T> shape,
+      {int seed: 0, int seed2: 0, DataType dtype}) {
+    dtype ??= inferType(shape);
+    var op = newOperation('RandomUniform', _scope.uniqueName('RandomUniform'));
+    op.addInput(shape);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output scatterNdSub(Output ref, Output indices, Output updates,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ScatterNdSub',
-        _scope.uniqueName('ScatterNdSub'),
-        [ref, indices, updates],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> scatterNdSub<T>(Output<T> ref, Output<T> indices, Output<T> updates,
+      {DataType tindices, bool useLocking: false}) {
+    var op = newOperation('ScatterNdSub', _scope.uniqueName('ScatterNdSub'));
+    op.addInput(ref);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output addManySparseToTensorsMap(
-      Output sparseIndices, Output sparseValues, Output sparseShape,
+  Output<int> addManySparseToTensorsMap<T>(Output<int> sparseIndices,
+      Output<T> sparseValues, Output<int> sparseShape,
       {String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'AddManySparseToTensorsMap',
-        _scope.uniqueName('AddManySparseToTensorsMap'),
-        [sparseIndices, sparseValues, sparseShape],
-        {'container': container, 'shared_name': sharedName}));
+    var op = newOperation('AddManySparseToTensorsMap',
+        _scope.uniqueName('AddManySparseToTensorsMap'));
+    op.addInput(sparseIndices);
+    op.addInput(sparseValues);
+    op.addInput(sparseShape);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output biasAddGrad(Output outBackprop, {String dataFormat: 'NHWC'}) {
-    return addOperation(new OperationDescription(
-        'BiasAddGrad',
-        _scope.uniqueName('BiasAddGrad'),
-        [outBackprop],
-        {'data_format': dataFormat}));
+  Output<T> biasAddGrad<T>(Output<T> outBackprop, {String dataFormat: 'NHWC'}) {
+    var op = newOperation('BiasAddGrad', _scope.uniqueName('BiasAddGrad'));
+    op.addInput(outBackprop);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
   }
 
-  Output elu(Output features) {
-    return addOperation(new OperationDescription(
-        'Elu', _scope.uniqueName('Elu'), [features], {}));
+  Output<T> elu<T>(Output<T> features) {
+    var op = newOperation('Elu', _scope.uniqueName('Elu'));
+    op.addInput(features);
+    return op.finish()[0];
   }
 
-  Output addSparseToTensorsMap(
-      Output sparseIndices, Output sparseValues, Output sparseShape,
+  Output<int> addSparseToTensorsMap<T>(Output<int> sparseIndices,
+      Output<T> sparseValues, Output<int> sparseShape,
       {String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'AddSparseToTensorsMap',
-        _scope.uniqueName('AddSparseToTensorsMap'),
-        [sparseIndices, sparseValues, sparseShape],
-        {'container': container, 'shared_name': sharedName}));
+    var op = newOperation(
+        'AddSparseToTensorsMap', _scope.uniqueName('AddSparseToTensorsMap'));
+    op.addInput(sparseIndices);
+    op.addInput(sparseValues);
+    op.addInput(sparseShape);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output preventGradient(Output input, {String message}) {
-    return addOperation(new OperationDescription('PreventGradient',
-        _scope.uniqueName('PreventGradient'), [input], {'message': message}));
+  Output<T> preventGradient<T>(Output<T> input, {String message}) {
+    var op =
+        newOperation('PreventGradient', _scope.uniqueName('PreventGradient'));
+    op.addInput(input);
+    op.setAttrString('message', message);
+    return op.finish()[0];
   }
 
-  Output sparseSoftmax(Output spIndices, Output spValues, Output spShape) {
-    return addOperation(new OperationDescription(
-        'SparseSoftmax',
-        _scope.uniqueName('SparseSoftmax'),
-        [spIndices, spValues, spShape],
-        {}));
+  Output<T> sparseSoftmax<T>(
+      Output<int> spIndices, Output<T> spValues, Output<int> spShape) {
+    var op = newOperation('SparseSoftmax', _scope.uniqueName('SparseSoftmax'));
+    op.addInput(spIndices);
+    op.addInput(spValues);
+    op.addInput(spShape);
+    return op.finish()[0];
   }
 
-  Output sparseDenseCwiseAdd(
-      Output spIndices, Output spValues, Output spShape, Output dense) {
-    return addOperation(new OperationDescription(
-        'SparseDenseCwiseAdd',
-        _scope.uniqueName('SparseDenseCwiseAdd'),
-        [spIndices, spValues, spShape, dense],
-        {}));
+  Output<T> sparseDenseCwiseAdd<T>(Output<int> spIndices, Output<T> spValues,
+      Output<int> spShape, Output<T> dense) {
+    var op = newOperation(
+        'SparseDenseCwiseAdd', _scope.uniqueName('SparseDenseCwiseAdd'));
+    op.addInput(spIndices);
+    op.addInput(spValues);
+    op.addInput(spShape);
+    op.addInput(dense);
+    return op.finish()[0];
   }
 
-  Output getSessionHandle(Output value) {
-    return addOperation(new OperationDescription('GetSessionHandle',
-        _scope.uniqueName('GetSessionHandle'), [value], {}));
+  Output<String> getSessionHandle<T>(Output<T> value) {
+    var op =
+        newOperation('GetSessionHandle', _scope.uniqueName('GetSessionHandle'));
+    op.addInput(value);
+    return op.finish()[0];
   }
 
-  Output sparseDenseCwiseMul(
-      Output spIndices, Output spValues, Output spShape, Output dense) {
-    return addOperation(new OperationDescription(
-        'SparseDenseCwiseMul',
-        _scope.uniqueName('SparseDenseCwiseMul'),
-        [spIndices, spValues, spShape, dense],
-        {}));
+  Output<T> fusedPadConv2D<T>(
+      Output<T> input, Output<int> paddings, Output<T> filter,
+      {String mode, List<int> strides, String padding}) {
+    var op =
+        newOperation('FusedPadConv2D', _scope.uniqueName('FusedPadConv2D'));
+    op.addInput(input);
+    op.addInput(paddings);
+    op.addInput(filter);
+    op.setAttrString('mode', mode);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    return op.finish()[0];
   }
 
-  Output relu6(Output features) {
-    return addOperation(new OperationDescription(
-        'Relu6', _scope.uniqueName('Relu6'), [features], {}));
+  Output<T> sparseDenseCwiseMul<T>(Output<int> spIndices, Output<T> spValues,
+      Output<int> spShape, Output<T> dense) {
+    var op = newOperation(
+        'SparseDenseCwiseMul', _scope.uniqueName('SparseDenseCwiseMul'));
+    op.addInput(spIndices);
+    op.addInput(spValues);
+    op.addInput(spShape);
+    op.addInput(dense);
+    return op.finish()[0];
   }
 
-  Output readerSerializeStateV2(Output readerHandle) {
-    return addOperation(new OperationDescription('ReaderSerializeStateV2',
-        _scope.uniqueName('ReaderSerializeStateV2'), [readerHandle], {}));
+  Output<T> relu6<T>(Output<T> features) {
+    var op = newOperation('Relu6', _scope.uniqueName('Relu6'));
+    op.addInput(features);
+    return op.finish()[0];
+  }
+
+  Output<String> readerSerializeStateV2(Output readerHandle) {
+    var op = newOperation(
+        'ReaderSerializeStateV2', _scope.uniqueName('ReaderSerializeStateV2'));
+    op.addInput(readerHandle);
+    return op.finish()[0];
   }
 
   Output destroyResourceOp(Output resource, {bool ignoreLookupError: true}) {
-    return addOperation(new OperationDescription(
-        'DestroyResourceOp',
-        _scope.uniqueName('DestroyResourceOp'),
-        [resource],
-        {'ignore_lookup_error': ignoreLookupError}));
+    var op = newOperation(
+        'DestroyResourceOp', _scope.uniqueName('DestroyResourceOp'));
+    op.addInput(resource);
+    op.setAttrBool('ignore_lookup_error', ignoreLookupError);
+    return op.finish()[-1];
   }
 
-  Output histogramFixedWidth(Output values, Output valueRange, Output nbins,
+  Output<T> histogramFixedWidth<T>(
+      Output<T> values, Output<T> valueRange, Output<int> nbins,
       {DataType dtype: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'HistogramFixedWidth',
-        _scope.uniqueName('HistogramFixedWidth'),
-        [values, valueRange, nbins],
-        {'dtype': dtype}));
+    dtype ??= inferType(values);
+    var op = newOperation(
+        'HistogramFixedWidth', _scope.uniqueName('HistogramFixedWidth'));
+    op.addInput(values);
+    op.addInput(valueRange);
+    op.addInput(nbins);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
+  }
+
+  Output iterator(
+      {String sharedName,
+      String container,
+      List<DataType> outputTypes,
+      List<Shape> outputShapes}) {
+    var op = newOperation('Iterator', _scope.uniqueName('Iterator'));
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrString('container', container);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayWriteV3')
-  Output tensorArrayWriteV2(
-      Output handle, Output index, Output value, Output flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayWriteV2',
-        _scope.uniqueName('TensorArrayWriteV2'),
-        [handle, index, value, flowIn],
-        {}));
+  Output<double> tensorArrayWriteV2<T>(Output<String> handle, Output<int> index,
+      Output<T> value, Output<double> flowIn) {
+    var op = newOperation(
+        'TensorArrayWriteV2', _scope.uniqueName('TensorArrayWriteV2'));
+    op.addInput(handle);
+    op.addInput(index);
+    op.addInput(value);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output sdcaShrinkL1(List<Output> weights,
-      {@required int numFeatures, @required double l1, @required double l2}) {
-    return addOperation(new OperationDescription(
-        'SdcaShrinkL1',
-        _scope.uniqueName('SdcaShrinkL1'),
-        [weights],
-        {'num_features': numFeatures, 'l1': l1, 'l2': l2}));
+  Output sdcaShrinkL1(List<Output<double>> weights,
+      {int numFeatures, double l1, double l2}) {
+    var op = newOperation('SdcaShrinkL1', _scope.uniqueName('SdcaShrinkL1'));
+    op.addInputList(weights);
+    op.setAttrInt('num_features', numFeatures);
+    op.setAttrFloat('l1', l1);
+    op.setAttrFloat('l2', l2);
+    return op.finish()[-1];
   }
 
   Output consumeMutexLock(Output mutexLock) {
-    return addOperation(new OperationDescription('ConsumeMutexLock',
-        _scope.uniqueName('ConsumeMutexLock'), [mutexLock], {}));
+    var op =
+        newOperation('ConsumeMutexLock', _scope.uniqueName('ConsumeMutexLock'));
+    op.addInput(mutexLock);
+    return op.finish()[-1];
   }
 
-  Output dataFormatVecPermute(Output x,
+  Output<T> dataFormatVecPermute<T>(Output<T> x,
       {String srcFormat: 'NHWC', String dstFormat: 'NCHW'}) {
-    return addOperation(new OperationDescription(
-        'DataFormatVecPermute',
-        _scope.uniqueName('DataFormatVecPermute'),
-        [x],
-        {'src_format': srcFormat, 'dst_format': dstFormat}));
+    var op = newOperation(
+        'DataFormatVecPermute', _scope.uniqueName('DataFormatVecPermute'));
+    op.addInput(x);
+    op.setAttrString('src_format', srcFormat);
+    op.setAttrString('dst_format', dstFormat);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 13: Use CholeskyGrad instead.')
-  Output batchCholeskyGrad(Output l, Output grad) {
-    return addOperation(new OperationDescription('BatchCholeskyGrad',
-        _scope.uniqueName('BatchCholeskyGrad'), [l, grad], {}));
+  Output<T> batchCholeskyGrad<T>(Output<T> l, Output<T> grad) {
+    var op = newOperation(
+        'BatchCholeskyGrad', _scope.uniqueName('BatchCholeskyGrad'));
+    op.addInput(l);
+    op.addInput(grad);
+    return op.finish()[0];
   }
 
-  Output resourceScatterAdd(Output resource, Output indices, Output updates,
-      {@required DataType dtype, @required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'ResourceScatterAdd',
-        _scope.uniqueName('ResourceScatterAdd'),
-        [resource, indices, updates],
-        {'dtype': dtype, 'Tindices': tindices}));
+  Output resourceScatterAdd<T>(
+      Output resource, Output<T> indices, Output<T> updates,
+      {DataType dtype, DataType tindices}) {
+    dtype ??= inferType(resource);
+    var op = newOperation(
+        'ResourceScatterAdd', _scope.uniqueName('ResourceScatterAdd'));
+    op.addInput(resource);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('dtype', dtype);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[-1];
   }
 
-  Output barrierReadySize(Output handle) {
-    return addOperation(new OperationDescription('BarrierReadySize',
-        _scope.uniqueName('BarrierReadySize'), [handle], {}));
+  Output<int> barrierReadySize(Output<String> handle) {
+    var op =
+        newOperation('BarrierReadySize', _scope.uniqueName('BarrierReadySize'));
+    op.addInput(handle);
+    return op.finish()[0];
   }
 
-  Output sparseTensorDenseMatMul(
-      Output aIndices, Output aValues, Output aShape, Output b,
+  Output mapStage<T>(
+      Output<int> key, Output<int> indices, List<Output<T>> values,
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      List<DataType> fakeDtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation('MapStage', _scope.uniqueName('MapStage'));
+    op.addInput(key);
+    op.addInput(indices);
+    op.addInputList(values);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrTypeList('fake_dtypes', fakeDtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[-1];
+  }
+
+  Output<T> sparseTensorDenseMatMul<T>(
+      Output<T> aIndices, Output<T> aValues, Output<int> aShape, Output<T> b,
       {DataType tindices: DataType.DT_INT64,
       bool adjointA: false,
       bool adjointB: false}) {
-    return addOperation(new OperationDescription(
-        'SparseTensorDenseMatMul',
-        _scope.uniqueName('SparseTensorDenseMatMul'),
-        [aIndices, aValues, aShape, b],
-        {'Tindices': tindices, 'adjoint_a': adjointA, 'adjoint_b': adjointB}));
+    var op = newOperation('SparseTensorDenseMatMul',
+        _scope.uniqueName('SparseTensorDenseMatMul'));
+    op.addInput(aIndices);
+    op.addInput(aValues);
+    op.addInput(aShape);
+    op.addInput(b);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('adjoint_a', adjointA);
+    op.setAttrBool('adjoint_b', adjointB);
+    return op.finish()[0];
   }
 
-  Output unsortedSegmentMin(Output data, Output segmentIds, Output numSegments,
-      {@required DataType tindices, DataType tnumsegments: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'UnsortedSegmentMin',
-        _scope.uniqueName('UnsortedSegmentMin'),
-        [data, segmentIds, numSegments],
-        {'Tindices': tindices, 'Tnumsegments': tnumsegments}));
+  Output<T> unsortedSegmentMin<T>(
+      Output<T> data, Output<T> segmentIds, Output<T> numSegments,
+      {DataType tindices, DataType tnumsegments: DataType.DT_INT32}) {
+    var op = newOperation(
+        'UnsortedSegmentMin', _scope.uniqueName('UnsortedSegmentMin'));
+    op.addInput(data);
+    op.addInput(segmentIds);
+    op.addInput(numSegments);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrType('Tnumsegments', tnumsegments);
+    return op.finish()[0];
   }
 
-  Output segmentMin(Output data, Output segmentIds,
-      {@required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'SegmentMin',
-        _scope.uniqueName('SegmentMin'),
-        [data, segmentIds],
-        {'Tindices': tindices}));
+  Output<T> segmentMin<T>(Output<T> data, Output<T> segmentIds,
+      {DataType tindices}) {
+    var op = newOperation('SegmentMin', _scope.uniqueName('SegmentMin'));
+    op.addInput(data);
+    op.addInput(segmentIds);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
   }
 
-  Output resourceSparseApplyRMSProp(
+  Output<T> remoteFusedGraphExecute<T>(List<Output<T>> inputs,
+      {List<DataType> tinputs,
+      List<DataType> toutputs,
+      String serializedRemoteFusedGraphExecuteInfo}) {
+    var op = newOperation('RemoteFusedGraphExecute',
+        _scope.uniqueName('RemoteFusedGraphExecute'));
+    op.addInputList(inputs);
+    op.setAttrTypeList('Tinputs', tinputs);
+    op.setAttrTypeList('Toutputs', toutputs);
+    op.setAttrString('serialized_remote_fused_graph_execute_info',
+        serializedRemoteFusedGraphExecuteInfo);
+    return op.finish()[0];
+  }
+
+  Output resourceSparseApplyRMSProp<T>(
       Output var_,
       Output ms,
       Output mom,
-      Output lr,
-      Output rho,
-      Output momentum,
-      Output epsilon,
-      Output grad,
-      Output indices,
-      {@required DataType tindices,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
+      Output<T> indices,
+      {DataType tindices,
       bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceSparseApplyRMSProp',
-        _scope.uniqueName('ResourceSparseApplyRMSProp'),
-        [var_, ms, mom, lr, rho, momentum, epsilon, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+    var op = newOperation('ResourceSparseApplyRMSProp',
+        _scope.uniqueName('ResourceSparseApplyRMSProp'));
+    op.addInput(var_);
+    op.addInput(ms);
+    op.addInput(mom);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(momentum);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 15: Use IFFT2D')
   Output batchIFFT2D(Output input) {
-    return addOperation(new OperationDescription(
-        'BatchIFFT2D', _scope.uniqueName('BatchIFFT2D'), [input], {}));
+    var op = newOperation('BatchIFFT2D', _scope.uniqueName('BatchIFFT2D'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output stringToNumber(Output stringTensor,
+  Output<T> stringToNumber<T>(Output<String> stringTensor,
       {DataType outType: DataType.DT_FLOAT}) {
-    return addOperation(new OperationDescription(
-        'StringToNumber',
-        _scope.uniqueName('StringToNumber'),
-        [stringTensor],
-        {'out_type': outType}));
+    var op =
+        newOperation('StringToNumber', _scope.uniqueName('StringToNumber'));
+    op.addInput(stringTensor);
+    op.setAttrType('out_type', outType);
+    return op.finish()[0];
   }
 
-  Output decodeJSONExample(Output jsonExamples) {
-    return addOperation(new OperationDescription('DecodeJSONExample',
-        _scope.uniqueName('DecodeJSONExample'), [jsonExamples], {}));
+  Output<String> decodeJSONExample(Output<String> jsonExamples) {
+    var op = newOperation(
+        'DecodeJSONExample', _scope.uniqueName('DecodeJSONExample'));
+    op.addInput(jsonExamples);
+    return op.finish()[0];
   }
 
-  Output scatterDiv(Output ref, Output indices, Output updates,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ScatterDiv',
-        _scope.uniqueName('ScatterDiv'),
-        [ref, indices, updates],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<String> tensorSummary<T>(Output<T> tensor,
+      {String description, List<String> labels, String displayName}) {
+    var op = newOperation('TensorSummary', _scope.uniqueName('TensorSummary'));
+    op.addInput(tensor);
+    op.setAttrString('description', description);
+    op.setAttrStringList('labels', labels);
+    op.setAttrString('display_name', displayName);
+    return op.finish()[0];
   }
 
-  Output serializeTensor(Output tensor) {
-    return addOperation(new OperationDescription(
-        'SerializeTensor', _scope.uniqueName('SerializeTensor'), [tensor], {}));
+  Output<T> scatterDiv<T>(Output<T> ref, Output<T> indices, Output<T> updates,
+      {DataType tindices, bool useLocking: false}) {
+    var op = newOperation('ScatterDiv', _scope.uniqueName('ScatterDiv'));
+    op.addInput(ref);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output parseTensor(Output serialized, {@required DataType outType}) {
-    return addOperation(new OperationDescription('ParseTensor',
-        _scope.uniqueName('ParseTensor'), [serialized], {'out_type': outType}));
+  Output<String> serializeTensor<T>(Output<T> tensor) {
+    var op =
+        newOperation('SerializeTensor', _scope.uniqueName('SerializeTensor'));
+    op.addInput(tensor);
+    return op.finish()[0];
   }
 
-  Output scatterNdNonAliasingAdd(Output input, Output indices, Output updates,
-      {@required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'ScatterNdNonAliasingAdd',
-        _scope.uniqueName('ScatterNdNonAliasingAdd'),
-        [input, indices, updates],
-        {'Tindices': tindices}));
+  Output<T> parseTensor<T>(Output<String> serialized, {DataType outType}) {
+    var op = newOperation('ParseTensor', _scope.uniqueName('ParseTensor'));
+    op.addInput(serialized);
+    op.setAttrType('out_type', outType);
+    return op.finish()[0];
   }
 
-  Output multinomial(Output logits, Output numSamples,
+  Output<T> scatterNdNonAliasingAdd<T>(
+      Output<T> input, Output<T> indices, Output<T> updates,
+      {DataType tindices}) {
+    var op = newOperation('ScatterNdNonAliasingAdd',
+        _scope.uniqueName('ScatterNdNonAliasingAdd'));
+    op.addInput(input);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
+  }
+
+  Output<T> multinomial<T>(Output<T> logits, Output<int> numSamples,
       {int seed: 0, int seed2: 0, DataType outputDtype: DataType.DT_INT64}) {
-    return addOperation(new OperationDescription(
-        'Multinomial',
-        _scope.uniqueName('Multinomial'),
-        [logits, numSamples],
-        {'seed': seed, 'seed2': seed2, 'output_dtype': outputDtype}));
+    var op = newOperation('Multinomial', _scope.uniqueName('Multinomial'));
+    op.addInput(logits);
+    op.addInput(numSamples);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    op.setAttrType('output_dtype', outputDtype);
+    return op.finish()[0];
   }
 
-  Output decodeCompressed(Output bytes, {String compressionType}) {
-    return addOperation(new OperationDescription(
-        'DecodeCompressed',
-        _scope.uniqueName('DecodeCompressed'),
-        [bytes],
-        {'compression_type': compressionType}));
+  Output<String> decodeCompressed(Output<String> bytes,
+      {String compressionType}) {
+    var op =
+        newOperation('DecodeCompressed', _scope.uniqueName('DecodeCompressed'));
+    op.addInput(bytes);
+    op.setAttrString('compression_type', compressionType);
+    return op.finish()[0];
   }
 
-  Output sdcaFprint(Output input) {
-    return addOperation(new OperationDescription(
-        'SdcaFprint', _scope.uniqueName('SdcaFprint'), [input], {}));
+  Output<int> sdcaFprint(Output<String> input) {
+    var op = newOperation('SdcaFprint', _scope.uniqueName('SdcaFprint'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output readerNumRecordsProducedV2(Output readerHandle) {
-    return addOperation(new OperationDescription('ReaderNumRecordsProducedV2',
-        _scope.uniqueName('ReaderNumRecordsProducedV2'), [readerHandle], {}));
+  Output<int> readerNumRecordsProducedV2(Output readerHandle) {
+    var op = newOperation('ReaderNumRecordsProducedV2',
+        _scope.uniqueName('ReaderNumRecordsProducedV2'));
+    op.addInput(readerHandle);
+    return op.finish()[0];
   }
 
-  Output decodeRaw(Output bytes,
-      {@required DataType outType, bool littleEndian: true}) {
-    return addOperation(new OperationDescription(
-        'DecodeRaw',
-        _scope.uniqueName('DecodeRaw'),
-        [bytes],
-        {'out_type': outType, 'little_endian': littleEndian}));
+  Output<T> decodeRaw<T>(Output<String> bytes,
+      {DataType outType, bool littleEndian: true}) {
+    var op = newOperation('DecodeRaw', _scope.uniqueName('DecodeRaw'));
+    op.addInput(bytes);
+    op.setAttrType('out_type', outType);
+    op.setAttrBool('little_endian', littleEndian);
+    return op.finish()[0];
+  }
+
+  Output saveSlices<T>(Output<String> filename, Output<String> tensorNames,
+      Output<String> shapesAndSlices, List<Output<T>> data,
+      {List<DataType> t}) {
+    var op = newOperation('SaveSlices', _scope.uniqueName('SaveSlices'));
+    op.addInput(filename);
+    op.addInput(tensorNames);
+    op.addInput(shapesAndSlices);
+    op.addInputList(data);
+    op.setAttrTypeList('T', t);
+    return op.finish()[-1];
+  }
+
+  Output<T> avgPool3D<T>(Output<T> input,
+      {List<int> ksize,
+      List<int> strides,
+      String padding,
+      String dataFormat: 'NDHWC'}) {
+    var op = newOperation('AvgPool3D', _scope.uniqueName('AvgPool3D'));
+    op.addInput(input);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 15: Use IFFT3D')
   Output batchIFFT3D(Output input) {
-    return addOperation(new OperationDescription(
-        'BatchIFFT3D', _scope.uniqueName('BatchIFFT3D'), [input], {}));
+    var op = newOperation('BatchIFFT3D', _scope.uniqueName('BatchIFFT3D'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output adjustHue(Output images, Output delta) {
-    return addOperation(new OperationDescription(
-        'AdjustHue', _scope.uniqueName('AdjustHue'), [images, delta], {}));
+  Output<double> adjustHue(Output<double> images, Output<double> delta) {
+    var op = newOperation('AdjustHue', _scope.uniqueName('AdjustHue'));
+    op.addInput(images);
+    op.addInput(delta);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 15: Use FFT3D')
   Output batchFFT3D(Output input) {
-    return addOperation(new OperationDescription(
-        'BatchFFT3D', _scope.uniqueName('BatchFFT3D'), [input], {}));
+    var op = newOperation('BatchFFT3D', _scope.uniqueName('BatchFFT3D'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
   Output textLineReaderV2(
       {int skipHeaderLines: 0, String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'TextLineReaderV2', _scope.uniqueName('TextLineReaderV2'), [], {
-      'skip_header_lines': skipHeaderLines,
-      'container': container,
-      'shared_name': sharedName
-    }));
+    var op =
+        newOperation('TextLineReaderV2', _scope.uniqueName('TextLineReaderV2'));
+    op.setAttrInt('skip_header_lines', skipHeaderLines);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
   Output fixedLengthRecordReaderV2(
       {int headerBytes: 0,
-      @required int recordBytes,
+      int recordBytes,
       int footerBytes: 0,
       int hopBytes: 0,
       String container,
       String sharedName,
       String encoding}) {
-    return addOperation(new OperationDescription('FixedLengthRecordReaderV2',
-        _scope.uniqueName('FixedLengthRecordReaderV2'), [], {
-      'header_bytes': headerBytes,
-      'record_bytes': recordBytes,
-      'footer_bytes': footerBytes,
-      'hop_bytes': hopBytes,
-      'container': container,
-      'shared_name': sharedName,
-      'encoding': encoding
-    }));
+    var op = newOperation('FixedLengthRecordReaderV2',
+        _scope.uniqueName('FixedLengthRecordReaderV2'));
+    op.setAttrInt('header_bytes', headerBytes);
+    op.setAttrInt('record_bytes', recordBytes);
+    op.setAttrInt('footer_bytes', footerBytes);
+    op.setAttrInt('hop_bytes', hopBytes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrString('encoding', encoding);
+    return op.finish()[0];
   }
 
   Output identityReaderV2({String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'IdentityReaderV2',
-        _scope.uniqueName('IdentityReaderV2'),
-        [],
-        {'container': container, 'shared_name': sharedName}));
+    var op =
+        newOperation('IdentityReaderV2', _scope.uniqueName('IdentityReaderV2'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output iRFFT3D(Output input, Output fftLength) {
-    return addOperation(new OperationDescription(
-        'IRFFT3D', _scope.uniqueName('IRFFT3D'), [input, fftLength], {}));
+  Output<double> iRFFT3D(Output input, Output<int> fftLength) {
+    var op = newOperation('IRFFT3D', _scope.uniqueName('IRFFT3D'));
+    op.addInput(input);
+    op.addInput(fftLength);
+    return op.finish()[0];
   }
 
-  Output applyFtrl(Output var_, Output accum, Output linear, Output grad,
-      Output lr, Output l1, Output l2, Output lrPower,
+  Output<T> applyFtrl<T>(
+      Output<T> var_,
+      Output<T> accum,
+      Output<T> linear,
+      Output<T> grad,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> lrPower,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyFtrl',
-        _scope.uniqueName('ApplyFtrl'),
-        [var_, accum, linear, grad, lr, l1, l2, lrPower],
-        {'use_locking': useLocking}));
+    var op = newOperation('ApplyFtrl', _scope.uniqueName('ApplyFtrl'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(linear);
+    op.addInput(grad);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(lrPower);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output iRFFT(Output input, Output fftLength) {
-    return addOperation(new OperationDescription(
-        'IRFFT', _scope.uniqueName('IRFFT'), [input, fftLength], {}));
+  Output<double> iRFFT(Output input, Output<int> fftLength) {
+    var op = newOperation('IRFFT', _scope.uniqueName('IRFFT'));
+    op.addInput(input);
+    op.addInput(fftLength);
+    return op.finish()[0];
   }
 
-  Output rFFT(Output input, Output fftLength) {
-    return addOperation(new OperationDescription(
-        'RFFT', _scope.uniqueName('RFFT'), [input, fftLength], {}));
+  Output rFFT(Output<double> input, Output<int> fftLength) {
+    var op = newOperation('RFFT', _scope.uniqueName('RFFT'));
+    op.addInput(input);
+    op.addInput(fftLength);
+    return op.finish()[0];
   }
 
   Output iFFT3D(Output input) {
-    return addOperation(new OperationDescription(
-        'IFFT3D', _scope.uniqueName('IFFT3D'), [input], {}));
+    var op = newOperation('IFFT3D', _scope.uniqueName('IFFT3D'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
   Output fFT3D(Output input) {
-    return addOperation(new OperationDescription(
-        'FFT3D', _scope.uniqueName('FFT3D'), [input], {}));
+    var op = newOperation('FFT3D', _scope.uniqueName('FFT3D'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output lessEqual(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'LessEqual', _scope.uniqueName('LessEqual'), [x, y], {}));
+  Output<bool> lessEqual<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('LessEqual', _scope.uniqueName('LessEqual'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
   Output timestamp() {
-    return addOperation(new OperationDescription(
-        'Timestamp', _scope.uniqueName('Timestamp'), [], {}));
+    var op = newOperation('Timestamp', _scope.uniqueName('Timestamp'));
+    return op.finish()[0];
   }
 
-  Output stackV2(Output maxSize,
-      {@required DataType elemType, String stackName}) {
-    return addOperation(new OperationDescription(
-        'StackV2',
-        _scope.uniqueName('StackV2'),
-        [maxSize],
-        {'elem_type': elemType, 'stack_name': stackName}));
+  Output paddedBatchDataset<T>(Output inputDataset, Output<int> batchSize,
+      List<Output<int>> paddedShapes, List<Output<T>> paddingValues,
+      {List<DataType> toutputTypes, List<Shape> outputShapes, int n}) {
+    var op = newOperation(
+        'PaddedBatchDataset', _scope.uniqueName('PaddedBatchDataset'));
+    op.addInput(inputDataset);
+    op.addInput(batchSize);
+    op.addInputList(paddedShapes);
+    op.addInputList(paddingValues);
+    op.setAttrTypeList('Toutput_types', toutputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    op.setAttrInt('N', n);
+    return op.finish()[0];
+  }
+
+  Output stackV2(Output<int> maxSize, {DataType elemType, String stackName}) {
+    var op = newOperation('StackV2', _scope.uniqueName('StackV2'));
+    op.addInput(maxSize);
+    op.setAttrType('elem_type', elemType);
+    op.setAttrString('stack_name', stackName);
+    return op.finish()[0];
+  }
+
+  Output<T> queueDequeueUpTo<T>(Output<String> handle, Output<int> n,
+      {List<DataType> componentTypes, int timeoutMs: -1}) {
+    var op =
+        newOperation('QueueDequeueUpTo', _scope.uniqueName('QueueDequeueUpTo'));
+    op.addInput(handle);
+    op.addInput(n);
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrInt('timeout_ms', timeoutMs);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 3: TileGrad has been replaced with reduce_sum')
-  Output tileGrad(Output input, Output multiples) {
-    return addOperation(new OperationDescription(
-        'TileGrad', _scope.uniqueName('TileGrad'), [input, multiples], {}));
+  Output<T> tileGrad<T>(Output<T> input, Output<int> multiples) {
+    var op = newOperation('TileGrad', _scope.uniqueName('TileGrad'));
+    op.addInput(input);
+    op.addInput(multiples);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 15: Use AudioSummaryV2.')
-  Output audioSummary(Output tag, Output tensor,
-      {@required double sampleRate, int maxOutputs: 3}) {
-    return addOperation(new OperationDescription(
-        'AudioSummary',
-        _scope.uniqueName('AudioSummary'),
-        [tag, tensor],
-        {'sample_rate': sampleRate, 'max_outputs': maxOutputs}));
+  Output<String> audioSummary(Output<String> tag, Output<double> tensor,
+      {double sampleRate, int maxOutputs: 3}) {
+    var op = newOperation('AudioSummary', _scope.uniqueName('AudioSummary'));
+    op.addInput(tag);
+    op.addInput(tensor);
+    op.setAttrFloat('sample_rate', sampleRate);
+    op.setAttrInt('max_outputs', maxOutputs);
+    return op.finish()[0];
   }
 
-  Output unbatch(Output batchedTensor, Output batchIndex, Output id,
-      {@required int timeoutMicros, String container, String sharedName}) {
-    return addOperation(
-        new OperationDescription('Unbatch', _scope.uniqueName('Unbatch'), [
-      batchedTensor,
-      batchIndex,
-      id
-    ], {
-      'timeout_micros': timeoutMicros,
-      'container': container,
-      'shared_name': sharedName
-    }));
+  Output<T> unbatch<T>(
+      Output<T> batchedTensor, Output<int> batchIndex, Output<int> id,
+      {int timeoutMicros, String container, String sharedName}) {
+    var op = newOperation('Unbatch', _scope.uniqueName('Unbatch'));
+    op.addInput(batchedTensor);
+    op.addInput(batchIndex);
+    op.addInput(id);
+    op.setAttrInt('timeout_micros', timeoutMicros);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output tensorSummaryV2(
-      Output tag, Output tensor, Output serializedSummaryMetadata) {
-    return addOperation(new OperationDescription(
-        'TensorSummaryV2',
-        _scope.uniqueName('TensorSummaryV2'),
-        [tag, tensor, serializedSummaryMetadata],
-        {}));
+  Output<T> mapUnstage<T>(Output<int> key, Output<int> indices,
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation('MapUnstage', _scope.uniqueName('MapUnstage'));
+    op.addInput(key);
+    op.addInput(indices);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output quantizeAndDequantizeV2(Output input, Output inputMin, Output inputMax,
+  Output<String> tensorSummaryV2<T>(Output<String> tag, Output<T> tensor,
+      Output<String> serializedSummaryMetadata) {
+    var op =
+        newOperation('TensorSummaryV2', _scope.uniqueName('TensorSummaryV2'));
+    op.addInput(tag);
+    op.addInput(tensor);
+    op.addInput(serializedSummaryMetadata);
+    return op.finish()[0];
+  }
+
+  Output<T> quantizeAndDequantizeV2<T>(
+      Output<T> input, Output<T> inputMin, Output<T> inputMax,
       {bool signedInput: true, int numBits: 8, bool rangeGiven: false}) {
-    return addOperation(new OperationDescription('QuantizeAndDequantizeV2',
-        _scope.uniqueName('QuantizeAndDequantizeV2'), [
-      input,
-      inputMin,
-      inputMax
-    ], {
-      'signed_input': signedInput,
-      'num_bits': numBits,
-      'range_given': rangeGiven
-    }));
+    var op = newOperation('QuantizeAndDequantizeV2',
+        _scope.uniqueName('QuantizeAndDequantizeV2'));
+    op.addInput(input);
+    op.addInput(inputMin);
+    op.addInput(inputMax);
+    op.setAttrBool('signed_input', signedInput);
+    op.setAttrInt('num_bits', numBits);
+    op.setAttrBool('range_given', rangeGiven);
+    return op.finish()[0];
+  }
+
+  Output slideDataset(
+      Output inputDataset, Output<int> windowSize, Output<int> stride,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('SlideDataset', _scope.uniqueName('SlideDataset'));
+    op.addInput(inputDataset);
+    op.addInput(windowSize);
+    op.addInput(stride);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
+  }
+
+  Output<T> print<T>(Output<T> input, List<Output<T>> data,
+      {List<DataType> u, String message, int firstN: -1, int summarize: 3}) {
+    var op = newOperation('Print', _scope.uniqueName('Print'));
+    op.addInput(input);
+    op.addInputList(data);
+    op.setAttrTypeList('U', u);
+    op.setAttrString('message', message);
+    op.setAttrInt('first_n', firstN);
+    op.setAttrInt('summarize', summarize);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 16: Use TensorArrayWriteV3')
-  Output tensorArrayWrite(
-      Output handle, Output index, Output value, Output flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayWrite',
-        _scope.uniqueName('TensorArrayWrite'),
-        [handle, index, value, flowIn],
-        {}));
+  Output<double> tensorArrayWrite<T>(Output<String> handle, Output<int> index,
+      Output<T> value, Output<double> flowIn) {
+    var op =
+        newOperation('TensorArrayWrite', _scope.uniqueName('TensorArrayWrite'));
+    op.addInput(handle);
+    op.addInput(index);
+    op.addInput(value);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output transpose(Output x, Output perm, {DataType tperm: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('Transpose',
-        _scope.uniqueName('Transpose'), [x, perm], {'Tperm': tperm}));
+  Output<T> transpose<T>(Output<T> x, Output<T> perm,
+      {DataType tperm: DataType.DT_INT32}) {
+    var op = newOperation('Transpose', _scope.uniqueName('Transpose'));
+    op.addInput(x);
+    op.addInput(perm);
+    op.setAttrType('Tperm', tperm);
+    return op.finish()[0];
+  }
+
+  Output assert_<T>(Output<bool> condition, List<Output<T>> data,
+      {List<DataType> t, int summarize: 3}) {
+    var op = newOperation('Assert', _scope.uniqueName('Assert'));
+    op.addInput(condition);
+    op.addInputList(data);
+    op.setAttrTypeList('T', t);
+    op.setAttrInt('summarize', summarize);
+    return op.finish()[-1];
   }
 
   Output controlTrigger() {
-    return addOperation(new OperationDescription(
-        'ControlTrigger', _scope.uniqueName('ControlTrigger'), [], {}));
+    var op =
+        newOperation('ControlTrigger', _scope.uniqueName('ControlTrigger'));
+    return op.finish()[-1];
   }
 
-  Output parallelDynamicStitch(List<Output> indices, List<Output> data,
-      {@required int n}) {
-    return addOperation(new OperationDescription('ParallelDynamicStitch',
-        _scope.uniqueName('ParallelDynamicStitch'), [indices, data], {'N': n}));
+  Output<T> parallelDynamicStitch<T>(
+      List<Output<int>> indices, List<Output<T>> data,
+      {int n}) {
+    var op = newOperation(
+        'ParallelDynamicStitch', _scope.uniqueName('ParallelDynamicStitch'));
+    op.addInputList(indices);
+    op.addInputList(data);
+    op.setAttrInt('N', n);
+    return op.finish()[0];
   }
 
-  Output nextIteration(Output data) {
-    return addOperation(new OperationDescription(
-        'NextIteration', _scope.uniqueName('NextIteration'), [data], {}));
+  Output<T> nextIteration<T>(Output<T> data) {
+    var op = newOperation('NextIteration', _scope.uniqueName('NextIteration'));
+    op.addInput(data);
+    return op.finish()[0];
   }
 
-  Output initializeTableV2(Output tableHandle, Output keys, Output values,
-      {@required DataType tkey, @required DataType tval}) {
-    return addOperation(new OperationDescription(
-        'InitializeTableV2',
-        _scope.uniqueName('InitializeTableV2'),
-        [tableHandle, keys, values],
-        {'Tkey': tkey, 'Tval': tval}));
+  Output initializeTableV2<T>(
+      Output tableHandle, Output<T> keys, Output<T> values,
+      {DataType tkey, DataType tval}) {
+    var op = newOperation(
+        'InitializeTableV2', _scope.uniqueName('InitializeTableV2'));
+    op.addInput(tableHandle);
+    op.addInput(keys);
+    op.addInput(values);
+    op.setAttrType('Tkey', tkey);
+    op.setAttrType('Tval', tval);
+    return op.finish()[-1];
   }
 
-  Output imag(Output input, {DataType tout: DataType.DT_FLOAT}) {
-    return addOperation(new OperationDescription(
-        'Imag', _scope.uniqueName('Imag'), [input], {'Tout': tout}));
+  Output<T> imag<T>(Output<T> input, {DataType tout: DataType.DT_FLOAT}) {
+    var op = newOperation('Imag', _scope.uniqueName('Imag'));
+    op.addInput(input);
+    op.setAttrType('Tout', tout);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 16: Use TensorArrayGradV3')
-  Output tensorArrayGrad(Output handle, Output flowIn,
-      {@required String source}) {
-    return addOperation(new OperationDescription(
-        'TensorArrayGrad',
-        _scope.uniqueName('TensorArrayGrad'),
-        [handle, flowIn],
-        {'source': source}));
+  Output<String> tensorArrayGrad(Output<String> handle, Output<double> flowIn,
+      {String source}) {
+    var op =
+        newOperation('TensorArrayGrad', _scope.uniqueName('TensorArrayGrad'));
+    op.addInput(handle);
+    op.addInput(flowIn);
+    op.setAttrString('source', source);
+    return op.finish()[0];
   }
 
-  Output mutableDenseHashTable(Output emptyKey,
+  Output<String> mutableDenseHashTable<T>(Output<T> emptyKey,
       {String container,
       String sharedName,
       bool useNodeNameSharing: false,
-      @required DataType keyDtype,
-      @required DataType valueDtype,
-      List<int> valueShape,
+      DataType keyDtype,
+      DataType valueDtype,
+      Shape valueShape,
       int initialNumBuckets: 131072,
       double maxLoadFactor: 0.800000011920929}) {
-    return addOperation(new OperationDescription(
-        'MutableDenseHashTable', _scope.uniqueName('MutableDenseHashTable'), [
-      emptyKey
-    ], {
-      'container': container,
-      'shared_name': sharedName,
-      'use_node_name_sharing': useNodeNameSharing,
-      'key_dtype': keyDtype,
-      'value_dtype': valueDtype,
-      'value_shape': valueShape,
-      'initial_num_buckets': initialNumBuckets,
-      'max_load_factor': maxLoadFactor
-    }));
+    var op = newOperation(
+        'MutableDenseHashTable', _scope.uniqueName('MutableDenseHashTable'));
+    op.addInput(emptyKey);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrBool('use_node_name_sharing', useNodeNameSharing);
+    op.setAttrType('key_dtype', keyDtype);
+    op.setAttrType('value_dtype', valueDtype);
+    op.setAttrShape('value_shape', valueShape);
+    op.setAttrInt('initial_num_buckets', initialNumBuckets);
+    op.setAttrFloat('max_load_factor', maxLoadFactor);
+    return op.finish()[0];
   }
 
-  Output oneHot(Output indices, Output depth, Output onValue, Output offValue,
+  Output<T> oneHot<T>(Output<T> indices, Output<int> depth, Output<T> onValue,
+      Output<T> offValue,
       {int axis: -1, DataType tI: DataType.DT_INT64}) {
-    return addOperation(new OperationDescription(
-        'OneHot',
-        _scope.uniqueName('OneHot'),
-        [indices, depth, onValue, offValue],
-        {'axis': axis, 'TI': tI}));
+    var op = newOperation('OneHot', _scope.uniqueName('OneHot'));
+    op.addInput(indices);
+    op.addInput(depth);
+    op.addInput(onValue);
+    op.addInput(offValue);
+    op.setAttrInt('axis', axis);
+    op.setAttrType('TI', tI);
+    return op.finish()[0];
   }
 
   Output mutableHashTableOfTensorsV2(
       {String container,
       String sharedName,
       bool useNodeNameSharing: false,
-      @required DataType keyDtype,
-      @required DataType valueDtype,
-      List<int> valueShape}) {
-    return addOperation(new OperationDescription('MutableHashTableOfTensorsV2',
-        _scope.uniqueName('MutableHashTableOfTensorsV2'), [], {
-      'container': container,
-      'shared_name': sharedName,
-      'use_node_name_sharing': useNodeNameSharing,
-      'key_dtype': keyDtype,
-      'value_dtype': valueDtype,
-      'value_shape': valueShape
-    }));
+      DataType keyDtype,
+      DataType valueDtype,
+      Shape valueShape}) {
+    var op = newOperation('MutableHashTableOfTensorsV2',
+        _scope.uniqueName('MutableHashTableOfTensorsV2'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrBool('use_node_name_sharing', useNodeNameSharing);
+    op.setAttrType('key_dtype', keyDtype);
+    op.setAttrType('value_dtype', valueDtype);
+    op.setAttrShape('value_shape', valueShape);
+    return op.finish()[0];
   }
 
-  Output softplus(Output features) {
-    return addOperation(new OperationDescription(
-        'Softplus', _scope.uniqueName('Softplus'), [features], {}));
+  Output<T> softplus<T>(Output<T> features) {
+    var op = newOperation('Softplus', _scope.uniqueName('Softplus'));
+    op.addInput(features);
+    return op.finish()[0];
   }
 
   Output mutableHashTableV2(
       {String container,
       String sharedName,
       bool useNodeNameSharing: false,
-      @required DataType keyDtype,
-      @required DataType valueDtype}) {
-    return addOperation(new OperationDescription(
-        'MutableHashTableV2', _scope.uniqueName('MutableHashTableV2'), [], {
-      'container': container,
-      'shared_name': sharedName,
-      'use_node_name_sharing': useNodeNameSharing,
-      'key_dtype': keyDtype,
-      'value_dtype': valueDtype
-    }));
+      DataType keyDtype,
+      DataType valueDtype}) {
+    var op = newOperation(
+        'MutableHashTableV2', _scope.uniqueName('MutableHashTableV2'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrBool('use_node_name_sharing', useNodeNameSharing);
+    op.setAttrType('key_dtype', keyDtype);
+    op.setAttrType('value_dtype', valueDtype);
+    return op.finish()[0];
   }
 
   /// Writes a `Summary` protocol buffer with scalar values.
   /// The input `tag` and `value` must have the scalars.
-  Output writeScalarSummary(
-      Output writer, Output step, Output tag, Output value) {
-    return addOperation(new OperationDescription(
-        'WriteScalarSummary',
-        _scope.uniqueName('WriteScalarSummary'),
-        [writer, step, tag, value],
-        {}));
+  Output writeScalarSummary<T>(
+      Output writer, Output<int> step, Output<String> tag, Output<T> value) {
+    var op = newOperation(
+        'WriteScalarSummary', _scope.uniqueName('WriteScalarSummary'));
+    op.addInput(writer);
+    op.addInput(step);
+    op.addInput(tag);
+    op.addInput(value);
+    return op.finish()[-1];
   }
 
-  Output reduceJoin(Output inputs, Output reductionIndices,
+  Output<String> reduceJoin(Output<String> inputs, Output<int> reductionIndices,
       {bool keepDims: false, String separator}) {
-    return addOperation(new OperationDescription(
-        'ReduceJoin',
-        _scope.uniqueName('ReduceJoin'),
-        [inputs, reductionIndices],
-        {'keep_dims': keepDims, 'separator': separator}));
+    var op = newOperation('ReduceJoin', _scope.uniqueName('ReduceJoin'));
+    op.addInput(inputs);
+    op.addInput(reductionIndices);
+    op.setAttrBool('keep_dims', keepDims);
+    op.setAttrString('separator', separator);
+    return op.finish()[0];
   }
 
-  Output shardedFilespec(Output basename, Output numShards) {
-    return addOperation(new OperationDescription('ShardedFilespec',
-        _scope.uniqueName('ShardedFilespec'), [basename, numShards], {}));
+  Output<String> shardedFilespec(
+      Output<String> basename, Output<int> numShards) {
+    var op =
+        newOperation('ShardedFilespec', _scope.uniqueName('ShardedFilespec'));
+    op.addInput(basename);
+    op.addInput(numShards);
+    return op.finish()[0];
   }
 
   Output iFFT2D(Output input) {
-    return addOperation(new OperationDescription(
-        'IFFT2D', _scope.uniqueName('IFFT2D'), [input], {}));
+    var op = newOperation('IFFT2D', _scope.uniqueName('IFFT2D'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
   Output hashTableV2(
       {String container,
       String sharedName,
       bool useNodeNameSharing: false,
-      @required DataType keyDtype,
-      @required DataType valueDtype}) {
-    return addOperation(new OperationDescription(
-        'HashTableV2', _scope.uniqueName('HashTableV2'), [], {
-      'container': container,
-      'shared_name': sharedName,
-      'use_node_name_sharing': useNodeNameSharing,
-      'key_dtype': keyDtype,
-      'value_dtype': valueDtype
-    }));
+      DataType keyDtype,
+      DataType valueDtype}) {
+    var op = newOperation('HashTableV2', _scope.uniqueName('HashTableV2'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrBool('use_node_name_sharing', useNodeNameSharing);
+    op.setAttrType('key_dtype', keyDtype);
+    op.setAttrType('value_dtype', valueDtype);
+    return op.finish()[0];
   }
 
-  Output hashTable(
+  Output<String> hashTable(
       {String container,
       String sharedName,
       bool useNodeNameSharing: false,
-      @required DataType keyDtype,
-      @required DataType valueDtype}) {
-    return addOperation(new OperationDescription(
-        'HashTable', _scope.uniqueName('HashTable'), [], {
-      'container': container,
-      'shared_name': sharedName,
-      'use_node_name_sharing': useNodeNameSharing,
-      'key_dtype': keyDtype,
-      'value_dtype': valueDtype
-    }));
+      DataType keyDtype,
+      DataType valueDtype}) {
+    var op = newOperation('HashTable', _scope.uniqueName('HashTable'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrBool('use_node_name_sharing', useNodeNameSharing);
+    op.setAttrType('key_dtype', keyDtype);
+    op.setAttrType('value_dtype', valueDtype);
+    return op.finish()[0];
   }
 
-  Output sparseDenseCwiseDiv(
-      Output spIndices, Output spValues, Output spShape, Output dense) {
-    return addOperation(new OperationDescription(
-        'SparseDenseCwiseDiv',
-        _scope.uniqueName('SparseDenseCwiseDiv'),
-        [spIndices, spValues, spShape, dense],
-        {}));
+  Output<T> sparseDenseCwiseDiv<T>(Output<int> spIndices, Output<T> spValues,
+      Output<int> spShape, Output<T> dense) {
+    var op = newOperation(
+        'SparseDenseCwiseDiv', _scope.uniqueName('SparseDenseCwiseDiv'));
+    op.addInput(spIndices);
+    op.addInput(spValues);
+    op.addInput(spShape);
+    op.addInput(dense);
+    return op.finish()[0];
   }
 
-  Output lookupTableImport(Output tableHandle, Output keys, Output values,
-      {@required DataType tin, @required DataType tout}) {
-    return addOperation(new OperationDescription(
-        'LookupTableImport',
-        _scope.uniqueName('LookupTableImport'),
-        [tableHandle, keys, values],
-        {'Tin': tin, 'Tout': tout}));
+  Output lookupTableImport<T>(
+      Output<String> tableHandle, Output<T> keys, Output<T> values,
+      {DataType tin, DataType tout}) {
+    var op = newOperation(
+        'LookupTableImport', _scope.uniqueName('LookupTableImport'));
+    op.addInput(tableHandle);
+    op.addInput(keys);
+    op.addInput(values);
+    op.setAttrType('Tin', tin);
+    op.setAttrType('Tout', tout);
+    return op.finish()[-1];
   }
 
-  Output assignVariableOp(Output resource, Output value,
-      {@required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'AssignVariableOp',
-        _scope.uniqueName('AssignVariableOp'),
-        [resource, value],
-        {'dtype': dtype}));
+  Output assignVariableOp<T>(Output resource, Output<T> value,
+      {DataType dtype}) {
+    dtype ??= inferType(resource);
+    var op =
+        newOperation('AssignVariableOp', _scope.uniqueName('AssignVariableOp'));
+    op.addInput(resource);
+    op.addInput(value);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[-1];
   }
 
-  Output lookupTableSize(Output tableHandle) {
-    return addOperation(new OperationDescription('LookupTableSize',
-        _scope.uniqueName('LookupTableSize'), [tableHandle], {}));
+  Output<int> lookupTableSize(Output<String> tableHandle) {
+    var op =
+        newOperation('LookupTableSize', _scope.uniqueName('LookupTableSize'));
+    op.addInput(tableHandle);
+    return op.finish()[0];
   }
 
-  Output lookupTableInsert(Output tableHandle, Output keys, Output values,
-      {@required DataType tin, @required DataType tout}) {
-    return addOperation(new OperationDescription(
-        'LookupTableInsert',
-        _scope.uniqueName('LookupTableInsert'),
-        [tableHandle, keys, values],
-        {'Tin': tin, 'Tout': tout}));
+  Output lookupTableInsert<T>(
+      Output<String> tableHandle, Output<T> keys, Output<T> values,
+      {DataType tin, DataType tout}) {
+    var op = newOperation(
+        'LookupTableInsert', _scope.uniqueName('LookupTableInsert'));
+    op.addInput(tableHandle);
+    op.addInput(keys);
+    op.addInput(values);
+    op.setAttrType('Tin', tin);
+    op.setAttrType('Tout', tout);
+    return op.finish()[-1];
   }
 
-  Output initializeTable(Output tableHandle, Output keys, Output values,
-      {@required DataType tkey, @required DataType tval}) {
-    return addOperation(new OperationDescription(
-        'InitializeTable',
-        _scope.uniqueName('InitializeTable'),
-        [tableHandle, keys, values],
-        {'Tkey': tkey, 'Tval': tval}));
+  Output initializeTable<T>(
+      Output<String> tableHandle, Output<T> keys, Output<T> values,
+      {DataType tkey, DataType tval}) {
+    var op =
+        newOperation('InitializeTable', _scope.uniqueName('InitializeTable'));
+    op.addInput(tableHandle);
+    op.addInput(keys);
+    op.addInput(values);
+    op.setAttrType('Tkey', tkey);
+    op.setAttrType('Tval', tval);
+    return op.finish()[-1];
   }
 
-  Output variableShape(Output input, {DataType outType: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('VariableShape',
-        _scope.uniqueName('VariableShape'), [input], {'out_type': outType}));
+  Output<T> variableShape<T>(Output input,
+      {DataType outType: DataType.DT_INT32}) {
+    var op = newOperation('VariableShape', _scope.uniqueName('VariableShape'));
+    op.addInput(input);
+    op.setAttrType('out_type', outType);
+    return op.finish()[0];
   }
 
-  Output tensorListReserve(Output elementShape, Output numElements,
-      {@required DataType elementDtype, @required DataType shapeType}) {
-    return addOperation(new OperationDescription(
-        'TensorListReserve',
-        _scope.uniqueName('TensorListReserve'),
-        [elementShape, numElements],
-        {'element_dtype': elementDtype, 'shape_type': shapeType}));
+  Output tensorListReserve<T>(Output<T> elementShape, Output<int> numElements,
+      {DataType elementDtype, DataType shapeType}) {
+    var op = newOperation(
+        'TensorListReserve', _scope.uniqueName('TensorListReserve'));
+    op.addInput(elementShape);
+    op.addInput(numElements);
+    op.setAttrType('element_dtype', elementDtype);
+    op.setAttrType('shape_type', shapeType);
+    return op.finish()[0];
   }
 
-  Output tensorListElementShape(Output inputHandle,
-      {@required DataType shapeType}) {
-    return addOperation(new OperationDescription(
-        'TensorListElementShape',
-        _scope.uniqueName('TensorListElementShape'),
-        [inputHandle],
-        {'shape_type': shapeType}));
+  Output<T> tensorListElementShape<T>(Output inputHandle,
+      {DataType shapeType}) {
+    var op = newOperation(
+        'TensorListElementShape', _scope.uniqueName('TensorListElementShape'));
+    op.addInput(inputHandle);
+    op.setAttrType('shape_type', shapeType);
+    return op.finish()[0];
   }
 
-  Output tensorListStack(Output inputHandle,
-      {@required DataType elementDtype, int numElements: -1}) {
-    return addOperation(new OperationDescription(
-        'TensorListStack',
-        _scope.uniqueName('TensorListStack'),
-        [inputHandle],
-        {'element_dtype': elementDtype, 'num_elements': numElements}));
+  Output<T> tensorListStack<T>(Output inputHandle,
+      {DataType elementDtype, int numElements: -1}) {
+    var op =
+        newOperation('TensorListStack', _scope.uniqueName('TensorListStack'));
+    op.addInput(inputHandle);
+    op.setAttrType('element_dtype', elementDtype);
+    op.setAttrInt('num_elements', numElements);
+    return op.finish()[0];
   }
 
-  Output emptyTensorList(Output elementShape,
-      {@required DataType elementDtype, @required DataType shapeType}) {
-    return addOperation(new OperationDescription(
-        'EmptyTensorList',
-        _scope.uniqueName('EmptyTensorList'),
-        [elementShape],
-        {'element_dtype': elementDtype, 'shape_type': shapeType}));
+  Output emptyTensorList<T>(Output<T> elementShape,
+      {DataType elementDtype, DataType shapeType}) {
+    var op =
+        newOperation('EmptyTensorList', _scope.uniqueName('EmptyTensorList'));
+    op.addInput(elementShape);
+    op.setAttrType('element_dtype', elementDtype);
+    op.setAttrType('shape_type', shapeType);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 13: Use MatrixSolveLs instead.')
-  Output batchMatrixSolveLs(Output matrix, Output rhs, Output l2Regularizer,
+  Output<T> batchMatrixSolveLs<T>(
+      Output<T> matrix, Output<T> rhs, Output l2Regularizer,
       {bool fast: true}) {
-    return addOperation(new OperationDescription(
-        'BatchMatrixSolveLs',
-        _scope.uniqueName('BatchMatrixSolveLs'),
-        [matrix, rhs, l2Regularizer],
-        {'fast': fast}));
+    var op = newOperation(
+        'BatchMatrixSolveLs', _scope.uniqueName('BatchMatrixSolveLs'));
+    op.addInput(matrix);
+    op.addInput(rhs);
+    op.addInput(l2Regularizer);
+    op.setAttrBool('fast', fast);
+    return op.finish()[0];
   }
 
-  Output gatherV2(Output params, Output indices, Output axis,
-      {@required DataType tparams,
-      @required DataType tindices,
-      @required DataType taxis}) {
-    return addOperation(new OperationDescription(
-        'GatherV2',
-        _scope.uniqueName('GatherV2'),
-        [params, indices, axis],
-        {'Tparams': tparams, 'Tindices': tindices, 'Taxis': taxis}));
+  Output<T> gatherV2<T>(Output<T> params, Output<T> indices, Output<T> axis,
+      {DataType tparams, DataType tindices, DataType taxis}) {
+    var op = newOperation('GatherV2', _scope.uniqueName('GatherV2'));
+    op.addInput(params);
+    op.addInput(indices);
+    op.addInput(axis);
+    op.setAttrType('Tparams', tparams);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrType('Taxis', taxis);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 13: Use MatrixSolve instead.')
-  Output batchMatrixSolve(Output matrix, Output rhs, {bool adjoint: false}) {
-    return addOperation(new OperationDescription(
-        'BatchMatrixSolve',
-        _scope.uniqueName('BatchMatrixSolve'),
-        [matrix, rhs],
-        {'adjoint': adjoint}));
+  Output<T> batchMatrixSolve<T>(Output<T> matrix, Output<T> rhs,
+      {bool adjoint: false}) {
+    var op =
+        newOperation('BatchMatrixSolve', _scope.uniqueName('BatchMatrixSolve'));
+    op.addInput(matrix);
+    op.addInput(rhs);
+    op.setAttrBool('adjoint', adjoint);
+    return op.finish()[0];
   }
 
-  Output applyProximalAdagrad(
-      Output var_, Output accum, Output lr, Output l1, Output l2, Output grad,
+  Output<T> applyProximalAdagrad<T>(Output<T> var_, Output<T> accum,
+      Output<T> lr, Output<T> l1, Output<T> l2, Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyProximalAdagrad',
-        _scope.uniqueName('ApplyProximalAdagrad'),
-        [var_, accum, lr, l1, l2, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation(
+        'ApplyProximalAdagrad', _scope.uniqueName('ApplyProximalAdagrad'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output sparseSegmentMeanGrad(
-      Output grad, Output indices, Output segmentIds, Output outputDim0,
+  Output<T> sparseSegmentMeanGrad<T>(Output<T> grad, Output<T> indices,
+      Output<int> segmentIds, Output<int> outputDim0,
       {DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'SparseSegmentMeanGrad',
-        _scope.uniqueName('SparseSegmentMeanGrad'),
-        [grad, indices, segmentIds, outputDim0],
-        {'Tidx': tidx}));
+    var op = newOperation(
+        'SparseSegmentMeanGrad', _scope.uniqueName('SparseSegmentMeanGrad'));
+    op.addInput(grad);
+    op.addInput(indices);
+    op.addInput(segmentIds);
+    op.addInput(outputDim0);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output pack(List<Output> values, {@required int n, int axis: 0}) {
-    return addOperation(new OperationDescription(
-        'Pack', _scope.uniqueName('Pack'), [values], {'N': n, 'axis': axis}));
+  Output<T> pack<T>(List<Output<T>> values, {int n, int axis: 0}) {
+    var op = newOperation('Pack', _scope.uniqueName('Pack'));
+    op.addInputList(values);
+    op.setAttrInt('N', n);
+    op.setAttrInt('axis', axis);
+    return op.finish()[0];
   }
 
-  Output barrierClose(Output handle, {bool cancelPendingEnqueues: false}) {
-    return addOperation(new OperationDescription(
-        'BarrierClose',
-        _scope.uniqueName('BarrierClose'),
-        [handle],
-        {'cancel_pending_enqueues': cancelPendingEnqueues}));
+  Output barrierClose(Output<String> handle,
+      {bool cancelPendingEnqueues: false}) {
+    var op = newOperation('BarrierClose', _scope.uniqueName('BarrierClose'));
+    op.addInput(handle);
+    op.setAttrBool('cancel_pending_enqueues', cancelPendingEnqueues);
+    return op.finish()[-1];
   }
 
-  Output choleskyGrad(Output l, Output grad) {
-    return addOperation(new OperationDescription(
-        'CholeskyGrad', _scope.uniqueName('CholeskyGrad'), [l, grad], {}));
+  Output<T> choleskyGrad<T>(Output<T> l, Output<T> grad) {
+    var op = newOperation('CholeskyGrad', _scope.uniqueName('CholeskyGrad'));
+    op.addInput(l);
+    op.addInput(grad);
+    return op.finish()[0];
   }
 
-  Output gatherNd(Output params, Output indices,
-      {@required DataType tparams, @required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'GatherNd',
-        _scope.uniqueName('GatherNd'),
-        [params, indices],
-        {'Tparams': tparams, 'Tindices': tindices}));
+  Output<T> gatherNd<T>(Output<T> params, Output<T> indices,
+      {DataType tparams, DataType tindices}) {
+    var op = newOperation('GatherNd', _scope.uniqueName('GatherNd'));
+    op.addInput(params);
+    op.addInput(indices);
+    op.setAttrType('Tparams', tparams);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
+  }
+
+  Output<T> maxPool<T>(Output<T> input,
+      {List<int> ksize,
+      List<int> strides,
+      String padding,
+      String dataFormat: 'NHWC'}) {
+    var op = newOperation('MaxPool', _scope.uniqueName('MaxPool'));
+    op.addInput(input);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
+  }
+
+  Output orderedMapClear(
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op =
+        newOperation('OrderedMapClear', _scope.uniqueName('OrderedMapClear'));
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[-1];
   }
 
   Output queueCloseV2(Output handle, {bool cancelPendingEnqueues: false}) {
-    return addOperation(new OperationDescription(
-        'QueueCloseV2',
-        _scope.uniqueName('QueueCloseV2'),
-        [handle],
-        {'cancel_pending_enqueues': cancelPendingEnqueues}));
+    var op = newOperation('QueueCloseV2', _scope.uniqueName('QueueCloseV2'));
+    op.addInput(handle);
+    op.setAttrBool('cancel_pending_enqueues', cancelPendingEnqueues);
+    return op.finish()[-1];
   }
 
-  Output matrixExponential(Output input) {
-    return addOperation(new OperationDescription('MatrixExponential',
-        _scope.uniqueName('MatrixExponential'), [input], {}));
+  Output<T> matrixExponential<T>(Output<T> input) {
+    var op = newOperation(
+        'MatrixExponential', _scope.uniqueName('MatrixExponential'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output matrixDeterminant(Output input) {
-    return addOperation(new OperationDescription('MatrixDeterminant',
-        _scope.uniqueName('MatrixDeterminant'), [input], {}));
+  Output<T> matrixDeterminant<T>(Output<T> input) {
+    var op = newOperation(
+        'MatrixDeterminant', _scope.uniqueName('MatrixDeterminant'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output shape(Output input, {DataType outType: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'Shape', _scope.uniqueName('Shape'), [input], {'out_type': outType}));
+  Output<T> shape<T>(Output<T> input, {DataType outType: DataType.DT_INT32}) {
+    var op = newOperation('Shape', _scope.uniqueName('Shape'));
+    op.addInput(input);
+    op.setAttrType('out_type', outType);
+    return op.finish()[0];
   }
 
-  Output asinh(Output x) {
-    return addOperation(
-        new OperationDescription('Asinh', _scope.uniqueName('Asinh'), [x], {}));
+  Output<T> asinh<T>(Output<T> x) {
+    var op = newOperation('Asinh', _scope.uniqueName('Asinh'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output lookupTableFindV2(Output tableHandle, Output keys, Output defaultValue,
-      {@required DataType tin, @required DataType tout}) {
-    return addOperation(new OperationDescription(
-        'LookupTableFindV2',
-        _scope.uniqueName('LookupTableFindV2'),
-        [tableHandle, keys, defaultValue],
-        {'Tin': tin, 'Tout': tout}));
+  Output<T> lookupTableFindV2<T>(
+      Output tableHandle, Output<T> keys, Output<T> defaultValue,
+      {DataType tin, DataType tout}) {
+    var op = newOperation(
+        'LookupTableFindV2', _scope.uniqueName('LookupTableFindV2'));
+    op.addInput(tableHandle);
+    op.addInput(keys);
+    op.addInput(defaultValue);
+    op.setAttrType('Tin', tin);
+    op.setAttrType('Tout', tout);
+    return op.finish()[0];
   }
 
-  Output where(Output input) {
-    return addOperation(new OperationDescription(
-        'Where', _scope.uniqueName('Where'), [input], {}));
+  Output<int> where<T>(Output<T> input) {
+    var op = newOperation('Where', _scope.uniqueName('Where'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output applyFtrlV2(Output var_, Output accum, Output linear, Output grad,
-      Output lr, Output l1, Output l2, Output l2Shrinkage, Output lrPower,
+  Output<T> applyFtrlV2<T>(
+      Output<T> var_,
+      Output<T> accum,
+      Output<T> linear,
+      Output<T> grad,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> l2Shrinkage,
+      Output<T> lrPower,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyFtrlV2',
-        _scope.uniqueName('ApplyFtrlV2'),
-        [var_, accum, linear, grad, lr, l1, l2, l2Shrinkage, lrPower],
-        {'use_locking': useLocking}));
+    var op = newOperation('ApplyFtrlV2', _scope.uniqueName('ApplyFtrlV2'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(linear);
+    op.addInput(grad);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(l2Shrinkage);
+    op.addInput(lrPower);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayCloseV3')
-  Output tensorArrayCloseV2(Output handle) {
-    return addOperation(new OperationDescription('TensorArrayCloseV2',
-        _scope.uniqueName('TensorArrayCloseV2'), [handle], {}));
+  Output tensorArrayCloseV2(Output<String> handle) {
+    var op = newOperation(
+        'TensorArrayCloseV2', _scope.uniqueName('TensorArrayCloseV2'));
+    op.addInput(handle);
+    return op.finish()[-1];
   }
 
-  Output readerReset(Output readerHandle) {
-    return addOperation(new OperationDescription(
-        'ReaderReset', _scope.uniqueName('ReaderReset'), [readerHandle], {}));
+  Output<T> avgPool3DGrad<T>(Output<int> origInputShape, Output<T> grad,
+      {List<int> ksize,
+      List<int> strides,
+      String padding,
+      String dataFormat: 'NDHWC'}) {
+    var op = newOperation('AvgPool3DGrad', _scope.uniqueName('AvgPool3DGrad'));
+    op.addInput(origInputShape);
+    op.addInput(grad);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
   }
 
-  Output audioSummaryV2(Output tag, Output tensor, Output sampleRate,
+  Output readerReset(Output<String> readerHandle) {
+    var op = newOperation('ReaderReset', _scope.uniqueName('ReaderReset'));
+    op.addInput(readerHandle);
+    return op.finish()[-1];
+  }
+
+  Output<T> avgPool<T>(Output<T> value,
+      {List<int> ksize,
+      List<int> strides,
+      String padding,
+      String dataFormat: 'NHWC'}) {
+    var op = newOperation('AvgPool', _scope.uniqueName('AvgPool'));
+    op.addInput(value);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
+  }
+
+  Output<String> audioSummaryV2(
+      Output<String> tag, Output<double> tensor, Output<double> sampleRate,
       {int maxOutputs: 3}) {
-    return addOperation(new OperationDescription(
-        'AudioSummaryV2',
-        _scope.uniqueName('AudioSummaryV2'),
-        [tag, tensor, sampleRate],
-        {'max_outputs': maxOutputs}));
+    var op =
+        newOperation('AudioSummaryV2', _scope.uniqueName('AudioSummaryV2'));
+    op.addInput(tag);
+    op.addInput(tensor);
+    op.addInput(sampleRate);
+    op.setAttrInt('max_outputs', maxOutputs);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayReadV3')
-  Output tensorArrayReadV2(Output handle, Output index, Output flowIn,
-      {@required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'TensorArrayReadV2',
-        _scope.uniqueName('TensorArrayReadV2'),
-        [handle, index, flowIn],
-        {'dtype': dtype}));
+  Output<T> tensorArrayReadV2<T>(
+      Output<String> handle, Output<int> index, Output<double> flowIn,
+      {DataType dtype}) {
+    dtype ??= inferType(handle);
+    var op = newOperation(
+        'TensorArrayReadV2', _scope.uniqueName('TensorArrayReadV2'));
+    op.addInput(handle);
+    op.addInput(index);
+    op.addInput(flowIn);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output readerRestoreStateV2(Output readerHandle, Output state) {
-    return addOperation(new OperationDescription('ReaderRestoreStateV2',
-        _scope.uniqueName('ReaderRestoreStateV2'), [readerHandle, state], {}));
+  Output<T> stagePeek<T>(Output<int> index,
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation('StagePeek', _scope.uniqueName('StagePeek'));
+    op.addInput(index);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output setSize(Output setIndices, Output setValues, Output setShape,
+  Output readerRestoreStateV2(Output readerHandle, Output<String> state) {
+    var op = newOperation(
+        'ReaderRestoreStateV2', _scope.uniqueName('ReaderRestoreStateV2'));
+    op.addInput(readerHandle);
+    op.addInput(state);
+    return op.finish()[-1];
+  }
+
+  Output<int> setSize<T>(
+      Output<int> setIndices, Output<T> setValues, Output<int> setShape,
       {bool validateIndices: true}) {
-    return addOperation(new OperationDescription(
-        'SetSize',
-        _scope.uniqueName('SetSize'),
-        [setIndices, setValues, setShape],
-        {'validate_indices': validateIndices}));
+    var op = newOperation('SetSize', _scope.uniqueName('SetSize'));
+    op.addInput(setIndices);
+    op.addInput(setValues);
+    op.addInput(setShape);
+    op.setAttrBool('validate_indices', validateIndices);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 13: Use Cholesky instead.')
-  Output batchCholesky(Output input) {
-    return addOperation(new OperationDescription(
-        'BatchCholesky', _scope.uniqueName('BatchCholesky'), [input], {}));
+  Output<T> batchCholesky<T>(Output<T> input) {
+    var op = newOperation('BatchCholesky', _scope.uniqueName('BatchCholesky'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 16: Use TensorArrayGatherV3')
-  Output tensorArrayGather(Output handle, Output indices, Output flowIn,
-      {@required DataType dtype, List<int> elementShape}) {
-    return addOperation(new OperationDescription(
-        'TensorArrayGather',
-        _scope.uniqueName('TensorArrayGather'),
-        [handle, indices, flowIn],
-        {'dtype': dtype, 'element_shape': elementShape}));
+  Output<T> tensorArrayGather<T>(
+      Output<String> handle, Output<int> indices, Output<double> flowIn,
+      {DataType dtype, Shape elementShape}) {
+    dtype ??= inferType(handle);
+    var op = newOperation(
+        'TensorArrayGather', _scope.uniqueName('TensorArrayGather'));
+    op.addInput(handle);
+    op.addInput(indices);
+    op.addInput(flowIn);
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('element_shape', elementShape);
+    return op.finish()[0];
   }
 
-  Output resizeArea(Output images, Output size, {bool alignCorners: false}) {
-    return addOperation(new OperationDescription(
-        'ResizeArea',
-        _scope.uniqueName('ResizeArea'),
-        [images, size],
-        {'align_corners': alignCorners}));
+  Output<double> resizeArea<T>(Output<T> images, Output<int> size,
+      {bool alignCorners: false}) {
+    var op = newOperation('ResizeArea', _scope.uniqueName('ResizeArea'));
+    op.addInput(images);
+    op.addInput(size);
+    op.setAttrBool('align_corners', alignCorners);
+    return op.finish()[0];
   }
 
-  Output readerRestoreState(Output readerHandle, Output state) {
-    return addOperation(new OperationDescription('ReaderRestoreState',
-        _scope.uniqueName('ReaderRestoreState'), [readerHandle, state], {}));
+  Output readerRestoreState(Output<String> readerHandle, Output<String> state) {
+    var op = newOperation(
+        'ReaderRestoreState', _scope.uniqueName('ReaderRestoreState'));
+    op.addInput(readerHandle);
+    op.addInput(state);
+    return op.finish()[-1];
   }
 
-  Output readerSerializeState(Output readerHandle) {
-    return addOperation(new OperationDescription('ReaderSerializeState',
-        _scope.uniqueName('ReaderSerializeState'), [readerHandle], {}));
+  Output<String> readerSerializeState(Output<String> readerHandle) {
+    var op = newOperation(
+        'ReaderSerializeState', _scope.uniqueName('ReaderSerializeState'));
+    op.addInput(readerHandle);
+    return op.finish()[0];
   }
 
-  Output matrixTriangularSolve(Output matrix, Output rhs,
+  Output<T> matrixTriangularSolve<T>(Output<T> matrix, Output<T> rhs,
       {bool lower: true, bool adjoint: false}) {
-    return addOperation(new OperationDescription(
-        'MatrixTriangularSolve',
-        _scope.uniqueName('MatrixTriangularSolve'),
-        [matrix, rhs],
-        {'lower': lower, 'adjoint': adjoint}));
+    var op = newOperation(
+        'MatrixTriangularSolve', _scope.uniqueName('MatrixTriangularSolve'));
+    op.addInput(matrix);
+    op.addInput(rhs);
+    op.setAttrBool('lower', lower);
+    op.setAttrBool('adjoint', adjoint);
+    return op.finish()[0];
   }
 
-  Output select(Output condition, Output t, Output e) {
-    return addOperation(new OperationDescription(
-        'Select', _scope.uniqueName('Select'), [condition, t, e], {}));
+  Output<T> select<T>(Output<bool> condition, Output<T> t, Output<T> e) {
+    var op = newOperation('Select', _scope.uniqueName('Select'));
+    op.addInput(condition);
+    op.addInput(t);
+    op.addInput(e);
+    return op.finish()[0];
   }
 
-  Output log(Output x) {
-    return addOperation(
-        new OperationDescription('Log', _scope.uniqueName('Log'), [x], {}));
+  Output<T> log<T>(Output<T> x) {
+    var op = newOperation('Log', _scope.uniqueName('Log'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output iRFFT2D(Output input, Output fftLength) {
-    return addOperation(new OperationDescription(
-        'IRFFT2D', _scope.uniqueName('IRFFT2D'), [input, fftLength], {}));
+  Output<double> iRFFT2D(Output input, Output<int> fftLength) {
+    var op = newOperation('IRFFT2D', _scope.uniqueName('IRFFT2D'));
+    op.addInput(input);
+    op.addInput(fftLength);
+    return op.finish()[0];
   }
 
-  Output mutableDenseHashTableV2(Output emptyKey,
+  Output mutableDenseHashTableV2<T>(Output<T> emptyKey,
       {String container,
       String sharedName,
       bool useNodeNameSharing: false,
-      @required DataType keyDtype,
-      @required DataType valueDtype,
-      List<int> valueShape,
+      DataType keyDtype,
+      DataType valueDtype,
+      Shape valueShape,
       int initialNumBuckets: 131072,
       double maxLoadFactor: 0.800000011920929}) {
-    return addOperation(new OperationDescription('MutableDenseHashTableV2',
-        _scope.uniqueName('MutableDenseHashTableV2'), [
-      emptyKey
-    ], {
-      'container': container,
-      'shared_name': sharedName,
-      'use_node_name_sharing': useNodeNameSharing,
-      'key_dtype': keyDtype,
-      'value_dtype': valueDtype,
-      'value_shape': valueShape,
-      'initial_num_buckets': initialNumBuckets,
-      'max_load_factor': maxLoadFactor
-    }));
+    var op = newOperation('MutableDenseHashTableV2',
+        _scope.uniqueName('MutableDenseHashTableV2'));
+    op.addInput(emptyKey);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrBool('use_node_name_sharing', useNodeNameSharing);
+    op.setAttrType('key_dtype', keyDtype);
+    op.setAttrType('value_dtype', valueDtype);
+    op.setAttrShape('value_shape', valueShape);
+    op.setAttrInt('initial_num_buckets', initialNumBuckets);
+    op.setAttrFloat('max_load_factor', maxLoadFactor);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 26: Use FixedLengthRecordReaderV2')
-  Output fixedLengthRecordReader(
+  Output<String> fixedLengthRecordReader(
       {int headerBytes: 0,
-      @required int recordBytes,
+      int recordBytes,
       int footerBytes: 0,
       int hopBytes: 0,
       String container,
       String sharedName}) {
-    return addOperation(new OperationDescription('FixedLengthRecordReader',
-        _scope.uniqueName('FixedLengthRecordReader'), [], {
-      'header_bytes': headerBytes,
-      'record_bytes': recordBytes,
-      'footer_bytes': footerBytes,
-      'hop_bytes': hopBytes,
-      'container': container,
-      'shared_name': sharedName
-    }));
+    var op = newOperation('FixedLengthRecordReader',
+        _scope.uniqueName('FixedLengthRecordReader'));
+    op.setAttrInt('header_bytes', headerBytes);
+    op.setAttrInt('record_bytes', recordBytes);
+    op.setAttrInt('footer_bytes', footerBytes);
+    op.setAttrInt('hop_bytes', hopBytes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output recordInput(
-      {@required String filePattern,
+  Output<String> recordInput(
+      {String filePattern,
       int fileRandomSeed: 301,
       double fileShuffleShiftRatio: 0.0,
       int fileBufferSize: 10000,
       int fileParallelism: 16,
       int batchSize: 32,
       String compressionType}) {
-    return addOperation(new OperationDescription(
-        'RecordInput', _scope.uniqueName('RecordInput'), [], {
-      'file_pattern': filePattern,
-      'file_random_seed': fileRandomSeed,
-      'file_shuffle_shift_ratio': fileShuffleShiftRatio,
-      'file_buffer_size': fileBufferSize,
-      'file_parallelism': fileParallelism,
-      'batch_size': batchSize,
-      'compression_type': compressionType
-    }));
+    var op = newOperation('RecordInput', _scope.uniqueName('RecordInput'));
+    op.setAttrString('file_pattern', filePattern);
+    op.setAttrInt('file_random_seed', fileRandomSeed);
+    op.setAttrFloat('file_shuffle_shift_ratio', fileShuffleShiftRatio);
+    op.setAttrInt('file_buffer_size', fileBufferSize);
+    op.setAttrInt('file_parallelism', fileParallelism);
+    op.setAttrInt('batch_size', batchSize);
+    op.setAttrString('compression_type', compressionType);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use TextLineReaderV2')
-  Output textLineReader(
+  Output<String> textLineReader(
       {int skipHeaderLines: 0, String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'TextLineReader', _scope.uniqueName('TextLineReader'), [], {
-      'skip_header_lines': skipHeaderLines,
-      'container': container,
-      'shared_name': sharedName
-    }));
+    var op =
+        newOperation('TextLineReader', _scope.uniqueName('TextLineReader'));
+    op.setAttrInt('skip_header_lines', skipHeaderLines);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output restoreSlice(
-      Output filePattern, Output tensorName, Output shapeAndSlice,
-      {@required DataType dt, int preferredShard: -1}) {
-    return addOperation(new OperationDescription(
-        'RestoreSlice',
-        _scope.uniqueName('RestoreSlice'),
-        [filePattern, tensorName, shapeAndSlice],
-        {'dt': dt, 'preferred_shard': preferredShard}));
+  Output<T> restoreSlice<T>(Output<String> filePattern,
+      Output<String> tensorName, Output<String> shapeAndSlice,
+      {DataType dt, int preferredShard: -1}) {
+    var op = newOperation('RestoreSlice', _scope.uniqueName('RestoreSlice'));
+    op.addInput(filePattern);
+    op.addInput(tensorName);
+    op.addInput(shapeAndSlice);
+    op.setAttrType('dt', dt);
+    op.setAttrInt('preferred_shard', preferredShard);
+    return op.finish()[0];
   }
 
-  Output refExit(Output data) {
-    return addOperation(new OperationDescription(
-        'RefExit', _scope.uniqueName('RefExit'), [data], {}));
+  Output save<T>(
+      Output<String> filename, Output<String> tensorNames, List<Output<T>> data,
+      {List<DataType> t}) {
+    var op = newOperation('Save', _scope.uniqueName('Save'));
+    op.addInput(filename);
+    op.addInput(tensorNames);
+    op.addInputList(data);
+    op.setAttrTypeList('T', t);
+    return op.finish()[-1];
   }
 
-  Output notEqual(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'NotEqual', _scope.uniqueName('NotEqual'), [x, y], {}));
+  Output<T> refExit<T>(Output<T> data) {
+    var op = newOperation('RefExit', _scope.uniqueName('RefExit'));
+    op.addInput(data);
+    return op.finish()[0];
   }
 
-  Output nonMaxSuppression(Output boxes, Output scores, Output maxOutputSize,
+  Output<bool> notEqual<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('NotEqual', _scope.uniqueName('NotEqual'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
+  }
+
+  Output<int> nonMaxSuppression(
+      Output<double> boxes, Output<double> scores, Output<int> maxOutputSize,
       {double iouThreshold: 0.5}) {
-    return addOperation(new OperationDescription(
-        'NonMaxSuppression',
-        _scope.uniqueName('NonMaxSuppression'),
-        [boxes, scores, maxOutputSize],
-        {'iou_threshold': iouThreshold}));
+    var op = newOperation(
+        'NonMaxSuppression', _scope.uniqueName('NonMaxSuppression'));
+    op.addInput(boxes);
+    op.addInput(scores);
+    op.addInput(maxOutputSize);
+    op.setAttrFloat('iou_threshold', iouThreshold);
+    return op.finish()[0];
   }
 
-  Output batchToSpaceND(Output input, Output blockShape, Output crops,
+  Output fIFOQueueV2(
+      {List<DataType> componentTypes,
+      List<Shape> shapes,
+      int capacity: -1,
+      String container,
+      String sharedName}) {
+    var op = newOperation('FIFOQueueV2', _scope.uniqueName('FIFOQueueV2'));
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrShapeList('shapes', shapes);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
+  }
+
+  Output<T> batchToSpaceND<T>(
+      Output<T> input, Output<T> blockShape, Output<T> crops,
       {DataType tblockShape: DataType.DT_INT32,
       DataType tcrops: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'BatchToSpaceND',
-        _scope.uniqueName('BatchToSpaceND'),
-        [input, blockShape, crops],
-        {'Tblock_shape': tblockShape, 'Tcrops': tcrops}));
+    var op =
+        newOperation('BatchToSpaceND', _scope.uniqueName('BatchToSpaceND'));
+    op.addInput(input);
+    op.addInput(blockShape);
+    op.addInput(crops);
+    op.setAttrType('Tblock_shape', tblockShape);
+    op.setAttrType('Tcrops', tcrops);
+    return op.finish()[0];
   }
 
-  Output cropAndResizeGradBoxes(
-      Output grads, Output image, Output boxes, Output boxInd,
+  Output<double> cropAndResizeGradBoxes<T>(Output<double> grads,
+      Output<T> image, Output<double> boxes, Output<int> boxInd,
       {String method: 'bilinear'}) {
-    return addOperation(new OperationDescription(
-        'CropAndResizeGradBoxes',
-        _scope.uniqueName('CropAndResizeGradBoxes'),
-        [grads, image, boxes, boxInd],
-        {'method': method}));
+    var op = newOperation(
+        'CropAndResizeGradBoxes', _scope.uniqueName('CropAndResizeGradBoxes'));
+    op.addInput(grads);
+    op.addInput(image);
+    op.addInput(boxes);
+    op.addInput(boxInd);
+    op.setAttrString('method', method);
+    return op.finish()[0];
   }
 
-  Output extractGlimpse(Output input, Output size, Output offsets,
+  Output<double> extractGlimpse(
+      Output<double> input, Output<int> size, Output<double> offsets,
       {bool centered: true, bool normalized: true, bool uniformNoise: true}) {
-    return addOperation(new OperationDescription(
-        'ExtractGlimpse', _scope.uniqueName('ExtractGlimpse'), [
-      input,
-      size,
-      offsets
-    ], {
-      'centered': centered,
-      'normalized': normalized,
-      'uniform_noise': uniformNoise
-    }));
+    var op =
+        newOperation('ExtractGlimpse', _scope.uniqueName('ExtractGlimpse'));
+    op.addInput(input);
+    op.addInput(size);
+    op.addInput(offsets);
+    op.setAttrBool('centered', centered);
+    op.setAttrBool('normalized', normalized);
+    op.setAttrBool('uniform_noise', uniformNoise);
+    return op.finish()[0];
   }
 
-  Output rightShift(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'RightShift', _scope.uniqueName('RightShift'), [x, y], {}));
+  Output<T> rightShift<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('RightShift', _scope.uniqueName('RightShift'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output decodeBmp(Output contents, {int channels: 0}) {
-    return addOperation(new OperationDescription('DecodeBmp',
-        _scope.uniqueName('DecodeBmp'), [contents], {'channels': channels}));
+  Output decodeBmp(Output<String> contents, {int channels: 0}) {
+    var op = newOperation('DecodeBmp', _scope.uniqueName('DecodeBmp'));
+    op.addInput(contents);
+    op.setAttrInt('channels', channels);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 13: Use MatrixDeterminant instead.')
-  Output batchMatrixDeterminant(Output input) {
-    return addOperation(new OperationDescription('BatchMatrixDeterminant',
-        _scope.uniqueName('BatchMatrixDeterminant'), [input], {}));
+  Output<T> batchMatrixDeterminant<T>(Output<T> input) {
+    var op = newOperation(
+        'BatchMatrixDeterminant', _scope.uniqueName('BatchMatrixDeterminant'));
+    op.addInput(input);
+    return op.finish()[0];
+  }
+
+  Output<T> queueDequeueUpToV2<T>(Output handle, Output<int> n,
+      {List<DataType> componentTypes, int timeoutMs: -1}) {
+    var op = newOperation(
+        'QueueDequeueUpToV2', _scope.uniqueName('QueueDequeueUpToV2'));
+    op.addInput(handle);
+    op.addInput(n);
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrInt('timeout_ms', timeoutMs);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 15: Use IFFT')
   Output batchIFFT(Output input) {
-    return addOperation(new OperationDescription(
-        'BatchIFFT', _scope.uniqueName('BatchIFFT'), [input], {}));
+    var op = newOperation('BatchIFFT', _scope.uniqueName('BatchIFFT'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayScatterV3')
-  Output tensorArrayScatterV2(
-      Output handle, Output indices, Output value, Output flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayScatterV2',
-        _scope.uniqueName('TensorArrayScatterV2'),
-        [handle, indices, value, flowIn],
-        {}));
+  Output<double> tensorArrayScatterV2<T>(Output<String> handle,
+      Output<int> indices, Output<T> value, Output<double> flowIn) {
+    var op = newOperation(
+        'TensorArrayScatterV2', _scope.uniqueName('TensorArrayScatterV2'));
+    op.addInput(handle);
+    op.addInput(indices);
+    op.addInput(value);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output rGBToHSV(Output images) {
-    return addOperation(new OperationDescription(
-        'RGBToHSV', _scope.uniqueName('RGBToHSV'), [images], {}));
+  Output<T> rGBToHSV<T>(Output<T> images) {
+    var op = newOperation('RGBToHSV', _scope.uniqueName('RGBToHSV'));
+    op.addInput(images);
+    return op.finish()[0];
   }
 
-  Output decodeGif(Output contents) {
-    return addOperation(new OperationDescription(
-        'DecodeGif', _scope.uniqueName('DecodeGif'), [contents], {}));
+  Output decodeGif(Output<String> contents) {
+    var op = newOperation('DecodeGif', _scope.uniqueName('DecodeGif'));
+    op.addInput(contents);
+    return op.finish()[0];
   }
 
-  Output assignSubVariableOp(Output resource, Output value,
-      {@required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'AssignSubVariableOp',
-        _scope.uniqueName('AssignSubVariableOp'),
-        [resource, value],
-        {'dtype': dtype}));
+  Output assignSubVariableOp<T>(Output resource, Output<T> value,
+      {DataType dtype}) {
+    dtype ??= inferType(resource);
+    var op = newOperation(
+        'AssignSubVariableOp', _scope.uniqueName('AssignSubVariableOp'));
+    op.addInput(resource);
+    op.addInput(value);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[-1];
   }
 
-  Output unravelIndex(Output indices, Output dims,
+  Output<T> unravelIndex<T>(Output<T> indices, Output<T> dims,
       {DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('UnravelIndex',
-        _scope.uniqueName('UnravelIndex'), [indices, dims], {'Tidx': tidx}));
+    var op = newOperation('UnravelIndex', _scope.uniqueName('UnravelIndex'));
+    op.addInput(indices);
+    op.addInput(dims);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output enter(Output data,
-      {@required String frameName,
-      bool isConstant: false,
-      int parallelIterations: 10}) {
-    return addOperation(
-        new OperationDescription('Enter', _scope.uniqueName('Enter'), [
-      data
-    ], {
-      'frame_name': frameName,
-      'is_constant': isConstant,
-      'parallel_iterations': parallelIterations
-    }));
+  Output<T> decodeCSV<T>(Output<String> records, List<Output<T>> recordDefaults,
+      {List<DataType> oUTTYPE,
+      String fieldDelim: ',',
+      bool useQuoteDelim: true,
+      String naValue}) {
+    var op = newOperation('DecodeCSV', _scope.uniqueName('DecodeCSV'));
+    op.addInput(records);
+    op.addInputList(recordDefaults);
+    op.setAttrTypeList('OUT_TYPE', oUTTYPE);
+    op.setAttrString('field_delim', fieldDelim);
+    op.setAttrBool('use_quote_delim', useQuoteDelim);
+    op.setAttrString('na_value', naValue);
+    return op.finish()[0];
   }
 
-  Output encodePng(Output image, {int compression: -1}) {
-    return addOperation(new OperationDescription('EncodePng',
-        _scope.uniqueName('EncodePng'), [image], {'compression': compression}));
+  Output<T> enter<T>(Output<T> data,
+      {String frameName, bool isConstant: false, int parallelIterations: 10}) {
+    var op = newOperation('Enter', _scope.uniqueName('Enter'));
+    op.addInput(data);
+    op.setAttrString('frame_name', frameName);
+    op.setAttrBool('is_constant', isConstant);
+    op.setAttrInt('parallel_iterations', parallelIterations);
+    return op.finish()[0];
   }
 
-  Output serializeManySparse(
-      Output sparseIndices, Output sparseValues, Output sparseShape,
+  Output<String> encodePng<T>(Output<T> image, {int compression: -1}) {
+    var op = newOperation('EncodePng', _scope.uniqueName('EncodePng'));
+    op.addInput(image);
+    op.setAttrInt('compression', compression);
+    return op.finish()[0];
+  }
+
+  Output<T> serializeManySparse<T>(Output<int> sparseIndices,
+      Output<T> sparseValues, Output<int> sparseShape,
       {DataType outType: DataType.DT_STRING}) {
-    return addOperation(new OperationDescription(
-        'SerializeManySparse',
-        _scope.uniqueName('SerializeManySparse'),
-        [sparseIndices, sparseValues, sparseShape],
-        {'out_type': outType}));
+    var op = newOperation(
+        'SerializeManySparse', _scope.uniqueName('SerializeManySparse'));
+    op.addInput(sparseIndices);
+    op.addInput(sparseValues);
+    op.addInput(sparseShape);
+    op.setAttrType('out_type', outType);
+    return op.finish()[0];
   }
 
-  Output tensorListFromTensor(Output tensor, Output elementShape,
-      {@required DataType elementDtype, @required DataType shapeType}) {
-    return addOperation(new OperationDescription(
-        'TensorListFromTensor',
-        _scope.uniqueName('TensorListFromTensor'),
-        [tensor, elementShape],
-        {'element_dtype': elementDtype, 'shape_type': shapeType}));
+  Output tensorListFromTensor<T>(Output<T> tensor, Output<T> elementShape,
+      {DataType elementDtype, DataType shapeType}) {
+    var op = newOperation(
+        'TensorListFromTensor', _scope.uniqueName('TensorListFromTensor'));
+    op.addInput(tensor);
+    op.addInput(elementShape);
+    op.setAttrType('element_dtype', elementDtype);
+    op.setAttrType('shape_type', shapeType);
+    return op.finish()[0];
   }
 
-  Output adjustSaturation(Output images, Output scale) {
-    return addOperation(new OperationDescription('AdjustSaturation',
-        _scope.uniqueName('AdjustSaturation'), [images, scale], {}));
+  Output<double> adjustSaturation(Output<double> images, Output<double> scale) {
+    var op =
+        newOperation('AdjustSaturation', _scope.uniqueName('AdjustSaturation'));
+    op.addInput(images);
+    op.addInput(scale);
+    return op.finish()[0];
   }
 
-  Output adjustContrastv2(Output images, Output contrastFactor) {
-    return addOperation(new OperationDescription('AdjustContrastv2',
-        _scope.uniqueName('AdjustContrastv2'), [images, contrastFactor], {}));
+  Output<double> adjustContrastv2(
+      Output<double> images, Output<double> contrastFactor) {
+    var op =
+        newOperation('AdjustContrastv2', _scope.uniqueName('AdjustContrastv2'));
+    op.addInput(images);
+    op.addInput(contrastFactor);
+    return op.finish()[0];
   }
 
-  Output extractJpegShape(Output contents,
+  Output<T> extractJpegShape<T>(Output<String> contents,
       {DataType outputType: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'ExtractJpegShape',
-        _scope.uniqueName('ExtractJpegShape'),
-        [contents],
-        {'output_type': outputType}));
+    var op =
+        newOperation('ExtractJpegShape', _scope.uniqueName('ExtractJpegShape'));
+    op.addInput(contents);
+    op.setAttrType('output_type', outputType);
+    return op.finish()[0];
   }
 
-  Output decodeAndCropJpeg(Output contents, Output cropWindow,
+  Output decodeAndCropJpeg(Output<String> contents, Output<int> cropWindow,
       {int channels: 0,
       int ratio: 1,
       bool fancyUpscaling: true,
       bool tryRecoverTruncated: false,
       double acceptableFraction: 1.0,
       String dctMethod}) {
-    return addOperation(new OperationDescription(
-        'DecodeAndCropJpeg', _scope.uniqueName('DecodeAndCropJpeg'), [
-      contents,
-      cropWindow
-    ], {
-      'channels': channels,
-      'ratio': ratio,
-      'fancy_upscaling': fancyUpscaling,
-      'try_recover_truncated': tryRecoverTruncated,
-      'acceptable_fraction': acceptableFraction,
-      'dct_method': dctMethod
-    }));
+    var op = newOperation(
+        'DecodeAndCropJpeg', _scope.uniqueName('DecodeAndCropJpeg'));
+    op.addInput(contents);
+    op.addInput(cropWindow);
+    op.setAttrInt('channels', channels);
+    op.setAttrInt('ratio', ratio);
+    op.setAttrBool('fancy_upscaling', fancyUpscaling);
+    op.setAttrBool('try_recover_truncated', tryRecoverTruncated);
+    op.setAttrFloat('acceptable_fraction', acceptableFraction);
+    op.setAttrString('dct_method', dctMethod);
+    return op.finish()[0];
   }
 
-  Output decodeJpeg(Output contents,
+  Output decodeJpeg(Output<String> contents,
       {int channels: 0,
       int ratio: 1,
       bool fancyUpscaling: true,
       bool tryRecoverTruncated: false,
       double acceptableFraction: 1.0,
       String dctMethod}) {
-    return addOperation(new OperationDescription(
-        'DecodeJpeg', _scope.uniqueName('DecodeJpeg'), [
-      contents
-    ], {
-      'channels': channels,
-      'ratio': ratio,
-      'fancy_upscaling': fancyUpscaling,
-      'try_recover_truncated': tryRecoverTruncated,
-      'acceptable_fraction': acceptableFraction,
-      'dct_method': dctMethod
-    }));
+    var op = newOperation('DecodeJpeg', _scope.uniqueName('DecodeJpeg'));
+    op.addInput(contents);
+    op.setAttrInt('channels', channels);
+    op.setAttrInt('ratio', ratio);
+    op.setAttrBool('fancy_upscaling', fancyUpscaling);
+    op.setAttrBool('try_recover_truncated', tryRecoverTruncated);
+    op.setAttrFloat('acceptable_fraction', acceptableFraction);
+    op.setAttrString('dct_method', dctMethod);
+    return op.finish()[0];
   }
 
-  Output lookupTableSizeV2(Output tableHandle) {
-    return addOperation(new OperationDescription('LookupTableSizeV2',
-        _scope.uniqueName('LookupTableSizeV2'), [tableHandle], {}));
+  Output<int> orderedMapIncompleteSize(
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation('OrderedMapIncompleteSize',
+        _scope.uniqueName('OrderedMapIncompleteSize'));
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output lookupTableImportV2(Output tableHandle, Output keys, Output values,
-      {@required DataType tin, @required DataType tout}) {
-    return addOperation(new OperationDescription(
-        'LookupTableImportV2',
-        _scope.uniqueName('LookupTableImportV2'),
-        [tableHandle, keys, values],
-        {'Tin': tin, 'Tout': tout}));
+  Output<int> lookupTableSizeV2(Output tableHandle) {
+    var op = newOperation(
+        'LookupTableSizeV2', _scope.uniqueName('LookupTableSizeV2'));
+    op.addInput(tableHandle);
+    return op.finish()[0];
+  }
+
+  Output enqueueInQueueDataset<T>(Output queue, List<Output<T>> components,
+      {List<DataType> tcomponents}) {
+    var op = newOperation(
+        'EnqueueInQueueDataset', _scope.uniqueName('EnqueueInQueueDataset'));
+    op.addInput(queue);
+    op.addInputList(components);
+    op.setAttrTypeList('Tcomponents', tcomponents);
+    return op.finish()[-1];
+  }
+
+  Output lookupTableImportV2<T>(
+      Output tableHandle, Output<T> keys, Output<T> values,
+      {DataType tin, DataType tout}) {
+    var op = newOperation(
+        'LookupTableImportV2', _scope.uniqueName('LookupTableImportV2'));
+    op.addInput(tableHandle);
+    op.addInput(keys);
+    op.addInput(values);
+    op.setAttrType('Tin', tin);
+    op.setAttrType('Tout', tout);
+    return op.finish()[-1];
   }
 
   Output tensorArrayCloseV3(Output handle) {
-    return addOperation(new OperationDescription('TensorArrayCloseV3',
-        _scope.uniqueName('TensorArrayCloseV3'), [handle], {}));
+    var op = newOperation(
+        'TensorArrayCloseV3', _scope.uniqueName('TensorArrayCloseV3'));
+    op.addInput(handle);
+    return op.finish()[-1];
   }
 
-  Output fractionalMaxPoolGrad(Output origInput, Output origOutput,
-      Output outBackprop, Output rowPoolingSequence, Output colPoolingSequence,
+  Output saveV2<T>(Output<String> prefix, Output<String> tensorNames,
+      Output<String> shapeAndSlices, List<Output<T>> tensors,
+      {List<DataType> dtypes}) {
+    var op = newOperation('SaveV2', _scope.uniqueName('SaveV2'));
+    op.addInput(prefix);
+    op.addInput(tensorNames);
+    op.addInput(shapeAndSlices);
+    op.addInputList(tensors);
+    op.setAttrTypeList('dtypes', dtypes);
+    return op.finish()[-1];
+  }
+
+  Output orderedMapStage<T>(
+      Output<int> key, Output<int> indices, List<Output<T>> values,
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      List<DataType> fakeDtypes,
+      String container,
+      String sharedName}) {
+    var op =
+        newOperation('OrderedMapStage', _scope.uniqueName('OrderedMapStage'));
+    op.addInput(key);
+    op.addInput(indices);
+    op.addInputList(values);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrTypeList('fake_dtypes', fakeDtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[-1];
+  }
+
+  Output prependFromQueueAndPaddedBatchDataset<T>(
+      Output inputDataset,
+      Output<int> batchSize,
+      List<Output<int>> paddedShapes,
+      List<Output<T>> paddingValues,
+      {List<DataType> toutputTypes,
+      List<Shape> outputShapes,
+      int n}) {
+    var op = newOperation('PrependFromQueueAndPaddedBatchDataset',
+        _scope.uniqueName('PrependFromQueueAndPaddedBatchDataset'));
+    op.addInput(inputDataset);
+    op.addInput(batchSize);
+    op.addInputList(paddedShapes);
+    op.addInputList(paddingValues);
+    op.setAttrTypeList('Toutput_types', toutputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    op.setAttrInt('N', n);
+    return op.finish()[0];
+  }
+
+  Output<T> fractionalMaxPoolGrad<T>(
+      Output<T> origInput,
+      Output<T> origOutput,
+      Output<T> outBackprop,
+      Output<int> rowPoolingSequence,
+      Output<int> colPoolingSequence,
       {bool overlapping: false}) {
-    return addOperation(new OperationDescription(
-        'FractionalMaxPoolGrad', _scope.uniqueName('FractionalMaxPoolGrad'), [
-      origInput,
-      origOutput,
-      outBackprop,
-      rowPoolingSequence,
-      colPoolingSequence
-    ], {
-      'overlapping': overlapping
-    }));
+    var op = newOperation(
+        'FractionalMaxPoolGrad', _scope.uniqueName('FractionalMaxPoolGrad'));
+    op.addInput(origInput);
+    op.addInput(origOutput);
+    op.addInput(outBackprop);
+    op.addInput(rowPoolingSequence);
+    op.addInput(colPoolingSequence);
+    op.setAttrBool('overlapping', overlapping);
+    return op.finish()[0];
   }
 
   Output iteratorSetStatsAggregator(
       Output iteratorHandle, Output statsAggregatorHandle) {
-    return addOperation(new OperationDescription(
-        'IteratorSetStatsAggregator',
-        _scope.uniqueName('IteratorSetStatsAggregator'),
-        [iteratorHandle, statsAggregatorHandle],
-        {}));
+    var op = newOperation('IteratorSetStatsAggregator',
+        _scope.uniqueName('IteratorSetStatsAggregator'));
+    op.addInput(iteratorHandle);
+    op.addInput(statsAggregatorHandle);
+    return op.finish()[-1];
   }
 
-  Output encodeJpeg(Output image,
+  Output<String> encodeJpeg(Output image,
       {String format,
       int quality: 95,
       bool progressive: false,
@@ -3481,1648 +5039,2865 @@ class Graph extends _Graph {
       int xDensity: 300,
       int yDensity: 300,
       String xmpMetadata}) {
-    return addOperation(new OperationDescription(
-        'EncodeJpeg', _scope.uniqueName('EncodeJpeg'), [
-      image
-    ], {
-      'format': format,
-      'quality': quality,
-      'progressive': progressive,
-      'optimize_size': optimizeSize,
-      'chroma_downsampling': chromaDownsampling,
-      'density_unit': densityUnit,
-      'x_density': xDensity,
-      'y_density': yDensity,
-      'xmp_metadata': xmpMetadata
-    }));
+    var op = newOperation('EncodeJpeg', _scope.uniqueName('EncodeJpeg'));
+    op.addInput(image);
+    op.setAttrString('format', format);
+    op.setAttrInt('quality', quality);
+    op.setAttrBool('progressive', progressive);
+    op.setAttrBool('optimize_size', optimizeSize);
+    op.setAttrBool('chroma_downsampling', chromaDownsampling);
+    op.setAttrString('density_unit', densityUnit);
+    op.setAttrInt('x_density', xDensity);
+    op.setAttrInt('y_density', yDensity);
+    op.setAttrString('xmp_metadata', xmpMetadata);
+    return op.finish()[0];
   }
 
-  Output rank(Output input) {
-    return addOperation(new OperationDescription(
-        'Rank', _scope.uniqueName('Rank'), [input], {}));
+  Output<int> rank<T>(Output<T> input) {
+    var op = newOperation('Rank', _scope.uniqueName('Rank'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output resourceScatterUpdate(Output resource, Output indices, Output updates,
-      {@required DataType dtype, @required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'ResourceScatterUpdate',
-        _scope.uniqueName('ResourceScatterUpdate'),
-        [resource, indices, updates],
-        {'dtype': dtype, 'Tindices': tindices}));
+  Output resourceScatterUpdate<T>(
+      Output resource, Output<T> indices, Output<T> updates,
+      {DataType dtype, DataType tindices}) {
+    dtype ??= inferType(resource);
+    var op = newOperation(
+        'ResourceScatterUpdate', _scope.uniqueName('ResourceScatterUpdate'));
+    op.addInput(resource);
+    op.addInput(indices);
+    op.addInput(updates);
+    op.setAttrType('dtype', dtype);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[-1];
   }
 
   Output stackCloseV2(Output handle) {
-    return addOperation(new OperationDescription(
-        'StackCloseV2', _scope.uniqueName('StackCloseV2'), [handle], {}));
+    var op = newOperation('StackCloseV2', _scope.uniqueName('StackCloseV2'));
+    op.addInput(handle);
+    return op.finish()[-1];
   }
 
-  Output abs(Output x) {
-    return addOperation(
-        new OperationDescription('Abs', _scope.uniqueName('Abs'), [x], {}));
+  Output<T> abs<T>(Output<T> x) {
+    var op = newOperation('Abs', _scope.uniqueName('Abs'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output gather(Output params, Output indices,
-      {bool validateIndices: true,
-      @required DataType tparams,
-      @required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'Gather', _scope.uniqueName('Gather'), [
-      params,
-      indices
-    ], {
-      'validate_indices': validateIndices,
-      'Tparams': tparams,
-      'Tindices': tindices
-    }));
+  Output<T> gather<T>(Output<T> params, Output<T> indices,
+      {bool validateIndices: true, DataType tparams, DataType tindices}) {
+    var op = newOperation('Gather', _scope.uniqueName('Gather'));
+    op.addInput(params);
+    op.addInput(indices);
+    op.setAttrBool('validate_indices', validateIndices);
+    op.setAttrType('Tparams', tparams);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
   }
 
-  Output tensorArrayReadV3(Output handle, Output index, Output flowIn,
-      {@required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'TensorArrayReadV3',
-        _scope.uniqueName('TensorArrayReadV3'),
-        [handle, index, flowIn],
-        {'dtype': dtype}));
+  Output<T> tensorArrayReadV3<T>(
+      Output handle, Output<int> index, Output<double> flowIn,
+      {DataType dtype}) {
+    dtype ??= inferType(handle);
+    var op = newOperation(
+        'TensorArrayReadV3', _scope.uniqueName('TensorArrayReadV3'));
+    op.addInput(handle);
+    op.addInput(index);
+    op.addInput(flowIn);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output resourceSparseApplyFtrlV2(
+  Output resourceSparseApplyFtrlV2<T>(
       Output var_,
       Output accum,
       Output linear,
-      Output grad,
-      Output indices,
-      Output lr,
-      Output l1,
-      Output l2,
-      Output l2Shrinkage,
-      Output lrPower,
-      {@required DataType tindices,
+      Output<T> grad,
+      Output<T> indices,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> l2Shrinkage,
+      Output<T> lrPower,
+      {DataType tindices,
       bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceSparseApplyFtrlV2',
-        _scope.uniqueName('ResourceSparseApplyFtrlV2'),
-        [var_, accum, linear, grad, indices, lr, l1, l2, l2Shrinkage, lrPower],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+    var op = newOperation('ResourceSparseApplyFtrlV2',
+        _scope.uniqueName('ResourceSparseApplyFtrlV2'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(linear);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(l2Shrinkage);
+    op.addInput(lrPower);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output encodeWav(Output audio, Output sampleRate) {
-    return addOperation(new OperationDescription(
-        'EncodeWav', _scope.uniqueName('EncodeWav'), [audio, sampleRate], {}));
+  Output<String> encodeWav(Output<double> audio, Output<int> sampleRate) {
+    var op = newOperation('EncodeWav', _scope.uniqueName('EncodeWav'));
+    op.addInput(audio);
+    op.addInput(sampleRate);
+    return op.finish()[0];
   }
 
   Output statsAggregatorHandle({String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'StatsAggregatorHandle',
-        _scope.uniqueName('StatsAggregatorHandle'),
-        [],
-        {'container': container, 'shared_name': sharedName}));
+    var op = newOperation(
+        'StatsAggregatorHandle', _scope.uniqueName('StatsAggregatorHandle'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 8: Random crop is now pure Python')
-  Output randomCrop(Output image, Output size, {int seed: 0, int seed2: 0}) {
-    return addOperation(new OperationDescription(
-        'RandomCrop',
-        _scope.uniqueName('RandomCrop'),
-        [image, size],
-        {'seed': seed, 'seed2': seed2}));
+  Output<T> randomCrop<T>(Output<T> image, Output<int> size,
+      {int seed: 0, int seed2: 0}) {
+    var op = newOperation('RandomCrop', _scope.uniqueName('RandomCrop'));
+    op.addInput(image);
+    op.addInput(size);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    return op.finish()[0];
   }
 
-  Output diag(Output diagonal) {
-    return addOperation(new OperationDescription(
-        'Diag', _scope.uniqueName('Diag'), [diagonal], {}));
+  Output<T> diag<T>(Output<T> diagonal) {
+    var op = newOperation('Diag', _scope.uniqueName('Diag'));
+    op.addInput(diagonal);
+    return op.finish()[0];
   }
 
-  Output tensorListGetItem(Output inputHandle, Output index,
-      {@required DataType elementDtype}) {
-    return addOperation(new OperationDescription(
-        'TensorListGetItem',
-        _scope.uniqueName('TensorListGetItem'),
-        [inputHandle, index],
-        {'element_dtype': elementDtype}));
+  Output<T> tensorListGetItem<T>(Output inputHandle, Output<int> index,
+      {DataType elementDtype}) {
+    var op = newOperation(
+        'TensorListGetItem', _scope.uniqueName('TensorListGetItem'));
+    op.addInput(inputHandle);
+    op.addInput(index);
+    op.setAttrType('element_dtype', elementDtype);
+    return op.finish()[0];
   }
 
-  Output sparseSegmentSqrtNGrad(
-      Output grad, Output indices, Output segmentIds, Output outputDim0,
+  Output<T> sparseSegmentSqrtNGrad<T>(Output<T> grad, Output<T> indices,
+      Output<int> segmentIds, Output<int> outputDim0,
       {DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'SparseSegmentSqrtNGrad',
-        _scope.uniqueName('SparseSegmentSqrtNGrad'),
-        [grad, indices, segmentIds, outputDim0],
-        {'Tidx': tidx}));
+    var op = newOperation(
+        'SparseSegmentSqrtNGrad', _scope.uniqueName('SparseSegmentSqrtNGrad'));
+    op.addInput(grad);
+    op.addInput(indices);
+    op.addInput(segmentIds);
+    op.addInput(outputDim0);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output varIsInitializedOp(Output resource) {
-    return addOperation(new OperationDescription('VarIsInitializedOp',
-        _scope.uniqueName('VarIsInitializedOp'), [resource], {}));
+  Output<bool> varIsInitializedOp(Output resource) {
+    var op = newOperation(
+        'VarIsInitializedOp', _scope.uniqueName('VarIsInitializedOp'));
+    op.addInput(resource);
+    return op.finish()[0];
   }
 
-  Output fakeQuantWithMinMaxVarsPerChannel(
-      Output inputs, Output min, Output max,
+  Output<double> fakeQuantWithMinMaxVarsPerChannel(
+      Output<double> inputs, Output<double> min, Output<double> max,
       {int numBits: 8, bool narrowRange: false}) {
-    return addOperation(new OperationDescription(
-        'FakeQuantWithMinMaxVarsPerChannel',
-        _scope.uniqueName('FakeQuantWithMinMaxVarsPerChannel'),
-        [inputs, min, max],
-        {'num_bits': numBits, 'narrow_range': narrowRange}));
+    var op = newOperation('FakeQuantWithMinMaxVarsPerChannel',
+        _scope.uniqueName('FakeQuantWithMinMaxVarsPerChannel'));
+    op.addInput(inputs);
+    op.addInput(min);
+    op.addInput(max);
+    op.setAttrInt('num_bits', numBits);
+    op.setAttrBool('narrow_range', narrowRange);
+    return op.finish()[0];
   }
 
-  Output resourceSparseApplyAdagradDA(
+  Output<T> iteratorGetNext<T>(Output iterator,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op =
+        newOperation('IteratorGetNext', _scope.uniqueName('IteratorGetNext'));
+    op.addInput(iterator);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
+  }
+
+  Output resourceSparseApplyAdagradDA<T>(
       Output var_,
       Output gradientAccumulator,
       Output gradientSquaredAccumulator,
-      Output grad,
-      Output indices,
-      Output lr,
-      Output l1,
-      Output l2,
-      Output globalStep,
-      {@required DataType tindices,
+      Output<T> grad,
+      Output<T> indices,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<int> globalStep,
+      {DataType tindices,
       bool useLocking: false}) {
-    return addOperation(new OperationDescription('ResourceSparseApplyAdagradDA',
-        _scope.uniqueName('ResourceSparseApplyAdagradDA'), [
-      var_,
-      gradientAccumulator,
-      gradientSquaredAccumulator,
-      grad,
-      indices,
-      lr,
-      l1,
-      l2,
-      globalStep
-    ], {
-      'Tindices': tindices,
-      'use_locking': useLocking
-    }));
+    var op = newOperation('ResourceSparseApplyAdagradDA',
+        _scope.uniqueName('ResourceSparseApplyAdagradDA'));
+    op.addInput(var_);
+    op.addInput(gradientAccumulator);
+    op.addInput(gradientSquaredAccumulator);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(globalStep);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output tFRecordDataset(
-      Output filenames, Output compressionType, Output bufferSize) {
-    return addOperation(new OperationDescription(
-        'TFRecordDataset',
-        _scope.uniqueName('TFRecordDataset'),
-        [filenames, compressionType, bufferSize],
-        {}));
+  Output tFRecordDataset(Output<String> filenames,
+      Output<String> compressionType, Output<int> bufferSize) {
+    var op =
+        newOperation('TFRecordDataset', _scope.uniqueName('TFRecordDataset'));
+    op.addInput(filenames);
+    op.addInput(compressionType);
+    op.addInput(bufferSize);
+    return op.finish()[0];
   }
 
-  Output linSpace(Output start, Output stop, Output num,
+  Output<T> linSpace<T>(Output<T> start, Output<T> stop, Output<T> num,
       {DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('LinSpace',
-        _scope.uniqueName('LinSpace'), [start, stop, num], {'Tidx': tidx}));
+    var op = newOperation('LinSpace', _scope.uniqueName('LinSpace'));
+    op.addInput(start);
+    op.addInput(stop);
+    op.addInput(num);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output fixedLengthRecordDataset(Output filenames, Output headerBytes,
-      Output recordBytes, Output footerBytes, Output bufferSize) {
-    return addOperation(new OperationDescription(
-        'FixedLengthRecordDataset',
-        _scope.uniqueName('FixedLengthRecordDataset'),
-        [filenames, headerBytes, recordBytes, footerBytes, bufferSize],
-        {}));
+  Output fixedLengthRecordDataset(
+      Output<String> filenames,
+      Output<int> headerBytes,
+      Output<int> recordBytes,
+      Output<int> footerBytes,
+      Output<int> bufferSize) {
+    var op = newOperation('FixedLengthRecordDataset',
+        _scope.uniqueName('FixedLengthRecordDataset'));
+    op.addInput(filenames);
+    op.addInput(headerBytes);
+    op.addInput(recordBytes);
+    op.addInput(footerBytes);
+    op.addInput(bufferSize);
+    return op.finish()[0];
   }
 
-  Output sparseApplyProximalAdagrad(Output var_, Output accum, Output lr,
-      Output l1, Output l2, Output grad, Output indices,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'SparseApplyProximalAdagrad',
-        _scope.uniqueName('SparseApplyProximalAdagrad'),
-        [var_, accum, lr, l1, l2, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> sparseApplyProximalAdagrad<T>(
+      Output<T> var_,
+      Output<T> accum,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> grad,
+      Output<T> indices,
+      {DataType tindices,
+      bool useLocking: false}) {
+    var op = newOperation('SparseApplyProximalAdagrad',
+        _scope.uniqueName('SparseApplyProximalAdagrad'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output sinh(Output x) {
-    return addOperation(
-        new OperationDescription('Sinh', _scope.uniqueName('Sinh'), [x], {}));
+  Output<int> mapSize(
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation('MapSize', _scope.uniqueName('MapSize'));
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
+  }
+
+  Output<T> sinh<T>(Output<T> x) {
+    var op = newOperation('Sinh', _scope.uniqueName('Sinh'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 14: Use MatrixDiag')
-  Output batchMatrixDiag(Output diagonal) {
-    return addOperation(new OperationDescription('BatchMatrixDiag',
-        _scope.uniqueName('BatchMatrixDiag'), [diagonal], {}));
+  Output<T> batchMatrixDiag<T>(Output<T> diagonal) {
+    var op =
+        newOperation('BatchMatrixDiag', _scope.uniqueName('BatchMatrixDiag'));
+    op.addInput(diagonal);
+    return op.finish()[0];
   }
 
-  Output segmentSum(Output data, Output segmentIds,
-      {@required DataType tindices}) {
-    return addOperation(new OperationDescription(
-        'SegmentSum',
-        _scope.uniqueName('SegmentSum'),
-        [data, segmentIds],
-        {'Tindices': tindices}));
+  Output sqlDataset(Output<String> driverName, Output<String> dataSourceName,
+      Output<String> query,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('SqlDataset', _scope.uniqueName('SqlDataset'));
+    op.addInput(driverName);
+    op.addInput(dataSourceName);
+    op.addInput(query);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
-  Output textLineDataset(
-      Output filenames, Output compressionType, Output bufferSize) {
-    return addOperation(new OperationDescription(
-        'TextLineDataset',
-        _scope.uniqueName('TextLineDataset'),
-        [filenames, compressionType, bufferSize],
-        {}));
+  Output<T> segmentSum<T>(Output<T> data, Output<T> segmentIds,
+      {DataType tindices}) {
+    var op = newOperation('SegmentSum', _scope.uniqueName('SegmentSum'));
+    op.addInput(data);
+    op.addInput(segmentIds);
+    op.setAttrType('Tindices', tindices);
+    return op.finish()[0];
   }
 
-  Output dataFormatDimMap(Output x,
+  Output textLineDataset(Output<String> filenames,
+      Output<String> compressionType, Output<int> bufferSize) {
+    var op =
+        newOperation('TextLineDataset', _scope.uniqueName('TextLineDataset'));
+    op.addInput(filenames);
+    op.addInput(compressionType);
+    op.addInput(bufferSize);
+    return op.finish()[0];
+  }
+
+  Output<T> dataFormatDimMap<T>(Output<T> x,
       {String srcFormat: 'NHWC', String dstFormat: 'NCHW'}) {
-    return addOperation(new OperationDescription(
-        'DataFormatDimMap',
-        _scope.uniqueName('DataFormatDimMap'),
-        [x],
-        {'src_format': srcFormat, 'dst_format': dstFormat}));
+    var op =
+        newOperation('DataFormatDimMap', _scope.uniqueName('DataFormatDimMap'));
+    op.addInput(x);
+    op.setAttrString('src_format', srcFormat);
+    op.setAttrString('dst_format', dstFormat);
+    return op.finish()[0];
   }
 
-  Output stackClose(Output handle) {
-    return addOperation(new OperationDescription(
-        'StackClose', _scope.uniqueName('StackClose'), [handle], {}));
+  Output stackClose(Output<String> handle) {
+    var op = newOperation('StackClose', _scope.uniqueName('StackClose'));
+    op.addInput(handle);
+    return op.finish()[-1];
   }
 
-  Output sparseSegmentMeanWithNumSegments(
-      Output data, Output indices, Output segmentIds, Output numSegments,
+  Output<T> sparseSegmentMeanWithNumSegments<T>(Output<T> data,
+      Output<T> indices, Output<int> segmentIds, Output<T> numSegments,
       {DataType tidx: DataType.DT_INT32,
       DataType tnumsegments: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'SparseSegmentMeanWithNumSegments',
-        _scope.uniqueName('SparseSegmentMeanWithNumSegments'),
-        [data, indices, segmentIds, numSegments],
-        {'Tidx': tidx, 'Tnumsegments': tnumsegments}));
+    var op = newOperation('SparseSegmentMeanWithNumSegments',
+        _scope.uniqueName('SparseSegmentMeanWithNumSegments'));
+    op.addInput(data);
+    op.addInput(indices);
+    op.addInput(segmentIds);
+    op.addInput(numSegments);
+    op.setAttrType('Tidx', tidx);
+    op.setAttrType('Tnumsegments', tnumsegments);
+    return op.finish()[0];
   }
 
-  Output resizeBicubic(Output images, Output size, {bool alignCorners: false}) {
-    return addOperation(new OperationDescription(
-        'ResizeBicubic',
-        _scope.uniqueName('ResizeBicubic'),
-        [images, size],
-        {'align_corners': alignCorners}));
+  Output<double> resizeBicubic<T>(Output<T> images, Output<int> size,
+      {bool alignCorners: false}) {
+    var op = newOperation('ResizeBicubic', _scope.uniqueName('ResizeBicubic'));
+    op.addInput(images);
+    op.addInput(size);
+    op.setAttrBool('align_corners', alignCorners);
+    return op.finish()[0];
   }
 
-  Output hSVToRGB(Output images) {
-    return addOperation(new OperationDescription(
-        'HSVToRGB', _scope.uniqueName('HSVToRGB'), [images], {}));
+  Output<T> hSVToRGB<T>(Output<T> images) {
+    var op = newOperation('HSVToRGB', _scope.uniqueName('HSVToRGB'));
+    op.addInput(images);
+    return op.finish()[0];
   }
 
-  Output maxPoolV2(Output input, Output ksize, Output strides,
-      {@required String padding, String dataFormat: 'NHWC'}) {
-    return addOperation(new OperationDescription(
-        'MaxPoolV2',
-        _scope.uniqueName('MaxPoolV2'),
-        [input, ksize, strides],
-        {'padding': padding, 'data_format': dataFormat}));
+  Output cacheDataset(Output inputDataset, Output<String> filename,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('CacheDataset', _scope.uniqueName('CacheDataset'));
+    op.addInput(inputDataset);
+    op.addInput(filename);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
-  Output randomPoissonV2(Output shape, Output rate,
+  Output<T> maxPoolV2<T>(
+      Output<T> input, Output<int> ksize, Output<int> strides,
+      {String padding, String dataFormat: 'NHWC'}) {
+    var op = newOperation('MaxPoolV2', _scope.uniqueName('MaxPoolV2'));
+    op.addInput(input);
+    op.addInput(ksize);
+    op.addInput(strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    return op.finish()[0];
+  }
+
+  Output shuffleAndRepeatDataset(Output inputDataset, Output<int> bufferSize,
+      Output<int> seed, Output<int> seed2, Output<int> count,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('ShuffleAndRepeatDataset',
+        _scope.uniqueName('ShuffleAndRepeatDataset'));
+    op.addInput(inputDataset);
+    op.addInput(bufferSize);
+    op.addInput(seed);
+    op.addInput(seed2);
+    op.addInput(count);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
+  }
+
+  Output rangeDataset(Output<int> start, Output<int> stop, Output<int> step,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('RangeDataset', _scope.uniqueName('RangeDataset'));
+    op.addInput(start);
+    op.addInput(stop);
+    op.addInput(step);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
+  }
+
+  Output<T> randomPoissonV2<T>(Output<T> shape, Output<T> rate,
       {int seed: 0,
       int seed2: 0,
-      @required DataType s,
+      DataType s,
       DataType r: DataType.DT_DOUBLE,
       DataType dtype: DataType.DT_INT64}) {
-    return addOperation(new OperationDescription(
-        'RandomPoissonV2',
-        _scope.uniqueName('RandomPoissonV2'),
-        [shape, rate],
-        {'seed': seed, 'seed2': seed2, 'S': s, 'R': r, 'dtype': dtype}));
+    dtype ??= inferType(shape);
+    var op =
+        newOperation('RandomPoissonV2', _scope.uniqueName('RandomPoissonV2'));
+    op.addInput(shape);
+    op.addInput(rate);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    op.setAttrType('S', s);
+    op.setAttrType('R', r);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output readerNumRecordsProduced(Output readerHandle) {
-    return addOperation(new OperationDescription('ReaderNumRecordsProduced',
-        _scope.uniqueName('ReaderNumRecordsProduced'), [readerHandle], {}));
+  Output shuffleDataset(Output inputDataset, Output<int> bufferSize,
+      Output<int> seed, Output<int> seed2,
+      {bool reshuffleEachIteration: true,
+      List<DataType> outputTypes,
+      List<Shape> outputShapes}) {
+    var op =
+        newOperation('ShuffleDataset', _scope.uniqueName('ShuffleDataset'));
+    op.addInput(inputDataset);
+    op.addInput(bufferSize);
+    op.addInput(seed);
+    op.addInput(seed2);
+    op.setAttrBool('reshuffle_each_iteration', reshuffleEachIteration);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
-  Output unpack(Output value, {@required int num, int axis: 0}) {
-    return addOperation(new OperationDescription('Unpack',
-        _scope.uniqueName('Unpack'), [value], {'num': num, 'axis': axis}));
+  Output<int> readerNumRecordsProduced(Output<String> readerHandle) {
+    var op = newOperation('ReaderNumRecordsProduced',
+        _scope.uniqueName('ReaderNumRecordsProduced'));
+    op.addInput(readerHandle);
+    return op.finish()[0];
+  }
+
+  Output takeDataset(Output inputDataset, Output<int> count,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('TakeDataset', _scope.uniqueName('TakeDataset'));
+    op.addInput(inputDataset);
+    op.addInput(count);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
+  }
+
+  Output<T> queueDequeueV2<T>(Output handle,
+      {List<DataType> componentTypes, int timeoutMs: -1}) {
+    var op =
+        newOperation('QueueDequeueV2', _scope.uniqueName('QueueDequeueV2'));
+    op.addInput(handle);
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrInt('timeout_ms', timeoutMs);
+    return op.finish()[0];
+  }
+
+  Output<T> unpack<T>(Output<T> value, {int num, int axis: 0}) {
+    var op = newOperation('Unpack', _scope.uniqueName('Unpack'));
+    op.addInput(value);
+    op.setAttrInt('num', num);
+    op.setAttrInt('axis', axis);
+    return op.finish()[0];
+  }
+
+  Output concatenateDataset(Output inputDataset, Output anotherDataset,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation(
+        'ConcatenateDataset', _scope.uniqueName('ConcatenateDataset'));
+    op.addInput(inputDataset);
+    op.addInput(anotherDataset);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
+  }
+
+  Output<T> conv2DBackpropFilter<T>(
+      Output<T> input, Output<int> filterSizes, Output<T> outBackprop,
+      {List<int> strides,
+      bool useCudnnOnGpu: true,
+      String padding,
+      String dataFormat: 'NHWC',
+      List<int> dilations}) {
+    var op = newOperation(
+        'Conv2DBackpropFilter', _scope.uniqueName('Conv2DBackpropFilter'));
+    op.addInput(input);
+    op.addInput(filterSizes);
+    op.addInput(outBackprop);
+    op.setAttrIntList('strides', strides);
+    op.setAttrBool('use_cudnn_on_gpu', useCudnnOnGpu);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    op.setAttrIntList('dilations', dilations);
+    return op.finish()[0];
+  }
+
+  Output<T> iteratorGetNextSync<T>(Output iterator,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation(
+        'IteratorGetNextSync', _scope.uniqueName('IteratorGetNextSync'));
+    op.addInput(iterator);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 13: Use MatrixInverse instead.')
-  Output batchMatrixInverse(Output input, {bool adjoint: false}) {
-    return addOperation(new OperationDescription(
-        'BatchMatrixInverse',
-        _scope.uniqueName('BatchMatrixInverse'),
-        [input],
-        {'adjoint': adjoint}));
+  Output<T> batchMatrixInverse<T>(Output<T> input, {bool adjoint: false}) {
+    var op = newOperation(
+        'BatchMatrixInverse', _scope.uniqueName('BatchMatrixInverse'));
+    op.addInput(input);
+    op.setAttrBool('adjoint', adjoint);
+    return op.finish()[0];
   }
 
-  Output sparseApplyCenteredRMSProp(
+  Output<T> sparseApplyCenteredRMSProp<T>(
+      Output<T> var_,
+      Output<T> mg,
+      Output<T> ms,
+      Output<T> mom,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
+      Output<T> indices,
+      {DataType tindices,
+      bool useLocking: false}) {
+    var op = newOperation('SparseApplyCenteredRMSProp',
+        _scope.uniqueName('SparseApplyCenteredRMSProp'));
+    op.addInput(var_);
+    op.addInput(mg);
+    op.addInput(ms);
+    op.addInput(mom);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(momentum);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
+  }
+
+  Output resourceSparseApplyCenteredRMSProp<T>(
       Output var_,
       Output mg,
       Output ms,
       Output mom,
-      Output lr,
-      Output rho,
-      Output momentum,
-      Output epsilon,
-      Output grad,
-      Output indices,
-      {@required DataType tindices,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
+      Output<T> indices,
+      {DataType tindices,
       bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'SparseApplyCenteredRMSProp',
-        _scope.uniqueName('SparseApplyCenteredRMSProp'),
-        [var_, mg, ms, mom, lr, rho, momentum, epsilon, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+    var op = newOperation('ResourceSparseApplyCenteredRMSProp',
+        _scope.uniqueName('ResourceSparseApplyCenteredRMSProp'));
+    op.addInput(var_);
+    op.addInput(mg);
+    op.addInput(ms);
+    op.addInput(mom);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(momentum);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output resourceSparseApplyCenteredRMSProp(
-      Output var_,
-      Output mg,
-      Output ms,
-      Output mom,
-      Output lr,
-      Output rho,
-      Output momentum,
-      Output epsilon,
-      Output grad,
-      Output indices,
-      {@required DataType tindices,
-      bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceSparseApplyCenteredRMSProp',
-        _scope.uniqueName('ResourceSparseApplyCenteredRMSProp'),
-        [var_, mg, ms, mom, lr, rho, momentum, epsilon, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<int> queueSizeV2(Output handle) {
+    var op = newOperation('QueueSizeV2', _scope.uniqueName('QueueSizeV2'));
+    op.addInput(handle);
+    return op.finish()[0];
   }
 
-  Output queueSizeV2(Output handle) {
-    return addOperation(new OperationDescription(
-        'QueueSizeV2', _scope.uniqueName('QueueSizeV2'), [handle], {}));
+  Output randomDataset(Output<int> seed, Output<int> seed2,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('RandomDataset', _scope.uniqueName('RandomDataset'));
+    op.addInput(seed);
+    op.addInput(seed2);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
-  Output mergeV2Checkpoints(Output checkpointPrefixes, Output destinationPrefix,
+  Output mergeV2Checkpoints(
+      Output<String> checkpointPrefixes, Output<String> destinationPrefix,
       {bool deleteOldDirs: true}) {
-    return addOperation(new OperationDescription(
-        'MergeV2Checkpoints',
-        _scope.uniqueName('MergeV2Checkpoints'),
-        [checkpointPrefixes, destinationPrefix],
-        {'delete_old_dirs': deleteOldDirs}));
+    var op = newOperation(
+        'MergeV2Checkpoints', _scope.uniqueName('MergeV2Checkpoints'));
+    op.addInput(checkpointPrefixes);
+    op.addInput(destinationPrefix);
+    op.setAttrBool('delete_old_dirs', deleteOldDirs);
+    return op.finish()[-1];
   }
 
-  Output queueClose(Output handle, {bool cancelPendingEnqueues: false}) {
-    return addOperation(new OperationDescription(
-        'QueueClose',
-        _scope.uniqueName('QueueClose'),
-        [handle],
-        {'cancel_pending_enqueues': cancelPendingEnqueues}));
+  Output queueClose(Output<String> handle,
+      {bool cancelPendingEnqueues: false}) {
+    var op = newOperation('QueueClose', _scope.uniqueName('QueueClose'));
+    op.addInput(handle);
+    op.setAttrBool('cancel_pending_enqueues', cancelPendingEnqueues);
+    return op.finish()[-1];
   }
 
-  Output addN(List<Output> inputs, {@required int n}) {
-    return addOperation(new OperationDescription(
-        'AddN', _scope.uniqueName('AddN'), [inputs], {'N': n}));
+  Output<String> randomShuffleQueue(
+      {List<DataType> componentTypes,
+      List<Shape> shapes,
+      int capacity: -1,
+      int minAfterDequeue: 0,
+      int seed: 0,
+      int seed2: 0,
+      String container,
+      String sharedName}) {
+    var op = newOperation(
+        'RandomShuffleQueue', _scope.uniqueName('RandomShuffleQueue'));
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrShapeList('shapes', shapes);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('min_after_dequeue', minAfterDequeue);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
+  }
+
+  Output<T> restoreV2<T>(Output<String> prefix, Output<String> tensorNames,
+      Output<String> shapeAndSlices,
+      {List<DataType> dtypes}) {
+    var op = newOperation('RestoreV2', _scope.uniqueName('RestoreV2'));
+    op.addInput(prefix);
+    op.addInput(tensorNames);
+    op.addInput(shapeAndSlices);
+    op.setAttrTypeList('dtypes', dtypes);
+    return op.finish()[0];
+  }
+
+  Output denseToSparseBatchDataset(
+      Output inputDataset, Output<int> batchSize, Output<int> rowShape,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('DenseToSparseBatchDataset',
+        _scope.uniqueName('DenseToSparseBatchDataset'));
+    op.addInput(inputDataset);
+    op.addInput(batchSize);
+    op.addInput(rowShape);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
+  }
+
+  Output<T> addN<T>(List<Output<T>> inputs, {int n}) {
+    var op = newOperation('AddN', _scope.uniqueName('AddN'));
+    op.addInputList(inputs);
+    op.setAttrInt('N', n);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayV3')
-  Output tensorArrayV2(Output size,
-      {@required DataType dtype,
-      List<int> elementShape,
+  Output<String> tensorArrayV2(Output<int> size,
+      {DataType dtype,
+      Shape elementShape,
       bool dynamicSize: false,
       bool clearAfterRead: true,
       String tensorArrayName}) {
-    return addOperation(new OperationDescription(
-        'TensorArrayV2', _scope.uniqueName('TensorArrayV2'), [
-      size
-    ], {
-      'dtype': dtype,
-      'element_shape': elementShape,
-      'dynamic_size': dynamicSize,
-      'clear_after_read': clearAfterRead,
-      'tensor_array_name': tensorArrayName
-    }));
+    dtype ??= inferType(size);
+    var op = newOperation('TensorArrayV2', _scope.uniqueName('TensorArrayV2'));
+    op.addInput(size);
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('element_shape', elementShape);
+    op.setAttrBool('dynamic_size', dynamicSize);
+    op.setAttrBool('clear_after_read', clearAfterRead);
+    op.setAttrString('tensor_array_name', tensorArrayName);
+    return op.finish()[0];
   }
 
-  Output range(Output start, Output limit, Output delta,
+  Output prefetchDataset(Output inputDataset, Output<int> bufferSize,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op =
+        newOperation('PrefetchDataset', _scope.uniqueName('PrefetchDataset'));
+    op.addInput(inputDataset);
+    op.addInput(bufferSize);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
+  }
+
+  Output<T> range<T>(Output<T> start, Output<T> limit, Output<T> delta,
       {DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('Range',
-        _scope.uniqueName('Range'), [start, limit, delta], {'Tidx': tidx}));
+    var op = newOperation('Range', _scope.uniqueName('Range'));
+    op.addInput(start);
+    op.addInput(limit);
+    op.addInput(delta);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output sparseTensorSliceDataset(
-      Output indices, Output values, Output denseShape,
-      {@required DataType tvalues}) {
-    return addOperation(new OperationDescription(
-        'SparseTensorSliceDataset',
-        _scope.uniqueName('SparseTensorSliceDataset'),
-        [indices, values, denseShape],
-        {'Tvalues': tvalues}));
+  Output sparseTensorSliceDataset<T>(
+      Output<int> indices, Output<T> values, Output<int> denseShape,
+      {DataType tvalues}) {
+    var op = newOperation('SparseTensorSliceDataset',
+        _scope.uniqueName('SparseTensorSliceDataset'));
+    op.addInput(indices);
+    op.addInput(values);
+    op.addInput(denseShape);
+    op.setAttrType('Tvalues', tvalues);
+    return op.finish()[0];
   }
 
-  Output tensorArrayWriteV3(
-      Output handle, Output index, Output value, Output flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayWriteV3',
-        _scope.uniqueName('TensorArrayWriteV3'),
-        [handle, index, value, flowIn],
-        {}));
+  Output randomShuffleQueueV2(
+      {List<DataType> componentTypes,
+      List<Shape> shapes,
+      int capacity: -1,
+      int minAfterDequeue: 0,
+      int seed: 0,
+      int seed2: 0,
+      String container,
+      String sharedName}) {
+    var op = newOperation(
+        'RandomShuffleQueueV2', _scope.uniqueName('RandomShuffleQueueV2'));
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrShapeList('shapes', shapes);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('min_after_dequeue', minAfterDequeue);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output histogramSummary(Output tag, Output values) {
-    return addOperation(new OperationDescription('HistogramSummary',
-        _scope.uniqueName('HistogramSummary'), [tag, values], {}));
+  Output<double> tensorArrayWriteV3<T>(Output handle, Output<int> index,
+      Output<T> value, Output<double> flowIn) {
+    var op = newOperation(
+        'TensorArrayWriteV3', _scope.uniqueName('TensorArrayWriteV3'));
+    op.addInput(handle);
+    op.addInput(index);
+    op.addInput(value);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output stackPopV2(Output handle, {@required DataType elemType}) {
-    return addOperation(new OperationDescription('StackPopV2',
-        _scope.uniqueName('StackPopV2'), [handle], {'elem_type': elemType}));
+  Output bytesProducedStatsDataset(Output inputDataset, Output<String> tag,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('BytesProducedStatsDataset',
+        _scope.uniqueName('BytesProducedStatsDataset'));
+    op.addInput(inputDataset);
+    op.addInput(tag);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
-  Output lRN(Output input,
+  Output<String> histogramSummary<T>(Output<String> tag, Output<T> values) {
+    var op =
+        newOperation('HistogramSummary', _scope.uniqueName('HistogramSummary'));
+    op.addInput(tag);
+    op.addInput(values);
+    return op.finish()[0];
+  }
+
+  Output<T> stackPopV2<T>(Output handle, {DataType elemType}) {
+    var op = newOperation('StackPopV2', _scope.uniqueName('StackPopV2'));
+    op.addInput(handle);
+    op.setAttrType('elem_type', elemType);
+    return op.finish()[0];
+  }
+
+  Output<T> lRN<T>(Output<T> input,
       {int depthRadius: 5,
       double bias: 1.0,
       double alpha: 1.0,
       double beta: 0.5}) {
-    return addOperation(new OperationDescription(
-        'LRN', _scope.uniqueName('LRN'), [
-      input
-    ], {
-      'depth_radius': depthRadius,
-      'bias': bias,
-      'alpha': alpha,
-      'beta': beta
-    }));
+    var op = newOperation('LRN', _scope.uniqueName('LRN'));
+    op.addInput(input);
+    op.setAttrInt('depth_radius', depthRadius);
+    op.setAttrFloat('bias', bias);
+    op.setAttrFloat('alpha', alpha);
+    op.setAttrFloat('beta', beta);
+    return op.finish()[0];
   }
 
-  Output sparseAccumulatorApplyGradient(Output handle, Output localStep,
-      Output gradientIndices, Output gradientValues, Output gradientShape,
-      {@required DataType dtype, @required bool hasKnownShape}) {
-    return addOperation(new OperationDescription(
-        'SparseAccumulatorApplyGradient',
-        _scope.uniqueName('SparseAccumulatorApplyGradient'),
-        [handle, localStep, gradientIndices, gradientValues, gradientShape],
-        {'dtype': dtype, 'has_known_shape': hasKnownShape}));
+  Output<T> conv3DBackpropInputV2<T>(
+      Output<int> inputSizes, Output<T> filter, Output<T> outBackprop,
+      {List<int> strides,
+      String padding,
+      String dataFormat: 'NDHWC',
+      List<int> dilations}) {
+    var op = newOperation(
+        'Conv3DBackpropInputV2', _scope.uniqueName('Conv3DBackpropInputV2'));
+    op.addInput(inputSizes);
+    op.addInput(filter);
+    op.addInput(outBackprop);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    op.setAttrIntList('dilations', dilations);
+    return op.finish()[0];
   }
 
-  Output statsAggregatorSummary(Output iterator) {
-    return addOperation(new OperationDescription('StatsAggregatorSummary',
-        _scope.uniqueName('StatsAggregatorSummary'), [iterator], {}));
+  Output skipDataset(Output inputDataset, Output<int> count,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('SkipDataset', _scope.uniqueName('SkipDataset'));
+    op.addInput(inputDataset);
+    op.addInput(count);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
-  Output equal(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'Equal', _scope.uniqueName('Equal'), [x, y], {}));
+  Output sparseAccumulatorApplyGradient<T>(
+      Output<String> handle,
+      Output<int> localStep,
+      Output<int> gradientIndices,
+      Output<T> gradientValues,
+      Output<int> gradientShape,
+      {DataType dtype,
+      bool hasKnownShape}) {
+    dtype ??= inferType(handle);
+    var op = newOperation('SparseAccumulatorApplyGradient',
+        _scope.uniqueName('SparseAccumulatorApplyGradient'));
+    op.addInput(handle);
+    op.addInput(localStep);
+    op.addInput(gradientIndices);
+    op.addInput(gradientValues);
+    op.addInput(gradientShape);
+    op.setAttrType('dtype', dtype);
+    op.setAttrBool('has_known_shape', hasKnownShape);
+    return op.finish()[-1];
   }
 
-  Output lookupTableInsertV2(Output tableHandle, Output keys, Output values,
-      {@required DataType tin, @required DataType tout}) {
-    return addOperation(new OperationDescription(
-        'LookupTableInsertV2',
-        _scope.uniqueName('LookupTableInsertV2'),
-        [tableHandle, keys, values],
-        {'Tin': tin, 'Tout': tout}));
+  Output<String> statsAggregatorSummary(Output iterator) {
+    var op = newOperation(
+        'StatsAggregatorSummary', _scope.uniqueName('StatsAggregatorSummary'));
+    op.addInput(iterator);
+    return op.finish()[0];
   }
 
-  Output barrierInsertMany(Output handle, Output keys, Output values,
-      {@required int componentIndex}) {
-    return addOperation(new OperationDescription(
-        'BarrierInsertMany',
-        _scope.uniqueName('BarrierInsertMany'),
-        [handle, keys, values],
-        {'component_index': componentIndex}));
+  Output<bool> equal<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('Equal', _scope.uniqueName('Equal'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
+  }
+
+  Output lookupTableInsertV2<T>(
+      Output tableHandle, Output<T> keys, Output<T> values,
+      {DataType tin, DataType tout}) {
+    var op = newOperation(
+        'LookupTableInsertV2', _scope.uniqueName('LookupTableInsertV2'));
+    op.addInput(tableHandle);
+    op.addInput(keys);
+    op.addInput(values);
+    op.setAttrType('Tin', tin);
+    op.setAttrType('Tout', tout);
+    return op.finish()[-1];
+  }
+
+  Output barrierInsertMany<T>(
+      Output<String> handle, Output<String> keys, Output<T> values,
+      {int componentIndex}) {
+    var op = newOperation(
+        'BarrierInsertMany', _scope.uniqueName('BarrierInsertMany'));
+    op.addInput(handle);
+    op.addInput(keys);
+    op.addInput(values);
+    op.setAttrInt('component_index', componentIndex);
+    return op.finish()[-1];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArraySplitV3')
-  Output tensorArraySplitV2(
-      Output handle, Output value, Output lengths, Output flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArraySplitV2',
-        _scope.uniqueName('TensorArraySplitV2'),
-        [handle, value, lengths, flowIn],
-        {}));
+  Output<double> tensorArraySplitV2<T>(Output<String> handle, Output<T> value,
+      Output<int> lengths, Output<double> flowIn) {
+    var op = newOperation(
+        'TensorArraySplitV2', _scope.uniqueName('TensorArraySplitV2'));
+    op.addInput(handle);
+    op.addInput(value);
+    op.addInput(lengths);
+    op.addInput(flowIn);
+    return op.finish()[0];
+  }
+
+  Output<T> orderedMapUnstage<T>(Output<int> key, Output<int> indices,
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation(
+        'OrderedMapUnstage', _scope.uniqueName('OrderedMapUnstage'));
+    op.addInput(key);
+    op.addInput(indices);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 15: Use FFT2D')
   Output batchFFT2D(Output input) {
-    return addOperation(new OperationDescription(
-        'BatchFFT2D', _scope.uniqueName('BatchFFT2D'), [input], {}));
+    var op = newOperation('BatchFFT2D', _scope.uniqueName('BatchFFT2D'));
+    op.addInput(input);
+    return op.finish()[0];
+  }
+
+  Output<int> mapIncompleteSize(
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation(
+        'MapIncompleteSize', _scope.uniqueName('MapIncompleteSize'));
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 11: Use SelfAdjointEigV2 instead.')
-  Output selfAdjointEig(Output input) {
-    return addOperation(new OperationDescription(
-        'SelfAdjointEig', _scope.uniqueName('SelfAdjointEig'), [input], {}));
+  Output<T> selfAdjointEig<T>(Output<T> input) {
+    var op =
+        newOperation('SelfAdjointEig', _scope.uniqueName('SelfAdjointEig'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
   Output readerResetV2(Output readerHandle) {
-    return addOperation(new OperationDescription('ReaderResetV2',
-        _scope.uniqueName('ReaderResetV2'), [readerHandle], {}));
+    var op = newOperation('ReaderResetV2', _scope.uniqueName('ReaderResetV2'));
+    op.addInput(readerHandle);
+    return op.finish()[-1];
   }
 
-  Output refNextIteration(Output data) {
-    return addOperation(new OperationDescription(
-        'RefNextIteration', _scope.uniqueName('RefNextIteration'), [data], {}));
+  Output<int> orderedMapSize(
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op =
+        newOperation('OrderedMapSize', _scope.uniqueName('OrderedMapSize'));
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output rFFT2D(Output input, Output fftLength) {
-    return addOperation(new OperationDescription(
-        'RFFT2D', _scope.uniqueName('RFFT2D'), [input, fftLength], {}));
+  Output<T> refNextIteration<T>(Output<T> data) {
+    var op =
+        newOperation('RefNextIteration', _scope.uniqueName('RefNextIteration'));
+    op.addInput(data);
+    return op.finish()[0];
   }
 
-  Output less(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'Less', _scope.uniqueName('Less'), [x, y], {}));
+  Output<T> orderedMapPeek<T>(Output<int> key, Output<int> indices,
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op =
+        newOperation('OrderedMapPeek', _scope.uniqueName('OrderedMapPeek'));
+    op.addInput(key);
+    op.addInput(indices);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
+  }
+
+  Output mapClear(
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation('MapClear', _scope.uniqueName('MapClear'));
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[-1];
+  }
+
+  Output<T> queueDequeue<T>(Output<String> handle,
+      {List<DataType> componentTypes, int timeoutMs: -1}) {
+    var op = newOperation('QueueDequeue', _scope.uniqueName('QueueDequeue'));
+    op.addInput(handle);
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrInt('timeout_ms', timeoutMs);
+    return op.finish()[0];
+  }
+
+  Output rFFT2D(Output<double> input, Output<int> fftLength) {
+    var op = newOperation('RFFT2D', _scope.uniqueName('RFFT2D'));
+    op.addInput(input);
+    op.addInput(fftLength);
+    return op.finish()[0];
+  }
+
+  Output<T> maxPoolGradGradWithArgmax<T>(
+      Output<T> input, Output<T> grad, Output<T> argmax,
+      {List<int> ksize, List<int> strides, String padding, DataType targmax}) {
+    var op = newOperation('MaxPoolGradGradWithArgmax',
+        _scope.uniqueName('MaxPoolGradGradWithArgmax'));
+    op.addInput(input);
+    op.addInput(grad);
+    op.addInput(argmax);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrType('Targmax', targmax);
+    return op.finish()[0];
+  }
+
+  Output<bool> less<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('Less', _scope.uniqueName('Less'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
+  }
+
+  Output<T> datasetToSingleElement<T>(Output dataset,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation(
+        'DatasetToSingleElement', _scope.uniqueName('DatasetToSingleElement'));
+    op.addInput(dataset);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
   /// Creates a summary file writer accessible by the given resource handle.
-  Output createSummaryFileWriter(Output writer, Output logdir, Output maxQueue,
-      Output flushMillis, Output filenameSuffix) {
-    return addOperation(new OperationDescription(
-        'CreateSummaryFileWriter',
-        _scope.uniqueName('CreateSummaryFileWriter'),
-        [writer, logdir, maxQueue, flushMillis, filenameSuffix],
-        {}));
+  Output createSummaryFileWriter(
+      Output writer,
+      Output<String> logdir,
+      Output<int> maxQueue,
+      Output<int> flushMillis,
+      Output<String> filenameSuffix) {
+    var op = newOperation('CreateSummaryFileWriter',
+        _scope.uniqueName('CreateSummaryFileWriter'));
+    op.addInput(writer);
+    op.addInput(logdir);
+    op.addInput(maxQueue);
+    op.addInput(flushMillis);
+    op.addInput(filenameSuffix);
+    return op.finish()[-1];
   }
 
-  Output queueIsClosedV2(Output handle) {
-    return addOperation(new OperationDescription(
-        'QueueIsClosedV2', _scope.uniqueName('QueueIsClosedV2'), [handle], {}));
+  Output<bool> queueIsClosedV2(Output handle) {
+    var op =
+        newOperation('QueueIsClosedV2', _scope.uniqueName('QueueIsClosedV2'));
+    op.addInput(handle);
+    return op.finish()[0];
   }
 
-  Output sparseReduceSum(Output inputIndices, Output inputValues,
-      Output inputShape, Output reductionAxes,
+  Output<T> sparseReduceSum<T>(Output<int> inputIndices, Output<T> inputValues,
+      Output<int> inputShape, Output<int> reductionAxes,
       {bool keepDims: false}) {
-    return addOperation(new OperationDescription(
-        'SparseReduceSum',
-        _scope.uniqueName('SparseReduceSum'),
-        [inputIndices, inputValues, inputShape, reductionAxes],
-        {'keep_dims': keepDims}));
+    var op =
+        newOperation('SparseReduceSum', _scope.uniqueName('SparseReduceSum'));
+    op.addInput(inputIndices);
+    op.addInput(inputValues);
+    op.addInput(inputShape);
+    op.addInput(reductionAxes);
+    op.setAttrBool('keep_dims', keepDims);
+    return op.finish()[0];
   }
 
-  Output zeta(Output x, Output q) {
-    return addOperation(new OperationDescription(
-        'Zeta', _scope.uniqueName('Zeta'), [x, q], {}));
+  Output<T> zeta<T>(Output<T> x, Output<T> q) {
+    var op = newOperation('Zeta', _scope.uniqueName('Zeta'));
+    op.addInput(x);
+    op.addInput(q);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayGradV3')
-  Output tensorArrayGradV2(Output handle, Output flowIn,
-      {@required String source}) {
-    return addOperation(new OperationDescription(
-        'TensorArrayGradV2',
-        _scope.uniqueName('TensorArrayGradV2'),
-        [handle, flowIn],
-        {'source': source}));
+  Output<String> tensorArrayGradV2(Output<String> handle, Output<double> flowIn,
+      {String source}) {
+    var op = newOperation(
+        'TensorArrayGradV2', _scope.uniqueName('TensorArrayGradV2'));
+    op.addInput(handle);
+    op.addInput(flowIn);
+    op.setAttrString('source', source);
+    return op.finish()[0];
   }
 
-  Output shapeN(List<Output> input,
-      {@required int n, DataType outType: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('ShapeN',
-        _scope.uniqueName('ShapeN'), [input], {'N': n, 'out_type': outType}));
+  Output<T> shapeN<T>(List<Output<T>> input,
+      {int n, DataType outType: DataType.DT_INT32}) {
+    var op = newOperation('ShapeN', _scope.uniqueName('ShapeN'));
+    op.addInputList(input);
+    op.setAttrInt('N', n);
+    op.setAttrType('out_type', outType);
+    return op.finish()[0];
   }
 
-  Output imageSummary(Output tag, Output tensor,
-      {int maxImages: 3, Output badColor}) {
-    return addOperation(new OperationDescription(
-        'ImageSummary',
-        _scope.uniqueName('ImageSummary'),
-        [tag, tensor],
-        {'max_images': maxImages, 'bad_color': badColor}));
+  Output<String> imageSummary<T>(Output<String> tag, Output<T> tensor,
+      {int maxImages: 3, Tensor badColor}) {
+    var op = newOperation('ImageSummary', _scope.uniqueName('ImageSummary'));
+    op.addInput(tag);
+    op.addInput(tensor);
+    op.setAttrInt('max_images', maxImages);
+    op.setAttrTensor('bad_color', badColor);
+    return op.finish()[0];
   }
 
   Output wholeFileReaderV2({String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'WholeFileReaderV2',
-        _scope.uniqueName('WholeFileReaderV2'),
-        [],
-        {'container': container, 'shared_name': sharedName}));
+    var op = newOperation(
+        'WholeFileReaderV2', _scope.uniqueName('WholeFileReaderV2'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output mfcc(Output spectrogram, Output sampleRate,
+  Output<double> mfcc(Output<double> spectrogram, Output<int> sampleRate,
       {double upperFrequencyLimit: 4000.0,
       double lowerFrequencyLimit: 20.0,
       int filterbankChannelCount: 40,
       int dctCoefficientCount: 13}) {
-    return addOperation(
-        new OperationDescription('Mfcc', _scope.uniqueName('Mfcc'), [
-      spectrogram,
-      sampleRate
-    ], {
-      'upper_frequency_limit': upperFrequencyLimit,
-      'lower_frequency_limit': lowerFrequencyLimit,
-      'filterbank_channel_count': filterbankChannelCount,
-      'dct_coefficient_count': dctCoefficientCount
-    }));
+    var op = newOperation('Mfcc', _scope.uniqueName('Mfcc'));
+    op.addInput(spectrogram);
+    op.addInput(sampleRate);
+    op.setAttrFloat('upper_frequency_limit', upperFrequencyLimit);
+    op.setAttrFloat('lower_frequency_limit', lowerFrequencyLimit);
+    op.setAttrInt('filterbank_channel_count', filterbankChannelCount);
+    op.setAttrInt('dct_coefficient_count', dctCoefficientCount);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 14: Use MatrixDiagPart')
-  Output batchMatrixDiagPart(Output input) {
-    return addOperation(new OperationDescription('BatchMatrixDiagPart',
-        _scope.uniqueName('BatchMatrixDiagPart'), [input], {}));
+  Output<T> batchMatrixDiagPart<T>(Output<T> input) {
+    var op = newOperation(
+        'BatchMatrixDiagPart', _scope.uniqueName('BatchMatrixDiagPart'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 2: Use AdjustContrastv2 instead')
-  Output adjustContrast(
-      Output images, Output contrastFactor, Output minValue, Output maxValue) {
-    return addOperation(new OperationDescription(
-        'AdjustContrast',
-        _scope.uniqueName('AdjustContrast'),
-        [images, contrastFactor, minValue, maxValue],
-        {}));
+  Output<double> adjustContrast<T>(
+      Output<T> images,
+      Output<double> contrastFactor,
+      Output<double> minValue,
+      Output<double> maxValue) {
+    var op =
+        newOperation('AdjustContrast', _scope.uniqueName('AdjustContrast'));
+    op.addInput(images);
+    op.addInput(contrastFactor);
+    op.addInput(minValue);
+    op.addInput(maxValue);
+    return op.finish()[0];
   }
 
-  Output resizeNearestNeighbor(Output images, Output size,
+  Output<T> resizeNearestNeighbor<T>(Output<T> images, Output<int> size,
       {bool alignCorners: false}) {
-    return addOperation(new OperationDescription(
-        'ResizeNearestNeighbor',
-        _scope.uniqueName('ResizeNearestNeighbor'),
-        [images, size],
-        {'align_corners': alignCorners}));
+    var op = newOperation(
+        'ResizeNearestNeighbor', _scope.uniqueName('ResizeNearestNeighbor'));
+    op.addInput(images);
+    op.addInput(size);
+    op.setAttrBool('align_corners', alignCorners);
+    return op.finish()[0];
   }
 
-  Output atanh(Output x) {
-    return addOperation(
-        new OperationDescription('Atanh', _scope.uniqueName('Atanh'), [x], {}));
+  Output<T> atanh<T>(Output<T> x) {
+    var op = newOperation('Atanh', _scope.uniqueName('Atanh'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
   Output makeIterator(Output dataset, Output iterator) {
-    return addOperation(new OperationDescription('MakeIterator',
-        _scope.uniqueName('MakeIterator'), [dataset, iterator], {}));
+    var op = newOperation('MakeIterator', _scope.uniqueName('MakeIterator'));
+    op.addInput(dataset);
+    op.addInput(iterator);
+    return op.finish()[-1];
   }
 
-  Output parameterizedTruncatedNormal(
-      Output shape, Output means, Output stdevs, Output minvals, Output maxvals,
-      {int seed: 0, int seed2: 0, @required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'ParameterizedTruncatedNormal',
-        _scope.uniqueName('ParameterizedTruncatedNormal'),
-        [shape, means, stdevs, minvals, maxvals],
-        {'seed': seed, 'seed2': seed2, 'dtype': dtype}));
+  Output<T> parameterizedTruncatedNormal<T>(Output<T> shape, Output<T> means,
+      Output<T> stdevs, Output<T> minvals, Output<T> maxvals,
+      {int seed: 0, int seed2: 0, DataType dtype}) {
+    dtype ??= inferType(shape);
+    var op = newOperation('ParameterizedTruncatedNormal',
+        _scope.uniqueName('ParameterizedTruncatedNormal'));
+    op.addInput(shape);
+    op.addInput(means);
+    op.addInput(stdevs);
+    op.addInput(minvals);
+    op.addInput(maxvals);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output assignAddVariableOp(Output resource, Output value,
-      {@required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'AssignAddVariableOp',
-        _scope.uniqueName('AssignAddVariableOp'),
-        [resource, value],
-        {'dtype': dtype}));
+  Output<int> stageSize(
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation('StageSize', _scope.uniqueName('StageSize'));
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output isNan(Output x) {
-    return addOperation(
-        new OperationDescription('IsNan', _scope.uniqueName('IsNan'), [x], {}));
+  Output assignAddVariableOp<T>(Output resource, Output<T> value,
+      {DataType dtype}) {
+    dtype ??= inferType(resource);
+    var op = newOperation(
+        'AssignAddVariableOp', _scope.uniqueName('AssignAddVariableOp'));
+    op.addInput(resource);
+    op.addInput(value);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[-1];
   }
 
-  Output tensorListPushBack(Output inputHandle, Output tensor,
-      {@required DataType elementDtype}) {
-    return addOperation(new OperationDescription(
-        'TensorListPushBack',
-        _scope.uniqueName('TensorListPushBack'),
-        [inputHandle, tensor],
-        {'element_dtype': elementDtype}));
+  Output<T> depthwiseConv2dNativeBackpropInput<T>(
+      Output<int> inputSizes, Output<T> filter, Output<T> outBackprop,
+      {List<int> strides,
+      String padding,
+      String dataFormat: 'NHWC',
+      List<int> dilations}) {
+    var op = newOperation('DepthwiseConv2dNativeBackpropInput',
+        _scope.uniqueName('DepthwiseConv2dNativeBackpropInput'));
+    op.addInput(inputSizes);
+    op.addInput(filter);
+    op.addInput(outBackprop);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    op.setAttrIntList('dilations', dilations);
+    return op.finish()[0];
   }
 
-  Output reciprocalGrad(Output y, Output dy) {
-    return addOperation(new OperationDescription(
-        'ReciprocalGrad', _scope.uniqueName('ReciprocalGrad'), [y, dy], {}));
+  Output<bool> isNan<T>(Output<T> x) {
+    var op = newOperation('IsNan', _scope.uniqueName('IsNan'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output deleteSessionTensor(Output handle) {
-    return addOperation(new OperationDescription('DeleteSessionTensor',
-        _scope.uniqueName('DeleteSessionTensor'), [handle], {}));
+  Output tensorListPushBack<T>(Output inputHandle, Output<T> tensor,
+      {DataType elementDtype}) {
+    var op = newOperation(
+        'TensorListPushBack', _scope.uniqueName('TensorListPushBack'));
+    op.addInput(inputHandle);
+    op.addInput(tensor);
+    op.setAttrType('element_dtype', elementDtype);
+    return op.finish()[0];
   }
 
-  Output getSessionHandleV2(Output value) {
-    return addOperation(new OperationDescription('GetSessionHandleV2',
-        _scope.uniqueName('GetSessionHandleV2'), [value], {}));
+  Output<T> reciprocalGrad<T>(Output<T> y, Output<T> dy) {
+    var op =
+        newOperation('ReciprocalGrad', _scope.uniqueName('ReciprocalGrad'));
+    op.addInput(y);
+    op.addInput(dy);
+    return op.finish()[0];
+  }
+
+  Output<T> unstage<T>(
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation('Unstage', _scope.uniqueName('Unstage'));
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
+  }
+
+  Output stage<T>(List<Output<T>> values,
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation('Stage', _scope.uniqueName('Stage'));
+    op.addInputList(values);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[-1];
+  }
+
+  Output tensorSliceDataset<T>(List<Output<T>> components,
+      {List<DataType> toutputTypes, List<Shape> outputShapes}) {
+    var op = newOperation(
+        'TensorSliceDataset', _scope.uniqueName('TensorSliceDataset'));
+    op.addInputList(components);
+    op.setAttrTypeList('Toutput_types', toutputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
+  }
+
+  Output deleteSessionTensor(Output<String> handle) {
+    var op = newOperation(
+        'DeleteSessionTensor', _scope.uniqueName('DeleteSessionTensor'));
+    op.addInput(handle);
+    return op.finish()[-1];
+  }
+
+  Output getSessionHandleV2<T>(Output<T> value) {
+    var op = newOperation(
+        'GetSessionHandleV2', _scope.uniqueName('GetSessionHandleV2'));
+    op.addInput(value);
+    return op.finish()[0];
+  }
+
+  Output tensorDataset<T>(List<Output<T>> components,
+      {List<DataType> toutputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('TensorDataset', _scope.uniqueName('TensorDataset'));
+    op.addInputList(components);
+    op.setAttrTypeList('Toutput_types', toutputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 14: Use MatrixBandPart')
-  Output batchMatrixBandPart(Output input, Output numLower, Output numUpper) {
-    return addOperation(new OperationDescription(
-        'BatchMatrixBandPart',
-        _scope.uniqueName('BatchMatrixBandPart'),
-        [input, numLower, numUpper],
-        {}));
+  Output<T> batchMatrixBandPart<T>(
+      Output<T> input, Output<int> numLower, Output<int> numUpper) {
+    var op = newOperation(
+        'BatchMatrixBandPart', _scope.uniqueName('BatchMatrixBandPart'));
+    op.addInput(input);
+    op.addInput(numLower);
+    op.addInput(numUpper);
+    return op.finish()[0];
   }
 
-  Output div(Output x, Output y) {
-    return addOperation(
-        new OperationDescription('Div', _scope.uniqueName('Div'), [x, y], {}));
+  Output<T> div<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('Div', _scope.uniqueName('Div'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
   /// Flushes and closes the summary writer.
   /// Also removes it from the resource manager. To reopen, use another
   /// CreateSummaryFileWriter op.
   Output closeSummaryWriter(Output writer) {
-    return addOperation(new OperationDescription('CloseSummaryWriter',
-        _scope.uniqueName('CloseSummaryWriter'), [writer], {}));
+    var op = newOperation(
+        'CloseSummaryWriter', _scope.uniqueName('CloseSummaryWriter'));
+    op.addInput(writer);
+    return op.finish()[-1];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArraySizeV3')
-  Output tensorArraySizeV2(Output handle, Output flowIn) {
-    return addOperation(new OperationDescription('TensorArraySizeV2',
-        _scope.uniqueName('TensorArraySizeV2'), [handle, flowIn], {}));
+  Output<int> tensorArraySizeV2(Output<String> handle, Output<double> flowIn) {
+    var op = newOperation(
+        'TensorArraySizeV2', _scope.uniqueName('TensorArraySizeV2'));
+    op.addInput(handle);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output floorMod(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'FloorMod', _scope.uniqueName('FloorMod'), [x, y], {}));
+  Output<T> floorMod<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('FloorMod', _scope.uniqueName('FloorMod'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output matchingFiles(Output pattern) {
-    return addOperation(new OperationDescription(
-        'MatchingFiles', _scope.uniqueName('MatchingFiles'), [pattern], {}));
+  Output<String> matchingFiles(Output<String> pattern) {
+    var op = newOperation('MatchingFiles', _scope.uniqueName('MatchingFiles'));
+    op.addInput(pattern);
+    return op.finish()[0];
   }
 
-  Output restore(Output filePattern, Output tensorName,
-      {@required DataType dt, int preferredShard: -1}) {
-    return addOperation(new OperationDescription(
-        'Restore',
-        _scope.uniqueName('Restore'),
-        [filePattern, tensorName],
-        {'dt': dt, 'preferred_shard': preferredShard}));
+  Output<T> restore<T>(Output<String> filePattern, Output<String> tensorName,
+      {DataType dt, int preferredShard: -1}) {
+    var op = newOperation('Restore', _scope.uniqueName('Restore'));
+    op.addInput(filePattern);
+    op.addInput(tensorName);
+    op.setAttrType('dt', dt);
+    op.setAttrInt('preferred_shard', preferredShard);
+    return op.finish()[0];
   }
 
-  Output tanh(Output x) {
-    return addOperation(
-        new OperationDescription('Tanh', _scope.uniqueName('Tanh'), [x], {}));
+  Output<T> tanh<T>(Output<T> x) {
+    var op = newOperation('Tanh', _scope.uniqueName('Tanh'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output cropAndResizeGradImage(
-      Output grads, Output boxes, Output boxInd, Output imageSize,
+  Output<T> cropAndResizeGradImage<T>(Output<double> grads,
+      Output<double> boxes, Output<int> boxInd, Output<int> imageSize,
       {String method: 'bilinear'}) {
-    return addOperation(new OperationDescription(
-        'CropAndResizeGradImage',
-        _scope.uniqueName('CropAndResizeGradImage'),
-        [grads, boxes, boxInd, imageSize],
-        {'method': method}));
+    var op = newOperation(
+        'CropAndResizeGradImage', _scope.uniqueName('CropAndResizeGradImage'));
+    op.addInput(grads);
+    op.addInput(boxes);
+    op.addInput(boxInd);
+    op.addInput(imageSize);
+    op.setAttrString('method', method);
+    return op.finish()[0];
   }
 
-  Output accumulatorTakeGradient(Output handle, Output numRequired,
-      {@required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'AccumulatorTakeGradient',
-        _scope.uniqueName('AccumulatorTakeGradient'),
-        [handle, numRequired],
-        {'dtype': dtype}));
+  Output<T> accumulatorTakeGradient<T>(
+      Output<String> handle, Output<int> numRequired,
+      {DataType dtype}) {
+    dtype ??= inferType(handle);
+    var op = newOperation('AccumulatorTakeGradient',
+        _scope.uniqueName('AccumulatorTakeGradient'));
+    op.addInput(handle);
+    op.addInput(numRequired);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output stridedSliceAssign(
-      Output ref, Output begin, Output end, Output strides, Output value,
-      {@required DataType index,
+  Output<T> stridedSliceAssign<T>(Output<T> ref, Output<T> begin, Output<T> end,
+      Output<T> strides, Output<T> value,
+      {DataType index,
       int beginMask: 0,
       int endMask: 0,
       int ellipsisMask: 0,
       int newAxisMask: 0,
       int shrinkAxisMask: 0}) {
-    return addOperation(new OperationDescription(
-        'StridedSliceAssign', _scope.uniqueName('StridedSliceAssign'), [
-      ref,
-      begin,
-      end,
-      strides,
-      value
-    ], {
-      'Index': index,
-      'begin_mask': beginMask,
-      'end_mask': endMask,
-      'ellipsis_mask': ellipsisMask,
-      'new_axis_mask': newAxisMask,
-      'shrink_axis_mask': shrinkAxisMask
-    }));
+    var op = newOperation(
+        'StridedSliceAssign', _scope.uniqueName('StridedSliceAssign'));
+    op.addInput(ref);
+    op.addInput(begin);
+    op.addInput(end);
+    op.addInput(strides);
+    op.addInput(value);
+    op.setAttrType('Index', index);
+    op.setAttrInt('begin_mask', beginMask);
+    op.setAttrInt('end_mask', endMask);
+    op.setAttrInt('ellipsis_mask', ellipsisMask);
+    op.setAttrInt('new_axis_mask', newAxisMask);
+    op.setAttrInt('shrink_axis_mask', shrinkAxisMask);
+    return op.finish()[0];
   }
 
   Output varHandleOp(
       {String container,
       String sharedName,
       @required DataType dtype,
-      @required List<int> shape}) {
-    return addOperation(new OperationDescription(
-        'VarHandleOp', _scope.uniqueName('VarHandleOp'), [], {
-      'container': container,
-      'shared_name': sharedName,
-      'dtype': dtype,
-      'shape': shape
-    }));
+      Shape shape}) {
+    var op = newOperation('VarHandleOp', _scope.uniqueName('VarHandleOp'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('shape', shape);
+    return op.finish()[0];
   }
 
-  Output rFFT3D(Output input, Output fftLength) {
-    return addOperation(new OperationDescription(
-        'RFFT3D', _scope.uniqueName('RFFT3D'), [input, fftLength], {}));
+  Output rFFT3D(Output<double> input, Output<int> fftLength) {
+    var op = newOperation('RFFT3D', _scope.uniqueName('RFFT3D'));
+    op.addInput(input);
+    op.addInput(fftLength);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayGatherV3')
-  Output tensorArrayGatherV2(Output handle, Output indices, Output flowIn,
-      {@required DataType dtype, List<int> elementShape}) {
-    return addOperation(new OperationDescription(
-        'TensorArrayGatherV2',
-        _scope.uniqueName('TensorArrayGatherV2'),
-        [handle, indices, flowIn],
-        {'dtype': dtype, 'element_shape': elementShape}));
+  Output<T> tensorArrayGatherV2<T>(
+      Output<String> handle, Output<int> indices, Output<double> flowIn,
+      {DataType dtype, Shape elementShape}) {
+    dtype ??= inferType(handle);
+    var op = newOperation(
+        'TensorArrayGatherV2', _scope.uniqueName('TensorArrayGatherV2'));
+    op.addInput(handle);
+    op.addInput(indices);
+    op.addInput(flowIn);
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('element_shape', elementShape);
+    return op.finish()[0];
   }
 
-  Output dynamicPartition(Output data, Output partitions,
-      {@required int numPartitions}) {
-    return addOperation(new OperationDescription(
-        'DynamicPartition',
-        _scope.uniqueName('DynamicPartition'),
-        [data, partitions],
-        {'num_partitions': numPartitions}));
+  Output<T> dynamicPartition<T>(Output<T> data, Output<int> partitions,
+      {int numPartitions}) {
+    var op =
+        newOperation('DynamicPartition', _scope.uniqueName('DynamicPartition'));
+    op.addInput(data);
+    op.addInput(partitions);
+    op.setAttrInt('num_partitions', numPartitions);
+    return op.finish()[0];
   }
 
-  Output fakeQueue(Output resource) {
-    return addOperation(new OperationDescription(
-        'FakeQueue', _scope.uniqueName('FakeQueue'), [resource], {}));
+  Output<String> fakeQueue(Output resource) {
+    var op = newOperation('FakeQueue', _scope.uniqueName('FakeQueue'));
+    op.addInput(resource);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 16: Use TensorArrayGatherV3 with RangeOp')
-  Output tensorArrayPack(Output handle, Output flowIn,
-      {@required DataType dtype, List<int> elementShape}) {
-    return addOperation(new OperationDescription(
-        'TensorArrayPack',
-        _scope.uniqueName('TensorArrayPack'),
-        [handle, flowIn],
-        {'dtype': dtype, 'element_shape': elementShape}));
+  Output<T> tensorArrayPack<T>(Output<String> handle, Output<double> flowIn,
+      {DataType dtype, Shape elementShape}) {
+    dtype ??= inferType(handle);
+    var op =
+        newOperation('TensorArrayPack', _scope.uniqueName('TensorArrayPack'));
+    op.addInput(handle);
+    op.addInput(flowIn);
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('element_shape', elementShape);
+    return op.finish()[0];
   }
 
-  Output tanhGrad(Output y, Output dy) {
-    return addOperation(new OperationDescription(
-        'TanhGrad', _scope.uniqueName('TanhGrad'), [y, dy], {}));
+  Output<T> dilation2DBackpropFilter<T>(
+      Output<T> input, Output<T> filter, Output<T> outBackprop,
+      {List<int> strides, List<int> rates, String padding}) {
+    var op = newOperation('Dilation2DBackpropFilter',
+        _scope.uniqueName('Dilation2DBackpropFilter'));
+    op.addInput(input);
+    op.addInput(filter);
+    op.addInput(outBackprop);
+    op.setAttrIntList('strides', strides);
+    op.setAttrIntList('rates', rates);
+    op.setAttrString('padding', padding);
+    return op.finish()[0];
   }
 
-  Output loopCond(Output input) {
-    return addOperation(new OperationDescription(
-        'LoopCond', _scope.uniqueName('LoopCond'), [input], {}));
+  Output<T> tanhGrad<T>(Output<T> y, Output<T> dy) {
+    var op = newOperation('TanhGrad', _scope.uniqueName('TanhGrad'));
+    op.addInput(y);
+    op.addInput(dy);
+    return op.finish()[0];
   }
 
-  Output sparseReduceMax(Output inputIndices, Output inputValues,
-      Output inputShape, Output reductionAxes,
+  Output<bool> loopCond(Output<bool> input) {
+    var op = newOperation('LoopCond', _scope.uniqueName('LoopCond'));
+    op.addInput(input);
+    return op.finish()[0];
+  }
+
+  Output<T> sparseReduceMax<T>(Output<int> inputIndices, Output<T> inputValues,
+      Output<int> inputShape, Output<int> reductionAxes,
       {bool keepDims: false}) {
-    return addOperation(new OperationDescription(
-        'SparseReduceMax',
-        _scope.uniqueName('SparseReduceMax'),
-        [inputIndices, inputValues, inputShape, reductionAxes],
-        {'keep_dims': keepDims}));
+    var op =
+        newOperation('SparseReduceMax', _scope.uniqueName('SparseReduceMax'));
+    op.addInput(inputIndices);
+    op.addInput(inputValues);
+    op.addInput(inputShape);
+    op.addInput(reductionAxes);
+    op.setAttrBool('keep_dims', keepDims);
+    return op.finish()[0];
   }
 
-  Output unsortedSegmentMax(Output data, Output segmentIds, Output numSegments,
-      {@required DataType tindices, DataType tnumsegments: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'UnsortedSegmentMax',
-        _scope.uniqueName('UnsortedSegmentMax'),
-        [data, segmentIds, numSegments],
-        {'Tindices': tindices, 'Tnumsegments': tnumsegments}));
+  Output<T> unsortedSegmentMax<T>(
+      Output<T> data, Output<T> segmentIds, Output<T> numSegments,
+      {DataType tindices, DataType tnumsegments: DataType.DT_INT32}) {
+    var op = newOperation(
+        'UnsortedSegmentMax', _scope.uniqueName('UnsortedSegmentMax'));
+    op.addInput(data);
+    op.addInput(segmentIds);
+    op.addInput(numSegments);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrType('Tnumsegments', tnumsegments);
+    return op.finish()[0];
   }
 
-  Output audioSpectrogram(Output input,
-      {@required int windowSize,
-      @required int stride,
-      bool magnitudeSquared: false}) {
-    return addOperation(new OperationDescription(
-        'AudioSpectrogram', _scope.uniqueName('AudioSpectrogram'), [
-      input
-    ], {
-      'window_size': windowSize,
-      'stride': stride,
-      'magnitude_squared': magnitudeSquared
-    }));
+  Output<double> audioSpectrogram(Output<double> input,
+      {int windowSize, int stride, bool magnitudeSquared: false}) {
+    var op =
+        newOperation('AudioSpectrogram', _scope.uniqueName('AudioSpectrogram'));
+    op.addInput(input);
+    op.setAttrInt('window_size', windowSize);
+    op.setAttrInt('stride', stride);
+    op.setAttrBool('magnitude_squared', magnitudeSquared);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 16: Use TensorArrayReadV3')
-  Output tensorArrayRead(Output handle, Output index, Output flowIn,
-      {@required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'TensorArrayRead',
-        _scope.uniqueName('TensorArrayRead'),
-        [handle, index, flowIn],
-        {'dtype': dtype}));
+  Output<T> tensorArrayRead<T>(
+      Output<String> handle, Output<int> index, Output<double> flowIn,
+      {DataType dtype}) {
+    dtype ??= inferType(handle);
+    var op =
+        newOperation('TensorArrayRead', _scope.uniqueName('TensorArrayRead'));
+    op.addInput(handle);
+    op.addInput(index);
+    op.addInput(flowIn);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
   }
 
-  Output mutableHashTable(
+  Output stageClear(
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation('StageClear', _scope.uniqueName('StageClear'));
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[-1];
+  }
+
+  Output<String> mutableHashTable(
       {String container,
       String sharedName,
       bool useNodeNameSharing: false,
-      @required DataType keyDtype,
-      @required DataType valueDtype}) {
-    return addOperation(new OperationDescription(
-        'MutableHashTable', _scope.uniqueName('MutableHashTable'), [], {
-      'container': container,
-      'shared_name': sharedName,
-      'use_node_name_sharing': useNodeNameSharing,
-      'key_dtype': keyDtype,
-      'value_dtype': valueDtype
-    }));
+      DataType keyDtype,
+      DataType valueDtype}) {
+    var op =
+        newOperation('MutableHashTable', _scope.uniqueName('MutableHashTable'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrBool('use_node_name_sharing', useNodeNameSharing);
+    op.setAttrType('key_dtype', keyDtype);
+    op.setAttrType('value_dtype', valueDtype);
+    return op.finish()[0];
   }
 
-  Output tensorArraySizeV3(Output handle, Output flowIn) {
-    return addOperation(new OperationDescription('TensorArraySizeV3',
-        _scope.uniqueName('TensorArraySizeV3'), [handle, flowIn], {}));
+  Output<int> tensorArraySizeV3(Output handle, Output<double> flowIn) {
+    var op = newOperation(
+        'TensorArraySizeV3', _scope.uniqueName('TensorArraySizeV3'));
+    op.addInput(handle);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output applyAdam(
-      Output var_,
-      Output m,
-      Output v,
-      Output beta1Power,
-      Output beta2Power,
-      Output lr,
-      Output beta1,
-      Output beta2,
-      Output epsilon,
-      Output grad,
+  Output<T> applyAdam<T>(
+      Output<T> var_,
+      Output<T> m,
+      Output<T> v,
+      Output<T> beta1Power,
+      Output<T> beta2Power,
+      Output<T> lr,
+      Output<T> beta1,
+      Output<T> beta2,
+      Output<T> epsilon,
+      Output<T> grad,
       {bool useLocking: false,
       bool useNesterov: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyAdam',
-        _scope.uniqueName('ApplyAdam'),
-        [var_, m, v, beta1Power, beta2Power, lr, beta1, beta2, epsilon, grad],
-        {'use_locking': useLocking, 'use_nesterov': useNesterov}));
+    var op = newOperation('ApplyAdam', _scope.uniqueName('ApplyAdam'));
+    op.addInput(var_);
+    op.addInput(m);
+    op.addInput(v);
+    op.addInput(beta1Power);
+    op.addInput(beta2Power);
+    op.addInput(lr);
+    op.addInput(beta1);
+    op.addInput(beta2);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    op.setAttrBool('use_nesterov', useNesterov);
+    return op.finish()[0];
   }
 
-  Output mergeSummary(List<Output> inputs, {@required int n}) {
-    return addOperation(new OperationDescription(
-        'MergeSummary', _scope.uniqueName('MergeSummary'), [inputs], {'N': n}));
+  Output<String> mergeSummary(List<Output<String>> inputs, {int n}) {
+    var op = newOperation('MergeSummary', _scope.uniqueName('MergeSummary'));
+    op.addInputList(inputs);
+    op.setAttrInt('N', n);
+    return op.finish()[0];
+  }
+
+  Output queueEnqueueManyV2<T>(Output handle, List<Output<T>> components,
+      {List<DataType> tcomponents, int timeoutMs: -1}) {
+    var op = newOperation(
+        'QueueEnqueueManyV2', _scope.uniqueName('QueueEnqueueManyV2'));
+    op.addInput(handle);
+    op.addInputList(components);
+    op.setAttrTypeList('Tcomponents', tcomponents);
+    op.setAttrInt('timeout_ms', timeoutMs);
+    return op.finish()[-1];
   }
 
   Output fFT(Output input) {
-    return addOperation(
-        new OperationDescription('FFT', _scope.uniqueName('FFT'), [input], {}));
+    var op = newOperation('FFT', _scope.uniqueName('FFT'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output resourceApplyAdadelta(Output var_, Output accum, Output accumUpdate,
-      Output lr, Output rho, Output epsilon, Output grad,
+  Output resourceApplyAdadelta<T>(Output var_, Output accum, Output accumUpdate,
+      Output<T> lr, Output<T> rho, Output<T> epsilon, Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceApplyAdadelta',
-        _scope.uniqueName('ResourceApplyAdadelta'),
-        [var_, accum, accumUpdate, lr, rho, epsilon, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation(
+        'ResourceApplyAdadelta', _scope.uniqueName('ResourceApplyAdadelta'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(accumUpdate);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output debugGradientRefIdentity(Output input) {
-    return addOperation(new OperationDescription('DebugGradientRefIdentity',
-        _scope.uniqueName('DebugGradientRefIdentity'), [input], {}));
+  Output<T> debugGradientRefIdentity<T>(Output<T> input) {
+    var op = newOperation('DebugGradientRefIdentity',
+        _scope.uniqueName('DebugGradientRefIdentity'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output floorDiv(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'FloorDiv', _scope.uniqueName('FloorDiv'), [x, y], {}));
+  Output<T> floorDiv<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('FloorDiv', _scope.uniqueName('FloorDiv'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output applyAdagradDA(
-      Output var_,
-      Output gradientAccumulator,
-      Output gradientSquaredAccumulator,
-      Output grad,
-      Output lr,
-      Output l1,
-      Output l2,
-      Output globalStep,
+  Output<T> applyAdagradDA<T>(
+      Output<T> var_,
+      Output<T> gradientAccumulator,
+      Output<T> gradientSquaredAccumulator,
+      Output<T> grad,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<int> globalStep,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyAdagradDA', _scope.uniqueName('ApplyAdagradDA'), [
-      var_,
-      gradientAccumulator,
-      gradientSquaredAccumulator,
-      grad,
-      lr,
-      l1,
-      l2,
-      globalStep
-    ], {
-      'use_locking': useLocking
-    }));
+    var op =
+        newOperation('ApplyAdagradDA', _scope.uniqueName('ApplyAdagradDA'));
+    op.addInput(var_);
+    op.addInput(gradientAccumulator);
+    op.addInput(gradientSquaredAccumulator);
+    op.addInput(grad);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(globalStep);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output square(Output x) {
-    return addOperation(new OperationDescription(
-        'Square', _scope.uniqueName('Square'), [x], {}));
+  Output<T> square<T>(Output<T> x) {
+    var op = newOperation('Square', _scope.uniqueName('Square'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use IdentityReaderV2')
-  Output identityReader({String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'IdentityReader',
-        _scope.uniqueName('IdentityReader'),
-        [],
-        {'container': container, 'shared_name': sharedName}));
+  Output<String> identityReader({String container, String sharedName}) {
+    var op =
+        newOperation('IdentityReader', _scope.uniqueName('IdentityReader'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output tensorArrayScatterV3(
-      Output handle, Output indices, Output value, Output flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArrayScatterV3',
-        _scope.uniqueName('TensorArrayScatterV3'),
-        [handle, indices, value, flowIn],
-        {}));
+  Output<double> tensorArrayScatterV3<T>(Output handle, Output<int> indices,
+      Output<T> value, Output<double> flowIn) {
+    var op = newOperation(
+        'TensorArrayScatterV3', _scope.uniqueName('TensorArrayScatterV3'));
+    op.addInput(handle);
+    op.addInput(indices);
+    op.addInput(value);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output biasAddV1(Output value, Output bias) {
-    return addOperation(new OperationDescription(
-        'BiasAddV1', _scope.uniqueName('BiasAddV1'), [value, bias], {}));
+  Output<T> biasAddV1<T>(Output<T> value, Output<T> bias) {
+    var op = newOperation('BiasAddV1', _scope.uniqueName('BiasAddV1'));
+    op.addInput(value);
+    op.addInput(bias);
+    return op.finish()[0];
   }
 
-  Output logicalOr(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'LogicalOr', _scope.uniqueName('LogicalOr'), [x, y], {}));
+  Output<bool> logicalOr(Output<bool> x, Output<bool> y) {
+    var op = newOperation('LogicalOr', _scope.uniqueName('LogicalOr'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output stackPush(Output handle, Output elem, {bool swapMemory: false}) {
-    return addOperation(new OperationDescription(
-        'StackPush',
-        _scope.uniqueName('StackPush'),
-        [handle, elem],
-        {'swap_memory': swapMemory}));
+  Output<T> stackPush<T>(Output<String> handle, Output<T> elem,
+      {bool swapMemory: false}) {
+    var op = newOperation('StackPush', _scope.uniqueName('StackPush'));
+    op.addInput(handle);
+    op.addInput(elem);
+    op.setAttrBool('swap_memory', swapMemory);
+    return op.finish()[0];
   }
 
   Output tFRecordReaderV2(
       {String container, String sharedName, String compressionType}) {
-    return addOperation(new OperationDescription(
-        'TFRecordReaderV2', _scope.uniqueName('TFRecordReaderV2'), [], {
-      'container': container,
-      'shared_name': sharedName,
-      'compression_type': compressionType
-    }));
+    var op =
+        newOperation('TFRecordReaderV2', _scope.uniqueName('TFRecordReaderV2'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrString('compression_type', compressionType);
+    return op.finish()[0];
   }
 
-  Output lookupTableFind(Output tableHandle, Output keys, Output defaultValue,
-      {@required DataType tin, @required DataType tout}) {
-    return addOperation(new OperationDescription(
-        'LookupTableFind',
-        _scope.uniqueName('LookupTableFind'),
-        [tableHandle, keys, defaultValue],
-        {'Tin': tin, 'Tout': tout}));
+  Output paddingFIFOQueueV2(
+      {List<DataType> componentTypes,
+      List<Shape> shapes,
+      int capacity: -1,
+      String container,
+      String sharedName}) {
+    var op = newOperation(
+        'PaddingFIFOQueueV2', _scope.uniqueName('PaddingFIFOQueueV2'));
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrShapeList('shapes', shapes);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output dynamicStitch(List<Output> indices, List<Output> data,
-      {@required int n}) {
-    return addOperation(new OperationDescription('DynamicStitch',
-        _scope.uniqueName('DynamicStitch'), [indices, data], {'N': n}));
+  Output<T> lookupTableFind<T>(
+      Output<String> tableHandle, Output<T> keys, Output<T> defaultValue,
+      {DataType tin, DataType tout}) {
+    var op =
+        newOperation('LookupTableFind', _scope.uniqueName('LookupTableFind'));
+    op.addInput(tableHandle);
+    op.addInput(keys);
+    op.addInput(defaultValue);
+    op.setAttrType('Tin', tin);
+    op.setAttrType('Tout', tout);
+    return op.finish()[0];
   }
 
-  Output sparseApplyAdadelta(Output var_, Output accum, Output accumUpdate,
-      Output lr, Output rho, Output epsilon, Output grad, Output indices,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'SparseApplyAdadelta',
-        _scope.uniqueName('SparseApplyAdadelta'),
-        [var_, accum, accumUpdate, lr, rho, epsilon, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> dynamicStitch<T>(List<Output<int>> indices, List<Output<T>> data,
+      {int n}) {
+    var op = newOperation('DynamicStitch', _scope.uniqueName('DynamicStitch'));
+    op.addInputList(indices);
+    op.addInputList(data);
+    op.setAttrInt('N', n);
+    return op.finish()[0];
   }
 
-  Output complexAbs(Output x, {DataType tout: DataType.DT_FLOAT}) {
-    return addOperation(new OperationDescription(
-        'ComplexAbs', _scope.uniqueName('ComplexAbs'), [x], {'Tout': tout}));
+  Output<T> sparseApplyAdadelta<T>(
+      Output<T> var_,
+      Output<T> accum,
+      Output<T> accumUpdate,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> epsilon,
+      Output<T> grad,
+      Output<T> indices,
+      {DataType tindices,
+      bool useLocking: false}) {
+    var op = newOperation(
+        'SparseApplyAdadelta', _scope.uniqueName('SparseApplyAdadelta'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(accumUpdate);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output serializeSparse(
-      Output sparseIndices, Output sparseValues, Output sparseShape,
+  Output<T> complexAbs<T>(Output<T> x, {DataType tout: DataType.DT_FLOAT}) {
+    var op = newOperation('ComplexAbs', _scope.uniqueName('ComplexAbs'));
+    op.addInput(x);
+    op.setAttrType('Tout', tout);
+    return op.finish()[0];
+  }
+
+  Output<T> serializeSparse<T>(Output<int> sparseIndices,
+      Output<T> sparseValues, Output<int> sparseShape,
       {DataType outType: DataType.DT_STRING}) {
-    return addOperation(new OperationDescription(
-        'SerializeSparse',
-        _scope.uniqueName('SerializeSparse'),
-        [sparseIndices, sparseValues, sparseShape],
-        {'out_type': outType}));
+    var op =
+        newOperation('SerializeSparse', _scope.uniqueName('SerializeSparse'));
+    op.addInput(sparseIndices);
+    op.addInput(sparseValues);
+    op.addInput(sparseShape);
+    op.setAttrType('out_type', outType);
+    return op.finish()[0];
   }
 
-  Output bitwiseXor(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'BitwiseXor', _scope.uniqueName('BitwiseXor'), [x, y], {}));
+  Output<T> bitwiseXor<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('BitwiseXor', _scope.uniqueName('BitwiseXor'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output tensorListSetItem(Output inputHandle, Output index, Output item,
-      {@required DataType elementDtype}) {
-    return addOperation(new OperationDescription(
-        'TensorListSetItem',
-        _scope.uniqueName('TensorListSetItem'),
-        [inputHandle, index, item],
-        {'element_dtype': elementDtype}));
+  Output tensorListSetItem<T>(
+      Output inputHandle, Output<int> index, Output<T> item,
+      {DataType elementDtype}) {
+    var op = newOperation(
+        'TensorListSetItem', _scope.uniqueName('TensorListSetItem'));
+    op.addInput(inputHandle);
+    op.addInput(index);
+    op.addInput(item);
+    op.setAttrType('element_dtype', elementDtype);
+    return op.finish()[0];
   }
 
-  Output stack({@required DataType elemType, String stackName}) {
-    return addOperation(new OperationDescription(
-        'Stack',
-        _scope.uniqueName('Stack'),
-        [],
-        {'elem_type': elemType, 'stack_name': stackName}));
+  Output<String> stack({DataType elemType, String stackName}) {
+    var op = newOperation('Stack', _scope.uniqueName('Stack'));
+    op.setAttrType('elem_type', elemType);
+    op.setAttrString('stack_name', stackName);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 26: Use TFRecordReaderV2')
-  Output tFRecordReader(
+  Output<String> tFRecordReader(
       {String container, String sharedName, String compressionType}) {
-    return addOperation(new OperationDescription(
-        'TFRecordReader', _scope.uniqueName('TFRecordReader'), [], {
-      'container': container,
-      'shared_name': sharedName,
-      'compression_type': compressionType
-    }));
+    var op =
+        newOperation('TFRecordReader', _scope.uniqueName('TFRecordReader'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    op.setAttrString('compression_type', compressionType);
+    return op.finish()[0];
   }
 
-  Output sparseConditionalAccumulator(
-      {@required DataType dtype,
-      @required List<int> shape,
-      String container,
-      String sharedName}) {
-    return addOperation(new OperationDescription('SparseConditionalAccumulator',
-        _scope.uniqueName('SparseConditionalAccumulator'), [], {
-      'dtype': dtype,
-      'shape': shape,
-      'container': container,
-      'shared_name': sharedName
-    }));
+  Output<T> queueDequeueMany<T>(Output<String> handle, Output<int> n,
+      {List<DataType> componentTypes, int timeoutMs: -1}) {
+    var op =
+        newOperation('QueueDequeueMany', _scope.uniqueName('QueueDequeueMany'));
+    op.addInput(handle);
+    op.addInput(n);
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrInt('timeout_ms', timeoutMs);
+    return op.finish()[0];
   }
 
-  Output conditionalAccumulator(
+  Output<String> sparseConditionalAccumulator(
       {@required DataType dtype,
-      @required List<int> shape,
+      Shape shape,
       String container,
       String sharedName}) {
-    return addOperation(new OperationDescription('ConditionalAccumulator',
-        _scope.uniqueName('ConditionalAccumulator'), [], {
-      'dtype': dtype,
-      'shape': shape,
-      'container': container,
-      'shared_name': sharedName
-    }));
+    var op = newOperation('SparseConditionalAccumulator',
+        _scope.uniqueName('SparseConditionalAccumulator'));
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('shape', shape);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
+  }
+
+  Output<String> conditionalAccumulator(
+      {@required DataType dtype,
+      Shape shape,
+      String container,
+      String sharedName}) {
+    var op = newOperation(
+        'ConditionalAccumulator', _scope.uniqueName('ConditionalAccumulator'));
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('shape', shape);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 15: Use FFT')
   Output batchFFT(Output input) {
-    return addOperation(new OperationDescription(
-        'BatchFFT', _scope.uniqueName('BatchFFT'), [input], {}));
+    var op = newOperation('BatchFFT', _scope.uniqueName('BatchFFT'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output accumulatorNumAccumulated(Output handle) {
-    return addOperation(new OperationDescription('AccumulatorNumAccumulated',
-        _scope.uniqueName('AccumulatorNumAccumulated'), [handle], {}));
+  Output<int> accumulatorNumAccumulated(Output<String> handle) {
+    var op = newOperation('AccumulatorNumAccumulated',
+        _scope.uniqueName('AccumulatorNumAccumulated'));
+    op.addInput(handle);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 11: Use SelfAdjointEigV2 instead.')
-  Output batchSelfAdjointEig(Output input) {
-    return addOperation(new OperationDescription('BatchSelfAdjointEig',
-        _scope.uniqueName('BatchSelfAdjointEig'), [input], {}));
+  Output<T> batchSelfAdjointEig<T>(Output<T> input) {
+    var op = newOperation(
+        'BatchSelfAdjointEig', _scope.uniqueName('BatchSelfAdjointEig'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output minimum(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'Minimum', _scope.uniqueName('Minimum'), [x, y], {}));
+  Output<T> minimum<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('Minimum', _scope.uniqueName('Minimum'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output queueIsClosed(Output handle) {
-    return addOperation(new OperationDescription(
-        'QueueIsClosed', _scope.uniqueName('QueueIsClosed'), [handle], {}));
+  Output<bool> queueIsClosed(Output<String> handle) {
+    var op = newOperation('QueueIsClosed', _scope.uniqueName('QueueIsClosed'));
+    op.addInput(handle);
+    return op.finish()[0];
   }
 
-  Output tensorArraySplitV3(
-      Output handle, Output value, Output lengths, Output flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArraySplitV3',
-        _scope.uniqueName('TensorArraySplitV3'),
-        [handle, value, lengths, flowIn],
-        {}));
+  Output<double> tensorArraySplitV3<T>(Output handle, Output<T> value,
+      Output<int> lengths, Output<double> flowIn) {
+    var op = newOperation(
+        'TensorArraySplitV3', _scope.uniqueName('TensorArraySplitV3'));
+    op.addInput(handle);
+    op.addInput(value);
+    op.addInput(lengths);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output sparseApplyFtrl(Output var_, Output accum, Output linear, Output grad,
-      Output indices, Output lr, Output l1, Output l2, Output lrPower,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'SparseApplyFtrl',
-        _scope.uniqueName('SparseApplyFtrl'),
-        [var_, accum, linear, grad, indices, lr, l1, l2, lrPower],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> sparseApplyFtrl<T>(
+      Output<T> var_,
+      Output<T> accum,
+      Output<T> linear,
+      Output<T> grad,
+      Output<T> indices,
+      Output<T> lr,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> lrPower,
+      {DataType tindices,
+      bool useLocking: false}) {
+    var op =
+        newOperation('SparseApplyFtrl', _scope.uniqueName('SparseApplyFtrl'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(linear);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.addInput(lr);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(lrPower);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output resourceSparseApplyProximalGradientDescent(Output var_, Output alpha,
-      Output l1, Output l2, Output grad, Output indices,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ResourceSparseApplyProximalGradientDescent',
-        _scope.uniqueName('ResourceSparseApplyProximalGradientDescent'),
-        [var_, alpha, l1, l2, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output resourceSparseApplyProximalGradientDescent<T>(
+      Output var_,
+      Output<T> alpha,
+      Output<T> l1,
+      Output<T> l2,
+      Output<T> grad,
+      Output<T> indices,
+      {DataType tindices,
+      bool useLocking: false}) {
+    var op = newOperation('ResourceSparseApplyProximalGradientDescent',
+        _scope.uniqueName('ResourceSparseApplyProximalGradientDescent'));
+    op.addInput(var_);
+    op.addInput(alpha);
+    op.addInput(l1);
+    op.addInput(l2);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[-1];
   }
 
-  Output sparseSegmentSum(Output data, Output indices, Output segmentIds,
+  Output<T> sparseSegmentSum<T>(
+      Output<T> data, Output<T> indices, Output<int> segmentIds,
       {DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'SparseSegmentSum',
-        _scope.uniqueName('SparseSegmentSum'),
-        [data, indices, segmentIds],
-        {'Tidx': tidx}));
+    var op =
+        newOperation('SparseSegmentSum', _scope.uniqueName('SparseSegmentSum'));
+    op.addInput(data);
+    op.addInput(indices);
+    op.addInput(segmentIds);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output rint(Output x) {
-    return addOperation(
-        new OperationDescription('Rint', _scope.uniqueName('Rint'), [x], {}));
+  Output<String> fIFOQueue(
+      {List<DataType> componentTypes,
+      List<Shape> shapes,
+      int capacity: -1,
+      String container,
+      String sharedName}) {
+    var op = newOperation('FIFOQueue', _scope.uniqueName('FIFOQueue'));
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrShapeList('shapes', shapes);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
+  }
+
+  Output<T> rint<T>(Output<T> x) {
+    var op = newOperation('Rint', _scope.uniqueName('Rint'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
   Output abort({String errorMsg, bool exitWithoutError: false}) {
-    return addOperation(new OperationDescription(
-        'Abort',
-        _scope.uniqueName('Abort'),
-        [],
-        {'error_msg': errorMsg, 'exit_without_error': exitWithoutError}));
+    var op = newOperation('Abort', _scope.uniqueName('Abort'));
+    op.setAttrString('error_msg', errorMsg);
+    op.setAttrBool('exit_without_error', exitWithoutError);
+    return op.finish()[-1];
   }
 
-  Output shardedFilename(Output basename, Output shard, Output numShards) {
-    return addOperation(new OperationDescription(
-        'ShardedFilename',
-        _scope.uniqueName('ShardedFilename'),
-        [basename, shard, numShards],
-        {}));
+  Output<T> extractImagePatches<T>(Output<T> images,
+      {List<int> ksizes, List<int> strides, List<int> rates, String padding}) {
+    var op = newOperation(
+        'ExtractImagePatches', _scope.uniqueName('ExtractImagePatches'));
+    op.addInput(images);
+    op.setAttrIntList('ksizes', ksizes);
+    op.setAttrIntList('strides', strides);
+    op.setAttrIntList('rates', rates);
+    op.setAttrString('padding', padding);
+    return op.finish()[0];
   }
 
-  Output matrixInverse(Output input, {bool adjoint: false}) {
-    return addOperation(new OperationDescription('MatrixInverse',
-        _scope.uniqueName('MatrixInverse'), [input], {'adjoint': adjoint}));
+  Output<String> shardedFilename(
+      Output<String> basename, Output<int> shard, Output<int> numShards) {
+    var op =
+        newOperation('ShardedFilename', _scope.uniqueName('ShardedFilename'));
+    op.addInput(basename);
+    op.addInput(shard);
+    op.addInput(numShards);
+    return op.finish()[0];
+  }
+
+  Output<T> matrixInverse<T>(Output<T> input, {bool adjoint: false}) {
+    var op = newOperation('MatrixInverse', _scope.uniqueName('MatrixInverse'));
+    op.addInput(input);
+    op.setAttrBool('adjoint', adjoint);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 25: Replaced by RandomPoissonV2')
-  Output randomPoisson(Output shape, Output rate,
-      {int seed: 0,
-      int seed2: 0,
-      @required DataType s,
-      @required DataType dtype}) {
-    return addOperation(new OperationDescription(
-        'RandomPoisson',
-        _scope.uniqueName('RandomPoisson'),
-        [shape, rate],
-        {'seed': seed, 'seed2': seed2, 'S': s, 'dtype': dtype}));
+  Output<T> randomPoisson<T>(Output<T> shape, Output<T> rate,
+      {int seed: 0, int seed2: 0, DataType s, DataType dtype}) {
+    dtype ??= inferType(shape);
+    var op = newOperation('RandomPoisson', _scope.uniqueName('RandomPoisson'));
+    op.addInput(shape);
+    op.addInput(rate);
+    op.setAttrInt('seed', seed);
+    op.setAttrInt('seed2', seed2);
+    op.setAttrType('S', s);
+    op.setAttrType('dtype', dtype);
+    return op.finish()[0];
+  }
+
+  Output<String> paddingFIFOQueue(
+      {List<DataType> componentTypes,
+      List<Shape> shapes,
+      int capacity: -1,
+      String container,
+      String sharedName}) {
+    var op =
+        newOperation('PaddingFIFOQueue', _scope.uniqueName('PaddingFIFOQueue'));
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrShapeList('shapes', shapes);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
+  }
+
+  @Deprecated('DEPRECATED at GraphDef version 10: Use Conv3DBackpropInputV2')
+  Output<T> conv3DBackpropInput<T>(
+      Output<T> input, Output<T> filter, Output<T> outBackprop,
+      {List<int> strides, String padding}) {
+    var op = newOperation(
+        'Conv3DBackpropInput', _scope.uniqueName('Conv3DBackpropInput'));
+    op.addInput(input);
+    op.addInput(filter);
+    op.addInput(outBackprop);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    return op.finish()[0];
+  }
+
+  Output<T> depthwiseConv2dNative<T>(Output<T> input, Output<T> filter,
+      {List<int> strides,
+      String padding,
+      String dataFormat: 'NHWC',
+      List<int> dilations}) {
+    var op = newOperation(
+        'DepthwiseConv2dNative', _scope.uniqueName('DepthwiseConv2dNative'));
+    op.addInput(input);
+    op.addInput(filter);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrString('data_format', dataFormat);
+    op.setAttrIntList('dilations', dilations);
+    return op.finish()[0];
+  }
+
+  Output queueEnqueueMany<T>(Output<String> handle, List<Output<T>> components,
+      {List<DataType> tcomponents, int timeoutMs: -1}) {
+    var op =
+        newOperation('QueueEnqueueMany', _scope.uniqueName('QueueEnqueueMany'));
+    op.addInput(handle);
+    op.addInputList(components);
+    op.setAttrTypeList('Tcomponents', tcomponents);
+    op.setAttrInt('timeout_ms', timeoutMs);
+    return op.finish()[-1];
   }
 
   Output noOp() {
-    return addOperation(
-        new OperationDescription('NoOp', _scope.uniqueName('NoOp'), [], {}));
+    var op = newOperation('NoOp', _scope.uniqueName('NoOp'));
+    return op.finish()[-1];
   }
 
-  Output loadAndRemapMatrix(Output ckptPath, Output oldTensorName,
-      Output rowRemapping, Output colRemapping, Output initializingValues,
-      {@required int numRows, @required int numCols, int maxRowsInMemory: -1}) {
-    return addOperation(new OperationDescription(
-        'LoadAndRemapMatrix', _scope.uniqueName('LoadAndRemapMatrix'), [
-      ckptPath,
-      oldTensorName,
-      rowRemapping,
-      colRemapping,
-      initializingValues
-    ], {
-      'num_rows': numRows,
-      'num_cols': numCols,
-      'max_rows_in_memory': maxRowsInMemory
-    }));
+  Output<double> loadAndRemapMatrix(
+      Output<String> ckptPath,
+      Output<String> oldTensorName,
+      Output<int> rowRemapping,
+      Output<int> colRemapping,
+      Output<double> initializingValues,
+      {int numRows,
+      int numCols,
+      int maxRowsInMemory: -1}) {
+    var op = newOperation(
+        'LoadAndRemapMatrix', _scope.uniqueName('LoadAndRemapMatrix'));
+    op.addInput(ckptPath);
+    op.addInput(oldTensorName);
+    op.addInput(rowRemapping);
+    op.addInput(colRemapping);
+    op.addInput(initializingValues);
+    op.setAttrInt('num_rows', numRows);
+    op.setAttrInt('num_cols', numCols);
+    op.setAttrInt('max_rows_in_memory', maxRowsInMemory);
+    return op.finish()[0];
   }
 
-  Output spaceToBatchND(Output input, Output blockShape, Output paddings,
+  Output<T> spaceToBatchND<T>(
+      Output<T> input, Output<T> blockShape, Output<T> paddings,
       {DataType tblockShape: DataType.DT_INT32,
       DataType tpaddings: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'SpaceToBatchND',
-        _scope.uniqueName('SpaceToBatchND'),
-        [input, blockShape, paddings],
-        {'Tblock_shape': tblockShape, 'Tpaddings': tpaddings}));
+    var op =
+        newOperation('SpaceToBatchND', _scope.uniqueName('SpaceToBatchND'));
+    op.addInput(input);
+    op.addInput(blockShape);
+    op.addInput(paddings);
+    op.setAttrType('Tblock_shape', tblockShape);
+    op.setAttrType('Tpaddings', tpaddings);
+    return op.finish()[0];
   }
 
-  Output resizeNearestNeighborGrad(Output grads, Output size,
+  Output<T> resizeNearestNeighborGrad<T>(Output<T> grads, Output<int> size,
       {bool alignCorners: false}) {
-    return addOperation(new OperationDescription(
-        'ResizeNearestNeighborGrad',
-        _scope.uniqueName('ResizeNearestNeighborGrad'),
-        [grads, size],
-        {'align_corners': alignCorners}));
+    var op = newOperation('ResizeNearestNeighborGrad',
+        _scope.uniqueName('ResizeNearestNeighborGrad'));
+    op.addInput(grads);
+    op.addInput(size);
+    op.setAttrBool('align_corners', alignCorners);
+    return op.finish()[0];
   }
 
-  Output temporaryVariable(
-      {@required List<int> shape, @required DataType dtype, String varName}) {
-    return addOperation(new OperationDescription(
-        'TemporaryVariable',
-        _scope.uniqueName('TemporaryVariable'),
-        [],
-        {'shape': shape, 'dtype': dtype, 'var_name': varName}));
+  Output queueEnqueueV2<T>(Output handle, List<Output<T>> components,
+      {List<DataType> tcomponents, int timeoutMs: -1}) {
+    var op =
+        newOperation('QueueEnqueueV2', _scope.uniqueName('QueueEnqueueV2'));
+    op.addInput(handle);
+    op.addInputList(components);
+    op.setAttrTypeList('Tcomponents', tcomponents);
+    op.setAttrInt('timeout_ms', timeoutMs);
+    return op.finish()[-1];
   }
 
-  Output resizeBilinear(Output images, Output size,
+  Output batchDataset(Output inputDataset, Output<int> batchSize,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('BatchDataset', _scope.uniqueName('BatchDataset'));
+    op.addInput(inputDataset);
+    op.addInput(batchSize);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
+  }
+
+  Output repeatDataset(Output inputDataset, Output<int> count,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation('RepeatDataset', _scope.uniqueName('RepeatDataset'));
+    op.addInput(inputDataset);
+    op.addInput(count);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
+  }
+
+  Output<T> queueDequeueManyV2<T>(Output handle, Output<int> n,
+      {List<DataType> componentTypes, int timeoutMs: -1}) {
+    var op = newOperation(
+        'QueueDequeueManyV2', _scope.uniqueName('QueueDequeueManyV2'));
+    op.addInput(handle);
+    op.addInput(n);
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrInt('timeout_ms', timeoutMs);
+    return op.finish()[0];
+  }
+
+  Output<T> temporaryVariable<T>(
+      {Shape shape, @required DataType dtype, String varName}) {
+    var op = newOperation(
+        'TemporaryVariable', _scope.uniqueName('TemporaryVariable'));
+    op.setAttrShape('shape', shape);
+    op.setAttrType('dtype', dtype);
+    op.setAttrString('var_name', varName);
+    return op.finish()[0];
+  }
+
+  Output<double> resizeBilinear<T>(Output<T> images, Output<int> size,
       {bool alignCorners: false}) {
-    return addOperation(new OperationDescription(
-        'ResizeBilinear',
-        _scope.uniqueName('ResizeBilinear'),
-        [images, size],
-        {'align_corners': alignCorners}));
+    var op =
+        newOperation('ResizeBilinear', _scope.uniqueName('ResizeBilinear'));
+    op.addInput(images);
+    op.addInput(size);
+    op.setAttrBool('align_corners', alignCorners);
+    return op.finish()[0];
   }
 
-  Output fakeQuantWithMinMaxVars(Output inputs, Output min, Output max,
+  Output<double> fakeQuantWithMinMaxVars(
+      Output<double> inputs, Output<double> min, Output<double> max,
       {int numBits: 8, bool narrowRange: false}) {
-    return addOperation(new OperationDescription(
-        'FakeQuantWithMinMaxVars',
-        _scope.uniqueName('FakeQuantWithMinMaxVars'),
-        [inputs, min, max],
-        {'num_bits': numBits, 'narrow_range': narrowRange}));
+    var op = newOperation('FakeQuantWithMinMaxVars',
+        _scope.uniqueName('FakeQuantWithMinMaxVars'));
+    op.addInput(inputs);
+    op.addInput(min);
+    op.addInput(max);
+    op.setAttrInt('num_bits', numBits);
+    op.setAttrBool('narrow_range', narrowRange);
+    return op.finish()[0];
   }
 
-  Output barrierIncompleteSize(Output handle) {
-    return addOperation(new OperationDescription('BarrierIncompleteSize',
-        _scope.uniqueName('BarrierIncompleteSize'), [handle], {}));
+  Output<int> barrierIncompleteSize(Output<String> handle) {
+    var op = newOperation(
+        'BarrierIncompleteSize', _scope.uniqueName('BarrierIncompleteSize'));
+    op.addInput(handle);
+    return op.finish()[0];
   }
 
-  Output logicalNot(Output x) {
-    return addOperation(new OperationDescription(
-        'LogicalNot', _scope.uniqueName('LogicalNot'), [x], {}));
+  Output<bool> logicalNot(Output<bool> x) {
+    var op = newOperation('LogicalNot', _scope.uniqueName('LogicalNot'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output sparseApplyAdagrad(
-      Output var_, Output accum, Output lr, Output grad, Output indices,
-      {@required DataType tindices, bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'SparseApplyAdagrad',
-        _scope.uniqueName('SparseApplyAdagrad'),
-        [var_, accum, lr, grad, indices],
-        {'Tindices': tindices, 'use_locking': useLocking}));
+  Output<T> sparseApplyAdagrad<T>(Output<T> var_, Output<T> accum, Output<T> lr,
+      Output<T> grad, Output<T> indices,
+      {DataType tindices, bool useLocking: false}) {
+    var op = newOperation(
+        'SparseApplyAdagrad', _scope.uniqueName('SparseApplyAdagrad'));
+    op.addInput(var_);
+    op.addInput(accum);
+    op.addInput(lr);
+    op.addInput(grad);
+    op.addInput(indices);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output queueSize(Output handle) {
-    return addOperation(new OperationDescription(
-        'QueueSize', _scope.uniqueName('QueueSize'), [handle], {}));
+  Output<int> queueSize(Output<String> handle) {
+    var op = newOperation('QueueSize', _scope.uniqueName('QueueSize'));
+    op.addInput(handle);
+    return op.finish()[0];
   }
 
   Output iFFT(Output input) {
-    return addOperation(new OperationDescription(
-        'IFFT', _scope.uniqueName('IFFT'), [input], {}));
+    var op = newOperation('IFFT', _scope.uniqueName('IFFT'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
-  Output atan(Output x) {
-    return addOperation(
-        new OperationDescription('Atan', _scope.uniqueName('Atan'), [x], {}));
+  Output<T> atan<T>(Output<T> x) {
+    var op = newOperation('Atan', _scope.uniqueName('Atan'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output fakeQuantWithMinMaxArgsGradient(Output gradients, Output inputs,
+  Output<double> fakeQuantWithMinMaxArgsGradient(
+      Output<double> gradients, Output<double> inputs,
       {double min: -6.0,
       double max: 6.0,
       int numBits: 8,
       bool narrowRange: false}) {
-    return addOperation(new OperationDescription(
-        'FakeQuantWithMinMaxArgsGradient',
-        _scope.uniqueName('FakeQuantWithMinMaxArgsGradient'), [
-      gradients,
-      inputs
-    ], {
-      'min': min,
-      'max': max,
-      'num_bits': numBits,
-      'narrow_range': narrowRange
-    }));
+    var op = newOperation('FakeQuantWithMinMaxArgsGradient',
+        _scope.uniqueName('FakeQuantWithMinMaxArgsGradient'));
+    op.addInput(gradients);
+    op.addInput(inputs);
+    op.setAttrFloat('min', min);
+    op.setAttrFloat('max', max);
+    op.setAttrInt('num_bits', numBits);
+    op.setAttrBool('narrow_range', narrowRange);
+    return op.finish()[0];
   }
 
-  Output tensorListLength(Output inputHandle) {
-    return addOperation(new OperationDescription('TensorListLength',
-        _scope.uniqueName('TensorListLength'), [inputHandle], {}));
+  Output<int> tensorListLength(Output inputHandle) {
+    var op =
+        newOperation('TensorListLength', _scope.uniqueName('TensorListLength'));
+    op.addInput(inputHandle);
+    return op.finish()[0];
   }
 
-  Output pow(Output x, Output y) {
-    return addOperation(
-        new OperationDescription('Pow', _scope.uniqueName('Pow'), [x, y], {}));
+  Output latencyStatsDataset(Output inputDataset, Output<String> tag,
+      {List<DataType> outputTypes, List<Shape> outputShapes}) {
+    var op = newOperation(
+        'LatencyStatsDataset', _scope.uniqueName('LatencyStatsDataset'));
+    op.addInput(inputDataset);
+    op.addInput(tag);
+    op.setAttrTypeList('output_types', outputTypes);
+    op.setAttrShapeList('output_shapes', outputShapes);
+    return op.finish()[0];
   }
 
-  Output applyRMSProp(Output var_, Output ms, Output mom, Output lr, Output rho,
-      Output momentum, Output epsilon, Output grad,
+  Output<T> pow<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('Pow', _scope.uniqueName('Pow'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
+  }
+
+  Output<T> applyRMSProp<T>(
+      Output<T> var_,
+      Output<T> ms,
+      Output<T> mom,
+      Output<T> lr,
+      Output<T> rho,
+      Output<T> momentum,
+      Output<T> epsilon,
+      Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyRMSProp',
-        _scope.uniqueName('ApplyRMSProp'),
-        [var_, ms, mom, lr, rho, momentum, epsilon, grad],
-        {'use_locking': useLocking}));
+    var op = newOperation('ApplyRMSProp', _scope.uniqueName('ApplyRMSProp'));
+    op.addInput(var_);
+    op.addInput(ms);
+    op.addInput(mom);
+    op.addInput(lr);
+    op.addInput(rho);
+    op.addInput(momentum);
+    op.addInput(epsilon);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output stackPushV2(Output handle, Output elem, {bool swapMemory: false}) {
-    return addOperation(new OperationDescription(
-        'StackPushV2',
-        _scope.uniqueName('StackPushV2'),
-        [handle, elem],
-        {'swap_memory': swapMemory}));
+  Output<T> stackPushV2<T>(Output handle, Output<T> elem,
+      {bool swapMemory: false}) {
+    var op = newOperation('StackPushV2', _scope.uniqueName('StackPushV2'));
+    op.addInput(handle);
+    op.addInput(elem);
+    op.setAttrBool('swap_memory', swapMemory);
+    return op.finish()[0];
   }
 
   Output mutexLock(Output mutex) {
-    return addOperation(new OperationDescription(
-        'MutexLock', _scope.uniqueName('MutexLock'), [mutex], {}));
+    var op = newOperation('MutexLock', _scope.uniqueName('MutexLock'));
+    op.addInput(mutex);
+    return op.finish()[0];
+  }
+
+  Output<T> maxPoolGradWithArgmax<T>(
+      Output<T> input, Output<T> grad, Output<T> argmax,
+      {List<int> ksize, List<int> strides, String padding, DataType targmax}) {
+    var op = newOperation(
+        'MaxPoolGradWithArgmax', _scope.uniqueName('MaxPoolGradWithArgmax'));
+    op.addInput(input);
+    op.addInput(grad);
+    op.addInput(argmax);
+    op.setAttrIntList('ksize', ksize);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    op.setAttrType('Targmax', targmax);
+    return op.finish()[0];
   }
 
   Output fFT2D(Output input) {
-    return addOperation(new OperationDescription(
-        'FFT2D', _scope.uniqueName('FFT2D'), [input], {}));
+    var op = newOperation('FFT2D', _scope.uniqueName('FFT2D'));
+    op.addInput(input);
+    return op.finish()[0];
   }
 
   Output mutexV2({String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'MutexV2',
-        _scope.uniqueName('MutexV2'),
-        [],
-        {'container': container, 'shared_name': sharedName}));
+    var op = newOperation('MutexV2', _scope.uniqueName('MutexV2'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output nonMaxSuppressionV2(
-      Output boxes, Output scores, Output maxOutputSize, Output iouThreshold) {
-    return addOperation(new OperationDescription(
-        'NonMaxSuppressionV2',
-        _scope.uniqueName('NonMaxSuppressionV2'),
-        [boxes, scores, maxOutputSize, iouThreshold],
-        {}));
+  Output<int> nonMaxSuppressionV2(Output<double> boxes, Output<double> scores,
+      Output<int> maxOutputSize, Output<double> iouThreshold) {
+    var op = newOperation(
+        'NonMaxSuppressionV2', _scope.uniqueName('NonMaxSuppressionV2'));
+    op.addInput(boxes);
+    op.addInput(scores);
+    op.addInput(maxOutputSize);
+    op.addInput(iouThreshold);
+    return op.finish()[0];
   }
 
-  Output drawBoundingBoxes(Output images, Output boxes) {
-    return addOperation(new OperationDescription('DrawBoundingBoxes',
-        _scope.uniqueName('DrawBoundingBoxes'), [images, boxes], {}));
+  Output<int> bucketize<T>(Output<T> input, {List<double> boundaries}) {
+    var op = newOperation('Bucketize', _scope.uniqueName('Bucketize'));
+    op.addInput(input);
+    op.setAttrFloatList('boundaries', boundaries);
+    return op.finish()[0];
   }
 
-  Output refEnter(Output data,
-      {@required String frameName,
-      bool isConstant: false,
-      int parallelIterations: 10}) {
-    return addOperation(
-        new OperationDescription('RefEnter', _scope.uniqueName('RefEnter'), [
-      data
-    ], {
-      'frame_name': frameName,
-      'is_constant': isConstant,
-      'parallel_iterations': parallelIterations
-    }));
+  Output<T> drawBoundingBoxes<T>(Output<T> images, Output<double> boxes) {
+    var op = newOperation(
+        'DrawBoundingBoxes', _scope.uniqueName('DrawBoundingBoxes'));
+    op.addInput(images);
+    op.addInput(boxes);
+    return op.finish()[0];
+  }
+
+  Output priorityQueueV2(
+      {List<DataType> componentTypes,
+      List<Shape> shapes,
+      int capacity: -1,
+      String container,
+      String sharedName}) {
+    var op =
+        newOperation('PriorityQueueV2', _scope.uniqueName('PriorityQueueV2'));
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrShapeList('shapes', shapes);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
+  }
+
+  Output<T> refEnter<T>(Output<T> data,
+      {String frameName, bool isConstant: false, int parallelIterations: 10}) {
+    var op = newOperation('RefEnter', _scope.uniqueName('RefEnter'));
+    op.addInput(data);
+    op.setAttrString('frame_name', frameName);
+    op.setAttrBool('is_constant', isConstant);
+    op.setAttrInt('parallel_iterations', parallelIterations);
+    return op.finish()[0];
   }
 
   @Deprecated('DEPRECATED at GraphDef version 16: Use TensorArraySplitV3')
-  Output tensorArraySplit(
-      Output handle, Output value, Output lengths, Output flowIn) {
-    return addOperation(new OperationDescription(
-        'TensorArraySplit',
-        _scope.uniqueName('TensorArraySplit'),
-        [handle, value, lengths, flowIn],
-        {}));
+  Output<double> tensorArraySplit<T>(Output<String> handle, Output<T> value,
+      Output<int> lengths, Output<double> flowIn) {
+    var op =
+        newOperation('TensorArraySplit', _scope.uniqueName('TensorArraySplit'));
+    op.addInput(handle);
+    op.addInput(value);
+    op.addInput(lengths);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output applyPowerSign(Output var_, Output m, Output lr, Output logbase,
-      Output signDecay, Output beta, Output grad,
+  Output<T> applyPowerSign<T>(Output<T> var_, Output<T> m, Output<T> lr,
+      Output<T> logbase, Output<T> signDecay, Output<T> beta, Output<T> grad,
       {bool useLocking: false}) {
-    return addOperation(new OperationDescription(
-        'ApplyPowerSign',
-        _scope.uniqueName('ApplyPowerSign'),
-        [var_, m, lr, logbase, signDecay, beta, grad],
-        {'use_locking': useLocking}));
+    var op =
+        newOperation('ApplyPowerSign', _scope.uniqueName('ApplyPowerSign'));
+    op.addInput(var_);
+    op.addInput(m);
+    op.addInput(lr);
+    op.addInput(logbase);
+    op.addInput(signDecay);
+    op.addInput(beta);
+    op.addInput(grad);
+    op.setAttrBool('use_locking', useLocking);
+    return op.finish()[0];
   }
 
-  Output initializeTableFromTextFileV2(Output tableHandle, Output filename,
-      {@required int keyIndex,
-      @required int valueIndex,
+  Output initializeTableFromTextFileV2(
+      Output tableHandle, Output<String> filename,
+      {int keyIndex,
+      int valueIndex,
       int vocabSize: -1,
       String delimiter: '	'}) {
-    return addOperation(new OperationDescription(
-        'InitializeTableFromTextFileV2',
-        _scope.uniqueName('InitializeTableFromTextFileV2'), [
-      tableHandle,
-      filename
-    ], {
-      'key_index': keyIndex,
-      'value_index': valueIndex,
-      'vocab_size': vocabSize,
-      'delimiter': delimiter
-    }));
+    var op = newOperation('InitializeTableFromTextFileV2',
+        _scope.uniqueName('InitializeTableFromTextFileV2'));
+    op.addInput(tableHandle);
+    op.addInput(filename);
+    op.setAttrInt('key_index', keyIndex);
+    op.setAttrInt('value_index', valueIndex);
+    op.setAttrInt('vocab_size', vocabSize);
+    op.setAttrString('delimiter', delimiter);
+    return op.finish()[-1];
   }
 
-  Output exit(Output data) {
-    return addOperation(new OperationDescription(
-        'Exit', _scope.uniqueName('Exit'), [data], {}));
+  Output<T> exit<T>(Output<T> data) {
+    var op = newOperation('Exit', _scope.uniqueName('Exit'));
+    op.addInput(data);
+    return op.finish()[0];
   }
 
-  Output accumulatorSetGlobalStep(Output handle, Output newGlobalStep) {
-    return addOperation(new OperationDescription(
-        'AccumulatorSetGlobalStep',
-        _scope.uniqueName('AccumulatorSetGlobalStep'),
-        [handle, newGlobalStep],
-        {}));
+  Output accumulatorSetGlobalStep(
+      Output<String> handle, Output<int> newGlobalStep) {
+    var op = newOperation('AccumulatorSetGlobalStep',
+        _scope.uniqueName('AccumulatorSetGlobalStep'));
+    op.addInput(handle);
+    op.addInput(newGlobalStep);
+    return op.finish()[-1];
   }
 
-  Output cumprod(Output x, Output axis,
+  Output<T> cumprod<T>(Output<T> x, Output<T> axis,
       {bool exclusive: false,
       bool reverse: false,
       DataType tidx: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'Cumprod',
-        _scope.uniqueName('Cumprod'),
-        [x, axis],
-        {'exclusive': exclusive, 'reverse': reverse, 'Tidx': tidx}));
+    var op = newOperation('Cumprod', _scope.uniqueName('Cumprod'));
+    op.addInput(x);
+    op.addInput(axis);
+    op.setAttrBool('exclusive', exclusive);
+    op.setAttrBool('reverse', reverse);
+    op.setAttrType('Tidx', tidx);
+    return op.finish()[0];
   }
 
-  Output refSelect(Output index, List<Output> inputs, {@required int n}) {
-    return addOperation(new OperationDescription('RefSelect',
-        _scope.uniqueName('RefSelect'), [index, inputs], {'N': n}));
+  Output<T> refSelect<T>(Output<int> index, List<Output<T>> inputs, {int n}) {
+    var op = newOperation('RefSelect', _scope.uniqueName('RefSelect'));
+    op.addInput(index);
+    op.addInputList(inputs);
+    op.setAttrInt('N', n);
+    return op.finish()[0];
   }
 
-  Output reverseSequence(Output input, Output seqLengths,
-      {@required int seqDim,
-      int batchDim: 0,
-      DataType tlen: DataType.DT_INT64}) {
-    return addOperation(new OperationDescription(
-        'ReverseSequence',
-        _scope.uniqueName('ReverseSequence'),
-        [input, seqLengths],
-        {'seq_dim': seqDim, 'batch_dim': batchDim, 'Tlen': tlen}));
+  Output<T> reverseSequence<T>(Output<T> input, Output<T> seqLengths,
+      {int seqDim, int batchDim: 0, DataType tlen: DataType.DT_INT64}) {
+    var op =
+        newOperation('ReverseSequence', _scope.uniqueName('ReverseSequence'));
+    op.addInput(input);
+    op.addInput(seqLengths);
+    op.setAttrInt('seq_dim', seqDim);
+    op.setAttrInt('batch_dim', batchDim);
+    op.setAttrType('Tlen', tlen);
+    return op.finish()[0];
   }
 
-  Output tensorArrayGatherV3(Output handle, Output indices, Output flowIn,
-      {@required DataType dtype, List<int> elementShape}) {
-    return addOperation(new OperationDescription(
-        'TensorArrayGatherV3',
-        _scope.uniqueName('TensorArrayGatherV3'),
-        [handle, indices, flowIn],
-        {'dtype': dtype, 'element_shape': elementShape}));
+  Output<T> tensorArrayGatherV3<T>(
+      Output handle, Output<int> indices, Output<double> flowIn,
+      {DataType dtype, Shape elementShape}) {
+    dtype ??= inferType(handle);
+    var op = newOperation(
+        'TensorArrayGatherV3', _scope.uniqueName('TensorArrayGatherV3'));
+    op.addInput(handle);
+    op.addInput(indices);
+    op.addInput(flowIn);
+    op.setAttrType('dtype', dtype);
+    op.setAttrShape('element_shape', elementShape);
+    return op.finish()[0];
   }
 
-  Output greater(Output x, Output y) {
-    return addOperation(new OperationDescription(
-        'Greater', _scope.uniqueName('Greater'), [x, y], {}));
+  Output<String> priorityQueue(
+      {List<DataType> componentTypes,
+      List<Shape> shapes,
+      int capacity: -1,
+      String container,
+      String sharedName}) {
+    var op = newOperation('PriorityQueue', _scope.uniqueName('PriorityQueue'));
+    op.setAttrTypeList('component_types', componentTypes);
+    op.setAttrShapeList('shapes', shapes);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output readerNumWorkUnitsCompleted(Output readerHandle) {
-    return addOperation(new OperationDescription('ReaderNumWorkUnitsCompleted',
-        _scope.uniqueName('ReaderNumWorkUnitsCompleted'), [readerHandle], {}));
+  Output<bool> greater<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('Greater', _scope.uniqueName('Greater'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
   }
 
-  Output stringToHashBucketFast(Output input, {@required int numBuckets}) {
-    return addOperation(new OperationDescription(
-        'StringToHashBucketFast',
-        _scope.uniqueName('StringToHashBucketFast'),
-        [input],
-        {'num_buckets': numBuckets}));
+  Output<int> readerNumWorkUnitsCompleted(Output<String> readerHandle) {
+    var op = newOperation('ReaderNumWorkUnitsCompleted',
+        _scope.uniqueName('ReaderNumWorkUnitsCompleted'));
+    op.addInput(readerHandle);
+    return op.finish()[0];
   }
 
-  Output unbatchGrad(
-      Output originalInput, Output batchIndex, Output grad, Output id,
+  Output<int> stringToHashBucketFast(Output<String> input, {int numBuckets}) {
+    var op = newOperation(
+        'StringToHashBucketFast', _scope.uniqueName('StringToHashBucketFast'));
+    op.addInput(input);
+    op.setAttrInt('num_buckets', numBuckets);
+    return op.finish()[0];
+  }
+
+  Output<T> unbatchGrad<T>(Output<T> originalInput, Output<int> batchIndex,
+      Output<T> grad, Output<int> id,
       {String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'UnbatchGrad',
-        _scope.uniqueName('UnbatchGrad'),
-        [originalInput, batchIndex, grad, id],
-        {'container': container, 'shared_name': sharedName}));
+    var op = newOperation('UnbatchGrad', _scope.uniqueName('UnbatchGrad'));
+    op.addInput(originalInput);
+    op.addInput(batchIndex);
+    op.addInput(grad);
+    op.addInput(id);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output argMin(Output input, Output dimension,
+  Output<T> argMin<T>(Output<T> input, Output<T> dimension,
       {DataType tidx: DataType.DT_INT32,
       DataType outputType: DataType.DT_INT64}) {
-    return addOperation(new OperationDescription(
-        'ArgMin',
-        _scope.uniqueName('ArgMin'),
-        [input, dimension],
-        {'Tidx': tidx, 'output_type': outputType}));
+    var op = newOperation('ArgMin', _scope.uniqueName('ArgMin'));
+    op.addInput(input);
+    op.addInput(dimension);
+    op.setAttrType('Tidx', tidx);
+    op.setAttrType('output_type', outputType);
+    return op.finish()[0];
   }
 
-  Output reciprocal(Output x) {
-    return addOperation(new OperationDescription(
-        'Reciprocal', _scope.uniqueName('Reciprocal'), [x], {}));
+  Output<T> reciprocal<T>(Output<T> x) {
+    var op = newOperation('Reciprocal', _scope.uniqueName('Reciprocal'));
+    op.addInput(x);
+    return op.finish()[0];
   }
 
-  Output readerNumWorkUnitsCompletedV2(Output readerHandle) {
-    return addOperation(new OperationDescription(
-        'ReaderNumWorkUnitsCompletedV2',
-        _scope.uniqueName('ReaderNumWorkUnitsCompletedV2'),
-        [readerHandle],
-        {}));
+  Output<int> readerNumWorkUnitsCompletedV2(Output readerHandle) {
+    var op = newOperation('ReaderNumWorkUnitsCompletedV2',
+        _scope.uniqueName('ReaderNumWorkUnitsCompletedV2'));
+    op.addInput(readerHandle);
+    return op.finish()[0];
   }
 
-  Output unsortedSegmentProd(Output data, Output segmentIds, Output numSegments,
-      {@required DataType tindices, DataType tnumsegments: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription(
-        'UnsortedSegmentProd',
-        _scope.uniqueName('UnsortedSegmentProd'),
-        [data, segmentIds, numSegments],
-        {'Tindices': tindices, 'Tnumsegments': tnumsegments}));
+  Output<T> unsortedSegmentProd<T>(
+      Output<T> data, Output<T> segmentIds, Output<T> numSegments,
+      {DataType tindices, DataType tnumsegments: DataType.DT_INT32}) {
+    var op = newOperation(
+        'UnsortedSegmentProd', _scope.uniqueName('UnsortedSegmentProd'));
+    op.addInput(data);
+    op.addInput(segmentIds);
+    op.addInput(numSegments);
+    op.setAttrType('Tindices', tindices);
+    op.setAttrType('Tnumsegments', tnumsegments);
+    return op.finish()[0];
   }
 
-  Output inTopK(Output predictions, Output targets, {@required int k}) {
-    return addOperation(new OperationDescription('InTopK',
-        _scope.uniqueName('InTopK'), [predictions, targets], {'k': k}));
+  Output<T> fusedResizeAndPadConv2D<T>(
+      Output<T> input, Output<int> size, Output<int> paddings, Output<T> filter,
+      {bool resizeAlignCorners: false,
+      String mode,
+      List<int> strides,
+      String padding}) {
+    var op = newOperation('FusedResizeAndPadConv2D',
+        _scope.uniqueName('FusedResizeAndPadConv2D'));
+    op.addInput(input);
+    op.addInput(size);
+    op.addInput(paddings);
+    op.addInput(filter);
+    op.setAttrBool('resize_align_corners', resizeAlignCorners);
+    op.setAttrString('mode', mode);
+    op.setAttrIntList('strides', strides);
+    op.setAttrString('padding', padding);
+    return op.finish()[0];
   }
 
-  Output sub(Output x, Output y) {
-    return addOperation(
-        new OperationDescription('Sub', _scope.uniqueName('Sub'), [x, y], {}));
+  Output<bool> inTopK<T>(Output<double> predictions, Output<T> targets,
+      {int k}) {
+    var op = newOperation('InTopK', _scope.uniqueName('InTopK'));
+    op.addInput(predictions);
+    op.addInput(targets);
+    op.setAttrInt('k', k);
+    return op.finish()[0];
   }
 
-  Output angle(Output input, {DataType tout: DataType.DT_FLOAT}) {
-    return addOperation(new OperationDescription(
-        'Angle', _scope.uniqueName('Angle'), [input], {'Tout': tout}));
+  Output<T> sub<T>(Output<T> x, Output<T> y) {
+    var op = newOperation('Sub', _scope.uniqueName('Sub'));
+    op.addInput(x);
+    op.addInput(y);
+    return op.finish()[0];
+  }
+
+  Output<T> angle<T>(Output<T> input, {DataType tout: DataType.DT_FLOAT}) {
+    var op = newOperation('Angle', _scope.uniqueName('Angle'));
+    op.addInput(input);
+    op.setAttrType('Tout', tout);
+    return op.finish()[0];
   }
 
   @Deprecated(
       'DEPRECATED at GraphDef version 20: Use TensorArrayScatterV3 with RangeOp')
-  Output tensorArrayUnpack(Output handle, Output value, Output flowIn) {
-    return addOperation(new OperationDescription('TensorArrayUnpack',
-        _scope.uniqueName('TensorArrayUnpack'), [handle, value, flowIn], {}));
+  Output<double> tensorArrayUnpack<T>(
+      Output<String> handle, Output<T> value, Output<double> flowIn) {
+    var op = newOperation(
+        'TensorArrayUnpack', _scope.uniqueName('TensorArrayUnpack'));
+    op.addInput(handle);
+    op.addInput(value);
+    op.addInput(flowIn);
+    return op.finish()[0];
   }
 
-  Output iteratorToStringHandle(Output resourceHandle) {
-    return addOperation(new OperationDescription('IteratorToStringHandle',
-        _scope.uniqueName('IteratorToStringHandle'), [resourceHandle], {}));
+  Output<String> iteratorToStringHandle(Output resourceHandle) {
+    var op = newOperation(
+        'IteratorToStringHandle', _scope.uniqueName('IteratorToStringHandle'));
+    op.addInput(resourceHandle);
+    return op.finish()[0];
   }
 
-  Output conjugateTranspose(Output x, Output perm,
+  Output<T> conjugateTranspose<T>(Output<T> x, Output<T> perm,
       {DataType tperm: DataType.DT_INT32}) {
-    return addOperation(new OperationDescription('ConjugateTranspose',
-        _scope.uniqueName('ConjugateTranspose'), [x, perm], {'Tperm': tperm}));
+    var op = newOperation(
+        'ConjugateTranspose', _scope.uniqueName('ConjugateTranspose'));
+    op.addInput(x);
+    op.addInput(perm);
+    op.setAttrType('Tperm', tperm);
+    return op.finish()[0];
   }
 
-  Output destroyTemporaryVariable(Output ref, {@required String varName}) {
-    return addOperation(new OperationDescription(
-        'DestroyTemporaryVariable',
-        _scope.uniqueName('DestroyTemporaryVariable'),
-        [ref],
-        {'var_name': varName}));
+  Output<T> mapPeek<T>(Output<int> key, Output<int> indices,
+      {int capacity: 0,
+      int memoryLimit: 0,
+      List<DataType> dtypes,
+      String container,
+      String sharedName}) {
+    var op = newOperation('MapPeek', _scope.uniqueName('MapPeek'));
+    op.addInput(key);
+    op.addInput(indices);
+    op.setAttrInt('capacity', capacity);
+    op.setAttrInt('memory_limit', memoryLimit);
+    op.setAttrTypeList('dtypes', dtypes);
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 
-  Output wholeFileReader({String container, String sharedName}) {
-    return addOperation(new OperationDescription(
-        'WholeFileReader',
-        _scope.uniqueName('WholeFileReader'),
-        [],
-        {'container': container, 'shared_name': sharedName}));
+  Output<T> destroyTemporaryVariable<T>(Output<T> ref, {String varName}) {
+    var op = newOperation('DestroyTemporaryVariable',
+        _scope.uniqueName('DestroyTemporaryVariable'));
+    op.addInput(ref);
+    op.setAttrString('var_name', varName);
+    return op.finish()[0];
+  }
+
+  Output<String> wholeFileReader({String container, String sharedName}) {
+    var op =
+        newOperation('WholeFileReader', _scope.uniqueName('WholeFileReader'));
+    op.setAttrString('container', container);
+    op.setAttrString('shared_name', sharedName);
+    return op.finish()[0];
   }
 }

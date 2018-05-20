@@ -7,6 +7,7 @@
 
 #include "graph.h"
 #include "operation.h"
+#include "saved_model_bundle.h"
 #include "session.h"
 #include "tensor.h"
 

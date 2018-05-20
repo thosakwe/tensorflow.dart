@@ -1,59 +1,147 @@
 part of tensorflow;
 
-/// Represents a computation graph.  Graphs may be shared between sessions.
-class _Graph {
-  final SymbolTable _scope = new SymbolTable();
+/// A data flow graph representing a TensorFlow computation.
+abstract class _Graph {
+  static int _Graph_new() native "Graph_new";
+
   final int _pointer;
+
+  final SymbolTable _scope = new SymbolTable();
   int _count = 0, _index = 0;
-  int _output;
+  List<Operation> _operations;
+  Session _session;
 
-  _Graph() : _pointer = Graph_new();
+  _Graph() : _pointer = _Graph_new();
 
-  /// Destroy an options object.  Graph will be deleted once no more
-  /// TFSession's are referencing it.
-  void delete() native "Graph_delete";
+  _Graph._fromPointer(this._pointer);
 
-  Output addOperation(OperationDescription desc) {
-    return _addOperation(desc.type, desc.name, desc.inputs ?? [], 0 ?? _index++,
-        Output, desc.attrs.values.toList(), desc.attrs.keys.toList(), DataType);
+  Output _convertOutput(x) => x is Output ? x : constant(x);
+
+  static Tuple3<int, String, int> _importGraphDef(
+      Uint8List graphDef, String prefix) native "Graph_from_graph_def";
+
+  /// Import a serialized representation of a TensorFlow graph.
+  static Graph importGraphDef(GraphDef graphDef, {String prefix}) {
+    var result = _importGraphDef(graphDef.writeToBuffer(), prefix);
+    var code = _codeFrom(result.item1);
+    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+    return new Graph._fromPointer(result.item3);
   }
 
-  Output _addOperation(
-      String opType,
-      String opName,
-      List<Output> inputs,
-      int index,
-      Type outputType,
-      List attrs,
-      List attr_names,
-      Type dataTypeType) native "Graph_add_operation";
+  int _getOperation(String name) native "Graph_operation_by_name";
 
-  /*int add(Op op) => _addOperation(op.type, op.name, op.inputs);
+  /// Returns the operation (node in the Graph) with the provided name.
+  Operation operator [](String name) {
+    var ptr = _getOperation(name);
+    if (ptr == null || ptr == 0)
+      throw "No operation named '$name' exists in this graph.";
+    return new Operation._fromPointer(ptr, this);
+  }
 
-  void addAll(Iterable<Op> ops) {
-    ops.forEach(add);
-  }*/
+  Session get session => _session ??= new Session._(this);
 
-  Output<T> constant<T>(T value, {String operationName, DataType type}) {
+  Iterator<Operation> get _iterator => new _OperationIterator(this);
+
+  /// All the [Operation]s in the graph.
+  List<Operation> get operations {
+    if (_operations != null) return _operations;
+    var it = _iterator;
+    var out = <Operation>[];
+    while (it.moveNext()) out.add(it.current);
+    return _operations = new List<Operation>.unmodifiable(out);
+  }
+
+  /// Release resources associated with the Graph.
+  void close() native "Graph_delete";
+
+  /// Returns a builder to add Operations to the Graph.
+  OperationDescription<T> newOperation<T>(String type, String name) {
+    return new OperationDescription._(this, type, name);
+  }
+
+  Tuple3<int, String, Uint8List> _toGraphDef() native "Graph_to_graph_def";
+
+  /// Generate a serialized representation of the Graph.
+  GraphDef toGraphDef() {
+    var result = _toGraphDef();
+    var code = _codeFrom(result.item1);
+    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+    return new GraphDef.fromBuffer(result.item3);
+  }
+
+  Output<T> constant<T>(T value, {String operationName, DataType dtype}) {
+    var tensor = value is Tensor ? value : new Tensor.from(value);
+    var op = newOperation<T>('Const',
+        operationName ?? _scope.uniqueName('Constant_${value.runtimeType}'))
+      ..setAttrType('dtype', dtype ?? tensor.dtype)
+      ..setAttrTensor('value', tensor);
+    return op.finish()[0];
+  }
+
+  /*
+  Output<T> _constant<T>(T value, {String operationName, DataType dtype}) {
     _count++;
+    dtype ??= inferType(value);
+
+    /*if (value is List) {
+      if (dtype == null && value.isNotEmpty) dtype = inferType(value[0]);
+      Output<dynamic> stack = stackV2(value.length, elemType: dtype);
+
+      for (var item in value.reversed) {
+        stackPushV2(stack, item);
+      }
+
+      //stack = stackCloseV2(stack);
+      return stack;
+    } else if (value is Iterable) {
+      return constant<dynamic>(value.toList(),
+          operationName: operationName, dtype: dtype);
+    }*/
+
+    if (value is Shape)
+      return constant<dynamic>(value.dimensions,
+          operationName: operationName, dtype: dtype);
+
     return _constant(
         value,
         Output,
         operationName ?? _scope.uniqueName('Constant_${value.runtimeType}'),
-        type?.value ?? -1,
-        0 ?? _index++);
-  }
+        dtype?.value ?? -1,
+        0 ?? _index++,
+        Shape,
+        (x) => inferType(x).value);
+  }*/
 
-  Output _constant(value, Type outputType, String operationName, int dtype,
-      int index) native "Constant";
+  Output _constant(
+      value,
+      Type outputType,
+      String operationName,
+      int dtype,
+      int index,
+      Type shapeType,
+      int Function(Object) inferType) native "Constant";
 
-  T run<T>(Output<T> tensor) {
-    if (_count == 0) {
-      throw new StateError('No nodes have been added to this Graph.');
-    }
+  @override
+  bool operator ==(other) => other is _Graph && other._pointer == _pointer;
 
-    return Session._run(this, tensor);
-  }
+  int _iter_next(int index) native "Graph_iter_next";
 }
 
-int Graph_new() native "Graph_new";
+class _OperationIterator extends Iterator<Operation> {
+  final Graph graph;
+  int index = 0;
+  Operation _current;
+
+  _OperationIterator(this.graph);
+
+  @override
+  Operation get current => _current;
+
+  @override
+  bool moveNext() {
+    var ptr = graph._iter_next(index++);
+    if (ptr == null) return false;
+    _current = new Operation._fromPointer(ptr, graph);
+    return true;
+  }
+}

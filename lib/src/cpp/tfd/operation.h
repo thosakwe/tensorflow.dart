@@ -14,6 +14,15 @@ namespace tfd
     void Operation_list(Dart_NativeArguments arguments);
     void Operation_name(Dart_NativeArguments arguments);
     void Operation_new(Dart_NativeArguments arguments);
+    void Operation_num_outputs(Dart_NativeArguments arguments);
+    void Operation_type(Dart_NativeArguments arguments);
+    void Operation_output(Dart_NativeArguments arguments);
+
+    void OperationDescription_add_input(Dart_NativeArguments arguments);
+    void OperationDescription_finish(Dart_NativeArguments arguments);
+    void OperationDescription_new(Dart_NativeArguments arguments);
+    void OperationDescription_set_attr_tensor(Dart_NativeArguments arguments);
+    void OperationDescription_set_attr_type(Dart_NativeArguments arguments);
 }
 
 

@@ -13,5 +13,6 @@ dev_dependencies:
   code_builder: ^3.0.0
   dart_style: ^1.0.0
   recase: ^1.0.0
+  system_info: ^0.0.16
   test: ^0.12.0
   vector_math: ^2.0.0

@@ -65,15 +65,17 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
     Dart_Handle attrs = Dart_GetNativeArgument(arguments, 6);
     Dart_Handle attr_names = Dart_GetNativeArgument(arguments, 7);
     Dart_Handle dataTypeType = Dart_GetNativeArgument(arguments, 8);
+    Dart_Handle shapeType = Dart_GetNativeArgument(arguments, 9);
     HandleError(Dart_ListLength(attrs, &length));
 
     for (intptr_t i = 0; i < length; i++) {
         const char *name;
-        bool isDataType;
+        bool isDataType, isShape;
         Dart_Handle attr = Dart_ListGetAt(attrs, i);
         Dart_Handle attr_name = Dart_ListGetAt(attr_names, i);
         HandleError(Dart_StringToCString(attr_name, &name));
         HandleError(Dart_ObjectIsType(attr, dataTypeType, &isDataType));
+        HandleError(Dart_ObjectIsType(attr, shapeType, &isShape));
 
         // TODO: List attrs?
 
@@ -100,6 +102,18 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
             Dart_Handle valueProp = HandleError(Dart_GetField(attr, Dart_NewStringFromCString("value")));
             HandleError(Dart_IntegerToInt64(valueProp, &v));
             TF_SetAttrType(desc, name, (TF_DataType) v);
+        } else if (isShape) {
+            Dart_Handle dimList = Dart_GetField(attr, Dart_NewStringFromCString("dims"));
+            intptr_t dimLength;
+            HandleError(Dart_ListLength(dimList, &dimLength));
+
+            auto *dims = new int64_t[dimLength];
+
+            for (intptr_t j = 0; j < dimLength; j++) {
+                HandleError(Dart_IntegerToInt64(Dart_ListGetAt(dimList, j), dims + j));
+            }
+
+            TF_SetAttrShape(desc, name, dims, (int) dimLength);
         } else if (Dart_IsType(attr)) {
             // Is this dynamic
             if (Dart_IdentityEquals(attr,
@@ -113,7 +127,7 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
                                          Dart_GetType(Dart_RootLibrary(), Dart_NewStringFromCString("int"), 0,
                                                       nullptr))) {
                 // TODO: Size?
-                dtype = TF_INT64;
+                dtype = TF_INT32;
             }
 
                 // Is this a double?
@@ -134,6 +148,36 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
             //HandleError(Dart_StringToCString(Dart_TypeName(attr), &msg));
             //Dart_ThrowException(attr);
             //}
+        } else if (Dart_IsList(attr)) {
+            intptr_t listLength;
+            HandleError(Dart_ListLength(attr, &listLength));
+
+            if (listLength > 0) {
+                Dart_Handle first = HandleError(Dart_ListGetAt(attr, 0));
+                bool firstIsDataType, firstIsShape;
+                HandleError(Dart_ObjectIsType(first, dataTypeType, &firstIsDataType));
+                HandleError(Dart_ObjectIsType(first, shapeType, &firstIsShape));
+
+                if (Dart_IsBoolean(first)) {
+                    auto *out = new bool[listLength];
+
+                    for (intptr_t j = 0; j < listLength; j++) {
+                        bool v;
+                    }
+
+                    //TF_SetAttrBoolList();
+                } else if (Dart_IsInteger(first)) {
+
+                } else if (Dart_IsDouble(first)) {
+
+                } else if (Dart_IsString(first)) {
+
+                } else if (firstIsDataType) {
+
+                } else if (firstIsShape) {
+
+                }
+            }
         }
 
         if (dtype != 0) {
@@ -153,7 +197,7 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
                 msg.append(toString);
             }
 
-            throwArgumentError(msg.c_str());
+            throwCoreError(msg.c_str());
         }*/
     }
 
@@ -170,4 +214,85 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
                   Dart_NewIntegerFromUint64((uint64_t) operation));
     Dart_SetField(outputInstance, Dart_NewStringFromCString("_index"), Dart_GetNativeArgument(arguments, 4));
     Dart_SetReturnValue(arguments, outputInstance);
+}
+
+void tfd::Graph_operation_by_name(Dart_NativeArguments arguments) {
+    const char *name;
+    auto *graph = dereference_graph_ptr(Dart_GetNativeArgument(arguments, 0));
+    HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
+    auto *op = TF_GraphOperationByName(graph, name);
+    Dart_SetReturnValue(arguments, Dart_NewIntegerFromUint64((uint64_t) op));
+}
+
+void tfd::Graph_from_graph_def(Dart_NativeArguments arguments) {
+    // Returns Tuple3<int, String, int>
+    Dart_Handle dataHandle = Dart_GetNativeArgument(arguments, 0); // Uint8List data
+    //Dart_Handle prefixHandle = Dart_GetNativeArgument(arguments, 1); // String prefix
+    auto *graph = TF_NewGraph();
+    auto *opts = TF_NewImportGraphDefOptions();
+    auto *status = TF_NewStatus();
+    Dart_TypedData_Type type;
+    void *data;
+    intptr_t length;
+    HandleError(Dart_TypedDataAcquireData(dataHandle, &type, &data, &length));
+    auto *buf = TF_NewBufferFromString(data, (size_t) length);
+    HandleError(Dart_TypedDataReleaseData(dataHandle));
+    auto *results = TF_GraphImportGraphDefWithResults(graph, buf, opts, status);
+
+    int code = TF_GetCode(status);
+    Dart_Handle tuple[3]; // Tuple3<int, String, int>
+    tuple[0] = Dart_NewInteger(code);
+
+    if (code != 0 || results == nullptr) {
+        tuple[1] = Dart_NewStringFromCString(TF_Message(status));
+        tuple[2] = Dart_Null();
+        TF_DeleteGraph(graph);
+    } else {
+        tuple[1] = Dart_Null();
+        tuple[2] = Dart_NewIntegerFromUint64((uint64_t) graph);
+        TF_DeleteImportGraphDefResults(results);
+        Dart_Handle out = Dart_New(getTuple3Type(), Dart_NewStringFromCString(""), 3, tuple);
+        Dart_SetReturnValue(arguments, out);
+    }
+
+    TF_DeleteImportGraphDefOptions(opts);
+    TF_DeleteBuffer(buf);
+    TF_DeleteStatus(status);
+}
+
+void tfd::Graph_to_graph_def(Dart_NativeArguments arguments) {
+    auto *graph = dereference_graph_ptr(Dart_GetNativeArgument(arguments, 0));
+    auto *status = TF_NewStatus();
+    auto *buf = TF_NewBuffer();
+    TF_GraphToGraphDef(graph, buf, status);
+    int code = TF_GetCode(status);
+
+    Dart_Handle tuple[3];
+    tuple[0] = Dart_NewInteger(code);
+
+    if (code == TF_OK) {
+        tuple[1] = Dart_Null();
+        // Create a Uint8List for the run metadata.
+        tuple[2] = Dart_NewExternalTypedData(Dart_TypedData_kUint8, (void *) buf->data, buf->length);
+    } else {
+        tuple[1] = Dart_NewStringFromCString(TF_Message(status));
+        tuple[2] = Dart_Null();
+    }
+
+    // Create a new tuple.
+    Dart_Handle out = Dart_New(getTuple3Type(), Dart_NewStringFromCString(""), 3, tuple);
+    Dart_SetReturnValue(arguments, out);
+}
+
+void tfd::Graph_iter_next(Dart_NativeArguments arguments) {
+    auto *graph = dereference_graph_ptr(Dart_GetNativeArgument(arguments, 0));
+    int64_t index;
+    HandleError(Dart_IntegerToInt64(Dart_GetNativeArgument(arguments, 1), &index));
+    auto pos = (size_t) index;
+    TF_Operation *oper = TF_GraphNextOperation(graph, &pos);
+
+    if (oper == nullptr)
+        Dart_SetReturnValue(arguments, Dart_Null());
+    else
+        Dart_SetReturnValue(arguments, Dart_NewIntegerFromUint64((uint64_t) oper));
 }
