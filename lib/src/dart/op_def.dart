@@ -4,9 +4,9 @@ part of tensorflow;
 
 class QuantizedBatchNormWithGlobalNormalizationOutput<T> {
   QuantizedBatchNormWithGlobalNormalizationOutput(
-      this.sourceOutput, this.result, this.resultMin, this.resultMax);
+      this.op, this.result, this.resultMin, this.resultMax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> result;
 
@@ -16,10 +16,10 @@ class QuantizedBatchNormWithGlobalNormalizationOutput<T> {
 }
 
 class QuantizedReluXOutput<T> {
-  QuantizedReluXOutput(this.sourceOutput, this.activations, this.minActivations,
-      this.maxActivations);
+  QuantizedReluXOutput(
+      this.op, this.activations, this.minActivations, this.maxActivations);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> activations;
 
@@ -29,10 +29,10 @@ class QuantizedReluXOutput<T> {
 }
 
 class QuantizedReluOutput<T> {
-  QuantizedReluOutput(this.sourceOutput, this.activations, this.minActivations,
-      this.maxActivations);
+  QuantizedReluOutput(
+      this.op, this.activations, this.minActivations, this.maxActivations);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> activations;
 
@@ -42,9 +42,9 @@ class QuantizedReluOutput<T> {
 }
 
 class TopKV2Output<T> {
-  TopKV2Output(this.sourceOutput, this.values, this.indices);
+  TopKV2Output(this.op, this.values, this.indices);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> values;
 
@@ -52,9 +52,9 @@ class TopKV2Output<T> {
 }
 
 class TopKOutput<T> {
-  TopKOutput(this.sourceOutput, this.values, this.indices);
+  TopKOutput(this.op, this.values, this.indices);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> values;
 
@@ -62,10 +62,9 @@ class TopKOutput<T> {
 }
 
 class SparseSoftmaxCrossEntropyWithLogitsOutput<T> {
-  SparseSoftmaxCrossEntropyWithLogitsOutput(
-      this.sourceOutput, this.loss, this.backprop);
+  SparseSoftmaxCrossEntropyWithLogitsOutput(this.op, this.loss, this.backprop);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> loss;
 
@@ -73,10 +72,10 @@ class SparseSoftmaxCrossEntropyWithLogitsOutput<T> {
 }
 
 class FusedBatchNormV2Output<T> {
-  FusedBatchNormV2Output(this.sourceOutput, this.y, this.batchMean,
-      this.batchVariance, this.reserveSpace1, this.reserveSpace2);
+  FusedBatchNormV2Output(this.op, this.y, this.batchMean, this.batchVariance,
+      this.reserveSpace1, this.reserveSpace2);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> y;
 
@@ -90,10 +89,10 @@ class FusedBatchNormV2Output<T> {
 }
 
 class FusedBatchNormOutput<T> {
-  FusedBatchNormOutput(this.sourceOutput, this.y, this.batchMean,
-      this.batchVariance, this.reserveSpace1, this.reserveSpace2);
+  FusedBatchNormOutput(this.op, this.y, this.batchMean, this.batchVariance,
+      this.reserveSpace1, this.reserveSpace2);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> y;
 
@@ -107,9 +106,9 @@ class FusedBatchNormOutput<T> {
 }
 
 class RequantizationRangeOutput<T> {
-  RequantizationRangeOutput(this.sourceOutput, this.outputMin, this.outputMax);
+  RequantizationRangeOutput(this.op, this.outputMin, this.outputMax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<double> outputMin;
 
@@ -118,9 +117,9 @@ class RequantizationRangeOutput<T> {
 
 class QuantizeDownAndShrinkRangeOutput<T> {
   QuantizeDownAndShrinkRangeOutput(
-      this.sourceOutput, this.output, this.outputMin, this.outputMax);
+      this.op, this.output, this.outputMin, this.outputMax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -130,9 +129,9 @@ class QuantizeDownAndShrinkRangeOutput<T> {
 }
 
 class QuantizedMatMulOutput<T> {
-  QuantizedMatMulOutput(this.sourceOutput, this.out, this.minOut, this.maxOut);
+  QuantizedMatMulOutput(this.op, this.out, this.minOut, this.maxOut);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> out;
 
@@ -143,9 +142,9 @@ class QuantizedMatMulOutput<T> {
 
 class BatchNormWithGlobalNormalizationGradOutput<T> {
   BatchNormWithGlobalNormalizationGradOutput(
-      this.sourceOutput, this.dx, this.dm, this.dv, this.db, this.dg);
+      this.op, this.dx, this.dm, this.dv, this.db, this.dg);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> dx;
 
@@ -160,9 +159,9 @@ class BatchNormWithGlobalNormalizationGradOutput<T> {
 
 class SampleDistortedBoundingBoxV2Output<T> {
   SampleDistortedBoundingBoxV2Output(
-      this.sourceOutput, this.begin, this.size, this.bboxes);
+      this.op, this.begin, this.size, this.bboxes);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> begin;
 
@@ -172,10 +171,10 @@ class SampleDistortedBoundingBoxV2Output<T> {
 }
 
 class SparseReduceSumSparseOutput<T> {
-  SparseReduceSumSparseOutput(this.sourceOutput, this.outputIndices,
-      this.outputValues, this.outputShape);
+  SparseReduceSumSparseOutput(
+      this.op, this.outputIndices, this.outputValues, this.outputShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> outputIndices;
 
@@ -185,10 +184,9 @@ class SparseReduceSumSparseOutput<T> {
 }
 
 class QuantizeV2Output<T> {
-  QuantizeV2Output(
-      this.sourceOutput, this.output, this.outputMin, this.outputMax);
+  QuantizeV2Output(this.op, this.output, this.outputMin, this.outputMax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -198,10 +196,10 @@ class QuantizeV2Output<T> {
 }
 
 class UniformCandidateSamplerOutput {
-  UniformCandidateSamplerOutput(this.sourceOutput, this.sampledCandidates,
+  UniformCandidateSamplerOutput(this.op, this.sampledCandidates,
       this.trueExpectedCount, this.sampledExpectedCount);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sampledCandidates;
 
@@ -211,10 +209,9 @@ class UniformCandidateSamplerOutput {
 }
 
 class RequantizeOutput<T> {
-  RequantizeOutput(
-      this.sourceOutput, this.output, this.outputMin, this.outputMax);
+  RequantizeOutput(this.op, this.output, this.outputMin, this.outputMax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -224,9 +221,9 @@ class RequantizeOutput<T> {
 }
 
 class QuantizedInstanceNormOutput<T> {
-  QuantizedInstanceNormOutput(this.sourceOutput, this.y, this.yMin, this.yMax);
+  QuantizedInstanceNormOutput(this.op, this.y, this.yMin, this.yMax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> y;
 
@@ -236,10 +233,9 @@ class QuantizedInstanceNormOutput<T> {
 }
 
 class QuantizedMaxPoolOutput<T> {
-  QuantizedMaxPoolOutput(
-      this.sourceOutput, this.output, this.minOutput, this.maxOutput);
+  QuantizedMaxPoolOutput(this.op, this.output, this.minOutput, this.maxOutput);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -249,9 +245,9 @@ class QuantizedMaxPoolOutput<T> {
 }
 
 class TensorArrayV3Output {
-  TensorArrayV3Output(this.sourceOutput, this.handle, this.flow);
+  TensorArrayV3Output(this.op, this.handle, this.flow);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output handle;
 
@@ -259,9 +255,9 @@ class TensorArrayV3Output {
 }
 
 class BroadcastGradientArgsOutput<T> {
-  BroadcastGradientArgsOutput(this.sourceOutput, this.r0, this.r1);
+  BroadcastGradientArgsOutput(this.op, this.r0, this.r1);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> r0;
 
@@ -269,10 +265,10 @@ class BroadcastGradientArgsOutput<T> {
 }
 
 class QuantizedRelu6Output<T> {
-  QuantizedRelu6Output(this.sourceOutput, this.activations, this.minActivations,
-      this.maxActivations);
+  QuantizedRelu6Output(
+      this.op, this.activations, this.minActivations, this.maxActivations);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> activations;
 
@@ -282,9 +278,9 @@ class QuantizedRelu6Output<T> {
 }
 
 class UniqueWithCountsV2Output<T> {
-  UniqueWithCountsV2Output(this.sourceOutput, this.y, this.idx, this.count);
+  UniqueWithCountsV2Output(this.op, this.y, this.idx, this.count);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> y;
 
@@ -294,9 +290,9 @@ class UniqueWithCountsV2Output<T> {
 }
 
 class UniqueV2Output<T> {
-  UniqueV2Output(this.sourceOutput, this.y, this.idx);
+  UniqueV2Output(this.op, this.y, this.idx);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> y;
 
@@ -304,9 +300,9 @@ class UniqueV2Output<T> {
 }
 
 class UniqueOutput<T> {
-  UniqueOutput(this.sourceOutput, this.y, this.idx);
+  UniqueOutput(this.op, this.y, this.idx);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> y;
 
@@ -314,10 +310,10 @@ class UniqueOutput<T> {
 }
 
 class FakeQuantWithMinMaxVarsGradientOutput {
-  FakeQuantWithMinMaxVarsGradientOutput(this.sourceOutput,
-      this.backpropsWrtInput, this.backpropWrtMin, this.backpropWrtMax);
+  FakeQuantWithMinMaxVarsGradientOutput(this.op, this.backpropsWrtInput,
+      this.backpropWrtMin, this.backpropWrtMax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<double> backpropsWrtInput;
 
@@ -327,10 +323,10 @@ class FakeQuantWithMinMaxVarsGradientOutput {
 }
 
 class FakeQuantWithMinMaxVarsPerChannelGradientOutput {
-  FakeQuantWithMinMaxVarsPerChannelGradientOutput(this.sourceOutput,
+  FakeQuantWithMinMaxVarsPerChannelGradientOutput(this.op,
       this.backpropsWrtInput, this.backpropWrtMin, this.backpropWrtMax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<double> backpropsWrtInput;
 
@@ -340,10 +336,10 @@ class FakeQuantWithMinMaxVarsPerChannelGradientOutput {
 }
 
 class ParseSingleExampleOutput<T> {
-  ParseSingleExampleOutput(this.sourceOutput, this.sparseIndices,
-      this.sparseValues, this.sparseShapes, this.denseValues);
+  ParseSingleExampleOutput(this.op, this.sparseIndices, this.sparseValues,
+      this.sparseShapes, this.denseValues);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sparseIndices;
 
@@ -355,17 +351,10 @@ class ParseSingleExampleOutput<T> {
 }
 
 class SkipgramOutput {
-  SkipgramOutput(
-      this.sourceOutput,
-      this.vocabWord,
-      this.vocabFreq,
-      this.wordsPerEpoch,
-      this.currentEpoch,
-      this.totalWordsProcessed,
-      this.examples,
-      this.labels);
+  SkipgramOutput(this.op, this.vocabWord, this.vocabFreq, this.wordsPerEpoch,
+      this.currentEpoch, this.totalWordsProcessed, this.examples, this.labels);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<String> vocabWord;
 
@@ -383,9 +372,9 @@ class SkipgramOutput {
 }
 
 class UniqueWithCountsOutput<T> {
-  UniqueWithCountsOutput(this.sourceOutput, this.y, this.idx, this.count);
+  UniqueWithCountsOutput(this.op, this.y, this.idx, this.count);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> y;
 
@@ -395,10 +384,9 @@ class UniqueWithCountsOutput<T> {
 }
 
 class BarrierTakeManyOutput<T> {
-  BarrierTakeManyOutput(
-      this.sourceOutput, this.indices, this.keys, this.values);
+  BarrierTakeManyOutput(this.op, this.indices, this.keys, this.values);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> indices;
 
@@ -408,9 +396,9 @@ class BarrierTakeManyOutput<T> {
 }
 
 class TensorArrayConcatV2Output<T> {
-  TensorArrayConcatV2Output(this.sourceOutput, this.value, this.lengths);
+  TensorArrayConcatV2Output(this.op, this.value, this.lengths);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> value;
 
@@ -418,9 +406,9 @@ class TensorArrayConcatV2Output<T> {
 }
 
 class BatchOutput<T> {
-  BatchOutput(this.sourceOutput, this.batchedTensors, this.batchIndex, this.id);
+  BatchOutput(this.op, this.batchedTensors, this.batchIndex, this.id);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> batchedTensors;
 
@@ -430,9 +418,9 @@ class BatchOutput<T> {
 }
 
 class QuantizedAddOutput<T> {
-  QuantizedAddOutput(this.sourceOutput, this.z, this.minZ, this.maxZ);
+  QuantizedAddOutput(this.op, this.z, this.minZ, this.maxZ);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> z;
 
@@ -443,9 +431,9 @@ class QuantizedAddOutput<T> {
 
 class QuantizedResizeBilinearOutput<T> {
   QuantizedResizeBilinearOutput(
-      this.sourceOutput, this.resizedImages, this.outMin, this.outMax);
+      this.op, this.resizedImages, this.outMin, this.outMax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> resizedImages;
 
@@ -455,10 +443,9 @@ class QuantizedResizeBilinearOutput<T> {
 }
 
 class SparseFillEmptyRowsGradOutput<T> {
-  SparseFillEmptyRowsGradOutput(
-      this.sourceOutput, this.dValues, this.dDefaultValue);
+  SparseFillEmptyRowsGradOutput(this.op, this.dValues, this.dDefaultValue);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> dValues;
 
@@ -466,10 +453,9 @@ class SparseFillEmptyRowsGradOutput<T> {
 }
 
 class QuantizedConv2DOutput<T> {
-  QuantizedConv2DOutput(
-      this.sourceOutput, this.output, this.minOutput, this.maxOutput);
+  QuantizedConv2DOutput(this.op, this.output, this.minOutput, this.maxOutput);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -479,10 +465,10 @@ class QuantizedConv2DOutput<T> {
 }
 
 class SparseFillEmptyRowsOutput<T> {
-  SparseFillEmptyRowsOutput(this.sourceOutput, this.outputIndices,
-      this.outputValues, this.emptyRowIndicator, this.reverseIndexMap);
+  SparseFillEmptyRowsOutput(this.op, this.outputIndices, this.outputValues,
+      this.emptyRowIndicator, this.reverseIndexMap);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> outputIndices;
 
@@ -494,10 +480,9 @@ class SparseFillEmptyRowsOutput<T> {
 }
 
 class SparseSparseMaximumOutput<T> {
-  SparseSparseMaximumOutput(
-      this.sourceOutput, this.outputIndices, this.outputValues);
+  SparseSparseMaximumOutput(this.op, this.outputIndices, this.outputValues);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> outputIndices;
 
@@ -505,9 +490,9 @@ class SparseSparseMaximumOutput<T> {
 }
 
 class SparseReorderOutput<T> {
-  SparseReorderOutput(this.sourceOutput, this.outputIndices, this.outputValues);
+  SparseReorderOutput(this.op, this.outputIndices, this.outputValues);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> outputIndices;
 
@@ -515,10 +500,10 @@ class SparseReorderOutput<T> {
 }
 
 class SparseSplitOutput<T> {
-  SparseSplitOutput(this.sourceOutput, this.outputIndices, this.outputValues,
-      this.outputShape);
+  SparseSplitOutput(
+      this.op, this.outputIndices, this.outputValues, this.outputShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> outputIndices;
 
@@ -528,10 +513,10 @@ class SparseSplitOutput<T> {
 }
 
 class DenseToSparseSetOperationOutput<T> {
-  DenseToSparseSetOperationOutput(this.sourceOutput, this.resultIndices,
-      this.resultValues, this.resultShape);
+  DenseToSparseSetOperationOutput(
+      this.op, this.resultIndices, this.resultValues, this.resultShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> resultIndices;
 
@@ -541,10 +526,9 @@ class DenseToSparseSetOperationOutput<T> {
 }
 
 class QuantizedBiasAddOutput<T> {
-  QuantizedBiasAddOutput(
-      this.sourceOutput, this.output, this.minOut, this.maxOut);
+  QuantizedBiasAddOutput(this.op, this.output, this.minOut, this.maxOut);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -554,15 +538,10 @@ class QuantizedBiasAddOutput<T> {
 }
 
 class FusedBatchNormGradV2Output<T> {
-  FusedBatchNormGradV2Output(
-      this.sourceOutput,
-      this.xBackprop,
-      this.scaleBackprop,
-      this.offsetBackprop,
-      this.reserveSpace3,
-      this.reserveSpace4);
+  FusedBatchNormGradV2Output(this.op, this.xBackprop, this.scaleBackprop,
+      this.offsetBackprop, this.reserveSpace3, this.reserveSpace4);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> xBackprop;
 
@@ -576,10 +555,10 @@ class FusedBatchNormGradV2Output<T> {
 }
 
 class CTCBeamSearchDecoderOutput {
-  CTCBeamSearchDecoderOutput(this.sourceOutput, this.decodedIndices,
-      this.decodedValues, this.decodedShape, this.logProbability);
+  CTCBeamSearchDecoderOutput(this.op, this.decodedIndices, this.decodedValues,
+      this.decodedShape, this.logProbability);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> decodedIndices;
 
@@ -591,10 +570,9 @@ class CTCBeamSearchDecoderOutput {
 }
 
 class SparseSparseMinimumOutput<T> {
-  SparseSparseMinimumOutput(
-      this.sourceOutput, this.outputIndices, this.outputValues);
+  SparseSparseMinimumOutput(this.op, this.outputIndices, this.outputValues);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> outputIndices;
 
@@ -602,10 +580,10 @@ class SparseSparseMinimumOutput<T> {
 }
 
 class SparseConcatOutput<T> {
-  SparseConcatOutput(this.sourceOutput, this.outputIndices, this.outputValues,
-      this.outputShape);
+  SparseConcatOutput(
+      this.op, this.outputIndices, this.outputValues, this.outputShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> outputIndices;
 
@@ -615,9 +593,9 @@ class SparseConcatOutput<T> {
 }
 
 class LookupTableExportV2Output<T> {
-  LookupTableExportV2Output(this.sourceOutput, this.keys, this.values);
+  LookupTableExportV2Output(this.op, this.keys, this.values);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> keys;
 
@@ -626,7 +604,7 @@ class LookupTableExportV2Output<T> {
 
 class ParseSingleSequenceExampleOutput<T> {
   ParseSingleSequenceExampleOutput(
-      this.sourceOutput,
+      this.op,
       this.contextSparseIndices,
       this.contextSparseValues,
       this.contextSparseShapes,
@@ -636,7 +614,7 @@ class ParseSingleSequenceExampleOutput<T> {
       this.featureListSparseShapes,
       this.featureListDenseValues);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> contextSparseIndices;
 
@@ -656,9 +634,9 @@ class ParseSingleSequenceExampleOutput<T> {
 }
 
 class LookupTableExportOutput<T> {
-  LookupTableExportOutput(this.sourceOutput, this.keys, this.values);
+  LookupTableExportOutput(this.op, this.keys, this.values);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> keys;
 
@@ -666,9 +644,9 @@ class LookupTableExportOutput<T> {
 }
 
 class BatchSvdOutput<T> {
-  BatchSvdOutput(this.sourceOutput, this.s, this.u, this.v);
+  BatchSvdOutput(this.op, this.s, this.u, this.v);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> s;
 
@@ -678,9 +656,9 @@ class BatchSvdOutput<T> {
 }
 
 class SvdOutput<T> {
-  SvdOutput(this.sourceOutput, this.s, this.u, this.v);
+  SvdOutput(this.op, this.s, this.u, this.v);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> s;
 
@@ -690,9 +668,9 @@ class SvdOutput<T> {
 }
 
 class QrOutput<T> {
-  QrOutput(this.sourceOutput, this.q, this.r);
+  QrOutput(this.op, this.q, this.r);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> q;
 
@@ -700,10 +678,10 @@ class QrOutput<T> {
 }
 
 class SparseCrossOutput<T> {
-  SparseCrossOutput(this.sourceOutput, this.outputIndices, this.outputValues,
-      this.outputShape);
+  SparseCrossOutput(
+      this.op, this.outputIndices, this.outputValues, this.outputShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> outputIndices;
 
@@ -713,9 +691,9 @@ class SparseCrossOutput<T> {
 }
 
 class SelfAdjointEigV2Output<T> {
-  SelfAdjointEigV2Output(this.sourceOutput, this.e, this.v);
+  SelfAdjointEigV2Output(this.op, this.e, this.v);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> e;
 
@@ -723,10 +701,9 @@ class SelfAdjointEigV2Output<T> {
 }
 
 class QuantizedConcatOutput<T> {
-  QuantizedConcatOutput(
-      this.sourceOutput, this.output, this.outputMin, this.outputMax);
+  QuantizedConcatOutput(this.op, this.output, this.outputMin, this.outputMax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -736,10 +713,10 @@ class QuantizedConcatOutput<T> {
 }
 
 class SparseSliceOutput<T> {
-  SparseSliceOutput(this.sourceOutput, this.outputIndices, this.outputValues,
-      this.outputShape);
+  SparseSliceOutput(
+      this.op, this.outputIndices, this.outputValues, this.outputShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> outputIndices;
 
@@ -749,9 +726,9 @@ class SparseSliceOutput<T> {
 }
 
 class ReaderReadOutput {
-  ReaderReadOutput(this.sourceOutput, this.key, this.value);
+  ReaderReadOutput(this.op, this.key, this.value);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<String> key;
 
@@ -759,9 +736,9 @@ class ReaderReadOutput {
 }
 
 class SparseAddGradOutput<T> {
-  SparseAddGradOutput(this.sourceOutput, this.aValGrad, this.bValGrad);
+  SparseAddGradOutput(this.op, this.aValGrad, this.bValGrad);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> aValGrad;
 
@@ -769,10 +746,9 @@ class SparseAddGradOutput<T> {
 }
 
 class SampleDistortedBoundingBoxOutput<T> {
-  SampleDistortedBoundingBoxOutput(
-      this.sourceOutput, this.begin, this.size, this.bboxes);
+  SampleDistortedBoundingBoxOutput(this.op, this.begin, this.size, this.bboxes);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> begin;
 
@@ -782,9 +758,9 @@ class SampleDistortedBoundingBoxOutput<T> {
 }
 
 class ListDiffOutput<T> {
-  ListDiffOutput(this.sourceOutput, this.out, this.idx);
+  ListDiffOutput(this.op, this.out, this.idx);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> out;
 
@@ -792,15 +768,10 @@ class ListDiffOutput<T> {
 }
 
 class FusedBatchNormGradOutput<T> {
-  FusedBatchNormGradOutput(
-      this.sourceOutput,
-      this.xBackprop,
-      this.scaleBackprop,
-      this.offsetBackprop,
-      this.reserveSpace3,
-      this.reserveSpace4);
+  FusedBatchNormGradOutput(this.op, this.xBackprop, this.scaleBackprop,
+      this.offsetBackprop, this.reserveSpace3, this.reserveSpace4);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> xBackprop;
 
@@ -814,9 +785,9 @@ class FusedBatchNormGradOutput<T> {
 }
 
 class TensorArrayConcatOutput<T> {
-  TensorArrayConcatOutput(this.sourceOutput, this.value, this.lengths);
+  TensorArrayConcatOutput(this.op, this.value, this.lengths);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> value;
 
@@ -824,9 +795,9 @@ class TensorArrayConcatOutput<T> {
 }
 
 class StringSplitOutput {
-  StringSplitOutput(this.sourceOutput, this.indices, this.values, this.shape);
+  StringSplitOutput(this.op, this.indices, this.values, this.shape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> indices;
 
@@ -836,13 +807,10 @@ class StringSplitOutput {
 }
 
 class ThreadUnsafeUnigramCandidateSamplerOutput {
-  ThreadUnsafeUnigramCandidateSamplerOutput(
-      this.sourceOutput,
-      this.sampledCandidates,
-      this.trueExpectedCount,
-      this.sampledExpectedCount);
+  ThreadUnsafeUnigramCandidateSamplerOutput(this.op, this.sampledCandidates,
+      this.trueExpectedCount, this.sampledExpectedCount);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sampledCandidates;
 
@@ -852,9 +820,9 @@ class ThreadUnsafeUnigramCandidateSamplerOutput {
 }
 
 class SwitchOutput<T> {
-  SwitchOutput(this.sourceOutput, this.outputFalse, this.outputTrue);
+  SwitchOutput(this.op, this.outputFalse, this.outputTrue);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> outputFalse;
 
@@ -862,9 +830,9 @@ class SwitchOutput<T> {
 }
 
 class CTCLossOutput {
-  CTCLossOutput(this.sourceOutput, this.loss, this.gradient);
+  CTCLossOutput(this.op, this.loss, this.gradient);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<double> loss;
 
@@ -872,10 +840,10 @@ class CTCLossOutput {
 }
 
 class SparseReduceMaxSparseOutput<T> {
-  SparseReduceMaxSparseOutput(this.sourceOutput, this.outputIndices,
-      this.outputValues, this.outputShape);
+  SparseReduceMaxSparseOutput(
+      this.op, this.outputIndices, this.outputValues, this.outputShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> outputIndices;
 
@@ -885,9 +853,9 @@ class SparseReduceMaxSparseOutput<T> {
 }
 
 class QuantizedMulOutput<T> {
-  QuantizedMulOutput(this.sourceOutput, this.z, this.minZ, this.maxZ);
+  QuantizedMulOutput(this.op, this.z, this.minZ, this.maxZ);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> z;
 
@@ -897,9 +865,9 @@ class QuantizedMulOutput<T> {
 }
 
 class TensorListPopBackOutput<T> {
-  TensorListPopBackOutput(this.sourceOutput, this.outputHandle, this.tensor);
+  TensorListPopBackOutput(this.op, this.outputHandle, this.tensor);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output outputHandle;
 
@@ -907,9 +875,9 @@ class TensorListPopBackOutput<T> {
 }
 
 class ReaderReadUpToV2Output {
-  ReaderReadUpToV2Output(this.sourceOutput, this.keys, this.values);
+  ReaderReadUpToV2Output(this.op, this.keys, this.values);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<String> keys;
 
@@ -917,9 +885,9 @@ class ReaderReadUpToV2Output {
 }
 
 class ReaderReadUpToOutput {
-  ReaderReadUpToOutput(this.sourceOutput, this.keys, this.values);
+  ReaderReadUpToOutput(this.op, this.keys, this.values);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<String> keys;
 
@@ -927,10 +895,10 @@ class ReaderReadUpToOutput {
 }
 
 class FractionalAvgPoolOutput<T> {
-  FractionalAvgPoolOutput(this.sourceOutput, this.output,
-      this.rowPoolingSequence, this.colPoolingSequence);
+  FractionalAvgPoolOutput(
+      this.op, this.output, this.rowPoolingSequence, this.colPoolingSequence);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -940,9 +908,9 @@ class FractionalAvgPoolOutput<T> {
 }
 
 class RefMergeOutput<T> {
-  RefMergeOutput(this.sourceOutput, this.output, this.valueIndex);
+  RefMergeOutput(this.op, this.output, this.valueIndex);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -950,10 +918,10 @@ class RefMergeOutput<T> {
 }
 
 class SparseToSparseSetOperationOutput<T> {
-  SparseToSparseSetOperationOutput(this.sourceOutput, this.resultIndices,
-      this.resultValues, this.resultShape);
+  SparseToSparseSetOperationOutput(
+      this.op, this.resultIndices, this.resultValues, this.resultShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> resultIndices;
 
@@ -963,10 +931,10 @@ class SparseToSparseSetOperationOutput<T> {
 }
 
 class DeserializeSparseOutput<T> {
-  DeserializeSparseOutput(this.sourceOutput, this.sparseIndices,
-      this.sparseValues, this.sparseShape);
+  DeserializeSparseOutput(
+      this.op, this.sparseIndices, this.sparseValues, this.sparseShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sparseIndices;
 
@@ -976,10 +944,10 @@ class DeserializeSparseOutput<T> {
 }
 
 class DenseToDenseSetOperationOutput<T> {
-  DenseToDenseSetOperationOutput(this.sourceOutput, this.resultIndices,
-      this.resultValues, this.resultShape);
+  DenseToDenseSetOperationOutput(
+      this.op, this.resultIndices, this.resultValues, this.resultShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> resultIndices;
 
@@ -989,10 +957,9 @@ class DenseToDenseSetOperationOutput<T> {
 }
 
 class SoftmaxCrossEntropyWithLogitsOutput<T> {
-  SoftmaxCrossEntropyWithLogitsOutput(
-      this.sourceOutput, this.loss, this.backprop);
+  SoftmaxCrossEntropyWithLogitsOutput(this.op, this.loss, this.backprop);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> loss;
 
@@ -1000,9 +967,9 @@ class SoftmaxCrossEntropyWithLogitsOutput<T> {
 }
 
 class MapUnstageNoKeyOutput<T> {
-  MapUnstageNoKeyOutput(this.sourceOutput, this.key, this.values);
+  MapUnstageNoKeyOutput(this.op, this.key, this.values);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> key;
 
@@ -1010,10 +977,10 @@ class MapUnstageNoKeyOutput<T> {
 }
 
 class ParseExampleOutput<T> {
-  ParseExampleOutput(this.sourceOutput, this.sparseIndices, this.sparseValues,
+  ParseExampleOutput(this.op, this.sparseIndices, this.sparseValues,
       this.sparseShapes, this.denseValues);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sparseIndices;
 
@@ -1025,10 +992,10 @@ class ParseExampleOutput<T> {
 }
 
 class CTCGreedyDecoderOutput {
-  CTCGreedyDecoderOutput(this.sourceOutput, this.decodedIndices,
-      this.decodedValues, this.decodedShape, this.logProbability);
+  CTCGreedyDecoderOutput(this.op, this.decodedIndices, this.decodedValues,
+      this.decodedShape, this.logProbability);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> decodedIndices;
 
@@ -1040,10 +1007,9 @@ class CTCGreedyDecoderOutput {
 }
 
 class QuantizedReshapeOutput<T> {
-  QuantizedReshapeOutput(
-      this.sourceOutput, this.output, this.outputMin, this.outputMax);
+  QuantizedReshapeOutput(this.op, this.output, this.outputMin, this.outputMax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -1053,10 +1019,9 @@ class QuantizedReshapeOutput<T> {
 }
 
 class ComputeAccidentalHitsOutput {
-  ComputeAccidentalHitsOutput(
-      this.sourceOutput, this.indices, this.ids, this.weights);
+  ComputeAccidentalHitsOutput(this.op, this.indices, this.ids, this.weights);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> indices;
 
@@ -1066,9 +1031,9 @@ class ComputeAccidentalHitsOutput {
 }
 
 class BatchSelfAdjointEigV2Output<T> {
-  BatchSelfAdjointEigV2Output(this.sourceOutput, this.e, this.v);
+  BatchSelfAdjointEigV2Output(this.op, this.e, this.v);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> e;
 
@@ -1076,9 +1041,9 @@ class BatchSelfAdjointEigV2Output<T> {
 }
 
 class TensorArrayConcatV3Output<T> {
-  TensorArrayConcatV3Output(this.sourceOutput, this.value, this.lengths);
+  TensorArrayConcatV3Output(this.op, this.value, this.lengths);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> value;
 
@@ -1086,9 +1051,9 @@ class TensorArrayConcatV3Output<T> {
 }
 
 class TensorArrayGradV3Output {
-  TensorArrayGradV3Output(this.sourceOutput, this.gradHandle, this.flowOut);
+  TensorArrayGradV3Output(this.op, this.gradHandle, this.flowOut);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output gradHandle;
 
@@ -1096,9 +1061,9 @@ class TensorArrayGradV3Output {
 }
 
 class RefSwitchOutput<T> {
-  RefSwitchOutput(this.sourceOutput, this.outputFalse, this.outputTrue);
+  RefSwitchOutput(this.op, this.outputFalse, this.outputTrue);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> outputFalse;
 
@@ -1106,10 +1071,10 @@ class RefSwitchOutput<T> {
 }
 
 class LogUniformCandidateSamplerOutput {
-  LogUniformCandidateSamplerOutput(this.sourceOutput, this.sampledCandidates,
+  LogUniformCandidateSamplerOutput(this.op, this.sampledCandidates,
       this.trueExpectedCount, this.sampledExpectedCount);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sampledCandidates;
 
@@ -1119,9 +1084,9 @@ class LogUniformCandidateSamplerOutput {
 }
 
 class SparseReshapeOutput {
-  SparseReshapeOutput(this.sourceOutput, this.outputIndices, this.outputShape);
+  SparseReshapeOutput(this.op, this.outputIndices, this.outputShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> outputIndices;
 
@@ -1129,10 +1094,9 @@ class SparseReshapeOutput {
 }
 
 class SparseAddOutput<T> {
-  SparseAddOutput(
-      this.sourceOutput, this.sumIndices, this.sumValues, this.sumShape);
+  SparseAddOutput(this.op, this.sumIndices, this.sumValues, this.sumShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sumIndices;
 
@@ -1142,10 +1106,10 @@ class SparseAddOutput<T> {
 }
 
 class DeserializeManySparseOutput<T> {
-  DeserializeManySparseOutput(this.sourceOutput, this.sparseIndices,
-      this.sparseValues, this.sparseShape);
+  DeserializeManySparseOutput(
+      this.op, this.sparseIndices, this.sparseValues, this.sparseShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sparseIndices;
 
@@ -1155,9 +1119,9 @@ class DeserializeManySparseOutput<T> {
 }
 
 class OrderedMapUnstageNoKeyOutput<T> {
-  OrderedMapUnstageNoKeyOutput(this.sourceOutput, this.key, this.values);
+  OrderedMapUnstageNoKeyOutput(this.op, this.key, this.values);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> key;
 
@@ -1165,9 +1129,9 @@ class OrderedMapUnstageNoKeyOutput<T> {
 }
 
 class MergeOutput<T> {
-  MergeOutput(this.sourceOutput, this.output, this.valueIndex);
+  MergeOutput(this.op, this.output, this.valueIndex);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -1175,10 +1139,10 @@ class MergeOutput<T> {
 }
 
 class FixedUnigramCandidateSamplerOutput {
-  FixedUnigramCandidateSamplerOutput(this.sourceOutput, this.sampledCandidates,
+  FixedUnigramCandidateSamplerOutput(this.op, this.sampledCandidates,
       this.trueExpectedCount, this.sampledExpectedCount);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sampledCandidates;
 
@@ -1188,13 +1152,10 @@ class FixedUnigramCandidateSamplerOutput {
 }
 
 class LearnedUnigramCandidateSamplerOutput {
-  LearnedUnigramCandidateSamplerOutput(
-      this.sourceOutput,
-      this.sampledCandidates,
-      this.trueExpectedCount,
-      this.sampledExpectedCount);
+  LearnedUnigramCandidateSamplerOutput(this.op, this.sampledCandidates,
+      this.trueExpectedCount, this.sampledExpectedCount);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sampledCandidates;
 
@@ -1204,10 +1165,10 @@ class LearnedUnigramCandidateSamplerOutput {
 }
 
 class AllCandidateSamplerOutput {
-  AllCandidateSamplerOutput(this.sourceOutput, this.sampledCandidates,
+  AllCandidateSamplerOutput(this.op, this.sampledCandidates,
       this.trueExpectedCount, this.sampledExpectedCount);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sampledCandidates;
 
@@ -1217,10 +1178,9 @@ class AllCandidateSamplerOutput {
 }
 
 class LogMatrixDeterminantOutput<T> {
-  LogMatrixDeterminantOutput(
-      this.sourceOutput, this.sign, this.logAbsDeterminant);
+  LogMatrixDeterminantOutput(this.op, this.sign, this.logAbsDeterminant);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> sign;
 
@@ -1228,10 +1188,10 @@ class LogMatrixDeterminantOutput<T> {
 }
 
 class SdcaOptimizerOutput {
-  SdcaOptimizerOutput(this.sourceOutput, this.outExampleStateData,
+  SdcaOptimizerOutput(this.op, this.outExampleStateData,
       this.outDeltaSparseWeights, this.outDeltaDenseWeights);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<double> outExampleStateData;
 
@@ -1241,9 +1201,9 @@ class SdcaOptimizerOutput {
 }
 
 class MaxPoolWithArgmaxOutput<T> {
-  MaxPoolWithArgmaxOutput(this.sourceOutput, this.output, this.argmax);
+  MaxPoolWithArgmaxOutput(this.op, this.output, this.argmax);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -1251,10 +1211,9 @@ class MaxPoolWithArgmaxOutput<T> {
 }
 
 class QuantizedAvgPoolOutput<T> {
-  QuantizedAvgPoolOutput(
-      this.sourceOutput, this.output, this.minOutput, this.maxOutput);
+  QuantizedAvgPoolOutput(this.op, this.output, this.minOutput, this.maxOutput);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -1264,9 +1223,9 @@ class QuantizedAvgPoolOutput<T> {
 }
 
 class ReaderReadV2Output {
-  ReaderReadV2Output(this.sourceOutput, this.key, this.value);
+  ReaderReadV2Output(this.op, this.key, this.value);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<String> key;
 
@@ -1274,9 +1233,9 @@ class ReaderReadV2Output {
 }
 
 class DecodeWavOutput {
-  DecodeWavOutput(this.sourceOutput, this.audio, this.sampleRate);
+  DecodeWavOutput(this.op, this.audio, this.sampleRate);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<double> audio;
 
@@ -1284,10 +1243,10 @@ class DecodeWavOutput {
 }
 
 class FractionalMaxPoolOutput<T> {
-  FractionalMaxPoolOutput(this.sourceOutput, this.output,
-      this.rowPoolingSequence, this.colPoolingSequence);
+  FractionalMaxPoolOutput(
+      this.op, this.output, this.rowPoolingSequence, this.colPoolingSequence);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<T> output;
 
@@ -1297,10 +1256,9 @@ class FractionalMaxPoolOutput<T> {
 }
 
 class GenerateVocabRemappingOutput {
-  GenerateVocabRemappingOutput(
-      this.sourceOutput, this.remapping, this.numPresent);
+  GenerateVocabRemappingOutput(this.op, this.remapping, this.numPresent);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> remapping;
 
@@ -1309,9 +1267,9 @@ class GenerateVocabRemappingOutput {
 
 class SparseAccumulatorTakeGradientOutput<T> {
   SparseAccumulatorTakeGradientOutput(
-      this.sourceOutput, this.indices, this.values, this.shape);
+      this.op, this.indices, this.values, this.shape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> indices;
 
@@ -1321,10 +1279,10 @@ class SparseAccumulatorTakeGradientOutput<T> {
 }
 
 class TakeManySparseFromTensorsMapOutput<T> {
-  TakeManySparseFromTensorsMapOutput(this.sourceOutput, this.sparseIndices,
-      this.sparseValues, this.sparseShape);
+  TakeManySparseFromTensorsMapOutput(
+      this.op, this.sparseIndices, this.sparseValues, this.sparseShape);
 
-  Output sourceOutput;
+  Operation op;
 
   final Output<int> sparseIndices;
 

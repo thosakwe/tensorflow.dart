@@ -207,17 +207,19 @@ main() async {
                 int i = 0;
 
                 constructor.requiredParameters.add(new Parameter((p) => p
-                  ..name = 'sourceOutput'
+                  ..name = 'op'
                   ..toThis = true));
 
                 b.fields.add(new Field((b) => b
-                  ..name = 'sourceOutput'
-                  ..type = refer('Output')));
+                  ..name = 'op'
+                  ..type = refer('Operation')));
 
                 for (var output in op.outputArg) {
                   b.fields.add(new Field((b) {
                     b
-                      ..name = escapeName(new ReCase(output.name).camelCase)
+                      ..name = escapeName(
+                          new ReCase(output.name == 'op' ? 'op\$' : output.name)
+                              .camelCase)
                       ..modifier = FieldModifier.final$
                       ..type = convertType(output.type, i++, typeAttr);
                     constructor.requiredParameters.add(new Parameter((p) => p
