@@ -5,6 +5,8 @@
 #ifndef TENSORFLOW_DART_UTIL_H
 #define TENSORFLOW_DART_UTIL_H
 
+#include <cstdlib>
+#include <cstring>
 #include <dart_api.h>
 #include <tensorflow/c/c_api.h>
 

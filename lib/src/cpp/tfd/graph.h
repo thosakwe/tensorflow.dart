@@ -6,7 +6,6 @@
 #define TENSORFLOW_DART_GRAPH_H
 
 #include <dart_api.h>
-#include <dart_mirrors_api.h>
 #include <tensorflow/c/c_api.h>
 
 namespace tfd
