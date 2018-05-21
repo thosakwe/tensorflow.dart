@@ -113,45 +113,6 @@ main() async {
   print('Found ${publicOps.length} ops');
 
   var lib = new Library((libBuilder) {
-    /*libBuilder.body.add(new Class((b) {
-      b
-        ..name = 'Graph'
-        ..extend = new Reference('_Graph');
-
-      b.constructors.addAll([
-        new Constructor((b) => b..initializers.add(new Code('super()'))),
-        new Constructor((b) => b
-          ..name = '_fromPointer'
-          ..requiredParameters.add(new Parameter((b) => b
-            ..name = '_pointer'
-            ..type = refer('int')))
-          ..initializers.add(new Code('super._fromPointer(_pointer)'))),
-      ]);
-
-      b.constructors.add(new Constructor((b) {
-        /*
-            /// 
-  static Graph importGraphDef(GraphDef graphDef, {String prefix}) {}
-         */
-        b
-          ..name = 'fromGraphDef'
-          ..factory = true
-          ..docs.add(
-              '/// Import a serialized representation of a TensorFlow graph.')
-          ..requiredParameters.add(new Parameter((b) => b
-            ..name = 'graphDef'
-            ..type = refer('GraphDef')))
-          ..optionalParameters.add(new Parameter((b) => b
-            ..name = 'prefix'
-            ..type = refer('String')
-            ..named = true))
-          ..body = refer('_Graph')
-              .property('importGraphDef')
-              .call([refer('graphDef')], {'prefix': refer('prefix')})
-              .returned
-              .statement;
-      }));*/
-
     for (var op in publicOps) {
       var body = <Code>[
         refer('graph').assignNullAware(refer('defaultGraph')).statement,
@@ -176,7 +137,6 @@ main() async {
             ..type = refer('Graph');
         }));
 
-        //b.methods.add(new Method((method) {
         var p = new Parameter((b) => b
           ..name = 'operationName'
           ..type = refer('String')
@@ -341,11 +301,6 @@ main() async {
             type = new TypeReference((b) => b
               ..symbol = 'List'
               ..types.add(type));
-            /*
-              print(input.typeListAttr.isNotEmpty
-                  ? input.typeListAttr
-                  : input.numberAttr);
-                  */
           }
 
           var p = new Parameter((b) {
@@ -398,45 +353,6 @@ main() async {
           method.optionalParameters.add(p);
         }
 
-        /*
-          for (var attr in op.attr) {
-            if (attr.name == 'T' && attr.type == 'type') continue;
-
-            var paramName = escapeName(new ReCase(attr.name).camelCase);
-            b.optionalParameters.add(new Parameter((b) {
-              b
-                ..name = paramName
-                ..named = true
-                ..type = refer(dartType(attr.type));
-
-              if (attr.hasDefaultValue())
-                b.defaultTo = convertDefaultValue(attr.defaultValue)?.code;
-              //else
-              //  b.annotations.add(refer('required'));
-
-              if (attr.name == 'dtype') {
-                if (op.inputArg.isEmpty)
-                  b.annotations.add(refer('required'));
-                else {
-                  var dtype = refer('dtype'), inferType = refer('inferType');
-                  var firstInput = refer(
-                      escapeName(new ReCase(op.inputArg[0].name).camelCase));
-                  body.insert(0,
-                      dtype.assignNullAware(inferType([firstInput])).statement);
-                }
-              }
-            }));
-            /*}
-
-          for (var attr in op.attr) {
-            var name = escapeName(new ReCase(attr.name).camelCase);
-
-            if (attr.type == 'type')
-              attributes[attr.name] = refer(attr.name);
-            else*/
-            attributes[attr.name] = refer(paramName);
-          }
-          */
         var retVal = refer('op\$').property('finish').call([]);
 
         if (op.outputArg.isEmpty) {
@@ -460,10 +376,8 @@ main() async {
         }
 
         method.body = new Block.of(body);
-        //}));
       }));
     }
-    //}));
   });
 
   var dartText =
@@ -480,7 +394,6 @@ Expression convertDefaultValue(tf.AttrValue defaultValue) {
   if (defaultValue.hasB()) return literalBool(defaultValue.b);
   if (defaultValue.hasType())
     return refer('DataType.${defaultValue.type.name}');
-  //if (defaultValue.hasS()) return literalConstList(defaultValue.s);
   if (defaultValue.hasS())
     return literalString(new String.fromCharCodes(defaultValue.s));
   //print(defaultValue.writeToJson());
@@ -502,7 +415,7 @@ String dartType(String tfType, [bool allowTensorType = false]) {
     case 'type':
       return 'DataType';
     case 'shape':
-      return 'Shape'; // TODO: How to handle shapes?
+      return 'Shape';
     case 'tensor':
       return allowTensorType ? 'Tensor' : 'Output';
     case 'string':
@@ -536,7 +449,7 @@ String attrType(String tfType) {
       return 'Type';
     case 'Shape':
     case 'shape':
-      return 'Shape'; // TODO: How to handle shapes?
+      return 'Shape';
     case 'tensor':
     case 'Tensor':
       return 'Tensor';
