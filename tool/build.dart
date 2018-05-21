@@ -26,7 +26,7 @@ final ArgParser argParser = new ArgParser()
       abbr: 't',
       help: 'The `TF_TYPE` variable to build with.',
       allowed: ['cpu', 'gpu'],
-      defaultsTo: Platform.isMacOS ? 'cpu' : 'gpu')
+      defaultsTo: 'cpu')
   ..addOption('version',
       abbr: 'v',
       help: 'The `TF_VERSION` variable to build with.',
