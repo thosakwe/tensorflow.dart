@@ -7,6 +7,7 @@
 
 [![Pub](https://img.shields.io/pub/v/tensorflow.svg)](https://pub.dartlang.org/packages/tensorflow)
 [![Build status](https://travis-ci.org/thosakwe/tensorflow.dart.svg?branch=master)](https://travis-ci.org/thosakwe/tensorflow.dart)
+[![Gitter](https://img.shields.io/gitter/room/tensorflow-dart/Lobby.svg)](https://gitter.im/tensorflow-dart/Lobby)
 [![License](https://img.shields.io/github/license/thosakwe/tensorflow.dart.svg)](https://github.com/thosakwe/tensorflow.dart/blob/master/LICENSE)
 
 [Tensorflow](https://github.com/tensorflow/tensorflow)
