@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:path/path.dart' as p;
 import 'package:tensorflow/tensorflow.dart' as tf;
 
-// Sample use of the TensorFlow Java API to label images using a pre-trained model.
+// Sample use of the TensorFlow Dart API to label images using a pre-trained model.
 //
 // Ported from the original Java version:
 // https://github.com/tensorflow/tensorflow/blob/master/tensorflow/java/src/main/java/org/tensorflow/examples/LabelImage.java
@@ -13,13 +13,12 @@ const String url =
     'https://storage.googleapis.com/download.tensorflow.org/models/inception5h.zip';
 
 main(List<String> args) async {
-  if (args.length != 1) {
+  if (args.length != 2) {
     printUsage(stderr);
     exit(1);
   }
 
-  var modelDir = p.join(p.dirname(p.fromUri(Platform.script)), 'inception5h');
-  var imageFile = args[0];
+  var modelDir = args[0], imageFile = args[1];
   var graphDefBytes =
       await new File(p.join(modelDir, 'tensorflow_inception_graph.pb'))
           .readAsBytes();
@@ -113,8 +112,8 @@ void printUsage(IOSink sink) {
     ..writeln('Usage: label_image <image file>')
     ..writeln()
     ..writeln('Where:')
-    //..writeln(
-    //    '<model dir> is a directory containing the unzipped contents of the inception model')
-    //..writeln('            (from ' + url + ")")
+    ..writeln(
+        '<model dir> is a directory containing the unzipped contents of the inception model')
+    ..writeln('            (from ' + url + ")")
     ..writeln('<image file> is the path to a JPEG image file');
 }
