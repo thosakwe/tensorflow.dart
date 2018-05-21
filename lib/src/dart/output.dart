@@ -28,7 +28,8 @@ class Output<T> {
 
   Shape get shape => new Shape._(_shape(_graph));
 
-  Output<T> get initializer => _initializer ??= throw new UnsupportedError('Not a variable: $this');
+  Output<T> get initializer =>
+      _initializer ??= throw new UnsupportedError('Not a variable: $this');
 
   Output<T> operator *(Output<T> other) => mul<T>(this, other, graph: _graph);
 

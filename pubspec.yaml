@@ -1,5 +1,5 @@
 name: tensorflow
-description: Native bindings for Tensorflow.
+description: Native bindings for Tensorflow. Includes functionality for importing graphs, and constructing them at low and high levels.
 version: 0.0.0
 author: Tobe O <thosakwe@gmail.com>
 homepage: https://github.com/thosakwe/tensorflow.dart

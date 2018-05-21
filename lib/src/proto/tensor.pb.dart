@@ -17,8 +17,10 @@ import 'types.pbenum.dart';
 
 class TensorProto extends GeneratedMessage {
   static final BuilderInfo _i = new BuilderInfo('TensorProto')
-    ..e<DataType>(1, 'dtype', PbFieldType.OE, DataType.DT_INVALID, DataType.valueOf, DataType.values)
-    ..a<TensorShapeProto>(2, 'tensorShape', PbFieldType.OM, TensorShapeProto.getDefault, TensorShapeProto.create)
+    ..e<DataType>(1, 'dtype', PbFieldType.OE, DataType.DT_INVALID,
+        DataType.valueOf, DataType.values)
+    ..a<TensorShapeProto>(2, 'tensorShape', PbFieldType.OM,
+        TensorShapeProto.getDefault, TensorShapeProto.create)
     ..a<int>(3, 'versionNumber', PbFieldType.O3)
     ..a<List<int>>(4, 'tensorContent', PbFieldType.OY)
     ..p<double>(5, 'floatVal', PbFieldType.KF)
@@ -30,16 +32,21 @@ class TensorProto extends GeneratedMessage {
     ..p<bool>(11, 'boolVal', PbFieldType.KB)
     ..p<double>(12, 'dcomplexVal', PbFieldType.KD)
     ..p<int>(13, 'halfVal', PbFieldType.K3)
-    ..pp<ResourceHandleProto>(14, 'resourceHandleVal', PbFieldType.PM, ResourceHandleProto.$checkItem, ResourceHandleProto.create)
-    ..pp<VariantTensorDataProto>(15, 'variantVal', PbFieldType.PM, VariantTensorDataProto.$checkItem, VariantTensorDataProto.create)
+    ..pp<ResourceHandleProto>(14, 'resourceHandleVal', PbFieldType.PM,
+        ResourceHandleProto.$checkItem, ResourceHandleProto.create)
+    ..pp<VariantTensorDataProto>(15, 'variantVal', PbFieldType.PM,
+        VariantTensorDataProto.$checkItem, VariantTensorDataProto.create)
     ..p<int>(16, 'uint32Val', PbFieldType.KU3)
     ..p<Int64>(17, 'uint64Val', PbFieldType.KU6)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   TensorProto() : super();
-  TensorProto.fromBuffer(List<int> i, [ExtensionRegistry r = ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  TensorProto.fromJson(String i, [ExtensionRegistry r = ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  TensorProto.fromBuffer(List<int> i,
+      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
+      : super.fromBuffer(i, r);
+  TensorProto.fromJson(String i,
+      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
+      : super.fromJson(i, r);
   TensorProto clone() => new TensorProto()..mergeFromMessage(this);
   BuilderInfo get info_ => _i;
   static TensorProto create() => new TensorProto();
@@ -48,28 +55,41 @@ class TensorProto extends GeneratedMessage {
     if (_defaultInstance == null) _defaultInstance = new _ReadonlyTensorProto();
     return _defaultInstance;
   }
+
   static TensorProto _defaultInstance;
   static void $checkItem(TensorProto v) {
     if (v is! TensorProto) checkItemFailed(v, 'TensorProto');
   }
 
   DataType get dtype => $_getN(0);
-  set dtype(DataType v) { setField(1, v); }
+  set dtype(DataType v) {
+    setField(1, v);
+  }
+
   bool hasDtype() => $_has(0);
   void clearDtype() => clearField(1);
 
   TensorShapeProto get tensorShape => $_getN(1);
-  set tensorShape(TensorShapeProto v) { setField(2, v); }
+  set tensorShape(TensorShapeProto v) {
+    setField(2, v);
+  }
+
   bool hasTensorShape() => $_has(1);
   void clearTensorShape() => clearField(2);
 
   int get versionNumber => $_get(2, 0);
-  set versionNumber(int v) { $_setUnsignedInt32(2, v); }
+  set versionNumber(int v) {
+    $_setUnsignedInt32(2, v);
+  }
+
   bool hasVersionNumber() => $_has(2);
   void clearVersionNumber() => clearField(3);
 
   List<int> get tensorContent => $_getN(3);
-  set tensorContent(List<int> v) { $_setBytes(3, v); }
+  set tensorContent(List<int> v) {
+    $_setBytes(3, v);
+  }
+
   bool hasTensorContent() => $_has(3);
   void clearTensorContent() => clearField(4);
 
@@ -106,38 +126,53 @@ class VariantTensorDataProto extends GeneratedMessage {
   static final BuilderInfo _i = new BuilderInfo('VariantTensorDataProto')
     ..aOS(1, 'typeName')
     ..a<List<int>>(2, 'metadata', PbFieldType.OY)
-    ..pp<TensorProto>(3, 'tensors', PbFieldType.PM, TensorProto.$checkItem, TensorProto.create)
-    ..hasRequiredFields = false
-  ;
+    ..pp<TensorProto>(3, 'tensors', PbFieldType.PM, TensorProto.$checkItem,
+        TensorProto.create)
+    ..hasRequiredFields = false;
 
   VariantTensorDataProto() : super();
-  VariantTensorDataProto.fromBuffer(List<int> i, [ExtensionRegistry r = ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  VariantTensorDataProto.fromJson(String i, [ExtensionRegistry r = ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  VariantTensorDataProto clone() => new VariantTensorDataProto()..mergeFromMessage(this);
+  VariantTensorDataProto.fromBuffer(List<int> i,
+      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
+      : super.fromBuffer(i, r);
+  VariantTensorDataProto.fromJson(String i,
+      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
+      : super.fromJson(i, r);
+  VariantTensorDataProto clone() =>
+      new VariantTensorDataProto()..mergeFromMessage(this);
   BuilderInfo get info_ => _i;
   static VariantTensorDataProto create() => new VariantTensorDataProto();
-  static PbList<VariantTensorDataProto> createRepeated() => new PbList<VariantTensorDataProto>();
+  static PbList<VariantTensorDataProto> createRepeated() =>
+      new PbList<VariantTensorDataProto>();
   static VariantTensorDataProto getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyVariantTensorDataProto();
+    if (_defaultInstance == null)
+      _defaultInstance = new _ReadonlyVariantTensorDataProto();
     return _defaultInstance;
   }
+
   static VariantTensorDataProto _defaultInstance;
   static void $checkItem(VariantTensorDataProto v) {
-    if (v is! VariantTensorDataProto) checkItemFailed(v, 'VariantTensorDataProto');
+    if (v is! VariantTensorDataProto)
+      checkItemFailed(v, 'VariantTensorDataProto');
   }
 
   String get typeName => $_getS(0, '');
-  set typeName(String v) { $_setString(0, v); }
+  set typeName(String v) {
+    $_setString(0, v);
+  }
+
   bool hasTypeName() => $_has(0);
   void clearTypeName() => clearField(1);
 
   List<int> get metadata => $_getN(1);
-  set metadata(List<int> v) { $_setBytes(1, v); }
+  set metadata(List<int> v) {
+    $_setBytes(1, v);
+  }
+
   bool hasMetadata() => $_has(1);
   void clearMetadata() => clearField(2);
 
   List<TensorProto> get tensors => $_getList(2);
 }
 
-class _ReadonlyVariantTensorDataProto extends VariantTensorDataProto with ReadonlyMessageMixin {}
-
+class _ReadonlyVariantTensorDataProto extends VariantTensorDataProto
+    with ReadonlyMessageMixin {}

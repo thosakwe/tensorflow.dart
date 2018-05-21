@@ -7,10 +7,36 @@ library tensorflow_tensor_pbjson;
 const TensorProto$json = const {
   '1': 'TensorProto',
   '2': const [
-    const {'1': 'dtype', '3': 1, '4': 1, '5': 14, '6': '.tensorflow.DataType', '10': 'dtype'},
-    const {'1': 'tensor_shape', '3': 2, '4': 1, '5': 11, '6': '.tensorflow.TensorShapeProto', '10': 'tensorShape'},
-    const {'1': 'version_number', '3': 3, '4': 1, '5': 5, '10': 'versionNumber'},
-    const {'1': 'tensor_content', '3': 4, '4': 1, '5': 12, '10': 'tensorContent'},
+    const {
+      '1': 'dtype',
+      '3': 1,
+      '4': 1,
+      '5': 14,
+      '6': '.tensorflow.DataType',
+      '10': 'dtype'
+    },
+    const {
+      '1': 'tensor_shape',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.tensorflow.TensorShapeProto',
+      '10': 'tensorShape'
+    },
+    const {
+      '1': 'version_number',
+      '3': 3,
+      '4': 1,
+      '5': 5,
+      '10': 'versionNumber'
+    },
+    const {
+      '1': 'tensor_content',
+      '3': 4,
+      '4': 1,
+      '5': 12,
+      '10': 'tensorContent'
+    },
     const {
       '1': 'half_val',
       '3': 13,
@@ -76,8 +102,22 @@ const TensorProto$json = const {
       '8': const {'2': true},
       '10': 'dcomplexVal',
     },
-    const {'1': 'resource_handle_val', '3': 14, '4': 3, '5': 11, '6': '.tensorflow.ResourceHandleProto', '10': 'resourceHandleVal'},
-    const {'1': 'variant_val', '3': 15, '4': 3, '5': 11, '6': '.tensorflow.VariantTensorDataProto', '10': 'variantVal'},
+    const {
+      '1': 'resource_handle_val',
+      '3': 14,
+      '4': 3,
+      '5': 11,
+      '6': '.tensorflow.ResourceHandleProto',
+      '10': 'resourceHandleVal'
+    },
+    const {
+      '1': 'variant_val',
+      '3': 15,
+      '4': 3,
+      '5': 11,
+      '6': '.tensorflow.VariantTensorDataProto',
+      '10': 'variantVal'
+    },
     const {
       '1': 'uint32_val',
       '3': 16,
@@ -102,7 +142,13 @@ const VariantTensorDataProto$json = const {
   '2': const [
     const {'1': 'type_name', '3': 1, '4': 1, '5': 9, '10': 'typeName'},
     const {'1': 'metadata', '3': 2, '4': 1, '5': 12, '10': 'metadata'},
-    const {'1': 'tensors', '3': 3, '4': 3, '5': 11, '6': '.tensorflow.TensorProto', '10': 'tensors'},
+    const {
+      '1': 'tensors',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.tensorflow.TensorProto',
+      '10': 'tensors'
+    },
   ],
 };
-

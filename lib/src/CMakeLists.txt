@@ -32,6 +32,7 @@ add_library(tensorflow_dart SHARED
         cpp/tfd/util.cc cpp/tfd/util.h
         cpp/tfd/tensor.cc cpp/tfd/tensor.h
         cpp/tfd/operation.cc cpp/tfd/operation.h cpp/tfd/saved_model_bundle.cc cpp/tfd/saved_model_bundle.h cpp/tfd/function_node.cc cpp/tfd/function_node.h)
+add_dependencies(tensorflow_dart TENSORFLOW)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/../../third_party)
 target_link_libraries(tensorflow_dart tensorflow)
 install(TARGETS tensorflow_dart DESTINATION lib)

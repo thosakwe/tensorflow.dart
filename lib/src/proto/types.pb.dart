@@ -8,4 +8,3 @@ library tensorflow_types;
 import 'dart:core' show int, bool, double, String, List, override;
 
 export 'types.pbenum.dart';
-

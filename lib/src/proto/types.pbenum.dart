@@ -40,24 +40,30 @@ class DataType extends ProtobufEnum {
   static const DataType DT_INT16_REF = const DataType._(105, 'DT_INT16_REF');
   static const DataType DT_INT8_REF = const DataType._(106, 'DT_INT8_REF');
   static const DataType DT_STRING_REF = const DataType._(107, 'DT_STRING_REF');
-  static const DataType DT_COMPLEX64_REF = const DataType._(108, 'DT_COMPLEX64_REF');
+  static const DataType DT_COMPLEX64_REF =
+      const DataType._(108, 'DT_COMPLEX64_REF');
   static const DataType DT_INT64_REF = const DataType._(109, 'DT_INT64_REF');
   static const DataType DT_BOOL_REF = const DataType._(110, 'DT_BOOL_REF');
   static const DataType DT_QINT8_REF = const DataType._(111, 'DT_QINT8_REF');
   static const DataType DT_QUINT8_REF = const DataType._(112, 'DT_QUINT8_REF');
   static const DataType DT_QINT32_REF = const DataType._(113, 'DT_QINT32_REF');
-  static const DataType DT_BFLOAT16_REF = const DataType._(114, 'DT_BFLOAT16_REF');
+  static const DataType DT_BFLOAT16_REF =
+      const DataType._(114, 'DT_BFLOAT16_REF');
   static const DataType DT_QINT16_REF = const DataType._(115, 'DT_QINT16_REF');
-  static const DataType DT_QUINT16_REF = const DataType._(116, 'DT_QUINT16_REF');
+  static const DataType DT_QUINT16_REF =
+      const DataType._(116, 'DT_QUINT16_REF');
   static const DataType DT_UINT16_REF = const DataType._(117, 'DT_UINT16_REF');
-  static const DataType DT_COMPLEX128_REF = const DataType._(118, 'DT_COMPLEX128_REF');
+  static const DataType DT_COMPLEX128_REF =
+      const DataType._(118, 'DT_COMPLEX128_REF');
   static const DataType DT_HALF_REF = const DataType._(119, 'DT_HALF_REF');
-  static const DataType DT_RESOURCE_REF = const DataType._(120, 'DT_RESOURCE_REF');
-  static const DataType DT_VARIANT_REF = const DataType._(121, 'DT_VARIANT_REF');
+  static const DataType DT_RESOURCE_REF =
+      const DataType._(120, 'DT_RESOURCE_REF');
+  static const DataType DT_VARIANT_REF =
+      const DataType._(121, 'DT_VARIANT_REF');
   static const DataType DT_UINT32_REF = const DataType._(122, 'DT_UINT32_REF');
   static const DataType DT_UINT64_REF = const DataType._(123, 'DT_UINT64_REF');
 
-  static const List<DataType> values = const <DataType> [
+  static const List<DataType> values = const <DataType>[
     DT_INVALID,
     DT_FLOAT,
     DT_DOUBLE,
@@ -115,4 +121,3 @@ class DataType extends ProtobufEnum {
 
   const DataType._(int v, String n) : super(v, n);
 }
-

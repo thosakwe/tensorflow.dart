@@ -5,4 +5,3 @@
 library tensorflow_tensor_description_pbserver;
 
 export 'tensor_description.pb.dart';
-

@@ -5,4 +5,3 @@
 library tensorflow_types_pbserver;
 
 export 'types.pb.dart';
-

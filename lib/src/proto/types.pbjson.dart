@@ -56,4 +56,3 @@ const DataType$json = const {
     const {'1': 'DT_UINT64_REF', '2': 123},
   ],
 };
-

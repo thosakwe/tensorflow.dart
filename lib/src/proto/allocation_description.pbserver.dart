@@ -5,4 +5,3 @@
 library tensorflow_allocation_description_pbserver;
 
 export 'allocation_description.pb.dart';
-

@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/thosakwe/tensorflow.dart/blob/master/logo/tensorflow-layout-400.png"><br><br>
+  <img src="https://github.com/thosakwe/tensorflow.dart/raw/master/logo/tensorflow-layout-400.png"><br><br>
 </div>
 
 -----------------

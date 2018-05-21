@@ -11,7 +11,12 @@ const ResourceHandleProto$json = const {
     const {'1': 'container', '3': 2, '4': 1, '5': 9, '10': 'container'},
     const {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'hash_code', '3': 4, '4': 1, '5': 4, '10': 'hashCode'},
-    const {'1': 'maybe_type_name', '3': 5, '4': 1, '5': 9, '10': 'maybeTypeName'},
+    const {
+      '1': 'maybe_type_name',
+      '3': 5,
+      '4': 1,
+      '5': 9,
+      '10': 'maybeTypeName'
+    },
   ],
 };
-

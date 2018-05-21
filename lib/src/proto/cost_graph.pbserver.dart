@@ -5,4 +5,3 @@
 library tensorflow_cost_graph_pbserver;
 
 export 'cost_graph.pb.dart';
-

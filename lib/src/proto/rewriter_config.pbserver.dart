@@ -5,4 +5,3 @@
 library tensorflow_rewriter_config_pbserver;
 
 export 'rewriter_config.pb.dart';
-

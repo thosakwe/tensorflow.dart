@@ -167,6 +167,9 @@ class Graph {
       */
 
   @override
+  int get hashCode => _pointer;
+
+  @override
   bool operator ==(other) => other is Graph && other._pointer == _pointer;
 
   int _iter_next(int index) native "Graph_iter_next";

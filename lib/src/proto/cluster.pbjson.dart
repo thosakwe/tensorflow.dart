@@ -8,7 +8,14 @@ const JobDef$json = const {
   '1': 'JobDef',
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'tasks', '3': 2, '4': 3, '5': 11, '6': '.tensorflow.JobDef.TasksEntry', '10': 'tasks'},
+    const {
+      '1': 'tasks',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.tensorflow.JobDef.TasksEntry',
+      '10': 'tasks'
+    },
   ],
   '3': const [JobDef_TasksEntry$json],
 };
@@ -25,7 +32,13 @@ const JobDef_TasksEntry$json = const {
 const ClusterDef$json = const {
   '1': 'ClusterDef',
   '2': const [
-    const {'1': 'job', '3': 1, '4': 3, '5': 11, '6': '.tensorflow.JobDef', '10': 'job'},
+    const {
+      '1': 'job',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.tensorflow.JobDef',
+      '10': 'job'
+    },
   ],
 };
-

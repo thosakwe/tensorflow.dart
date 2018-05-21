@@ -42,7 +42,7 @@ class SavedModelBundle {
       ..feed(metaGraphDef.saverDef.filenameTensorName.replaceAll(':0', ''),
           new Tensor.from(checkPointFile))
       ..addTarget(metaGraphDef.saverDef.restoreOpName)
-    //..fetch(metaGraphDef.saverDef.restoreOpName)
+      //..fetch(metaGraphDef.saverDef.restoreOpName)
       ..run();
   }
 

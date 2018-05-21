@@ -5,4 +5,3 @@ void main() {
   var graphDef = tf.defaultGraph.toGraphDef();
   print('${graphDef.node.length} node(s)');
 }
-

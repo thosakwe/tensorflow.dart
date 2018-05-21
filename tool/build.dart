@@ -5,12 +5,12 @@ import 'package:path/path.dart' as p;
 import 'package:system_info/system_info.dart';
 
 final ArgParser argParser = new ArgParser()
-  ..addFlag('download',
-      negatable: false, help: 'Re-download Tensorflow binaries.')
+//..addFlag('download',
+//    negatable: false, help: 'Re-download Tensorflow binaries.')
   ..addFlag('force',
       abbr: 'f',
       negatable: false,
-      help: 'Delete the CMakeCache before building (to force a rebuild).')
+      help: 'Rebuild the CMake cache before building (to force a rebuild).')
   ..addFlag('help',
       abbr: 'h', negatable: false, help: 'Print this help information.')
   ..addOption('os',
@@ -35,7 +35,7 @@ final ArgParser argParser = new ArgParser()
 main(List<String> args, [bool isDownloading = false]) async {
   try {
     var argResults = argParser.parse(args);
-    isDownloading = (isDownloading == true) || argResults['download'];
+    isDownloading = false; // (isDownloading == true) || argResults['download'];
 
     if (argResults['help']) {
       printUsage(stdout);
@@ -66,7 +66,7 @@ main(List<String> args, [bool isDownloading = false]) async {
 
     var cmakeArgs = '';
     if (!Platform.isWindows)
-      cmakeArgs += ' -- -j ${Platform.numberOfProcessors * 2}';
+      cmakeArgs += ' -- -j ${Platform.numberOfProcessors}';
 
     stdout.addStream(bash.stdout);
     stderr.addStream(bash.stderr);
@@ -81,7 +81,7 @@ main(List<String> args, [bool isDownloading = false]) async {
 
     bash.stdin
       ..writeln('cmake .')
-      ..writeln('cmake --build . --target all $cmakeArgs'.trim());
+      ..writeln('cmake --build . --target tensorflow_dart $cmakeArgs'.trim());
 
     if (Platform.isWindows)
       bash.stdin.writeln('exit /B %errorlevel%');

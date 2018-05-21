@@ -5,4 +5,3 @@
 library tensorflow_op_def_pbserver;
 
 export 'op_def.pb.dart';
-

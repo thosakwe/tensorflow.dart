@@ -5,4 +5,3 @@
 library tensorflow_resource_handle_pbserver;
 
 export 'resource_handle.pb.dart';
-

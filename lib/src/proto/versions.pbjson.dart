@@ -12,4 +12,3 @@ const VersionDef$json = const {
     const {'1': 'bad_consumers', '3': 3, '4': 3, '5': 5, '10': 'badConsumers'},
   ],
 };
-
