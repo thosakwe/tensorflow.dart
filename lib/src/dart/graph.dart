@@ -1,6 +1,7 @@
 part of tensorflow;
 
 const Symbol _defaultGraphSymbol = #tf_default_graph;
+const Symbol _deviceSymbol = #tf_device;
 const Symbol _scopesSymbol = #tf_variable_scopes;
 
 Graph _defaultGraph;
@@ -21,6 +22,10 @@ T withVariableScope<T>(String name, T Function() f) {
       .fork(zoneValues: {_scopesSymbol: new List.from(scopes)..add(name)});
   return zone.run<T>(f);
 }
+
+/// Executes a function, delegating all work to the given device.
+T withDeviceScope<T>(String device, T Function() f) =>
+    Zone.current.fork(zoneValues: {_deviceSymbol: device}).run<T>(f);
 
 Output<T> constant<T>(T value, {String operationName, DataType dtype}) {
   return defaultGraph.constant<T>(value,

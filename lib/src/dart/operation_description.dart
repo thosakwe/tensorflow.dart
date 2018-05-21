@@ -6,6 +6,7 @@ class OperationDescription<T> {
   final String type, name;
   final int _pointer;
   int _index = 0;
+  String _device;
 
   static int _OperationDescription_new(int graph, String type, String name)
       native "OperationDescription_new";
@@ -32,8 +33,10 @@ class OperationDescription<T> {
       native "OperationDescription_finish";
 
   /// Add the [Operation] being built to the [Graph].
-  Operation<T> finish() =>
-      new Operation<T>._fromPointer(_finish(TensorFlowException), _graph);
+  Operation<T> finish() {
+    setDevice(_device ?? Zone.current[_deviceSymbol]);
+    return new Operation<T>._fromPointer(_finish(TensorFlowException), _graph);
+  }
 
   Tuple2<int, String> _setAttrTensor(String name, Tensor value)
       native "OperationDescription_set_attr_tensor";
@@ -113,5 +116,10 @@ class OperationDescription<T> {
         name, new Int32List.fromList(value.map((t) => t.value).toList()));
   }
 
-  void setDevice(String device) native "";
+  void _setDevice(String device) native "";
+
+  void setDevice(String device) {
+    if (value == null) return;
+    _setDevice(_device = device);
+  }
 }
