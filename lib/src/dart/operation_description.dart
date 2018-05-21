@@ -119,7 +119,7 @@ class OperationDescription<T> {
   void _setDevice(String device) native "";
 
   void setDevice(String device) {
-    if (value == null) return;
+    if (device == null) return;
     _setDevice(_device = device);
   }
 }
