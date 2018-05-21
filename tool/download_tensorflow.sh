@@ -37,7 +37,8 @@ fi
 set -e
 TF=${TF_TYPE}-${TF_OS}-${TF_PLATFORM}-${TF_VERSION}
 URL="https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-${TF}.tar.gz"
-TARGET_DIRECTORY=`dirname $0`/../third_party/tensorflow-${TF}
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+TARGET_DIRECTORY="${DIR}/../third_party/tensorflow-${TF}"
 FILE="tensorflow.tar.gz"
 echo "Downloading ${URL} to ${TARGET_DIRECTORY}..."
 mkdir -p $TARGET_DIRECTORY
