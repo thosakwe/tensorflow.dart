@@ -24,6 +24,9 @@ This project is still in its early stages, but will grow very quickly.
     * [Prerequisites](#prerequisites)
     * [Building as a Dependency](#building-as-a-dependency)
     * [Building by Itself](#building-by-itself)
+* [Basic Usage](#basic-usage)
+    * [Importing Graphs](#importing-graphs)
+    * [Low Level API](#low-level-api)
 
 ## Installation
 This library uses native bindings, which (currently) are not easily
@@ -69,3 +72,49 @@ ever have to build them once.
 If you are contributing to the project, you will certainly need to be able to
 build the project on the fly. Use the provided `tool/build.dart` script to build
 the project on-the-fly.
+
+# Basic Usage
+
+## Importing Graphs
+This project supports loading and restoring models saved from other Tensorflow
+frontends, i.e. Python:
+
+```dart
+import 'package:tensorflow/tensorflow.dart' as tf;
+
+void main() {
+  // Using the `SavedModel` API:
+  var model = new SavedModelBundle('example/saved_models');
+  model.restore('variables.index');
+  
+  // Or, you can import from a `GraphDef` protocol buffer:
+  var graph = new Graph.fromGraphDef(graphDef);
+  graph['output'].run(feed: {'input': new Tensor.from('Hello, world!')});
+}
+```
+
+## Low Level API
+`package:tensorflow/tensorflow.dart` supports the entire low-level
+Tensorflow API. This can be used to perform a variety of complex mathematical
+operations, and also be used to compose higher-level functionality.
+
+```dart
+import 'package:tensorflow/tensorflow.dart' as tf;
+
+void main() {
+    var shape = new tf.Shape(6, 6);
+  
+    var x = tf.getVariable(
+      'x',
+      shape: shape,
+      initializer: tf.randomUniform(
+        tf.constant(shape),
+        dtype: tf.DataType.DT_FLOAT,
+      ),
+    );
+  
+    x = tf.matMul(x, x);
+  
+    print(x.run());
+}
+```
