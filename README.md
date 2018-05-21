@@ -1,4 +1,9 @@
-![Tensorflow.dart logo](logo/tensorflow-layout-400.png)
+<div align="center">
+  <img src="https://github.com/thosakwe/tensorflow.dart/blob/master/logo/tensorflow-layout-400.png"><br><br>
+</div>
+
+-----------------
+
 
 [![Pub](https://img.shields.io/pub/v/tensorflow.svg)](https://pub.dartlang.org/packages/tensorflow)
 [![Build status](https://travis-ci.org/thosakwe/tensorflow.dart.svg?branch=master)](https://travis-ci.org/thosakwe/tensorflow.dart)
