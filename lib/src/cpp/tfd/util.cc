@@ -38,8 +38,8 @@ TF_Tensor *tfd::convert_tensor(Dart_Handle handle) {
         dims = nullptr;
         nDims = 0;
     } else {
+        nDims = length;
         HandleError(Dart_TypedDataAcquireData(shapeHandle, &type, (void **) &dims, &length));
-        nDims = length / sizeof(int64_t);
         Dart_TypedDataReleaseData(shapeHandle);
     }
 
@@ -108,11 +108,7 @@ Dart_Handle tfd::get_tensor_value(TF_Tensor *tensor) {
         if (length == 1) {
             return Dart_NewDouble((double) *v);
         } else {
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCDFAInspection"
-            Dart_TypedData_Type dataType = sizeof(float) == 32 ? Dart_TypedData_kFloat32 : Dart_TypedData_kFloat64;
-#pragma clang diagnostic pop
-            return Dart_NewExternalTypedData(dataType, v, length);
+            return Dart_NewExternalTypedData(Dart_TypedData_kFloat32, v, length);
         }
     } else if (type == TF_INT8) {
         auto *v = ((int8_t *) TF_TensorData(tensor));

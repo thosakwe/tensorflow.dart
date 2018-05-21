@@ -43,11 +43,11 @@ class QuantizedBatchNormWithGlobalNormalizationOutput<T> {
 
   Operation op;
 
-  final Output<T> result;
+  final Output<Output> result;
 
-  final Output<double> resultMin;
+  final Output<Output> resultMin;
 
-  final Output<double> resultMax;
+  final Output<Output> resultMax;
 
   QuantizedBatchNormWithGlobalNormalization run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -69,11 +69,11 @@ class QuantizedBatchNormWithGlobalNormalization<T> {
   QuantizedBatchNormWithGlobalNormalization(
       this.result, this.resultMin, this.resultMax);
 
-  final T result;
+  final Output result;
 
-  final double resultMin;
+  final Output resultMin;
 
-  final double resultMax;
+  final Output resultMax;
 }
 
 QuantizedBatchNormWithGlobalNormalizationOutput
@@ -136,11 +136,11 @@ class QuantizedReluXOutput<T> {
 
   Operation op;
 
-  final Output<T> activations;
+  final Output<Output> activations;
 
-  final Output<double> minActivations;
+  final Output<Output> minActivations;
 
-  final Output<double> maxActivations;
+  final Output<Output> maxActivations;
 
   QuantizedReluX run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -160,11 +160,11 @@ class QuantizedReluXOutput<T> {
 class QuantizedReluX<T> {
   QuantizedReluX(this.activations, this.minActivations, this.maxActivations);
 
-  final T activations;
+  final Output activations;
 
-  final double minActivations;
+  final Output minActivations;
 
-  final double maxActivations;
+  final Output maxActivations;
 }
 
 QuantizedReluXOutput quantizedReluX<T>(
@@ -195,11 +195,11 @@ class QuantizedReluOutput<T> {
 
   Operation op;
 
-  final Output<T> activations;
+  final Output<Output> activations;
 
-  final Output<double> minActivations;
+  final Output<Output> minActivations;
 
-  final Output<double> maxActivations;
+  final Output<Output> maxActivations;
 
   QuantizedRelu run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -219,11 +219,11 @@ class QuantizedReluOutput<T> {
 class QuantizedRelu<T> {
   QuantizedRelu(this.activations, this.minActivations, this.maxActivations);
 
-  final T activations;
+  final Output activations;
 
-  final double minActivations;
+  final Output minActivations;
 
-  final double maxActivations;
+  final Output maxActivations;
 }
 
 QuantizedReluOutput quantizedRelu<T>(
@@ -277,9 +277,9 @@ class TopKV2Output<T> {
 
   Operation op;
 
-  final Output<T> values;
+  final Output<Output> values;
 
-  final Output<int> indices;
+  final Output<Output> indices;
 
   TopKV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -296,9 +296,9 @@ class TopKV2Output<T> {
 class TopKV2<T> {
   TopKV2(this.values, this.indices);
 
-  final T values;
+  final Output values;
 
-  final int indices;
+  final Output indices;
 }
 
 TopKV2Output topKV2<T>(Output input, Output k,
@@ -320,9 +320,9 @@ class TopKOutput<T> {
 
   Operation op;
 
-  final Output<T> values;
+  final Output<Output> values;
 
-  final Output<int> indices;
+  final Output<Output> indices;
 
   TopK run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -339,9 +339,9 @@ class TopKOutput<T> {
 class TopK<T> {
   TopK(this.values, this.indices);
 
-  final T values;
+  final Output values;
 
-  final int indices;
+  final Output indices;
 }
 
 @Deprecated('DEPRECATED at GraphDef version 7: Use TopKV2 instead')
@@ -376,9 +376,9 @@ class SparseSoftmaxCrossEntropyWithLogitsOutput<T> {
 
   Operation op;
 
-  final Output<T> loss;
+  final Output<Output> loss;
 
-  final Output<T> backprop;
+  final Output<Output> backprop;
 
   SparseSoftmaxCrossEntropyWithLogits run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -395,9 +395,9 @@ class SparseSoftmaxCrossEntropyWithLogitsOutput<T> {
 class SparseSoftmaxCrossEntropyWithLogits<T> {
   SparseSoftmaxCrossEntropyWithLogits(this.loss, this.backprop);
 
-  final T loss;
+  final Output loss;
 
-  final T backprop;
+  final Output backprop;
 }
 
 SparseSoftmaxCrossEntropyWithLogitsOutput
@@ -820,15 +820,15 @@ class FusedBatchNormV2Output<T> {
 
   Operation op;
 
-  final Output<T> y;
+  final Output<Output> y;
 
-  final Output<T> batchMean;
+  final Output<Output> batchMean;
 
-  final Output<T> batchVariance;
+  final Output<Output> batchVariance;
 
-  final Output<T> reserveSpace1;
+  final Output<Output> reserveSpace1;
 
-  final Output<T> reserveSpace2;
+  final Output<Output> reserveSpace2;
 
   FusedBatchNormV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -855,15 +855,15 @@ class FusedBatchNormV2<T> {
   FusedBatchNormV2(this.y, this.batchMean, this.batchVariance,
       this.reserveSpace1, this.reserveSpace2);
 
-  final T y;
+  final Output y;
 
-  final T batchMean;
+  final Output batchMean;
 
-  final T batchVariance;
+  final Output batchVariance;
 
-  final T reserveSpace1;
+  final Output reserveSpace1;
 
-  final T reserveSpace2;
+  final Output reserveSpace2;
 }
 
 FusedBatchNormV2Output fusedBatchNormV2<T>(
@@ -922,15 +922,15 @@ class FusedBatchNormOutput<T> {
 
   Operation op;
 
-  final Output<T> y;
+  final Output<Output> y;
 
-  final Output<T> batchMean;
+  final Output<Output> batchMean;
 
-  final Output<T> batchVariance;
+  final Output<Output> batchVariance;
 
-  final Output<T> reserveSpace1;
+  final Output<Output> reserveSpace1;
 
-  final Output<T> reserveSpace2;
+  final Output<Output> reserveSpace2;
 
   FusedBatchNorm run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -957,15 +957,15 @@ class FusedBatchNorm<T> {
   FusedBatchNorm(this.y, this.batchMean, this.batchVariance, this.reserveSpace1,
       this.reserveSpace2);
 
-  final T y;
+  final Output y;
 
-  final T batchMean;
+  final Output batchMean;
 
-  final T batchVariance;
+  final Output batchVariance;
 
-  final T reserveSpace1;
+  final Output reserveSpace1;
 
-  final T reserveSpace2;
+  final Output reserveSpace2;
 }
 
 FusedBatchNormOutput fusedBatchNorm<T>(
@@ -1018,9 +1018,9 @@ class RequantizationRangeOutput<T> {
 
   Operation op;
 
-  final Output<double> outputMin;
+  final Output<Output> outputMin;
 
-  final Output<double> outputMax;
+  final Output<Output> outputMax;
 
   RequantizationRange run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -1037,9 +1037,9 @@ class RequantizationRangeOutput<T> {
 class RequantizationRange<T> {
   RequantizationRange(this.outputMin, this.outputMax);
 
-  final double outputMin;
+  final Output outputMin;
 
-  final double outputMax;
+  final Output outputMax;
 }
 
 RequantizationRangeOutput requantizationRange<T>(
@@ -1075,11 +1075,11 @@ class QuantizeDownAndShrinkRangeOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<double> outputMin;
+  final Output<Output> outputMin;
 
-  final Output<double> outputMax;
+  final Output<Output> outputMax;
 
   QuantizeDownAndShrinkRange run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -1099,11 +1099,11 @@ class QuantizeDownAndShrinkRangeOutput<T> {
 class QuantizeDownAndShrinkRange<T> {
   QuantizeDownAndShrinkRange(this.output, this.outputMin, this.outputMax);
 
-  final T output;
+  final Output output;
 
-  final double outputMin;
+  final Output outputMin;
 
-  final double outputMax;
+  final Output outputMax;
 }
 
 QuantizeDownAndShrinkRangeOutput quantizeDownAndShrinkRange<T>(
@@ -1130,11 +1130,11 @@ class QuantizedMatMulOutput<T> {
 
   Operation op;
 
-  final Output<T> out;
+  final Output<Output> out;
 
-  final Output<double> minOut;
+  final Output<Output> minOut;
 
-  final Output<double> maxOut;
+  final Output<Output> maxOut;
 
   QuantizedMatMul run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -1154,11 +1154,11 @@ class QuantizedMatMulOutput<T> {
 class QuantizedMatMul<T> {
   QuantizedMatMul(this.out, this.minOut, this.maxOut);
 
-  final T out;
+  final Output out;
 
-  final double minOut;
+  final Output minOut;
 
-  final double maxOut;
+  final Output maxOut;
 }
 
 QuantizedMatMulOutput quantizedMatMul<T>(
@@ -1216,15 +1216,15 @@ class BatchNormWithGlobalNormalizationGradOutput<T> {
 
   Operation op;
 
-  final Output<T> dx;
+  final Output<Output> dx;
 
-  final Output<T> dm;
+  final Output<Output> dm;
 
-  final Output<T> dv;
+  final Output<Output> dv;
 
-  final Output<T> db;
+  final Output<Output> db;
 
-  final Output<T> dg;
+  final Output<Output> dg;
 
   BatchNormWithGlobalNormalizationGrad run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -1252,15 +1252,15 @@ class BatchNormWithGlobalNormalizationGrad<T> {
   BatchNormWithGlobalNormalizationGrad(
       this.dx, this.dm, this.dv, this.db, this.dg);
 
-  final T dx;
+  final Output dx;
 
-  final T dm;
+  final Output dm;
 
-  final T dv;
+  final Output dv;
 
-  final T db;
+  final Output db;
 
-  final T dg;
+  final Output dg;
 }
 
 @Deprecated('DEPRECATED at GraphDef version 9: Use tf.nn.batch_normalization()')
@@ -1492,11 +1492,11 @@ class SampleDistortedBoundingBoxV2Output<T> {
 
   Operation op;
 
-  final Output<T> begin;
+  final Output<Output> begin;
 
-  final Output<T> size;
+  final Output<Output> size;
 
-  final Output<double> bboxes;
+  final Output<Output> bboxes;
 
   SampleDistortedBoundingBoxV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -1516,11 +1516,11 @@ class SampleDistortedBoundingBoxV2Output<T> {
 class SampleDistortedBoundingBoxV2<T> {
   SampleDistortedBoundingBoxV2(this.begin, this.size, this.bboxes);
 
-  final T begin;
+  final Output begin;
 
-  final T size;
+  final Output size;
 
-  final double bboxes;
+  final Output bboxes;
 }
 
 SampleDistortedBoundingBoxV2Output sampleDistortedBoundingBoxV2<T>(
@@ -1612,11 +1612,11 @@ class SparseReduceSumSparseOutput<T> {
 
   Operation op;
 
-  final Output<int> outputIndices;
+  final Output<Output> outputIndices;
 
-  final Output<T> outputValues;
+  final Output<Output> outputValues;
 
-  final Output<int> outputShape;
+  final Output<Output> outputShape;
 
   SparseReduceSumSparse run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -1637,11 +1637,11 @@ class SparseReduceSumSparse<T> {
   SparseReduceSumSparse(
       this.outputIndices, this.outputValues, this.outputShape);
 
-  final int outputIndices;
+  final Output outputIndices;
 
-  final T outputValues;
+  final Output outputValues;
 
-  final int outputShape;
+  final Output outputShape;
 }
 
 SparseReduceSumSparseOutput sparseReduceSumSparse<T>(Output inputIndices,
@@ -1717,11 +1717,11 @@ class QuantizeV2Output<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<double> outputMin;
+  final Output<Output> outputMin;
 
-  final Output<double> outputMax;
+  final Output<Output> outputMax;
 
   QuantizeV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -1741,11 +1741,11 @@ class QuantizeV2Output<T> {
 class QuantizeV2<T> {
   QuantizeV2(this.output, this.outputMin, this.outputMax);
 
-  final T output;
+  final Output output;
 
-  final double outputMin;
+  final Output outputMin;
 
-  final double outputMax;
+  final Output outputMax;
 }
 
 QuantizeV2Output quantizeV2<T>(Output input, Output minRange, Output maxRange,
@@ -1930,11 +1930,11 @@ class UniformCandidateSamplerOutput {
 
   Operation op;
 
-  final Output<int> sampledCandidates;
+  final Output<Output> sampledCandidates;
 
-  final Output<double> trueExpectedCount;
+  final Output<Output> trueExpectedCount;
 
-  final Output<double> sampledExpectedCount;
+  final Output<Output> sampledExpectedCount;
 
   UniformCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -1955,11 +1955,11 @@ class UniformCandidateSampler {
   UniformCandidateSampler(this.sampledCandidates, this.trueExpectedCount,
       this.sampledExpectedCount);
 
-  final int sampledCandidates;
+  final Output sampledCandidates;
 
-  final double trueExpectedCount;
+  final Output trueExpectedCount;
 
-  final double sampledExpectedCount;
+  final Output sampledExpectedCount;
 }
 
 UniformCandidateSamplerOutput uniformCandidateSampler(Output trueClasses,
@@ -2195,11 +2195,11 @@ class RequantizeOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<double> outputMin;
+  final Output<Output> outputMin;
 
-  final Output<double> outputMax;
+  final Output<Output> outputMax;
 
   Requantize run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -2219,11 +2219,11 @@ class RequantizeOutput<T> {
 class Requantize<T> {
   Requantize(this.output, this.outputMin, this.outputMax);
 
-  final T output;
+  final Output output;
 
-  final double outputMin;
+  final Output outputMin;
 
-  final double outputMax;
+  final Output outputMax;
 }
 
 RequantizeOutput requantize<T>(Output input, Output inputMin, Output inputMax,
@@ -2333,11 +2333,11 @@ class QuantizedInstanceNormOutput<T> {
 
   Operation op;
 
-  final Output<T> y;
+  final Output<Output> y;
 
-  final Output<double> yMin;
+  final Output<Output> yMin;
 
-  final Output<double> yMax;
+  final Output<Output> yMax;
 
   QuantizedInstanceNorm run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -2357,11 +2357,11 @@ class QuantizedInstanceNormOutput<T> {
 class QuantizedInstanceNorm<T> {
   QuantizedInstanceNorm(this.y, this.yMin, this.yMax);
 
-  final T y;
+  final Output y;
 
-  final double yMin;
+  final Output yMin;
 
-  final double yMax;
+  final Output yMax;
 }
 
 QuantizedInstanceNormOutput quantizedInstanceNorm<T>(
@@ -2677,11 +2677,11 @@ class QuantizedMaxPoolOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<double> minOutput;
+  final Output<Output> minOutput;
 
-  final Output<double> maxOutput;
+  final Output<Output> maxOutput;
 
   QuantizedMaxPool run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -2701,11 +2701,11 @@ class QuantizedMaxPoolOutput<T> {
 class QuantizedMaxPool<T> {
   QuantizedMaxPool(this.output, this.minOutput, this.maxOutput);
 
-  final T output;
+  final Output output;
 
-  final double minOutput;
+  final Output minOutput;
 
-  final double maxOutput;
+  final Output maxOutput;
 }
 
 QuantizedMaxPoolOutput quantizedMaxPool<T>(
@@ -2751,9 +2751,9 @@ class TensorArrayV3Output {
 
   Operation op;
 
-  final Output<dynamic> handle;
+  final Output<Output> handle;
 
-  final Output<double> flow;
+  final Output<Output> flow;
 
   TensorArrayV3 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -2770,9 +2770,9 @@ class TensorArrayV3Output {
 class TensorArrayV3 {
   TensorArrayV3(this.handle, this.flow);
 
-  final dynamic handle;
+  final Output handle;
 
-  final double flow;
+  final Output flow;
 }
 
 TensorArrayV3Output tensorArrayV3(Output size,
@@ -2846,9 +2846,9 @@ class BroadcastGradientArgsOutput<T> {
 
   Operation op;
 
-  final Output<T> r0;
+  final Output<Output> r0;
 
-  final Output<T> r1;
+  final Output<Output> r1;
 
   BroadcastGradientArgs run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -2865,9 +2865,9 @@ class BroadcastGradientArgsOutput<T> {
 class BroadcastGradientArgs<T> {
   BroadcastGradientArgs(this.r0, this.r1);
 
-  final T r0;
+  final Output r0;
 
-  final T r1;
+  final Output r1;
 }
 
 BroadcastGradientArgsOutput broadcastGradientArgs<T>(Output s0, Output s1,
@@ -2900,11 +2900,11 @@ class QuantizedRelu6Output<T> {
 
   Operation op;
 
-  final Output<T> activations;
+  final Output<Output> activations;
 
-  final Output<double> minActivations;
+  final Output<Output> minActivations;
 
-  final Output<double> maxActivations;
+  final Output<Output> maxActivations;
 
   QuantizedRelu6 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -2924,11 +2924,11 @@ class QuantizedRelu6Output<T> {
 class QuantizedRelu6<T> {
   QuantizedRelu6(this.activations, this.minActivations, this.maxActivations);
 
-  final T activations;
+  final Output activations;
 
-  final double minActivations;
+  final Output minActivations;
 
-  final double maxActivations;
+  final Output maxActivations;
 }
 
 QuantizedRelu6Output quantizedRelu6<T>(
@@ -3085,11 +3085,11 @@ class UniqueWithCountsV2Output<T> {
 
   Operation op;
 
-  final Output<T> y;
+  final Output<Output> y;
 
-  final Output<T> idx;
+  final Output<Output> idx;
 
-  final Output<T> count;
+  final Output<Output> count;
 
   UniqueWithCountsV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -3109,11 +3109,11 @@ class UniqueWithCountsV2Output<T> {
 class UniqueWithCountsV2<T> {
   UniqueWithCountsV2(this.y, this.idx, this.count);
 
-  final T y;
+  final Output y;
 
-  final T idx;
+  final Output idx;
 
-  final T count;
+  final Output count;
 }
 
 UniqueWithCountsV2Output uniqueWithCountsV2<T>(Output x, Output axis,
@@ -3140,9 +3140,9 @@ class UniqueV2Output<T> {
 
   Operation op;
 
-  final Output<T> y;
+  final Output<Output> y;
 
-  final Output<T> idx;
+  final Output<Output> idx;
 
   UniqueV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -3159,9 +3159,9 @@ class UniqueV2Output<T> {
 class UniqueV2<T> {
   UniqueV2(this.y, this.idx);
 
-  final T y;
+  final Output y;
 
-  final T idx;
+  final Output idx;
 }
 
 UniqueV2Output uniqueV2<T>(Output x, Output axis,
@@ -3199,9 +3199,9 @@ class UniqueOutput<T> {
 
   Operation op;
 
-  final Output<T> y;
+  final Output<Output> y;
 
-  final Output<T> idx;
+  final Output<Output> idx;
 
   Unique run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -3218,9 +3218,9 @@ class UniqueOutput<T> {
 class Unique<T> {
   Unique(this.y, this.idx);
 
-  final T y;
+  final Output y;
 
-  final T idx;
+  final Output idx;
 }
 
 UniqueOutput unique<T>(Output x,
@@ -3359,11 +3359,11 @@ class FakeQuantWithMinMaxVarsGradientOutput {
 
   Operation op;
 
-  final Output<double> backpropsWrtInput;
+  final Output<Output> backpropsWrtInput;
 
-  final Output<double> backpropWrtMin;
+  final Output<Output> backpropWrtMin;
 
-  final Output<double> backpropWrtMax;
+  final Output<Output> backpropWrtMax;
 
   FakeQuantWithMinMaxVarsGradient run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -3384,11 +3384,11 @@ class FakeQuantWithMinMaxVarsGradient {
   FakeQuantWithMinMaxVarsGradient(
       this.backpropsWrtInput, this.backpropWrtMin, this.backpropWrtMax);
 
-  final double backpropsWrtInput;
+  final Output backpropsWrtInput;
 
-  final double backpropWrtMin;
+  final Output backpropWrtMin;
 
-  final double backpropWrtMax;
+  final Output backpropWrtMax;
 }
 
 FakeQuantWithMinMaxVarsGradientOutput fakeQuantWithMinMaxVarsGradient(
@@ -3564,11 +3564,11 @@ class FakeQuantWithMinMaxVarsPerChannelGradientOutput {
 
   Operation op;
 
-  final Output<double> backpropsWrtInput;
+  final Output<Output> backpropsWrtInput;
 
-  final Output<double> backpropWrtMin;
+  final Output<Output> backpropWrtMin;
 
-  final Output<double> backpropWrtMax;
+  final Output<Output> backpropWrtMax;
 
   FakeQuantWithMinMaxVarsPerChannelGradient run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -3590,11 +3590,11 @@ class FakeQuantWithMinMaxVarsPerChannelGradient {
   FakeQuantWithMinMaxVarsPerChannelGradient(
       this.backpropsWrtInput, this.backpropWrtMin, this.backpropWrtMax);
 
-  final double backpropsWrtInput;
+  final Output backpropsWrtInput;
 
-  final double backpropWrtMin;
+  final Output backpropWrtMin;
 
-  final double backpropWrtMax;
+  final Output backpropWrtMax;
 }
 
 FakeQuantWithMinMaxVarsPerChannelGradientOutput
@@ -3636,13 +3636,13 @@ class ParseSingleExampleOutput<T> {
 
   Operation op;
 
-  final Output<int> sparseIndices;
+  final Output<Output> sparseIndices;
 
-  final Output<T> sparseValues;
+  final Output<Output> sparseValues;
 
-  final Output<int> sparseShapes;
+  final Output<Output> sparseShapes;
 
-  final Output<T> denseValues;
+  final Output<Output> denseValues;
 
   ParseSingleExample run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -3666,13 +3666,13 @@ class ParseSingleExample<T> {
   ParseSingleExample(this.sparseIndices, this.sparseValues, this.sparseShapes,
       this.denseValues);
 
-  final int sparseIndices;
+  final Output sparseIndices;
 
-  final T sparseValues;
+  final Output sparseValues;
 
-  final int sparseShapes;
+  final Output sparseShapes;
 
-  final T denseValues;
+  final Output denseValues;
 }
 
 ParseSingleExampleOutput parseSingleExample<T>(
@@ -3972,19 +3972,19 @@ class SkipgramOutput {
 
   Operation op;
 
-  final Output<String> vocabWord;
+  final Output<Output> vocabWord;
 
-  final Output<int> vocabFreq;
+  final Output<Output> vocabFreq;
 
-  final Output<int> wordsPerEpoch;
+  final Output<Output> wordsPerEpoch;
 
-  final Output<int> currentEpoch;
+  final Output<Output> currentEpoch;
 
-  final Output<int> totalWordsProcessed;
+  final Output<Output> totalWordsProcessed;
 
-  final Output<int> examples;
+  final Output<Output> examples;
 
-  final Output<int> labels;
+  final Output<Output> labels;
 
   Skipgram run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -4018,19 +4018,19 @@ class Skipgram {
   Skipgram(this.vocabWord, this.vocabFreq, this.wordsPerEpoch,
       this.currentEpoch, this.totalWordsProcessed, this.examples, this.labels);
 
-  final String vocabWord;
+  final Output vocabWord;
 
-  final int vocabFreq;
+  final Output vocabFreq;
 
-  final int wordsPerEpoch;
+  final Output wordsPerEpoch;
 
-  final int currentEpoch;
+  final Output currentEpoch;
 
-  final int totalWordsProcessed;
+  final Output totalWordsProcessed;
 
-  final int examples;
+  final Output examples;
 
-  final int labels;
+  final Output labels;
 }
 
 @Deprecated(
@@ -4096,11 +4096,11 @@ class UniqueWithCountsOutput<T> {
 
   Operation op;
 
-  final Output<T> y;
+  final Output<Output> y;
 
-  final Output<T> idx;
+  final Output<Output> idx;
 
-  final Output<T> count;
+  final Output<Output> count;
 
   UniqueWithCounts run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -4120,11 +4120,11 @@ class UniqueWithCountsOutput<T> {
 class UniqueWithCounts<T> {
   UniqueWithCounts(this.y, this.idx, this.count);
 
-  final T y;
+  final Output y;
 
-  final T idx;
+  final Output idx;
 
-  final T count;
+  final Output count;
 }
 
 UniqueWithCountsOutput uniqueWithCounts<T>(Output x,
@@ -4859,11 +4859,11 @@ class BarrierTakeManyOutput<T> {
 
   Operation op;
 
-  final Output<int> indices;
+  final Output<Output> indices;
 
-  final Output<String> keys;
+  final Output<Output> keys;
 
-  final Output<T> values;
+  final Output<Output> values;
 
   BarrierTakeMany run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -4883,11 +4883,11 @@ class BarrierTakeManyOutput<T> {
 class BarrierTakeMany<T> {
   BarrierTakeMany(this.indices, this.keys, this.values);
 
-  final int indices;
+  final Output indices;
 
-  final String keys;
+  final Output keys;
 
-  final T values;
+  final Output values;
 }
 
 BarrierTakeManyOutput barrierTakeMany<T>(Output handle, Output numElements,
@@ -5305,9 +5305,9 @@ class TensorArrayConcatV2Output<T> {
 
   Operation op;
 
-  final Output<T> value;
+  final Output<Output> value;
 
-  final Output<int> lengths;
+  final Output<Output> lengths;
 
   TensorArrayConcatV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -5324,9 +5324,9 @@ class TensorArrayConcatV2Output<T> {
 class TensorArrayConcatV2<T> {
   TensorArrayConcatV2(this.value, this.lengths);
 
-  final T value;
+  final Output value;
 
-  final int lengths;
+  final Output lengths;
 }
 
 TensorArrayConcatV2Output tensorArrayConcatV2<T>(Output handle, Output flowIn,
@@ -5456,11 +5456,11 @@ class BatchOutput<T> {
 
   Operation op;
 
-  final Output<T> batchedTensors;
+  final Output<Output> batchedTensors;
 
-  final Output<int> batchIndex;
+  final Output<Output> batchIndex;
 
-  final Output<int> id;
+  final Output<Output> id;
 
   Batch run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -5480,11 +5480,11 @@ class BatchOutput<T> {
 class Batch<T> {
   Batch(this.batchedTensors, this.batchIndex, this.id);
 
-  final T batchedTensors;
+  final Output batchedTensors;
 
-  final int batchIndex;
+  final Output batchIndex;
 
-  final int id;
+  final Output id;
 }
 
 BatchOutput batch<T>(List<Output> inTensors,
@@ -5654,11 +5654,11 @@ class QuantizedAddOutput<T> {
 
   Operation op;
 
-  final Output<T> z;
+  final Output<Output> z;
 
-  final Output<double> minZ;
+  final Output<Output> minZ;
 
-  final Output<double> maxZ;
+  final Output<Output> maxZ;
 
   QuantizedAdd run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -5678,11 +5678,11 @@ class QuantizedAddOutput<T> {
 class QuantizedAdd<T> {
   QuantizedAdd(this.z, this.minZ, this.maxZ);
 
-  final T z;
+  final Output z;
 
-  final double minZ;
+  final Output minZ;
 
-  final double maxZ;
+  final Output maxZ;
 }
 
 QuantizedAddOutput quantizedAdd<T>(
@@ -5792,11 +5792,11 @@ class QuantizedResizeBilinearOutput<T> {
 
   Operation op;
 
-  final Output<T> resizedImages;
+  final Output<Output> resizedImages;
 
-  final Output<double> outMin;
+  final Output<Output> outMin;
 
-  final Output<double> outMax;
+  final Output<Output> outMax;
 
   QuantizedResizeBilinear run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -5816,11 +5816,11 @@ class QuantizedResizeBilinearOutput<T> {
 class QuantizedResizeBilinear<T> {
   QuantizedResizeBilinear(this.resizedImages, this.outMin, this.outMax);
 
-  final T resizedImages;
+  final Output resizedImages;
 
-  final double outMin;
+  final Output outMin;
 
-  final double outMax;
+  final Output outMax;
 }
 
 QuantizedResizeBilinearOutput quantizedResizeBilinear<T>(
@@ -5976,9 +5976,9 @@ class SparseFillEmptyRowsGradOutput<T> {
 
   Operation op;
 
-  final Output<T> dValues;
+  final Output<Output> dValues;
 
-  final Output<T> dDefaultValue;
+  final Output<Output> dDefaultValue;
 
   SparseFillEmptyRowsGrad run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -5995,9 +5995,9 @@ class SparseFillEmptyRowsGradOutput<T> {
 class SparseFillEmptyRowsGrad<T> {
   SparseFillEmptyRowsGrad(this.dValues, this.dDefaultValue);
 
-  final T dValues;
+  final Output dValues;
 
-  final T dDefaultValue;
+  final Output dDefaultValue;
 }
 
 SparseFillEmptyRowsGradOutput sparseFillEmptyRowsGrad<T>(
@@ -6021,11 +6021,11 @@ class QuantizedConv2DOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<double> minOutput;
+  final Output<Output> minOutput;
 
-  final Output<double> maxOutput;
+  final Output<Output> maxOutput;
 
   QuantizedConv2D run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -6045,11 +6045,11 @@ class QuantizedConv2DOutput<T> {
 class QuantizedConv2D<T> {
   QuantizedConv2D(this.output, this.minOutput, this.maxOutput);
 
-  final T output;
+  final Output output;
 
-  final double minOutput;
+  final Output minOutput;
 
-  final double maxOutput;
+  final Output maxOutput;
 }
 
 QuantizedConv2DOutput quantizedConv2D<T>(Output input, Output filter,
@@ -6106,13 +6106,13 @@ class SparseFillEmptyRowsOutput<T> {
 
   Operation op;
 
-  final Output<int> outputIndices;
+  final Output<Output> outputIndices;
 
-  final Output<T> outputValues;
+  final Output<Output> outputValues;
 
-  final Output<bool> emptyRowIndicator;
+  final Output<Output> emptyRowIndicator;
 
-  final Output<int> reverseIndexMap;
+  final Output<Output> reverseIndexMap;
 
   SparseFillEmptyRows run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -6136,13 +6136,13 @@ class SparseFillEmptyRows<T> {
   SparseFillEmptyRows(this.outputIndices, this.outputValues,
       this.emptyRowIndicator, this.reverseIndexMap);
 
-  final int outputIndices;
+  final Output outputIndices;
 
-  final T outputValues;
+  final Output outputValues;
 
-  final bool emptyRowIndicator;
+  final Output emptyRowIndicator;
 
-  final int reverseIndexMap;
+  final Output reverseIndexMap;
 }
 
 SparseFillEmptyRowsOutput sparseFillEmptyRows<T>(
@@ -6233,9 +6233,9 @@ class SparseSparseMaximumOutput<T> {
 
   Operation op;
 
-  final Output<int> outputIndices;
+  final Output<Output> outputIndices;
 
-  final Output<T> outputValues;
+  final Output<Output> outputValues;
 
   SparseSparseMaximum run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -6252,9 +6252,9 @@ class SparseSparseMaximumOutput<T> {
 class SparseSparseMaximum<T> {
   SparseSparseMaximum(this.outputIndices, this.outputValues);
 
-  final int outputIndices;
+  final Output outputIndices;
 
-  final T outputValues;
+  final Output outputValues;
 }
 
 SparseSparseMaximumOutput sparseSparseMaximum<T>(
@@ -6361,9 +6361,9 @@ class SparseReorderOutput<T> {
 
   Operation op;
 
-  final Output<int> outputIndices;
+  final Output<Output> outputIndices;
 
-  final Output<T> outputValues;
+  final Output<Output> outputValues;
 
   SparseReorder run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -6380,9 +6380,9 @@ class SparseReorderOutput<T> {
 class SparseReorder<T> {
   SparseReorder(this.outputIndices, this.outputValues);
 
-  final int outputIndices;
+  final Output outputIndices;
 
-  final T outputValues;
+  final Output outputValues;
 }
 
 SparseReorderOutput sparseReorder<T>(
@@ -6423,11 +6423,11 @@ class SparseSplitOutput<T> {
 
   Operation op;
 
-  final Output<int> outputIndices;
+  final Output<Output> outputIndices;
 
-  final Output<T> outputValues;
+  final Output<Output> outputValues;
 
-  final Output<int> outputShape;
+  final Output<Output> outputShape;
 
   SparseSplit run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -6447,11 +6447,11 @@ class SparseSplitOutput<T> {
 class SparseSplit<T> {
   SparseSplit(this.outputIndices, this.outputValues, this.outputShape);
 
-  final int outputIndices;
+  final Output outputIndices;
 
-  final T outputValues;
+  final Output outputValues;
 
-  final int outputShape;
+  final Output outputShape;
 }
 
 SparseSplitOutput sparseSplit<T>(
@@ -6532,11 +6532,11 @@ class DenseToSparseSetOperationOutput<T> {
 
   Operation op;
 
-  final Output<int> resultIndices;
+  final Output<Output> resultIndices;
 
-  final Output<T> resultValues;
+  final Output<Output> resultValues;
 
-  final Output<int> resultShape;
+  final Output<Output> resultShape;
 
   DenseToSparseSetOperation run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -6557,11 +6557,11 @@ class DenseToSparseSetOperation<T> {
   DenseToSparseSetOperation(
       this.resultIndices, this.resultValues, this.resultShape);
 
-  final int resultIndices;
+  final Output resultIndices;
 
-  final T resultValues;
+  final Output resultValues;
 
-  final int resultShape;
+  final Output resultShape;
 }
 
 DenseToSparseSetOperationOutput denseToSparseSetOperation<T>(
@@ -6617,11 +6617,11 @@ class QuantizedBiasAddOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<double> minOut;
+  final Output<Output> minOut;
 
-  final Output<double> maxOut;
+  final Output<Output> maxOut;
 
   QuantizedBiasAdd run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -6641,11 +6641,11 @@ class QuantizedBiasAddOutput<T> {
 class QuantizedBiasAdd<T> {
   QuantizedBiasAdd(this.output, this.minOut, this.maxOut);
 
-  final T output;
+  final Output output;
 
-  final double minOut;
+  final Output minOut;
 
-  final double maxOut;
+  final Output maxOut;
 }
 
 QuantizedBiasAddOutput quantizedBiasAdd<T>(Output input, Output bias,
@@ -6725,15 +6725,15 @@ class FusedBatchNormGradV2Output<T> {
 
   Operation op;
 
-  final Output<T> xBackprop;
+  final Output<Output> xBackprop;
 
-  final Output<T> scaleBackprop;
+  final Output<Output> scaleBackprop;
 
-  final Output<T> offsetBackprop;
+  final Output<Output> offsetBackprop;
 
-  final Output<T> reserveSpace3;
+  final Output<Output> reserveSpace3;
 
-  final Output<T> reserveSpace4;
+  final Output<Output> reserveSpace4;
 
   FusedBatchNormGradV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -6761,15 +6761,15 @@ class FusedBatchNormGradV2<T> {
   FusedBatchNormGradV2(this.xBackprop, this.scaleBackprop, this.offsetBackprop,
       this.reserveSpace3, this.reserveSpace4);
 
-  final T xBackprop;
+  final Output xBackprop;
 
-  final T scaleBackprop;
+  final Output scaleBackprop;
 
-  final T offsetBackprop;
+  final Output offsetBackprop;
 
-  final T reserveSpace3;
+  final Output reserveSpace3;
 
-  final T reserveSpace4;
+  final Output reserveSpace4;
 }
 
 FusedBatchNormGradV2Output fusedBatchNormGradV2<T>(Output yBackprop, Output x,
@@ -7000,13 +7000,13 @@ class CTCBeamSearchDecoderOutput {
 
   Operation op;
 
-  final Output<int> decodedIndices;
+  final Output<Output> decodedIndices;
 
-  final Output<int> decodedValues;
+  final Output<Output> decodedValues;
 
-  final Output<int> decodedShape;
+  final Output<Output> decodedShape;
 
-  final Output<double> logProbability;
+  final Output<Output> logProbability;
 
   CTCBeamSearchDecoder run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -7030,13 +7030,13 @@ class CTCBeamSearchDecoder {
   CTCBeamSearchDecoder(this.decodedIndices, this.decodedValues,
       this.decodedShape, this.logProbability);
 
-  final int decodedIndices;
+  final Output decodedIndices;
 
-  final int decodedValues;
+  final Output decodedValues;
 
-  final int decodedShape;
+  final Output decodedShape;
 
-  final double logProbability;
+  final Output logProbability;
 }
 
 CTCBeamSearchDecoderOutput cTCBeamSearchDecoder(
@@ -7207,9 +7207,9 @@ class SparseSparseMinimumOutput<T> {
 
   Operation op;
 
-  final Output<int> outputIndices;
+  final Output<Output> outputIndices;
 
-  final Output<T> outputValues;
+  final Output<Output> outputValues;
 
   SparseSparseMinimum run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -7226,9 +7226,9 @@ class SparseSparseMinimumOutput<T> {
 class SparseSparseMinimum<T> {
   SparseSparseMinimum(this.outputIndices, this.outputValues);
 
-  final int outputIndices;
+  final Output outputIndices;
 
-  final T outputValues;
+  final Output outputValues;
 }
 
 SparseSparseMinimumOutput sparseSparseMinimum<T>(
@@ -7787,11 +7787,11 @@ class SparseConcatOutput<T> {
 
   Operation op;
 
-  final Output<int> outputIndices;
+  final Output<Output> outputIndices;
 
-  final Output<T> outputValues;
+  final Output<Output> outputValues;
 
-  final Output<int> outputShape;
+  final Output<Output> outputShape;
 
   SparseConcat run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -7811,11 +7811,11 @@ class SparseConcatOutput<T> {
 class SparseConcat<T> {
   SparseConcat(this.outputIndices, this.outputValues, this.outputShape);
 
-  final int outputIndices;
+  final Output outputIndices;
 
-  final T outputValues;
+  final Output outputValues;
 
-  final int outputShape;
+  final Output outputShape;
 }
 
 SparseConcatOutput sparseConcat<T>(
@@ -7923,9 +7923,9 @@ class LookupTableExportV2Output<T> {
 
   Operation op;
 
-  final Output<T> keys;
+  final Output<Output> keys;
 
-  final Output<T> values;
+  final Output<Output> values;
 
   LookupTableExportV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -7942,9 +7942,9 @@ class LookupTableExportV2Output<T> {
 class LookupTableExportV2<T> {
   LookupTableExportV2(this.keys, this.values);
 
-  final T keys;
+  final Output keys;
 
-  final T values;
+  final Output values;
 }
 
 LookupTableExportV2Output lookupTableExportV2<T>(Output tableHandle,
@@ -8100,21 +8100,21 @@ class ParseSingleSequenceExampleOutput<T> {
 
   Operation op;
 
-  final Output<int> contextSparseIndices;
+  final Output<Output> contextSparseIndices;
 
-  final Output<T> contextSparseValues;
+  final Output<Output> contextSparseValues;
 
-  final Output<int> contextSparseShapes;
+  final Output<Output> contextSparseShapes;
 
-  final Output<T> contextDenseValues;
+  final Output<Output> contextDenseValues;
 
-  final Output<int> featureListSparseIndices;
+  final Output<Output> featureListSparseIndices;
 
-  final Output<T> featureListSparseValues;
+  final Output<Output> featureListSparseValues;
 
-  final Output<int> featureListSparseShapes;
+  final Output<Output> featureListSparseShapes;
 
-  final Output<T> featureListDenseValues;
+  final Output<Output> featureListDenseValues;
 
   ParseSingleSequenceExample run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -8158,21 +8158,21 @@ class ParseSingleSequenceExample<T> {
       this.featureListSparseShapes,
       this.featureListDenseValues);
 
-  final int contextSparseIndices;
+  final Output contextSparseIndices;
 
-  final T contextSparseValues;
+  final Output contextSparseValues;
 
-  final int contextSparseShapes;
+  final Output contextSparseShapes;
 
-  final T contextDenseValues;
+  final Output contextDenseValues;
 
-  final int featureListSparseIndices;
+  final Output featureListSparseIndices;
 
-  final T featureListSparseValues;
+  final Output featureListSparseValues;
 
-  final int featureListSparseShapes;
+  final Output featureListSparseShapes;
 
-  final T featureListDenseValues;
+  final Output featureListDenseValues;
 }
 
 ParseSingleSequenceExampleOutput parseSingleSequenceExample<T>(
@@ -8238,9 +8238,9 @@ class LookupTableExportOutput<T> {
 
   Operation op;
 
-  final Output<T> keys;
+  final Output<Output> keys;
 
-  final Output<T> values;
+  final Output<Output> values;
 
   LookupTableExport run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -8257,9 +8257,9 @@ class LookupTableExportOutput<T> {
 class LookupTableExport<T> {
   LookupTableExport(this.keys, this.values);
 
-  final T keys;
+  final Output keys;
 
-  final T values;
+  final Output values;
 }
 
 LookupTableExportOutput lookupTableExport<T>(Output tableHandle,
@@ -8299,11 +8299,11 @@ class BatchSvdOutput<T> {
 
   Operation op;
 
-  final Output<T> s;
+  final Output<Output> s;
 
-  final Output<T> u;
+  final Output<Output> u;
 
-  final Output<T> v;
+  final Output<Output> v;
 
   BatchSvd run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -8323,11 +8323,11 @@ class BatchSvdOutput<T> {
 class BatchSvd<T> {
   BatchSvd(this.s, this.u, this.v);
 
-  final T s;
+  final Output s;
 
-  final T u;
+  final Output u;
 
-  final T v;
+  final Output v;
 }
 
 @Deprecated('DEPRECATED at GraphDef version 13: Use Svd instead.')
@@ -8396,11 +8396,11 @@ class SvdOutput<T> {
 
   Operation op;
 
-  final Output<T> s;
+  final Output<Output> s;
 
-  final Output<T> u;
+  final Output<Output> u;
 
-  final Output<T> v;
+  final Output<Output> v;
 
   Svd run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -8420,11 +8420,11 @@ class SvdOutput<T> {
 class Svd<T> {
   Svd(this.s, this.u, this.v);
 
-  final T s;
+  final Output s;
 
-  final T u;
+  final Output u;
 
-  final T v;
+  final Output v;
 }
 
 SvdOutput svd<T>(Output input,
@@ -8449,9 +8449,9 @@ class QrOutput<T> {
 
   Operation op;
 
-  final Output<T> q;
+  final Output<Output> q;
 
-  final Output<T> r;
+  final Output<Output> r;
 
   Qr run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -8468,9 +8468,9 @@ class QrOutput<T> {
 class Qr<T> {
   Qr(this.q, this.r);
 
-  final T q;
+  final Output q;
 
-  final T r;
+  final Output r;
 }
 
 QrOutput qr<T>(Output input,
@@ -8492,11 +8492,11 @@ class SparseCrossOutput<T> {
 
   Operation op;
 
-  final Output<int> outputIndices;
+  final Output<Output> outputIndices;
 
-  final Output<T> outputValues;
+  final Output<Output> outputValues;
 
-  final Output<int> outputShape;
+  final Output<Output> outputShape;
 
   SparseCross run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -8516,11 +8516,11 @@ class SparseCrossOutput<T> {
 class SparseCross<T> {
   SparseCross(this.outputIndices, this.outputValues, this.outputShape);
 
-  final int outputIndices;
+  final Output outputIndices;
 
-  final T outputValues;
+  final Output outputValues;
 
-  final int outputShape;
+  final Output outputShape;
 }
 
 SparseCrossOutput sparseCross<T>(List<Output> indices, List<Output> values,
@@ -8583,9 +8583,9 @@ class SelfAdjointEigV2Output<T> {
 
   Operation op;
 
-  final Output<T> e;
+  final Output<Output> e;
 
-  final Output<T> v;
+  final Output<Output> v;
 
   SelfAdjointEigV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -8602,9 +8602,9 @@ class SelfAdjointEigV2Output<T> {
 class SelfAdjointEigV2<T> {
   SelfAdjointEigV2(this.e, this.v);
 
-  final T e;
+  final Output e;
 
-  final T v;
+  final Output v;
 }
 
 SelfAdjointEigV2Output selfAdjointEigV2<T>(Output input,
@@ -8636,11 +8636,11 @@ class QuantizedConcatOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<double> outputMin;
+  final Output<Output> outputMin;
 
-  final Output<double> outputMax;
+  final Output<Output> outputMax;
 
   QuantizedConcat run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -8660,11 +8660,11 @@ class QuantizedConcatOutput<T> {
 class QuantizedConcat<T> {
   QuantizedConcat(this.output, this.outputMin, this.outputMax);
 
-  final T output;
+  final Output output;
 
-  final double outputMin;
+  final Output outputMin;
 
-  final double outputMax;
+  final Output outputMax;
 }
 
 QuantizedConcatOutput quantizedConcat<T>(Output concatDim, List<Output> values,
@@ -8863,11 +8863,11 @@ class SparseSliceOutput<T> {
 
   Operation op;
 
-  final Output<int> outputIndices;
+  final Output<Output> outputIndices;
 
-  final Output<T> outputValues;
+  final Output<Output> outputValues;
 
-  final Output<int> outputShape;
+  final Output<Output> outputShape;
 
   SparseSlice run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -8887,11 +8887,11 @@ class SparseSliceOutput<T> {
 class SparseSlice<T> {
   SparseSlice(this.outputIndices, this.outputValues, this.outputShape);
 
-  final int outputIndices;
+  final Output outputIndices;
 
-  final T outputValues;
+  final Output outputValues;
 
-  final int outputShape;
+  final Output outputShape;
 }
 
 SparseSliceOutput sparseSlice<T>(
@@ -9072,9 +9072,9 @@ class ReaderReadOutput {
 
   Operation op;
 
-  final Output<String> key;
+  final Output<Output> key;
 
-  final Output<String> value;
+  final Output<Output> value;
 
   ReaderRead run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -9091,9 +9091,9 @@ class ReaderReadOutput {
 class ReaderRead {
   ReaderRead(this.key, this.value);
 
-  final String key;
+  final Output key;
 
-  final String value;
+  final Output value;
 }
 
 ReaderReadOutput readerRead(Output readerHandle, Output queueHandle,
@@ -9125,9 +9125,9 @@ class SparseAddGradOutput<T> {
 
   Operation op;
 
-  final Output<T> aValGrad;
+  final Output<Output> aValGrad;
 
-  final Output<T> bValGrad;
+  final Output<Output> bValGrad;
 
   SparseAddGrad run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -9144,9 +9144,9 @@ class SparseAddGradOutput<T> {
 class SparseAddGrad<T> {
   SparseAddGrad(this.aValGrad, this.bValGrad);
 
-  final T aValGrad;
+  final Output aValGrad;
 
-  final T bValGrad;
+  final Output bValGrad;
 }
 
 SparseAddGradOutput sparseAddGrad<T>(
@@ -9417,11 +9417,11 @@ class SampleDistortedBoundingBoxOutput<T> {
 
   Operation op;
 
-  final Output<T> begin;
+  final Output<Output> begin;
 
-  final Output<T> size;
+  final Output<Output> size;
 
-  final Output<double> bboxes;
+  final Output<Output> bboxes;
 
   SampleDistortedBoundingBox run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -9441,11 +9441,11 @@ class SampleDistortedBoundingBoxOutput<T> {
 class SampleDistortedBoundingBox<T> {
   SampleDistortedBoundingBox(this.begin, this.size, this.bboxes);
 
-  final T begin;
+  final Output begin;
 
-  final T size;
+  final Output size;
 
-  final double bboxes;
+  final Output bboxes;
 }
 
 SampleDistortedBoundingBoxOutput sampleDistortedBoundingBox<T>(
@@ -9517,9 +9517,9 @@ class ListDiffOutput<T> {
 
   Operation op;
 
-  final Output<T> out;
+  final Output<Output> out;
 
-  final Output<T> idx;
+  final Output<Output> idx;
 
   ListDiff run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -9536,9 +9536,9 @@ class ListDiffOutput<T> {
 class ListDiff<T> {
   ListDiff(this.out, this.idx);
 
-  final T out;
+  final Output out;
 
-  final T idx;
+  final Output idx;
 }
 
 ListDiffOutput listDiff<T>(Output x, Output y,
@@ -9609,15 +9609,15 @@ class FusedBatchNormGradOutput<T> {
 
   Operation op;
 
-  final Output<T> xBackprop;
+  final Output<Output> xBackprop;
 
-  final Output<T> scaleBackprop;
+  final Output<Output> scaleBackprop;
 
-  final Output<T> offsetBackprop;
+  final Output<Output> offsetBackprop;
 
-  final Output<T> reserveSpace3;
+  final Output<Output> reserveSpace3;
 
-  final Output<T> reserveSpace4;
+  final Output<Output> reserveSpace4;
 
   FusedBatchNormGrad run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -9645,15 +9645,15 @@ class FusedBatchNormGrad<T> {
   FusedBatchNormGrad(this.xBackprop, this.scaleBackprop, this.offsetBackprop,
       this.reserveSpace3, this.reserveSpace4);
 
-  final T xBackprop;
+  final Output xBackprop;
 
-  final T scaleBackprop;
+  final Output scaleBackprop;
 
-  final T offsetBackprop;
+  final Output offsetBackprop;
 
-  final T reserveSpace3;
+  final Output reserveSpace3;
 
-  final T reserveSpace4;
+  final Output reserveSpace4;
 }
 
 FusedBatchNormGradOutput fusedBatchNormGrad<T>(Output yBackprop, Output x,
@@ -9802,9 +9802,9 @@ class TensorArrayConcatOutput<T> {
 
   Operation op;
 
-  final Output<T> value;
+  final Output<Output> value;
 
-  final Output<int> lengths;
+  final Output<Output> lengths;
 
   TensorArrayConcat run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -9821,9 +9821,9 @@ class TensorArrayConcatOutput<T> {
 class TensorArrayConcat<T> {
   TensorArrayConcat(this.value, this.lengths);
 
-  final T value;
+  final Output value;
 
-  final int lengths;
+  final Output lengths;
 }
 
 @Deprecated('DEPRECATED at GraphDef version 16: Use TensorArrayGradV3')
@@ -10080,11 +10080,11 @@ class StringSplitOutput {
 
   Operation op;
 
-  final Output<int> indices;
+  final Output<Output> indices;
 
-  final Output<String> values;
+  final Output<Output> values;
 
-  final Output<int> shape;
+  final Output<Output> shape;
 
   StringSplit run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -10104,11 +10104,11 @@ class StringSplitOutput {
 class StringSplit {
   StringSplit(this.indices, this.values, this.shape);
 
-  final int indices;
+  final Output indices;
 
-  final String values;
+  final Output values;
 
-  final int shape;
+  final Output shape;
 }
 
 StringSplitOutput stringSplit(Output input, Output delimiter,
@@ -10151,11 +10151,11 @@ class ThreadUnsafeUnigramCandidateSamplerOutput {
 
   Operation op;
 
-  final Output<int> sampledCandidates;
+  final Output<Output> sampledCandidates;
 
-  final Output<double> trueExpectedCount;
+  final Output<Output> trueExpectedCount;
 
-  final Output<double> sampledExpectedCount;
+  final Output<Output> sampledExpectedCount;
 
   ThreadUnsafeUnigramCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -10176,11 +10176,11 @@ class ThreadUnsafeUnigramCandidateSampler {
   ThreadUnsafeUnigramCandidateSampler(this.sampledCandidates,
       this.trueExpectedCount, this.sampledExpectedCount);
 
-  final int sampledCandidates;
+  final Output sampledCandidates;
 
-  final double trueExpectedCount;
+  final Output trueExpectedCount;
 
-  final double sampledExpectedCount;
+  final Output sampledExpectedCount;
 }
 
 ThreadUnsafeUnigramCandidateSamplerOutput threadUnsafeUnigramCandidateSampler(
@@ -10467,9 +10467,9 @@ class SwitchOutput<T> {
 
   Operation op;
 
-  final Output<T> outputFalse;
+  final Output<Output> outputFalse;
 
-  final Output<T> outputTrue;
+  final Output<Output> outputTrue;
 
   Switch run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -10486,9 +10486,9 @@ class SwitchOutput<T> {
 class Switch<T> {
   Switch(this.outputFalse, this.outputTrue);
 
-  final T outputFalse;
+  final Output outputFalse;
 
-  final T outputTrue;
+  final Output outputTrue;
 }
 
 SwitchOutput switch$<T>(Output data, Output pred,
@@ -10521,9 +10521,9 @@ class CTCLossOutput {
 
   Operation op;
 
-  final Output<double> loss;
+  final Output<Output> loss;
 
-  final Output<double> gradient;
+  final Output<Output> gradient;
 
   CTCLoss run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -10540,9 +10540,9 @@ class CTCLossOutput {
 class CTCLoss {
   CTCLoss(this.loss, this.gradient);
 
-  final double loss;
+  final Output loss;
 
-  final double gradient;
+  final Output gradient;
 }
 
 CTCLossOutput cTCLoss(Output inputs, Output labelsIndices, Output labelsValues,
@@ -10747,11 +10747,11 @@ class SparseReduceMaxSparseOutput<T> {
 
   Operation op;
 
-  final Output<int> outputIndices;
+  final Output<Output> outputIndices;
 
-  final Output<T> outputValues;
+  final Output<Output> outputValues;
 
-  final Output<int> outputShape;
+  final Output<Output> outputShape;
 
   SparseReduceMaxSparse run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -10772,11 +10772,11 @@ class SparseReduceMaxSparse<T> {
   SparseReduceMaxSparse(
       this.outputIndices, this.outputValues, this.outputShape);
 
-  final int outputIndices;
+  final Output outputIndices;
 
-  final T outputValues;
+  final Output outputValues;
 
-  final int outputShape;
+  final Output outputShape;
 }
 
 SparseReduceMaxSparseOutput sparseReduceMaxSparse<T>(Output inputIndices,
@@ -10833,11 +10833,11 @@ class QuantizedMulOutput<T> {
 
   Operation op;
 
-  final Output<T> z;
+  final Output<Output> z;
 
-  final Output<double> minZ;
+  final Output<Output> minZ;
 
-  final Output<double> maxZ;
+  final Output<Output> maxZ;
 
   QuantizedMul run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -10857,11 +10857,11 @@ class QuantizedMulOutput<T> {
 class QuantizedMul<T> {
   QuantizedMul(this.z, this.minZ, this.maxZ);
 
-  final T z;
+  final Output z;
 
-  final double minZ;
+  final Output minZ;
 
-  final double maxZ;
+  final Output maxZ;
 }
 
 QuantizedMulOutput quantizedMul<T>(
@@ -10981,9 +10981,9 @@ class TensorListPopBackOutput<T> {
 
   Operation op;
 
-  final Output<dynamic> outputHandle;
+  final Output<Output> outputHandle;
 
-  final Output<T> tensor;
+  final Output<Output> tensor;
 
   TensorListPopBack run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -11000,9 +11000,9 @@ class TensorListPopBackOutput<T> {
 class TensorListPopBack<T> {
   TensorListPopBack(this.outputHandle, this.tensor);
 
-  final dynamic outputHandle;
+  final Output outputHandle;
 
-  final T tensor;
+  final Output tensor;
 }
 
 TensorListPopBackOutput tensorListPopBack<T>(Output inputHandle,
@@ -11038,9 +11038,9 @@ class ReaderReadUpToV2Output {
 
   Operation op;
 
-  final Output<String> keys;
+  final Output<Output> keys;
 
-  final Output<String> values;
+  final Output<Output> values;
 
   ReaderReadUpToV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -11057,9 +11057,9 @@ class ReaderReadUpToV2Output {
 class ReaderReadUpToV2 {
   ReaderReadUpToV2(this.keys, this.values);
 
-  final String keys;
+  final Output keys;
 
-  final String values;
+  final Output values;
 }
 
 ReaderReadUpToV2Output readerReadUpToV2(
@@ -11096,9 +11096,9 @@ class ReaderReadUpToOutput {
 
   Operation op;
 
-  final Output<String> keys;
+  final Output<Output> keys;
 
-  final Output<String> values;
+  final Output<Output> values;
 
   ReaderReadUpTo run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -11115,9 +11115,9 @@ class ReaderReadUpToOutput {
 class ReaderReadUpTo {
   ReaderReadUpTo(this.keys, this.values);
 
-  final String keys;
+  final Output keys;
 
-  final String values;
+  final Output values;
 }
 
 ReaderReadUpToOutput readerReadUpTo(
@@ -11291,11 +11291,11 @@ class FractionalAvgPoolOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<int> rowPoolingSequence;
+  final Output<Output> rowPoolingSequence;
 
-  final Output<int> colPoolingSequence;
+  final Output<Output> colPoolingSequence;
 
   FractionalAvgPool run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -11316,11 +11316,11 @@ class FractionalAvgPool<T> {
   FractionalAvgPool(
       this.output, this.rowPoolingSequence, this.colPoolingSequence);
 
-  final T output;
+  final Output output;
 
-  final int rowPoolingSequence;
+  final Output rowPoolingSequence;
 
-  final int colPoolingSequence;
+  final Output colPoolingSequence;
 }
 
 FractionalAvgPoolOutput fractionalAvgPool<T>(Output value,
@@ -11596,9 +11596,9 @@ class RefMergeOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<int> valueIndex;
+  final Output<Output> valueIndex;
 
   RefMerge run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -11615,9 +11615,9 @@ class RefMergeOutput<T> {
 class RefMerge<T> {
   RefMerge(this.output, this.valueIndex);
 
-  final T output;
+  final Output output;
 
-  final int valueIndex;
+  final Output valueIndex;
 }
 
 RefMergeOutput refMerge<T>(List<Output> inputs,
@@ -11765,11 +11765,11 @@ class SparseToSparseSetOperationOutput<T> {
 
   Operation op;
 
-  final Output<int> resultIndices;
+  final Output<Output> resultIndices;
 
-  final Output<T> resultValues;
+  final Output<Output> resultValues;
 
-  final Output<int> resultShape;
+  final Output<Output> resultShape;
 
   SparseToSparseSetOperation run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -11790,11 +11790,11 @@ class SparseToSparseSetOperation<T> {
   SparseToSparseSetOperation(
       this.resultIndices, this.resultValues, this.resultShape);
 
-  final int resultIndices;
+  final Output resultIndices;
 
-  final T resultValues;
+  final Output resultValues;
 
-  final int resultShape;
+  final Output resultShape;
 }
 
 SparseToSparseSetOperationOutput sparseToSparseSetOperation<T>(
@@ -11986,11 +11986,11 @@ class DeserializeSparseOutput<T> {
 
   Operation op;
 
-  final Output<int> sparseIndices;
+  final Output<Output> sparseIndices;
 
-  final Output<T> sparseValues;
+  final Output<Output> sparseValues;
 
-  final Output<int> sparseShape;
+  final Output<Output> sparseShape;
 
   DeserializeSparse run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -12010,11 +12010,11 @@ class DeserializeSparseOutput<T> {
 class DeserializeSparse<T> {
   DeserializeSparse(this.sparseIndices, this.sparseValues, this.sparseShape);
 
-  final int sparseIndices;
+  final Output sparseIndices;
 
-  final T sparseValues;
+  final Output sparseValues;
 
-  final int sparseShape;
+  final Output sparseShape;
 }
 
 DeserializeSparseOutput deserializeSparse<T>(Output serializedSparse,
@@ -12114,11 +12114,11 @@ class DenseToDenseSetOperationOutput<T> {
 
   Operation op;
 
-  final Output<int> resultIndices;
+  final Output<Output> resultIndices;
 
-  final Output<T> resultValues;
+  final Output<Output> resultValues;
 
-  final Output<int> resultShape;
+  final Output<Output> resultShape;
 
   DenseToDenseSetOperation run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -12139,11 +12139,11 @@ class DenseToDenseSetOperation<T> {
   DenseToDenseSetOperation(
       this.resultIndices, this.resultValues, this.resultShape);
 
-  final int resultIndices;
+  final Output resultIndices;
 
-  final T resultValues;
+  final Output resultValues;
 
-  final int resultShape;
+  final Output resultShape;
 }
 
 DenseToDenseSetOperationOutput denseToDenseSetOperation<T>(
@@ -12172,9 +12172,9 @@ class SoftmaxCrossEntropyWithLogitsOutput<T> {
 
   Operation op;
 
-  final Output<T> loss;
+  final Output<Output> loss;
 
-  final Output<T> backprop;
+  final Output<Output> backprop;
 
   SoftmaxCrossEntropyWithLogits run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -12191,9 +12191,9 @@ class SoftmaxCrossEntropyWithLogitsOutput<T> {
 class SoftmaxCrossEntropyWithLogits<T> {
   SoftmaxCrossEntropyWithLogits(this.loss, this.backprop);
 
-  final T loss;
+  final Output loss;
 
-  final T backprop;
+  final Output backprop;
 }
 
 SoftmaxCrossEntropyWithLogitsOutput softmaxCrossEntropyWithLogits<T>(
@@ -12326,9 +12326,9 @@ class MapUnstageNoKeyOutput<T> {
 
   Operation op;
 
-  final Output<int> key;
+  final Output<Output> key;
 
-  final Output<T> values;
+  final Output<Output> values;
 
   MapUnstageNoKey run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -12345,9 +12345,9 @@ class MapUnstageNoKeyOutput<T> {
 class MapUnstageNoKey<T> {
   MapUnstageNoKey(this.key, this.values);
 
-  final int key;
+  final Output key;
 
-  final T values;
+  final Output values;
 }
 
 MapUnstageNoKeyOutput mapUnstageNoKey<T>(Output indices,
@@ -12433,13 +12433,13 @@ class ParseExampleOutput<T> {
 
   Operation op;
 
-  final Output<int> sparseIndices;
+  final Output<Output> sparseIndices;
 
-  final Output<T> sparseValues;
+  final Output<Output> sparseValues;
 
-  final Output<int> sparseShapes;
+  final Output<Output> sparseShapes;
 
-  final Output<T> denseValues;
+  final Output<Output> denseValues;
 
   ParseExample run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -12463,13 +12463,13 @@ class ParseExample<T> {
   ParseExample(this.sparseIndices, this.sparseValues, this.sparseShapes,
       this.denseValues);
 
-  final int sparseIndices;
+  final Output sparseIndices;
 
-  final T sparseValues;
+  final Output sparseValues;
 
-  final int sparseShapes;
+  final Output sparseShapes;
 
-  final T denseValues;
+  final Output denseValues;
 }
 
 ParseExampleOutput parseExample<T>(Output serialized, Output names,
@@ -12580,13 +12580,13 @@ class CTCGreedyDecoderOutput {
 
   Operation op;
 
-  final Output<int> decodedIndices;
+  final Output<Output> decodedIndices;
 
-  final Output<int> decodedValues;
+  final Output<Output> decodedValues;
 
-  final Output<int> decodedShape;
+  final Output<Output> decodedShape;
 
-  final Output<double> logProbability;
+  final Output<Output> logProbability;
 
   CTCGreedyDecoder run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -12610,13 +12610,13 @@ class CTCGreedyDecoder {
   CTCGreedyDecoder(this.decodedIndices, this.decodedValues, this.decodedShape,
       this.logProbability);
 
-  final int decodedIndices;
+  final Output decodedIndices;
 
-  final int decodedValues;
+  final Output decodedValues;
 
-  final int decodedShape;
+  final Output decodedShape;
 
-  final double logProbability;
+  final Output logProbability;
 }
 
 CTCGreedyDecoderOutput cTCGreedyDecoder(Output inputs, Output sequenceLength,
@@ -12723,11 +12723,11 @@ class QuantizedReshapeOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<double> outputMin;
+  final Output<Output> outputMin;
 
-  final Output<double> outputMax;
+  final Output<Output> outputMax;
 
   QuantizedReshape run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -12747,11 +12747,11 @@ class QuantizedReshapeOutput<T> {
 class QuantizedReshape<T> {
   QuantizedReshape(this.output, this.outputMin, this.outputMax);
 
-  final T output;
+  final Output output;
 
-  final double outputMin;
+  final Output outputMin;
 
-  final double outputMax;
+  final Output outputMax;
 }
 
 QuantizedReshapeOutput quantizedReshape<T>(
@@ -13016,11 +13016,11 @@ class ComputeAccidentalHitsOutput {
 
   Operation op;
 
-  final Output<int> indices;
+  final Output<Output> indices;
 
-  final Output<int> ids;
+  final Output<Output> ids;
 
-  final Output<double> weights;
+  final Output<Output> weights;
 
   ComputeAccidentalHits run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -13040,11 +13040,11 @@ class ComputeAccidentalHitsOutput {
 class ComputeAccidentalHits {
   ComputeAccidentalHits(this.indices, this.ids, this.weights);
 
-  final int indices;
+  final Output indices;
 
-  final int ids;
+  final Output ids;
 
-  final double weights;
+  final Output weights;
 }
 
 ComputeAccidentalHitsOutput computeAccidentalHits(
@@ -13169,9 +13169,9 @@ class BatchSelfAdjointEigV2Output<T> {
 
   Operation op;
 
-  final Output<T> e;
+  final Output<Output> e;
 
-  final Output<T> v;
+  final Output<Output> v;
 
   BatchSelfAdjointEigV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -13188,9 +13188,9 @@ class BatchSelfAdjointEigV2Output<T> {
 class BatchSelfAdjointEigV2<T> {
   BatchSelfAdjointEigV2(this.e, this.v);
 
-  final T e;
+  final Output e;
 
-  final T v;
+  final Output v;
 }
 
 @Deprecated('DEPRECATED at GraphDef version 13: Use SelfAdjointEigV2 instead.')
@@ -13448,9 +13448,9 @@ class TensorArrayConcatV3Output<T> {
 
   Operation op;
 
-  final Output<T> value;
+  final Output<Output> value;
 
-  final Output<int> lengths;
+  final Output<Output> lengths;
 
   TensorArrayConcatV3 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -13467,9 +13467,9 @@ class TensorArrayConcatV3Output<T> {
 class TensorArrayConcatV3<T> {
   TensorArrayConcatV3(this.value, this.lengths);
 
-  final T value;
+  final Output value;
 
-  final int lengths;
+  final Output lengths;
 }
 
 TensorArrayConcatV3Output tensorArrayConcatV3<T>(Output handle, Output flowIn,
@@ -13523,9 +13523,9 @@ class TensorArrayGradV3Output {
 
   Operation op;
 
-  final Output<dynamic> gradHandle;
+  final Output<Output> gradHandle;
 
-  final Output<double> flowOut;
+  final Output<Output> flowOut;
 
   TensorArrayGradV3 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -13542,9 +13542,9 @@ class TensorArrayGradV3Output {
 class TensorArrayGradV3 {
   TensorArrayGradV3(this.gradHandle, this.flowOut);
 
-  final dynamic gradHandle;
+  final Output gradHandle;
 
-  final double flowOut;
+  final Output flowOut;
 }
 
 TensorArrayGradV3Output tensorArrayGradV3(Output handle, Output flowIn,
@@ -13566,9 +13566,9 @@ class RefSwitchOutput<T> {
 
   Operation op;
 
-  final Output<T> outputFalse;
+  final Output<Output> outputFalse;
 
-  final Output<T> outputTrue;
+  final Output<Output> outputTrue;
 
   RefSwitch run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -13585,9 +13585,9 @@ class RefSwitchOutput<T> {
 class RefSwitch<T> {
   RefSwitch(this.outputFalse, this.outputTrue);
 
-  final T outputFalse;
+  final Output outputFalse;
 
-  final T outputTrue;
+  final Output outputTrue;
 }
 
 RefSwitchOutput refSwitch<T>(Output data, Output pred,
@@ -13722,11 +13722,11 @@ class LogUniformCandidateSamplerOutput {
 
   Operation op;
 
-  final Output<int> sampledCandidates;
+  final Output<Output> sampledCandidates;
 
-  final Output<double> trueExpectedCount;
+  final Output<Output> trueExpectedCount;
 
-  final Output<double> sampledExpectedCount;
+  final Output<Output> sampledExpectedCount;
 
   LogUniformCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -13747,11 +13747,11 @@ class LogUniformCandidateSampler {
   LogUniformCandidateSampler(this.sampledCandidates, this.trueExpectedCount,
       this.sampledExpectedCount);
 
-  final int sampledCandidates;
+  final Output sampledCandidates;
 
-  final double trueExpectedCount;
+  final Output trueExpectedCount;
 
-  final double sampledExpectedCount;
+  final Output sampledExpectedCount;
 }
 
 LogUniformCandidateSamplerOutput logUniformCandidateSampler(Output trueClasses,
@@ -13851,9 +13851,9 @@ class SparseReshapeOutput {
 
   Operation op;
 
-  final Output<int> outputIndices;
+  final Output<Output> outputIndices;
 
-  final Output<int> outputShape;
+  final Output<Output> outputShape;
 
   SparseReshape run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -13870,9 +13870,9 @@ class SparseReshapeOutput {
 class SparseReshape {
   SparseReshape(this.outputIndices, this.outputShape);
 
-  final int outputIndices;
+  final Output outputIndices;
 
-  final int outputShape;
+  final Output outputShape;
 }
 
 SparseReshapeOutput sparseReshape(
@@ -13928,11 +13928,11 @@ class SparseAddOutput<T> {
 
   Operation op;
 
-  final Output<int> sumIndices;
+  final Output<Output> sumIndices;
 
-  final Output<T> sumValues;
+  final Output<Output> sumValues;
 
-  final Output<int> sumShape;
+  final Output<Output> sumShape;
 
   SparseAdd run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -13952,11 +13952,11 @@ class SparseAddOutput<T> {
 class SparseAdd<T> {
   SparseAdd(this.sumIndices, this.sumValues, this.sumShape);
 
-  final int sumIndices;
+  final Output sumIndices;
 
-  final T sumValues;
+  final Output sumValues;
 
-  final int sumShape;
+  final Output sumShape;
 }
 
 SparseAddOutput sparseAdd<T>(Output aIndices, Output aValues, Output aShape,
@@ -14061,11 +14061,11 @@ class DeserializeManySparseOutput<T> {
 
   Operation op;
 
-  final Output<int> sparseIndices;
+  final Output<Output> sparseIndices;
 
-  final Output<T> sparseValues;
+  final Output<Output> sparseValues;
 
-  final Output<int> sparseShape;
+  final Output<Output> sparseShape;
 
   DeserializeManySparse run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -14086,11 +14086,11 @@ class DeserializeManySparse<T> {
   DeserializeManySparse(
       this.sparseIndices, this.sparseValues, this.sparseShape);
 
-  final int sparseIndices;
+  final Output sparseIndices;
 
-  final T sparseValues;
+  final Output sparseValues;
 
-  final int sparseShape;
+  final Output sparseShape;
 }
 
 DeserializeManySparseOutput deserializeManySparse<T>(Output serializedSparse,
@@ -14283,9 +14283,9 @@ class OrderedMapUnstageNoKeyOutput<T> {
 
   Operation op;
 
-  final Output<int> key;
+  final Output<Output> key;
 
-  final Output<T> values;
+  final Output<Output> values;
 
   OrderedMapUnstageNoKey run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -14302,9 +14302,9 @@ class OrderedMapUnstageNoKeyOutput<T> {
 class OrderedMapUnstageNoKey<T> {
   OrderedMapUnstageNoKey(this.key, this.values);
 
-  final int key;
+  final Output key;
 
-  final T values;
+  final Output values;
 }
 
 OrderedMapUnstageNoKeyOutput orderedMapUnstageNoKey<T>(Output indices,
@@ -14357,9 +14357,9 @@ class MergeOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<int> valueIndex;
+  final Output<Output> valueIndex;
 
   Merge run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -14376,9 +14376,9 @@ class MergeOutput<T> {
 class Merge<T> {
   Merge(this.output, this.valueIndex);
 
-  final T output;
+  final Output output;
 
-  final int valueIndex;
+  final Output valueIndex;
 }
 
 MergeOutput merge<T>(List<Output> inputs,
@@ -14422,11 +14422,11 @@ class FixedUnigramCandidateSamplerOutput {
 
   Operation op;
 
-  final Output<int> sampledCandidates;
+  final Output<Output> sampledCandidates;
 
-  final Output<double> trueExpectedCount;
+  final Output<Output> trueExpectedCount;
 
-  final Output<double> sampledExpectedCount;
+  final Output<Output> sampledExpectedCount;
 
   FixedUnigramCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -14447,11 +14447,11 @@ class FixedUnigramCandidateSampler {
   FixedUnigramCandidateSampler(this.sampledCandidates, this.trueExpectedCount,
       this.sampledExpectedCount);
 
-  final int sampledCandidates;
+  final Output sampledCandidates;
 
-  final double trueExpectedCount;
+  final Output trueExpectedCount;
 
-  final double sampledExpectedCount;
+  final Output sampledExpectedCount;
 }
 
 FixedUnigramCandidateSamplerOutput fixedUnigramCandidateSampler(
@@ -14599,11 +14599,11 @@ class LearnedUnigramCandidateSamplerOutput {
 
   Operation op;
 
-  final Output<int> sampledCandidates;
+  final Output<Output> sampledCandidates;
 
-  final Output<double> trueExpectedCount;
+  final Output<Output> trueExpectedCount;
 
-  final Output<double> sampledExpectedCount;
+  final Output<Output> sampledExpectedCount;
 
   LearnedUnigramCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -14624,11 +14624,11 @@ class LearnedUnigramCandidateSampler {
   LearnedUnigramCandidateSampler(this.sampledCandidates, this.trueExpectedCount,
       this.sampledExpectedCount);
 
-  final int sampledCandidates;
+  final Output sampledCandidates;
 
-  final double trueExpectedCount;
+  final Output trueExpectedCount;
 
-  final double sampledExpectedCount;
+  final Output sampledExpectedCount;
 }
 
 LearnedUnigramCandidateSamplerOutput learnedUnigramCandidateSampler(
@@ -14736,11 +14736,11 @@ class AllCandidateSamplerOutput {
 
   Operation op;
 
-  final Output<int> sampledCandidates;
+  final Output<Output> sampledCandidates;
 
-  final Output<double> trueExpectedCount;
+  final Output<Output> trueExpectedCount;
 
-  final Output<double> sampledExpectedCount;
+  final Output<Output> sampledExpectedCount;
 
   AllCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -14761,11 +14761,11 @@ class AllCandidateSampler {
   AllCandidateSampler(this.sampledCandidates, this.trueExpectedCount,
       this.sampledExpectedCount);
 
-  final int sampledCandidates;
+  final Output sampledCandidates;
 
-  final double trueExpectedCount;
+  final Output trueExpectedCount;
 
-  final double sampledExpectedCount;
+  final Output sampledExpectedCount;
 }
 
 AllCandidateSamplerOutput allCandidateSampler(Output trueClasses,
@@ -14858,9 +14858,9 @@ class LogMatrixDeterminantOutput<T> {
 
   Operation op;
 
-  final Output<T> sign;
+  final Output<Output> sign;
 
-  final Output<T> logAbsDeterminant;
+  final Output<Output> logAbsDeterminant;
 
   LogMatrixDeterminant run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -14877,9 +14877,9 @@ class LogMatrixDeterminantOutput<T> {
 class LogMatrixDeterminant<T> {
   LogMatrixDeterminant(this.sign, this.logAbsDeterminant);
 
-  final T sign;
+  final Output sign;
 
-  final T logAbsDeterminant;
+  final Output logAbsDeterminant;
 }
 
 LogMatrixDeterminantOutput logMatrixDeterminant<T>(Output input,
@@ -14987,11 +14987,11 @@ class SdcaOptimizerOutput {
 
   Operation op;
 
-  final Output<double> outExampleStateData;
+  final Output<Output> outExampleStateData;
 
-  final Output<double> outDeltaSparseWeights;
+  final Output<Output> outDeltaSparseWeights;
 
-  final Output<double> outDeltaDenseWeights;
+  final Output<Output> outDeltaDenseWeights;
 
   SdcaOptimizer run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -15012,11 +15012,11 @@ class SdcaOptimizer {
   SdcaOptimizer(this.outExampleStateData, this.outDeltaSparseWeights,
       this.outDeltaDenseWeights);
 
-  final double outExampleStateData;
+  final Output outExampleStateData;
 
-  final double outDeltaSparseWeights;
+  final Output outDeltaSparseWeights;
 
-  final double outDeltaDenseWeights;
+  final Output outDeltaDenseWeights;
 }
 
 SdcaOptimizerOutput sdcaOptimizer(
@@ -15254,9 +15254,9 @@ class MaxPoolWithArgmaxOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<T> argmax;
+  final Output<Output> argmax;
 
   MaxPoolWithArgmax run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -15273,9 +15273,9 @@ class MaxPoolWithArgmaxOutput<T> {
 class MaxPoolWithArgmax<T> {
   MaxPoolWithArgmax(this.output, this.argmax);
 
-  final T output;
+  final Output output;
 
-  final T argmax;
+  final Output argmax;
 }
 
 MaxPoolWithArgmaxOutput maxPoolWithArgmax<T>(Output input,
@@ -15354,11 +15354,11 @@ class QuantizedAvgPoolOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<double> minOutput;
+  final Output<Output> minOutput;
 
-  final Output<double> maxOutput;
+  final Output<Output> maxOutput;
 
   QuantizedAvgPool run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -15378,11 +15378,11 @@ class QuantizedAvgPoolOutput<T> {
 class QuantizedAvgPool<T> {
   QuantizedAvgPool(this.output, this.minOutput, this.maxOutput);
 
-  final T output;
+  final Output output;
 
-  final double minOutput;
+  final Output minOutput;
 
-  final double maxOutput;
+  final Output maxOutput;
 }
 
 QuantizedAvgPoolOutput quantizedAvgPool<T>(
@@ -15486,9 +15486,9 @@ class ReaderReadV2Output {
 
   Operation op;
 
-  final Output<String> key;
+  final Output<Output> key;
 
-  final Output<String> value;
+  final Output<Output> value;
 
   ReaderReadV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -15505,9 +15505,9 @@ class ReaderReadV2Output {
 class ReaderReadV2 {
   ReaderReadV2(this.key, this.value);
 
-  final String key;
+  final Output key;
 
-  final String value;
+  final Output value;
 }
 
 ReaderReadV2Output readerReadV2(Output readerHandle, Output queueHandle,
@@ -15609,9 +15609,9 @@ class DecodeWavOutput {
 
   Operation op;
 
-  final Output<double> audio;
+  final Output<Output> audio;
 
-  final Output<int> sampleRate;
+  final Output<Output> sampleRate;
 
   DecodeWav run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -15628,9 +15628,9 @@ class DecodeWavOutput {
 class DecodeWav {
   DecodeWav(this.audio, this.sampleRate);
 
-  final double audio;
+  final Output audio;
 
-  final int sampleRate;
+  final Output sampleRate;
 }
 
 DecodeWavOutput decodeWav(Output contents,
@@ -15731,11 +15731,11 @@ class FractionalMaxPoolOutput<T> {
 
   Operation op;
 
-  final Output<T> output;
+  final Output<Output> output;
 
-  final Output<int> rowPoolingSequence;
+  final Output<Output> rowPoolingSequence;
 
-  final Output<int> colPoolingSequence;
+  final Output<Output> colPoolingSequence;
 
   FractionalMaxPool run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -15756,11 +15756,11 @@ class FractionalMaxPool<T> {
   FractionalMaxPool(
       this.output, this.rowPoolingSequence, this.colPoolingSequence);
 
-  final T output;
+  final Output output;
 
-  final int rowPoolingSequence;
+  final Output rowPoolingSequence;
 
-  final int colPoolingSequence;
+  final Output colPoolingSequence;
 }
 
 FractionalMaxPoolOutput fractionalMaxPool<T>(Output value,
@@ -15814,9 +15814,9 @@ class GenerateVocabRemappingOutput {
 
   Operation op;
 
-  final Output<int> remapping;
+  final Output<Output> remapping;
 
-  final Output<int> numPresent;
+  final Output<Output> numPresent;
 
   GenerateVocabRemapping run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -15833,9 +15833,9 @@ class GenerateVocabRemappingOutput {
 class GenerateVocabRemapping {
   GenerateVocabRemapping(this.remapping, this.numPresent);
 
-  final int remapping;
+  final Output remapping;
 
-  final int numPresent;
+  final Output numPresent;
 }
 
 GenerateVocabRemappingOutput generateVocabRemapping(
@@ -15957,11 +15957,11 @@ class SparseAccumulatorTakeGradientOutput<T> {
 
   Operation op;
 
-  final Output<int> indices;
+  final Output<Output> indices;
 
-  final Output<T> values;
+  final Output<Output> values;
 
-  final Output<int> shape;
+  final Output<Output> shape;
 
   SparseAccumulatorTakeGradient run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -15981,11 +15981,11 @@ class SparseAccumulatorTakeGradientOutput<T> {
 class SparseAccumulatorTakeGradient<T> {
   SparseAccumulatorTakeGradient(this.indices, this.values, this.shape);
 
-  final int indices;
+  final Output indices;
 
-  final T values;
+  final Output values;
 
-  final int shape;
+  final Output shape;
 }
 
 SparseAccumulatorTakeGradientOutput sparseAccumulatorTakeGradient<T>(
@@ -16055,11 +16055,11 @@ class TakeManySparseFromTensorsMapOutput<T> {
 
   Operation op;
 
-  final Output<int> sparseIndices;
+  final Output<Output> sparseIndices;
 
-  final Output<T> sparseValues;
+  final Output<Output> sparseValues;
 
-  final Output<int> sparseShape;
+  final Output<Output> sparseShape;
 
   TakeManySparseFromTensorsMap run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
@@ -16080,11 +16080,11 @@ class TakeManySparseFromTensorsMap<T> {
   TakeManySparseFromTensorsMap(
       this.sparseIndices, this.sparseValues, this.sparseShape);
 
-  final int sparseIndices;
+  final Output sparseIndices;
 
-  final T sparseValues;
+  final Output sparseValues;
 
-  final int sparseShape;
+  final Output sparseShape;
 }
 
 TakeManySparseFromTensorsMapOutput takeManySparseFromTensorsMap<T>(

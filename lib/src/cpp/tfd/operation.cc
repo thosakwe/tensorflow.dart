@@ -2,6 +2,8 @@
 // Created by Tobe on 5/14/18.
 //
 
+#include <cstring>
+#include <iostream>
 #include "../tensorflow_dart.h"
 #include "operation.h"
 #include "util.h"
@@ -9,6 +11,50 @@
 void tfd::Output_get_type(Dart_NativeArguments arguments) {
     TF_Output output = convert_output_wrapper(Dart_GetNativeArgument(arguments, 0));
     Dart_SetReturnValue(arguments, Dart_NewInteger(TF_OperationOutputType(output)));
+}
+
+void tfd::Output_reshape(Dart_NativeArguments arguments) {
+    TF_Output output = convert_output_wrapper(Dart_GetNativeArgument(arguments, 0));
+    Dart_Handle shapeHandle = Dart_GetNativeArgument(arguments, 2);
+    auto *graph = dereference_graph_ptr(Dart_GetNativeArgument(arguments, 1));
+    auto *status = TF_NewStatus();
+    int64_t *dims = nullptr, nDims = 0;
+    intptr_t length;
+    Dart_TypedData_Type type;
+
+    HandleError(Dart_ListLength(shapeHandle, &length));
+
+    if (length > 0) {
+        nDims = length;
+        HandleError(Dart_TypedDataAcquireData(shapeHandle, &type, (void **) &dims, &length));
+        TF_GraphSetTensorShape(graph, output, dims, (const int) nDims, status);
+        HandleError(Dart_TypedDataReleaseData(shapeHandle));
+    }
+
+    int code = TF_GetCode(status);
+    Dart_Handle tuple[2];
+    tuple[0] = Dart_NewInteger(code);
+
+    if (code != 0)
+        tuple[1] = Dart_NewStringFromCString(TF_Message(status));
+    else
+        tuple[1] = Dart_Null();
+
+    Dart_Handle tupleType = HandleError(getTuple2Type());
+    Dart_Handle tupleHandle = Dart_New(tupleType, Dart_NewStringFromCString(""), 2, tuple);
+    Dart_SetReturnValue(arguments, tupleHandle);
+    TF_DeleteStatus(status);
+}
+
+void tfd::Output_shape(Dart_NativeArguments arguments) {
+    TF_Output output = convert_output_wrapper(Dart_GetNativeArgument(arguments, 0));
+    auto *graph = dereference_graph_ptr(Dart_GetNativeArgument(arguments, 1));
+    auto *status = TF_NewStatus();
+    int nDims = TF_GraphGetTensorNumDims(graph, output, status);
+    auto *dims = new int64_t[nDims];
+    TF_GraphGetTensorShape(graph, output, dims, nDims, status);
+    Dart_SetReturnValue(arguments, Dart_NewExternalTypedData(Dart_TypedData_kInt64, dims, nDims));
+    TF_DeleteStatus(status);
 }
 
 void tfd::Operation_new(Dart_NativeArguments arguments) {
@@ -88,6 +134,15 @@ void tfd::Operation_num_outputs(Dart_NativeArguments arguments) {
     Dart_SetReturnValue(arguments, Dart_NewInteger(TF_OperationNumOutputs(oper)));
 }
 
+void tfd::OperationDescription_set_attr_bool(Dart_NativeArguments arguments) {
+    auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
+    const char *name;
+    bool value;
+    HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
+    HandleError(Dart_BooleanValue(Dart_GetNativeArgument(arguments, 2), &value));
+    TF_SetAttrBool(desc, name, (unsigned char) (value ? 1 : 0));
+}
+
 void tfd::OperationDescription_set_attr_int(Dart_NativeArguments arguments) {
     auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
     const char *name;
@@ -138,4 +193,12 @@ void tfd::OperationDescription_set_attr_shape(Dart_NativeArguments arguments) {
     HandleError(Dart_TypedDataAcquireData(dimsHandle, &type, (void **) &dims, &length));
     TF_SetAttrShape(desc, name, dims, (int) length);
     HandleError(Dart_TypedDataReleaseData(dimsHandle));
+}
+
+void tfd::OperationDescription_set_attr_string(Dart_NativeArguments arguments) {
+    auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
+    const char *name, *value;
+    HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
+    HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 2), &value));
+    TF_SetAttrString(desc, name, value, strlen(value));
 }

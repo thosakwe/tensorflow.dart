@@ -39,6 +39,7 @@ class OperationDescription<T> {
       native "OperationDescription_set_attr_tensor";
 
   void setAttrTensor(String name, Tensor value) {
+    if (value == null) return;
     var result = _setAttrTensor(name, value);
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw new TensorFlowException(code, result.item2);
@@ -48,16 +49,32 @@ class OperationDescription<T> {
 
   void setAttrTensorList(String name, List<Tensor> value) native "";
 
-  void setAttrString(String name, String value) native "";
+  void _setAttrString(String name, String value)
+      native "OperationDescription_set_attr_string";
+
+  void setAttrString(String name, String value) {
+    if (value == null) return;
+    _setAttrString(name, value);
+  }
 
   void setAttrStringList(String name, List<String> value) native "";
 
-  void setAttrBool(String name, bool value) native "";
+  void _setAttrBool(String name, bool value) native "OperationDescription_set_attr_bool";
+
+  void setAttrBool(String name, bool value) {
+    if (value == null) return;
+    _setAttrBool(name, value);
+  }
 
   void setAttrBoolList(String name, List<bool> value) native "";
 
-  void setAttrInt(String name, int value)
+  void _setAttrInt(String name, int value)
       native "OperationDescription_set_attr_int";
+
+  void setAttrInt(String name, int value) {
+    if (value == null) return;
+    _setAttrInt(name, value);
+  }
 
   void setAttrIntList(String name, List<int> value) native "";
 
@@ -72,8 +89,10 @@ class OperationDescription<T> {
   void _setAttrShape(String name, Int64List value)
       native "OperationDescription_set_attr_shape";
 
-  void setAttrShape(String name, Shape value) =>
-      _setAttrShape(name, value.dimensions);
+  void setAttrShape(String name, Shape value) {
+    if (value == null) return;
+    _setAttrShape(name, value.dimensions);
+  }
 
   void setAttrShapeList(String name, List<Shape> value) native "";
 
@@ -88,8 +107,11 @@ class OperationDescription<T> {
   void _setAttrTypeList(String name, Int32List value)
       native "OperationDescription_set_attr_type_list";
 
-  void setAttrTypeList(String name, List<DataType> value) => _setAttrTypeList(
-      name, new Int32List.fromList(value.map((t) => t.value).toList()));
+  void setAttrTypeList(String name, List<DataType> value) {
+    if (value == null) return;
+    _setAttrTypeList(
+        name, new Int32List.fromList(value.map((t) => t.value).toList()));
+  }
 
   void setDevice(String device) native "";
 }

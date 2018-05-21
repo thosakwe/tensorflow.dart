@@ -48,6 +48,8 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
 
         // operation.h
     else if (strcmp("Output_get_type", cname) == 0) result = tfd::Output_get_type;
+    else if (strcmp("Output_reshape", cname) == 0) result = tfd::Output_reshape;
+    else if (strcmp("Output_shape", cname) == 0) result = tfd::Output_shape;
     else if (strcmp("Operation_list", cname) == 0) result = tfd::Operation_list;
     else if (strcmp("Operation_name", cname) == 0) result = tfd::Operation_name;
     else if (strcmp("Operation_new", cname) == 0) result = tfd::Operation_new;
@@ -57,10 +59,14 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     else if (strcmp("OperationDescription_add_input", cname) == 0) result = tfd::OperationDescription_add_input;
     else if (strcmp("OperationDescription_finish", cname) == 0) result = tfd::OperationDescription_finish;
     else if (strcmp("OperationDescription_new", cname) == 0) result = tfd::OperationDescription_new;
+    else if (strcmp("OperationDescription_set_attr_bool", cname) == 0)
+        result = tfd::OperationDescription_set_attr_bool;
     else if (strcmp("OperationDescription_set_attr_int", cname) == 0)
         result = tfd::OperationDescription_set_attr_int;
     else if (strcmp("OperationDescription_set_attr_shape", cname) == 0)
         result = tfd::OperationDescription_set_attr_shape;
+    else if (strcmp("OperationDescription_set_attr_string", cname) == 0)
+        result = tfd::OperationDescription_set_attr_string;
     else if (strcmp("OperationDescription_set_attr_tensor", cname) == 0)
         result = tfd::OperationDescription_set_attr_tensor;
     else if (strcmp("OperationDescription_set_attr_type", cname) == 0) result = tfd::OperationDescription_set_attr_type;

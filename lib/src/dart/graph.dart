@@ -1,6 +1,26 @@
 part of tensorflow;
 
-final Graph defaultGraph = new Graph();
+const Symbol _defaultGraphSymbol = #tf_default_graph;
+const Symbol _scopesSymbol = #tf_variable_scopes;
+
+Graph _defaultGraph;
+
+Graph get defaultGraph =>
+    _defaultGraph ??= Zone.current[_defaultGraphSymbol] ?? new Graph();
+
+/// Executes code within the context of a single [Graph].
+T withScope<T>(Graph graph, T Function() f) {
+  var zone = Zone.current.fork(zoneValues: {_defaultGraphSymbol: graph});
+  return zone.run<T>(f);
+}
+
+/// Executes a function, prepending a [prefix] to all operations.
+T withVariableScope<T>(String name, T Function() f) {
+  var scopes = Zone.current[_scopesSymbol] ?? [];
+  var zone = Zone.current
+      .fork(zoneValues: {_scopesSymbol: new List.from(scopes)..add(name)});
+  return zone.run<T>(f);
+}
 
 Output<T> constant<T>(T value, {String operationName, DataType dtype}) {
   return defaultGraph.constant<T>(value,
@@ -14,7 +34,8 @@ class Graph {
   int _pointer;
 
   final SymbolTable _scope = new SymbolTable();
-  int  _index = 0;
+  final Map<String, Output> _variables = {};
+  int _index = 0;
   List<Operation> _operations;
   Session _session;
 
@@ -80,7 +101,9 @@ class Graph {
   }
 
   Output<T> constant<T>(T value, {String operationName, DataType dtype}) {
-    var tensor = value is Tensor ? value : new Tensor.from(value);
+    var tensor = value is Tensor
+        ? value
+        : new Tensor.from(value is Shape ? value.dimensions : value);
     var op = newOperation<T>('Const',
         operationName ?? _scope.uniqueName('Constant_${value.runtimeType}'))
       ..setAttrType('dtype', dtype ?? tensor.dtype)

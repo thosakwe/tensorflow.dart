@@ -21,7 +21,7 @@ void tfd::Graph_copy_function(Dart_NativeArguments arguments) {
     HandleError(Dart_IntegerToUint64(funcHandle, &func));
 
     if (Dart_IsNull(gradHandle))
-        grad = nullptr;
+        grad = (uint64_t) nullptr;
     else
         HandleError(Dart_IntegerToUint64(gradHandle, &grad));
 

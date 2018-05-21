@@ -1,5 +1,6 @@
 library tensorflow;
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:core' as core;
@@ -37,6 +38,8 @@ part 'dart/session.dart';
 part 'dart/shape.dart';
 
 part 'dart/tensor.dart';
+
+part 'dart/variable.dart';
 
 String get version native "Version";
 

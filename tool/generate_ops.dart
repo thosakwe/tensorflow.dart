@@ -122,9 +122,9 @@ main() async {
           .call([
             literal(op.name),
             refer('operationName').assignNullAware(
-              refer('graph')
-                  .property('_scope')
-                  .property('uniqueName')([literal(op.name + '/')]),
+              refer('graph').property('_scope').property('uniqueName')([
+                literal(op.name + '/'),
+              ]),
             ),
           ])
           .assignVar('op\$')
@@ -224,7 +224,7 @@ main() async {
                           new ReCase(output.name == 'op' ? 'op\$' : output.name)
                               .camelCase);
                       var type = resultField.type =
-                          convertType(output.type, i++, typeAttr, false);
+                          convertType(output.type, i++, typeAttr);
                       resultConstructor.requiredParameters
                           .add(new Parameter((p) => p
                             ..name = name

@@ -2,6 +2,7 @@ part of tensorflow;
 
 class Output<T> {
   final Graph _graph;
+  Output<T> _initializer;
   int _operation;
   int _index;
   int _dtype;
@@ -23,7 +24,11 @@ class Output<T> {
 
   Operation get op => new Operation._fromPointer(_operation, _graph);
 
-  Shape get shape native "Output_shape";
+  Int64List _shape(Graph graph) native "Output_shape";
+
+  Shape get shape => new Shape._(_shape(_graph));
+
+  Output<T> get initializer => _initializer ??= assign<T>(this, this);
 
   Output<T> operator *(Output<T> other) => mul<T>(this, other, graph: _graph);
 
@@ -65,6 +70,15 @@ class Output<T> {
   int _getType() native "Output_get_type";
 
   T run({Map<String, Tensor> feed: const {}}) => runAsList(feed: feed)[0];
+
+  Tuple2<int, String> _reshape(Graph graph, Int64List dims)
+      native "Output_reshape";
+
+  void reshape(Shape shape) {
+    var result = _reshape(_graph, shape.dimensions);
+    var code = _codeFrom(result.item1);
+    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+  }
 
   List<T> runAsList({Map<String, Tensor> feed: const {}}) {
     var runner = _graph.session.runner..fetchFromOutput(this);

@@ -64,8 +64,11 @@ class Tensor {
   factory Tensor.fromDouble(double n) =>
       new Tensor.fromFloat64List(new Float64List.fromList([n])).asScalar;
 
-  factory Tensor.fromShape(Shape shape) =>
-      new Tensor.fromInt64List(shape.dimensions);
+  factory Tensor.fromShape(Shape shape) {
+    if (shape.size == 0)
+      throw 'Cannot convert a scalar (empty) Shape to a Tensor.';
+    return new Tensor.fromInt64List(shape.dimensions).reshape(shape);
+  }
 
   factory Tensor.fromBool(bool b) =>
       new Tensor.fromUint8List(new Uint8List.fromList([b ? 1 : 0])).asScalar;
@@ -260,3 +263,15 @@ class Tensor {
     }
   }
 }
+
+const List<DataType> intTypes = const [
+  DataType.DT_INT8,
+  DataType.DT_INT16,
+  DataType.DT_INT32,
+  DataType.DT_INT64,
+  DataType.DT_UINT8,
+  DataType.DT_UINT16,
+  DataType.DT_UINT32,
+  DataType.DT_UINT64,
+];
+const List<DataType> floatTypes = const [DataType.DT_DOUBLE, DataType.DT_FLOAT];
