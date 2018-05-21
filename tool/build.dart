@@ -7,6 +7,10 @@ import 'package:system_info/system_info.dart';
 final ArgParser argParser = new ArgParser()
   ..addFlag('download',
       negatable: false, help: 'Re-download Tensorflow binaries.')
+  ..addFlag('force',
+      abbr: 'f',
+      negatable: false,
+      help: 'Delete the CMakeCache before building (to force a rebuild).')
   ..addFlag('help',
       abbr: 'h', negatable: false, help: 'Print this help information.')
   ..addOption('os',
@@ -21,7 +25,8 @@ final ArgParser argParser = new ArgParser()
   ..addOption('type',
       abbr: 't',
       help: 'The `TF_TYPE` variable to build with.',
-      allowed: ['cpu', 'gpu'])
+      allowed: ['cpu', 'gpu'],
+      defaultsTo: Platform.isMacOS ? 'cpu' : 'gpu')
   ..addOption('version',
       abbr: 'v',
       help: 'The `TF_VERSION` variable to build with.',
@@ -54,12 +59,14 @@ main(List<String> args, [bool isDownloading = false]) async {
       'TF_VERSION': argResults['version'],
     });
 
-    var cmakeCache = new File('CMakeCache.txt');
-    if (await cmakeCache.exists()) await cmakeCache.delete();
+    if (argResults['force']) {
+      var cmakeCache = new File('CMakeCache.txt');
+      if (await cmakeCache.exists()) await cmakeCache.delete();
+    }
 
     var cmakeArgs = '';
     if (!Platform.isWindows)
-      cmakeArgs += ' -- -j ${Platform.numberOfProcessors}';
+      cmakeArgs += ' -- -j ${Platform.numberOfProcessors * 2}';
 
     stdout.addStream(bash.stdout);
     stderr.addStream(bash.stderr);

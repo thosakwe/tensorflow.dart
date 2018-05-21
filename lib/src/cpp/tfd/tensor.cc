@@ -11,16 +11,46 @@
 using namespace tfd;
 
 void tfd::Tensors_string(Dart_NativeArguments arguments) {
+    // Returns Tuple3<int, String, Uint8List>
     auto *status = TF_NewStatus();
     const char *str;
     Dart_Handle value = Dart_GetNativeArgument(arguments, 0);
     HandleError(Dart_StringToCString(value, &str));
     auto *tensor = TF_AllocateTensor(TF_STRING, nullptr, 0, 8 + TF_StringEncodedSize(strlen(str)));
-    auto *data = TF_TensorData(tensor);
-    memset(data, 0, 8);
-    TF_StringEncode(str, strlen(str), 8 + (char *) data, TF_StringEncodedSize(strlen(str)), status);
+
+    if (tensor == nullptr) throwCoreError("Could not allocate string tensor.", "StateError");
+    else {
+        auto *data = TF_TensorData(tensor);
+        memset(data, 0, TF_TensorByteSize(tensor));
+        TF_StringEncode(str, strlen(str), 8 + (char *) data, TF_StringEncodedSize(strlen(str)), status);
+
+        int code = TF_GetCode(status);
+        Dart_Handle tuple[4];
+        tuple[0] = Dart_NewInteger(code);
+
+        if (code != 0) {
+            tuple[1] = Dart_NewStringFromCString(TF_Message(status));
+            tuple[2] = Dart_Null();
+        } else {
+            tuple[1] = Dart_Null();
+
+            // Get the raw data.
+            Dart_Handle dataHandle = tuple[2] = Dart_NewTypedData(Dart_TypedData_kUint8, TF_TensorByteSize(tensor));
+            void *buf;
+            intptr_t length;
+            Dart_TypedData_Type type;
+            HandleError(Dart_TypedDataAcquireData(dataHandle, &type, &buf, &length));
+            memcpy(buf, data, (size_t) length);
+            HandleError(Dart_TypedDataReleaseData(dataHandle));
+        }
+
+        Dart_Handle tupleType = HandleError(getTuple3Type());
+        Dart_Handle tupleHandle = Dart_New(tupleType, Dart_NewStringFromCString(""), 3, tuple);
+        Dart_SetReturnValue(arguments, tupleHandle);
+    }
+
+    TF_DeleteTensor(tensor);
     TF_DeleteStatus(status);
-    Dart_SetReturnValue(arguments, Dart_NewExternalTypedData(Dart_TypedData_kUint8, tensor, 400));
 }
 
 void tfd::Constant(Dart_NativeArguments arguments) {

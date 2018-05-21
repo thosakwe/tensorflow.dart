@@ -50,12 +50,23 @@ class Tensor {
   factory Tensor.fromBuffer(DataType dtype, Shape shape, ByteBuffer data) =>
       new Tensor(dtype, shape, new Uint8List.view(data));
 
-  factory Tensor.fromString(String s, {bool prefix: false}) {
-    var bytes = new List.filled(prefix ? 8 : 0, 0, growable: true)
+  //static Tuple3<int, String, Uint8List> _string(String s)
+  //    native "Tensors_string";
+
+  factory Tensor.fromString(String s) {
+    /*
+    var result = _string(s);
+    var code = _codeFrom(result.item1);
+    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+    return new Tensor._(DataType.DT_STRING.value,
+        new Uint8List.view(result.item3.buffer, 9), Shape.scalar.dimensions);
+    */
+    var bytes = new List.filled(0, 0, growable: true)
       ..addAll(utf8.encode(s))
       ..add(0);
-    return new Tensor(DataType.DT_STRING, new Shape(bytes.length),
+    return new Tensor(DataType.DT_STRING, Shape.scalar,
         new Uint8List.fromList(bytes));
+
   }
 
   factory Tensor.fromInt(int n) =>
@@ -102,8 +113,6 @@ class Tensor {
 
   factory Tensor.fromFloat64List(Float64List list) => new Tensor.fromBuffer(
       DataType.DT_DOUBLE, new Shape(list.length), list.buffer);
-
-  //static Uint8List _string(String s) native "Tensors_string";
 
   /// Returns this [Tensor] as a 0-dimensional scalar.
   Tensor get asScalar => reshape(Shape.scalar);
@@ -272,6 +281,6 @@ const List<DataType> intTypes = const [
   DataType.DT_UINT8,
   DataType.DT_UINT16,
   DataType.DT_UINT32,
-  DataType.DT_UINT64,
+  DataType.DT_INT64,
 ];
 const List<DataType> floatTypes = const [DataType.DT_DOUBLE, DataType.DT_FLOAT];
