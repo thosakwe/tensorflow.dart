@@ -35,3 +35,4 @@ doc/api/
 *.o
 third_party/tensorflow*
 tensorflow.tar.gz
+inception5h
