@@ -143,6 +143,15 @@ void tfd::OperationDescription_set_attr_bool(Dart_NativeArguments arguments) {
     TF_SetAttrBool(desc, name, (unsigned char) (value ? 1 : 0));
 }
 
+void tfd::OperationDescription_set_attr_float(Dart_NativeArguments arguments) {
+    auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
+    const char *name;
+    double value;
+    HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
+    HandleError(Dart_DoubleValue(Dart_GetNativeArgument(arguments, 2), &value));
+    TF_SetAttrFloat(desc, name, (float) value);
+}
+
 void tfd::OperationDescription_set_attr_int(Dart_NativeArguments arguments) {
     auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
     const char *name;

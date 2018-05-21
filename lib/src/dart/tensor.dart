@@ -16,7 +16,7 @@ class Tensor {
   factory Tensor.from(value) {
     if (value is String) return new Tensor.fromString(value);
     if (value is bool) return new Tensor.fromBool(value);
-    if (value is double) return new Tensor.fromDouble(value);
+    if (value is double) return new Tensor.fromFloat(value);
     if (value is int) return new Tensor.fromInt(value);
     if (value is Shape) return new Tensor.fromShape(value);
     if (value is Int32)
@@ -33,6 +33,8 @@ class Tensor {
     if (value is Uint16List) return new Tensor.fromUint16List(value);
     if (value is Uint32List) return new Tensor.fromUint32List(value);
     if (value is Uint64List) return new Tensor.fromUint64List(value);
+    if (value is Float32List) return new Tensor.fromFloat32List(value);
+    if (value is Float64List) return new Tensor.fromFloat64List(value);
 
     if (value is List) {
       if (value.isEmpty) return new Tensor.fromInt64List(new Int64List(0));
@@ -53,7 +55,7 @@ class Tensor {
   //static Tuple3<int, String, Uint8List> _string(String s)
   //    native "Tensors_string";
 
-  factory Tensor.fromString(String s) {
+  factory Tensor.fromString(String s, {bool padding: false}) {
     /*
     var result = _string(s);
     var code = _codeFrom(result.item1);
@@ -61,16 +63,18 @@ class Tensor {
     return new Tensor._(DataType.DT_STRING.value,
         new Uint8List.view(result.item3.buffer, 9), Shape.scalar.dimensions);
     */
-    var bytes = new List.filled(0, 0, growable: true)
+    var bytes = new List.filled(padding ? 8 : 0, 0, growable: true)
       ..addAll(utf8.encode(s))
       ..add(0);
-    return new Tensor(DataType.DT_STRING, Shape.scalar,
-        new Uint8List.fromList(bytes));
-
+    return new Tensor(
+        DataType.DT_STRING, Shape.scalar, new Uint8List.fromList(bytes));
   }
 
   factory Tensor.fromInt(int n) =>
-      new Tensor.fromInt64List(new Int64List.fromList([n])).asScalar;
+      new Tensor.fromInt32List(new Int32List.fromList([n])).asScalar;
+
+  factory Tensor.fromFloat(double n) =>
+      new Tensor.fromFloat32List(new Float32List.fromList([n])).asScalar;
 
   factory Tensor.fromDouble(double n) =>
       new Tensor.fromFloat64List(new Float64List.fromList([n])).asScalar;
@@ -116,6 +120,9 @@ class Tensor {
 
   /// Returns this [Tensor] as a 0-dimensional scalar.
   Tensor get asScalar => reshape(Shape.scalar);
+
+  /// Casts this tensor to another type.
+  Tensor cast(DataType type) => new Tensor(type, shape, _data);
 
   /// Returns this [Tensor] as a n-dimensional scalar.
   Tensor reshape(Shape newShape) =>

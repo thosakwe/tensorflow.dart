@@ -10,7 +10,5 @@ class TensorFlowException implements Exception {
       new TensorFlowException(_codeFrom(code), message);
 
   @override
-  String toString() {
-    return 'TensorFlow exception: $code: $message';
-  }
+  String toString() => '$code: $message';
 }

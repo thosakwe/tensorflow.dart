@@ -26,6 +26,7 @@ namespace tfd
     void OperationDescription_finish(Dart_NativeArguments arguments);
     void OperationDescription_new(Dart_NativeArguments arguments);
     void OperationDescription_set_attr_bool(Dart_NativeArguments arguments);
+    void OperationDescription_set_attr_float(Dart_NativeArguments arguments);
     void OperationDescription_set_attr_int(Dart_NativeArguments arguments);
     void OperationDescription_set_attr_shape(Dart_NativeArguments arguments);
     void OperationDescription_set_attr_string(Dart_NativeArguments arguments);

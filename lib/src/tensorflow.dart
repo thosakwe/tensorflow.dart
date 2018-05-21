@@ -15,6 +15,8 @@ import 'package:tuple/tuple.dart';
 import 'proto/proto.dart';
 export 'proto/proto.dart';
 
+part 'dart/data.dart';
+
 part 'dart/enums.dart';
 
 part 'dart/error.dart';

@@ -28,7 +28,7 @@ class Output<T> {
 
   Shape get shape => new Shape._(_shape(_graph));
 
-  Output<T> get initializer => _initializer ??= assign<T>(this, this);
+  Output<T> get initializer => _initializer ??= throw new UnsupportedError('Not a variable: $this');
 
   Output<T> operator *(Output<T> other) => mul<T>(this, other, graph: _graph);
 
@@ -88,8 +88,6 @@ class Output<T> {
 
   @override
   String toString() {
-    return 'Output { operation: 0x' +
-        _operation.toRadixString(16) +
-        ', index: $_index }';
+    return 'Output { operation: \'' + op.name + '\', index: $_index }';
   }
 }

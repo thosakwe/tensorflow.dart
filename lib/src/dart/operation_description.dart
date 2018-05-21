@@ -62,7 +62,8 @@ class OperationDescription<T> {
 
   void setAttrStringList(String name, List<String> value) native "";
 
-  void _setAttrBool(String name, bool value) native "OperationDescription_set_attr_bool";
+  void _setAttrBool(String name, bool value)
+      native "OperationDescription_set_attr_bool";
 
   void setAttrBool(String name, bool value) {
     if (value == null) return;
@@ -81,7 +82,13 @@ class OperationDescription<T> {
 
   void setAttrIntList(String name, List<int> value) native "";
 
-  void setAttrFloat(String name, double value) native "";
+  void _setAttrFloat(String name, double value)
+      native "OperationDescription_set_attr_float";
+
+  void setAttrFloat(String name, double value) {
+    if (value == null) return;
+    _setAttrFloat(name, value);
+  }
 
   void setAttrFloatList(String name, List<double> value) native "";
 

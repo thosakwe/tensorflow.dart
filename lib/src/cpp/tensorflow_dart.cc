@@ -61,6 +61,8 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     else if (strcmp("OperationDescription_new", cname) == 0) result = tfd::OperationDescription_new;
     else if (strcmp("OperationDescription_set_attr_bool", cname) == 0)
         result = tfd::OperationDescription_set_attr_bool;
+    else if (strcmp("OperationDescription_set_attr_float", cname) == 0)
+        result = tfd::OperationDescription_set_attr_float;
     else if (strcmp("OperationDescription_set_attr_int", cname) == 0)
         result = tfd::OperationDescription_set_attr_int;
     else if (strcmp("OperationDescription_set_attr_shape", cname) == 0)
