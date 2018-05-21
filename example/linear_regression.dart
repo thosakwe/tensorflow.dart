@@ -1,14 +1,13 @@
-import 'package:tensorflow/tensorflow.dart';
+import 'package:tensorflow/tensorflow.dart' as tf;
 
 void main() {
-  var tf = new Graph();
   var x = tf.variable(
-    dtype: DataType.DT_INT32,
-    shape: new Shape(2),
+    dtype: tf.DataType.DT_INT32,
+    shape: new tf.Shape(2),
   );
 
   var node = tf.assign(x, tf.constant([2, 3]));
-  node = tf.constant(new Shape(34, 5));
+  node = tf.constant(new tf.Shape(34, 5));
   print(node.run());
 
   //print(tf.constant([2.0], dtype: DataType.DT_FLOAT).run());

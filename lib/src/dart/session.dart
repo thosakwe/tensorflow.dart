@@ -6,6 +6,9 @@ class Session {
   SessionRunner _runner;
   int _pointer;
 
+  factory Session({Graph graph, ConfigProto config}) =>
+      new Session._(graph ?? defaultGraph, config: config);
+
   Session._(this._graph, {this.config});
 
   Session._fromPointer(this._graph, this._pointer, {this.config});

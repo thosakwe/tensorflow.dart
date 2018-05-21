@@ -6,6 +6,11 @@
 #include "operation.h"
 #include "util.h"
 
+void tfd::Output_get_type(Dart_NativeArguments arguments) {
+    TF_Output output = convert_output_wrapper(Dart_GetNativeArgument(arguments, 0));
+    Dart_SetReturnValue(arguments, Dart_NewInteger(TF_OperationOutputType(output)));
+}
+
 void tfd::Operation_new(Dart_NativeArguments arguments) {
     //auto *op = TF_NewOperation();
 }
@@ -83,6 +88,15 @@ void tfd::Operation_num_outputs(Dart_NativeArguments arguments) {
     Dart_SetReturnValue(arguments, Dart_NewInteger(TF_OperationNumOutputs(oper)));
 }
 
+void tfd::OperationDescription_set_attr_int(Dart_NativeArguments arguments) {
+    auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
+    const char *name;
+    int64_t value;
+    HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
+    HandleError(Dart_IntegerToInt64(Dart_GetNativeArgument(arguments, 2), &value));
+    TF_SetAttrInt(desc, name, value);
+}
+
 void tfd::OperationDescription_set_attr_tensor(Dart_NativeArguments arguments) {
     Dart_Handle tensorHandle = Dart_GetNativeArgument(arguments, 2);
     auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
@@ -111,4 +125,17 @@ void tfd::OperationDescription_set_attr_type(Dart_NativeArguments arguments) {
     HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
     HandleError(Dart_IntegerToInt64(Dart_GetNativeArgument(arguments, 2), &value));
     TF_SetAttrType(desc, name, (TF_DataType) value);
+}
+
+void tfd::OperationDescription_set_attr_shape(Dart_NativeArguments arguments) {
+    auto dimsHandle = Dart_GetNativeArgument(arguments, 2); // Int64List
+    auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
+    const char *name;
+    int64_t *dims;
+    intptr_t length;
+    Dart_TypedData_Type type;
+    HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
+    HandleError(Dart_TypedDataAcquireData(dimsHandle, &type, (void **) &dims, &length));
+    TF_SetAttrShape(desc, name, dims, (int) length);
+    HandleError(Dart_TypedDataReleaseData(dimsHandle));
 }

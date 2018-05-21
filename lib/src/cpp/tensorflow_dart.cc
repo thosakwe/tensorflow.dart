@@ -33,14 +33,21 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     const char *cname;
     HandleError(Dart_StringToCString(name, &cname));
 
-    // graph.h
-    if (strcmp("Graph_new", cname) == 0) result = tfd::Graph_new;
+    // function_node.h
+    if (strcmp("FunctionNode_from_graph", cname) == 0) result = tfd::FunctionNode_from_graph;
+
+        // graph.h
+    else if (strcmp("Graph_copy_function", cname) == 0) result = tfd::Graph_copy_function;
+    else if (strcmp("Graph_new", cname) == 0) result = tfd::Graph_new;
     else if (strcmp("Graph_delete", cname) == 0) result = tfd::Graph_delete;
     else if (strcmp("Graph_add_operation", cname) == 0) result = tfd::Graph_add_operation;
     else if (strcmp("Graph_iter_next", cname) == 0) result = tfd::Graph_iter_next;
     else if (strcmp("Graph_operation_by_name", cname) == 0) result = tfd::Graph_operation_by_name;
     else if (strcmp("Graph_from_graph_def", cname) == 0) result = tfd::Graph_from_graph_def;
     else if (strcmp("Graph_to_graph_def", cname) == 0) result = tfd::Graph_to_graph_def;
+
+        // operation.h
+    else if (strcmp("Output_get_type", cname) == 0) result = tfd::Output_get_type;
     else if (strcmp("Operation_list", cname) == 0) result = tfd::Operation_list;
     else if (strcmp("Operation_name", cname) == 0) result = tfd::Operation_name;
     else if (strcmp("Operation_new", cname) == 0) result = tfd::Operation_new;
@@ -50,7 +57,12 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     else if (strcmp("OperationDescription_add_input", cname) == 0) result = tfd::OperationDescription_add_input;
     else if (strcmp("OperationDescription_finish", cname) == 0) result = tfd::OperationDescription_finish;
     else if (strcmp("OperationDescription_new", cname) == 0) result = tfd::OperationDescription_new;
-    else if (strcmp("OperationDescription_set_attr_tensor", cname) == 0) result = tfd::OperationDescription_set_attr_tensor;
+    else if (strcmp("OperationDescription_set_attr_int", cname) == 0)
+        result = tfd::OperationDescription_set_attr_int;
+    else if (strcmp("OperationDescription_set_attr_shape", cname) == 0)
+        result = tfd::OperationDescription_set_attr_shape;
+    else if (strcmp("OperationDescription_set_attr_tensor", cname) == 0)
+        result = tfd::OperationDescription_set_attr_tensor;
     else if (strcmp("OperationDescription_set_attr_type", cname) == 0) result = tfd::OperationDescription_set_attr_type;
 
         // saved_model_bundle.h

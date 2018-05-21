@@ -44,6 +44,8 @@ class OperationDescription<T> {
     if (code != Code.ok) throw new TensorFlowException(code, result.item2);
   }
 
+  void setAttrFunc(String name, Func value) native "";
+
   void setAttrTensorList(String name, List<Tensor> value) native "";
 
   void setAttrString(String name, String value) native "";
@@ -54,7 +56,8 @@ class OperationDescription<T> {
 
   void setAttrBoolList(String name, List<bool> value) native "";
 
-  void setAttrInt(String name, int value) native "";
+  void setAttrInt(String name, int value)
+      native "OperationDescription_set_attr_int";
 
   void setAttrIntList(String name, List<int> value) native "";
 
@@ -66,15 +69,21 @@ class OperationDescription<T> {
 
   void setAttrLongList(String name, int value) native "";
 
-  void setAttrShape(String name, Shape value) native "";
+  void _setAttrShape(String name, Int64List value)
+      native "OperationDescription_set_attr_shape";
+
+  void setAttrShape(String name, Shape value) =>
+      _setAttrShape(name, value.dimensions);
 
   void setAttrShapeList(String name, List<Shape> value) native "";
 
   void _setAttrType(String name, int value)
       native "OperationDescription_set_attr_type";
 
-  void setAttrType(String name, DataType value) =>
-      _setAttrType(name, value.value);
+  void setAttrType(String name, DataType value) {
+    if (value == null) throw "Missing required attr '$name' on '${this.name}'.";
+    _setAttrType(name, value.value);
+  }
 
   void _setAttrTypeList(String name, Int32List value)
       native "OperationDescription_set_attr_type_list";

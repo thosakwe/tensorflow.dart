@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:io';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
@@ -23,44 +22,50 @@ String escapeName(String name) {
     'switch',
     'var',
     'while',
-    'sourceOutput'
+    'sourceOutput',
+    'graph',
+    'operationName',
+    'run'
   ].contains(name)
       ? name + '\$'
       : name;
 }
 
-Reference convertType(
-    tf.DataType type, int index, List<tf.OpDef_AttrDef> attrs) {
-  return new TypeReference((b) {
-    b.symbol = 'Output';
-
-    Reference t;
-
+Reference convertType(tf.DataType type, int index, List<tf.OpDef_AttrDef> attrs,
+    [bool wrapped = true]) {
+  var t = (() {
     switch (type) {
       case tf.DataType.DT_BOOL:
-        t = new Reference('bool');
+        return new Reference('bool');
         break;
       case tf.DataType.DT_INT32:
-        t = new Reference('int');
+        return new Reference('int');
         break;
       case tf.DataType.DT_INT64:
-        t = new Reference('int');
+        return new Reference('int');
         break;
       case tf.DataType.DT_FLOAT:
-        t = new Reference('double');
+        return new Reference('double');
         break;
       case tf.DataType.DT_STRING:
-        t = new Reference('String');
+        return new Reference('String');
         break;
       case tf.DataType.DT_INVALID:
-        t = refer('T'); //new Reference(attrs[index].name);
+        return refer('T'); //new Reference(attrs[index].name);
         break;
       default:
         return null;
         //t = new Reference('dynamic');
         break;
     }
+  })();
 
+  if (!wrapped) return t ?? refer('dynamic');
+
+  return new TypeReference((b) {
+    b.symbol = 'Output';
+
+    Reference t;
     if (t != null) b.types.add(t);
   });
 }
@@ -108,7 +113,7 @@ main() async {
   print('Found ${publicOps.length} ops');
 
   var lib = new Library((libBuilder) {
-    libBuilder.body.add(new Class((b) {
+    /*libBuilder.body.add(new Class((b) {
       b
         ..name = 'Graph'
         ..extend = new Reference('_Graph');
@@ -123,15 +128,14 @@ main() async {
           ..initializers.add(new Code('super._fromPointer(_pointer)'))),
       ]);
 
-      b.methods.add(new Method((b) {
+      b.constructors.add(new Constructor((b) {
         /*
             /// 
   static Graph importGraphDef(GraphDef graphDef, {String prefix}) {}
          */
         b
-          ..name = 'importGraphDef'
-          ..static = true
-          ..returns = refer('Graph')
+          ..name = 'fromGraphDef'
+          ..factory = true
           ..docs.add(
               '/// Import a serialized representation of a TensorFlow graph.')
           ..requiredParameters.add(new Parameter((b) => b
@@ -146,159 +150,255 @@ main() async {
               .call([refer('graphDef')], {'prefix': refer('prefix')})
               .returned
               .statement;
-      }));
+      }));*/
 
-      for (var op in publicOps) {
-        var body = <Code>[];
-        body.add(refer('newOperation')
-            .call([
-              literal(op.name),
-              refer('_scope').property('uniqueName')([literal(op.name)]),
-            ])
-            .assignVar('op\$')
-            .statement);
+    for (var op in publicOps) {
+      var body = <Code>[
+        refer('graph').assignNullAware(refer('defaultGraph')).statement,
+      ];
+      body.add(refer('graph')
+          .property('newOperation')
+          .call([
+            literal(op.name),
+            refer('operationName').assignNullAware(
+              refer('graph')
+                  .property('_scope')
+                  .property('uniqueName')([literal(op.name + '/')]),
+            ),
+          ])
+          .assignVar('op\$')
+          .statement);
 
-        b.methods.add(new Method((method) {
-          var name = new ReCase(op.name).camelCase;
-          method
-            ..docs.addAll(getDocs(op.summary))
-            ..docs.addAll(getDocs(op.description))
-            ..returns = new Reference('Output')
-            ..name = escapeName(name);
+      libBuilder.body.add(new Method((method) {
+        method.optionalParameters.add(new Parameter((b) {
+          b
+            ..name = 'graph'
+            ..type = refer('Graph');
+        }));
 
-          if (op.inputArg.any((a) => a.type == tf.DataType.DT_INVALID) ||
-              op.outputArg.any((a) => a.type == tf.DataType.DT_INVALID))
-            method.types.add(refer('T'));
+        //b.methods.add(new Method((method) {
+        var p = new Parameter((b) => b
+          ..name = 'operationName'
+          ..type = refer('String')
+          ..named = true);
+        method.optionalParameters.add(p);
 
-          if (op.hasDeprecation())
-            method.annotations.add(new Reference('Deprecated').call([
-              literal(
-                  'DEPRECATED at GraphDef version ${op.deprecation.version}:' +
-                      ' ${op.deprecation.explanation}')
-            ]));
+        var name = new ReCase(op.name).camelCase;
+        method
+          ..docs.addAll(getDocs(op.summary))
+          ..docs.addAll(getDocs(op.description))
+          ..returns = new Reference('Output')
+          ..name = escapeName(name);
 
-          var typeAttr = op.attr.where((o) => o.type == 'type').toList();
-          var paramAttr = op.attr.where((o) => o.type != 'type').toList();
-          var inputs = <String>[], attributes = <String, Expression>{};
-          String outputTypeName;
+        if (op.inputArg.any((a) => a.type == tf.DataType.DT_INVALID) ||
+            op.outputArg.any((a) => a.type == tf.DataType.DT_INVALID)) {
+          method.types.add(refer('T'));
+        }
 
-          var hasT = op.attr
-                  .any((attr) => (attr.name == 'T' && attr.type == 'type')) ||
-              op.inputArg.any((a) => a.type == tf.DataType.DT_INVALID) ||
-              op.outputArg.any((a) => a.type == tf.DataType.DT_INVALID);
+        if (op.hasDeprecation()) {
+          var ann = new Reference('Deprecated').call([
+            literal('DEPRECATED at GraphDef version ${op.deprecation
+                .version}:' +
+                ' ${op.deprecation.explanation}')
+          ]);
+          method.annotations.add(ann);
+        }
 
-          if (op.outputArg.isEmpty)
-            method.returns = refer('void');
-          else if (op.outputArg.length == 1)
-            method.returns = convertType(op.outputArg[0].type, 0, typeAttr);
-          else {
-            // Create a custom output class.
-            outputTypeName = new ReCase(op.name).pascalCase + 'Output';
-            method.returns = refer(outputTypeName);
+        var typeAttr = op.attr.where((o) => o.type == 'type').toList();
+        var inputs = <String>[];
+        String resultTypeName, outputTypeName;
 
-            libBuilder.body.add(new Class((b) {
-              b.name = escapeName(outputTypeName);
+        var hasT =
+            op.attr.any((attr) => (attr.name == 'T' && attr.type == 'type')) ||
+                op.inputArg.any((a) => a.type == tf.DataType.DT_INVALID) ||
+                op.outputArg.any((a) => a.type == tf.DataType.DT_INVALID);
+
+        if (op.outputArg.isEmpty)
+          method.returns = refer('Operation');
+        else if (op.outputArg.length == 1)
+          method.returns = convertType(op.outputArg[0].type, 0, typeAttr);
+        else {
+          // Create a custom output class.
+          resultTypeName = new ReCase(op.name).pascalCase;
+          outputTypeName = '${resultTypeName}Output';
+          method.returns = refer(outputTypeName);
+
+          libBuilder.body.add(new Class((resultClass) {
+            resultClass..name = escapeName(resultTypeName);
+
+            libBuilder.body.add(new Class((outputClass) {
+              outputClass
+                ..name = escapeName(outputTypeName)
+                ..fields.add(new Field((b) => b
+                  ..name = '_graph'
+                  ..modifier = FieldModifier.final$
+                  ..type = refer('Graph')));
 
               // Add a `T` if necessary.
-              if (hasT) b.types.add(refer('T'));
+              if (hasT) {
+                outputClass.types.add(refer('T'));
+                resultClass.types.add(refer('T'));
+              }
 
               // Add a field + constructor parameter for each argument.
-              b.constructors.add(new Constructor((constructor) {
+              outputClass.constructors.add(new Constructor((outputConstructor) {
                 int i = 0;
 
-                constructor.requiredParameters.add(new Parameter((p) => p
+                outputConstructor.requiredParameters.add(new Parameter((b) => b
+                  ..name = '_graph'
+                  ..toThis = true));
+
+                outputConstructor.requiredParameters.add(new Parameter((p) => p
                   ..name = 'op'
                   ..toThis = true));
 
-                b.fields.add(new Field((b) => b
+                outputClass.fields.add(new Field((b) => b
                   ..name = 'op'
                   ..type = refer('Operation')));
 
-                for (var output in op.outputArg) {
-                  b.fields.add(new Field((b) {
-                    b
-                      ..name = escapeName(
+                resultClass.constructors
+                    .add(new Constructor((resultConstructor) {
+                  for (var output in op.outputArg) {
+                    resultClass.fields.add(new Field((resultField) {
+                      var name = resultField.name = escapeName(
                           new ReCase(output.name == 'op' ? 'op\$' : output.name)
-                              .camelCase)
-                      ..modifier = FieldModifier.final$
-                      ..type = convertType(output.type, i++, typeAttr);
-                    constructor.requiredParameters.add(new Parameter((p) => p
-                      ..name = b.name
-                      ..toThis = true));
-                  }));
-                }
+                              .camelCase);
+                      var type = resultField.type =
+                          convertType(output.type, i++, typeAttr, false);
+                      resultConstructor.requiredParameters
+                          .add(new Parameter((p) => p
+                            ..name = name
+                            ..toThis = true));
+                      outputClass.fields.add(new Field((outputField) {
+                        outputField
+                          ..name = name
+                          ..modifier =
+                              resultField.modifier = FieldModifier.final$
+                          ..type = new TypeReference((b) => b
+                            ..symbol = 'Output'
+                            ..types.add(type));
+                        outputConstructor.requiredParameters
+                            .add(new Parameter((p) => p
+                              ..name = name
+                              ..toThis = true));
+                      }));
+                    }));
+                  }
+                }));
+              }));
+
+              // Add a helper `run` method.
+              outputClass.methods.add(new Method((b) {
+                b
+                  ..name = 'run'
+                  ..returns = refer(resultTypeName)
+                  ..optionalParameters.add(new Parameter((b) => b
+                    ..name = 'feed'
+                    ..named = true
+                    ..type = new TypeReference((b) => b
+                      ..symbol = 'Map'
+                      ..types.addAll([
+                        refer('String'),
+                        refer('Tensor'),
+                      ]))))
+                  ..body = new Block((b) {
+                    b.statements.add(
+                      new Code('var runner = _graph.session.runner;'),
+                    );
+
+                    for (int i = 0; i < op.outputArg.length; i++) {
+                      b.statements.addAll([
+                        new Code('runner.fetch(op.name, index: $i);'),
+                        new Code('feed?.forEach(runner.feed);'),
+                        new Code('var result$i = runner.run()[0];'),
+                      ]);
+                    }
+
+                    var args = <Expression>[];
+
+                    for (int i = 0; i < op.outputArg.length; i++)
+                      args.add(refer('result$i'));
+
+                    b.statements.add(refer(resultTypeName)
+                        .newInstance(args, {}, hasT ? [refer('T')] : [])
+                        .returned
+                        .statement);
+                  });
               }));
             }));
-          }
+          }));
+        }
 
-          // All inputs should be tf.Output or []tf.Output
-          for (var input in op.inputArg) {
-            var type = convertType(input.type, 0, typeAttr);
-            var name = escapeName(new ReCase(input.name).camelCase);
-            inputs.add('_convertOutput($name)');
+        // All inputs should be tf.Output or []tf.Output
+        for (var input in op.inputArg) {
+          var type = convertType(input.type, 0, typeAttr);
+          var name = escapeName(new ReCase(input.name).camelCase);
+          inputs.add('_convertOutput($name)');
 
-            bool isList =
-                input.typeListAttr.isNotEmpty || input.numberAttr.isNotEmpty;
-            if (isList) {
-              type = new TypeReference((b) => b
-                ..symbol = 'List'
-                ..types.add(type));
-              /*
+          bool isList =
+              input.typeListAttr.isNotEmpty || input.numberAttr.isNotEmpty;
+          if (isList) {
+            type = new TypeReference((b) => b
+              ..symbol = 'List'
+              ..types.add(type));
+            /*
               print(input.typeListAttr.isNotEmpty
                   ? input.typeListAttr
                   : input.numberAttr);
                   */
+          }
+
+          var p = new Parameter((b) {
+            b
+              ..name = escapeName(new ReCase(input.name).camelCase)
+              ..type = type;
+          });
+          method.requiredParameters.add(p);
+
+          body.add(refer('op\$')
+              .property(isList ? 'addInputList' : 'addInput')
+              .call([refer(name)]).statement);
+        }
+
+        for (var attr in op.attr) {
+          if (attr.name == 'T' && attr.type == 'type') continue;
+
+          var paramName = escapeName(new ReCase(attr.name).camelCase);
+          var p = new Parameter((b) {
+            b
+              ..name = paramName
+              ..named = true
+              ..type = refer(dartType(attr.type, true));
+
+            if (attr.hasDefaultValue())
+              b.defaultTo = convertDefaultValue(attr.defaultValue)?.code;
+            //else
+            //  b.annotations.add(refer('required'));
+
+            if (attr.name == 'dtype') {
+              if (op.inputArg.isEmpty)
+                b.annotations.add(refer('required'));
+              else {
+                var dtype = refer('dtype'), inferType = refer('inferType');
+                var firstInput = refer(
+                    escapeName(new ReCase(op.inputArg[0].name).camelCase));
+                body.insert(0,
+                    dtype.assignNullAware(inferType([firstInput])).statement);
+              }
             }
 
-            method.requiredParameters.add(new Parameter((b) {
-              b
-                ..name = escapeName(new ReCase(input.name).camelCase)
-                ..type = type;
-            }));
+            var setAttr = new StringBuffer('setAttr');
+            setAttr.write(attrType(attr.type));
+            if (attr.type.startsWith('list')) setAttr.write('List');
 
             body.add(refer('op\$')
-                .property(isList ? 'addInputList' : 'addInput')
-                .call([refer(name)]).statement);
-          }
+                .property(setAttr.toString())
+                .call([literal(attr.name), refer(b.name)]).statement);
+          });
+          method.optionalParameters.add(p);
+        }
 
-          for (var attr in op.attr) {
-            if (attr.name == 'T' && attr.type == 'type') continue;
-
-            var paramName = escapeName(new ReCase(attr.name).camelCase);
-            method.optionalParameters.add(new Parameter((b) {
-              b
-                ..name = paramName
-                ..named = true
-                ..type = refer(dartType(attr.type, true));
-
-              if (attr.hasDefaultValue())
-                b.defaultTo = convertDefaultValue(attr.defaultValue)?.code;
-              //else
-              //  b.annotations.add(refer('required'));
-
-              if (attr.name == 'dtype') {
-                if (op.inputArg.isEmpty)
-                  b.annotations.add(refer('required'));
-                else {
-                  var dtype = refer('dtype'), inferType = refer('inferType');
-                  var firstInput = refer(
-                      escapeName(new ReCase(op.inputArg[0].name).camelCase));
-                  body.insert(0,
-                      dtype.assignNullAware(inferType([firstInput])).statement);
-                }
-              }
-
-              var setAttr = new StringBuffer('setAttr');
-              setAttr.write(attrType(attr.type));
-              if (attr.type.startsWith('list')) setAttr.write('List');
-
-              body.add(refer('op\$')
-                  .property(setAttr.toString())
-                  .call([literal(attr.name), refer(b.name)]).statement);
-            }));
-          }
-
-          /*
+        /*
           for (var attr in op.attr) {
             if (attr.name == 'T' && attr.type == 'type') continue;
 
@@ -337,32 +437,33 @@ main() async {
             attributes[attr.name] = refer(paramName);
           }
           */
-          var retVal = refer('op\$').property('finish').call([]);
+        var retVal = refer('op\$').property('finish').call([]);
 
-          if (op.outputArg.isEmpty) {
-            body.add(retVal.statement);
+        if (op.outputArg.isEmpty) {
+          body.add(retVal.returned.statement);
+        } else {
+          if (op.outputArg.length <= 1) {
+            retVal = retVal.index(literal(op.outputArg.length - 1));
           } else {
-            if (op.outputArg.length <= 1) {
-              retVal = retVal.index(literal(op.outputArg.length - 1));
-            } else {
-              body.add(retVal.assignVar('result\$').statement);
-              var args = <Expression>[refer('result\$')];
+            body.add(retVal.assignVar('result\$').statement);
+            var args = <Expression>[refer('graph'), refer('result\$')];
 
-              for (int i = 0; i < op.outputArg.length; i++) {
-                //var output = op.outputArg[i];
-                args.add(refer('result\$').index(literal(i)));
-              }
-              retVal = refer(outputTypeName)
-                  .newInstance(args, {}, hasT ? [refer('T')] : []);
+            for (int i = 0; i < op.outputArg.length; i++) {
+              //var output = op.outputArg[i];
+              args.add(refer('result\$').index(literal(i)));
             }
-
-            body.add(retVal.returned.statement);
+            retVal = refer(outputTypeName)
+                .newInstance(args, {}, hasT ? [refer('T')] : []);
           }
 
-          method.body = new Block.of(body);
-        }));
-      }
-    }));
+          body.add(retVal.returned.statement);
+        }
+
+        method.body = new Block.of(body);
+        //}));
+      }));
+    }
+    //}));
   });
 
   var dartText =
@@ -406,6 +507,8 @@ String dartType(String tfType, [bool allowTensorType = false]) {
       return allowTensorType ? 'Tensor' : 'Output';
     case 'string':
       return 'String';
+    case 'func':
+      return 'Func';
     default:
       var m = _listType.firstMatch(tfType);
       if (m == null) return null;
@@ -440,6 +543,8 @@ String attrType(String tfType) {
     case 'string':
     case 'String':
       return 'String';
+    case 'func':
+      return 'Func';
     default:
       var m = _listType.firstMatch(tfType);
       if (m == null) throw "Unknown attr type '${tfType}'.";

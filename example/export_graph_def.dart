@@ -1,8 +1,8 @@
-import 'package:tensorflow/tensorflow.dart';
+import 'package:tensorflow/tensorflow.dart' as tf;
 
 void main() {
-  var tf = new Graph()..constant('Hello, world!');
-  var graphDef = tf.toGraphDef();
+  tf.constant('Hello, world!');
+  var graphDef = tf.defaultGraph.toGraphDef();
   print('${graphDef.node.length} node(s)');
 }
 

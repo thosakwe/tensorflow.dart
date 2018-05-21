@@ -9,6 +9,38 @@
 
 using namespace tfd;
 
+void tfd::Graph_copy_function(Dart_NativeArguments arguments) {
+    Dart_Handle graphHandle = Dart_GetNativeArgument(arguments, 0);
+    Dart_Handle funcHandle = Dart_GetNativeArgument(arguments, 1);
+    Dart_Handle gradHandle = Dart_GetNativeArgument(arguments, 2);
+
+    auto *graph = dereference_graph_ptr(graphHandle);
+    auto *status = TF_NewStatus();
+    uint64_t func, grad;
+
+    HandleError(Dart_IntegerToUint64(funcHandle, &func));
+
+    if (Dart_IsNull(gradHandle))
+        grad = nullptr;
+    else
+        HandleError(Dart_IntegerToUint64(gradHandle, &grad));
+
+    TF_GraphCopyFunction(graph, (TF_Function *) func, (TF_Function *) grad, status);
+
+    int code = TF_GetCode(status);
+
+    Dart_Handle retVal;
+
+    if (code != 0) {
+        retVal = Dart_NewStringFromCString(TF_Message(status));
+    } else {
+        retVal = Dart_Null();
+    }
+
+    TF_DeleteStatus(status);
+    Dart_SetReturnValue(arguments, retVal);
+}
+
 void tfd::Graph_new(Dart_NativeArguments arguments) {
     auto *graph = TF_NewGraph();
     Dart_SetReturnValue(arguments, Dart_NewIntegerFromUint64((uint64_t) graph));

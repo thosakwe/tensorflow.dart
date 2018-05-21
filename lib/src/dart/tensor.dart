@@ -18,6 +18,7 @@ class Tensor {
     if (value is bool) return new Tensor.fromBool(value);
     if (value is double) return new Tensor.fromDouble(value);
     if (value is int) return new Tensor.fromInt(value);
+    if (value is Shape) return new Tensor.fromShape(value);
     if (value is Int32)
       return new Tensor.fromInt32List(new Int32List.fromList([value.toInt()]))
           .asScalar;
@@ -99,7 +100,7 @@ class Tensor {
   factory Tensor.fromFloat64List(Float64List list) => new Tensor.fromBuffer(
       DataType.DT_DOUBLE, new Shape(list.length), list.buffer);
 
-  static Uint8List _string(String s) native "Tensors_string";
+  //static Uint8List _string(String s) native "Tensors_string";
 
   /// Returns this [Tensor] as a 0-dimensional scalar.
   Tensor get asScalar => reshape(Shape.scalar);

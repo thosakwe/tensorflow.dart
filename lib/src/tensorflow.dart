@@ -18,6 +18,8 @@ part 'dart/enums.dart';
 
 part 'dart/error.dart';
 
+part 'dart/function_node.dart';
+
 part 'dart/graph.dart';
 
 part 'dart/op_def.dart';
@@ -36,7 +38,7 @@ part 'dart/shape.dart';
 
 part 'dart/tensor.dart';
 
-String get tensorFlowVersion native "Version";
+String get version native "Version";
 
 Uint8List getAllOpsInternal() native "Operation_list";
 
@@ -55,4 +57,10 @@ DataType inferType(x) {
   if (x is Iterable) return x.isEmpty ? DataType.DT_INT32 : inferType(x.first);
   if (x is Shape) return DataType.DT_INT32;
   throw 'Cannot infer Tensorflow data type for value $x';
+}
+
+class TFFunction {
+  final DataType dtype;
+
+  const TFFunction(this.dtype);
 }

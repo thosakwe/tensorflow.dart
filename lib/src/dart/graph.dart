@@ -1,27 +1,32 @@
 part of tensorflow;
 
+final Graph defaultGraph = new Graph();
+
+Output<T> constant<T>(T value, {String operationName, DataType dtype}) {
+  return defaultGraph.constant<T>(value,
+      operationName: operationName, dtype: dtype);
+}
+
 /// A data flow graph representing a TensorFlow computation.
-abstract class _Graph {
+class Graph {
   static int _Graph_new() native "Graph_new";
 
-  final int _pointer;
+  int _pointer;
 
   final SymbolTable _scope = new SymbolTable();
-  int _count = 0, _index = 0;
+  int  _index = 0;
   List<Operation> _operations;
   Session _session;
 
-  _Graph() : _pointer = _Graph_new();
+  Graph() : _pointer = _Graph_new();
 
-  _Graph._fromPointer(this._pointer);
-
-  Output _convertOutput(x) => x is Output ? x : constant(x);
+  Graph._fromPointer(this._pointer);
 
   static Tuple3<int, String, int> _importGraphDef(
       Uint8List graphDef, String prefix) native "Graph_from_graph_def";
 
   /// Import a serialized representation of a TensorFlow graph.
-  static Graph importGraphDef(GraphDef graphDef, {String prefix}) {
+  factory Graph.fromGraphDef(GraphDef graphDef, {String prefix}) {
     var result = _importGraphDef(graphDef.writeToBuffer(), prefix);
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw new TensorFlowException(code, result.item2);
@@ -54,6 +59,11 @@ abstract class _Graph {
   /// Release resources associated with the Graph.
   void close() native "Graph_delete";
 
+  void reset() {
+    close();
+    _pointer = _Graph_new();
+  }
+
   /// Returns a builder to add Operations to the Graph.
   OperationDescription<T> newOperation<T>(String type, String name) {
     return new OperationDescription._(this, type, name);
@@ -77,6 +87,11 @@ abstract class _Graph {
       ..setAttrTensor('value', tensor);
     return op.finish()[0];
   }
+
+  void _copyFunction(int func, int grad) native "Graph_copy_function";
+
+  void copyFunction(Func func, {Func grad}) =>
+      _copyFunction(func._pointer, grad?._pointer);
 
   /*
   Output<T> _constant<T>(T value, {String operationName, DataType dtype}) {
@@ -112,6 +127,7 @@ abstract class _Graph {
         (x) => inferType(x).value);
   }*/
 
+  /*
   Output _constant(
       value,
       Type outputType,
@@ -120,9 +136,10 @@ abstract class _Graph {
       int index,
       Type shapeType,
       int Function(Object) inferType) native "Constant";
+      */
 
   @override
-  bool operator ==(other) => other is _Graph && other._pointer == _pointer;
+  bool operator ==(other) => other is Graph && other._pointer == _pointer;
 
   int _iter_next(int index) native "Graph_iter_next";
 }

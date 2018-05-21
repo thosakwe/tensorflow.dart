@@ -72,10 +72,6 @@ enum Code {
   dataLoss,
 }
 
-int _codeToInt(Code type) {
-  return Code.values.indexOf(type);
-}
-
 Code _codeFrom(int value) {
   return Code.values[value];
 }

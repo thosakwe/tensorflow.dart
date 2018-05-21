@@ -9,9 +9,13 @@ class Output<T> {
   Output._(this._graph);
 
   DataType get dtype {
-    if (_dtype == null)
+    if (_dtype == null) {
+      _dtype = _getType();
+      /*
       throw new StateError('Could not determine the data type of this output.\n'
           'Most likely, a function is trying to infer the type of this output.');
+          */
+    }
     return DataType.valueOf(_dtype);
   }
 
@@ -21,40 +25,51 @@ class Output<T> {
 
   Shape get shape native "Output_shape";
 
-  Output<T> operator *(Output<T> other) => _graph.mul<T>(this, other);
+  Output<T> operator *(Output<T> other) => mul<T>(this, other, graph: _graph);
 
-  Output<T> operator /(Output<T> other) => _graph.div<T>(this, other);
+  Output<T> operator /(Output<T> other) => div<T>(this, other, graph: _graph);
 
-  Output<T> operator %(Output<T> other) => _graph.mod<T>(this, other);
+  Output<T> operator %(Output<T> other) => mod<T>(this, other, graph: _graph);
 
-  Output<T> operator +(Output<T> other) => _graph.add<T>(this, other);
+  Output<T> operator +(Output<T> other) => add<T>(this, other, graph: _graph);
 
-  Output<T> operator -(Output<T> other) => _graph.sub<T>(this, other);
+  Output<T> operator -(Output<T> other) => sub<T>(this, other, graph: _graph);
 
-  Output<T> operator &(Output<T> other) => _graph.bitwiseAnd<T>(this, other);
+  Output<T> operator &(Output<T> other) =>
+      bitwiseAnd<T>(this, other, graph: _graph);
 
-  Output<T> operator ^(Output<T> other) => _graph.bitwiseXor<T>(this, other);
+  Output<T> operator ^(Output<T> other) =>
+      bitwiseXor<T>(this, other, graph: _graph);
 
-  Output<T> operator |(Output<T> other) => _graph.bitwiseOr<T>(this, other);
+  Output<T> operator |(Output<T> other) =>
+      bitwiseOr<T>(this, other, graph: _graph);
 
-  Output<bool> operator >(Output<T> other) => _graph.greater<T>(this, other);
+  Output<bool> operator >(Output<T> other) =>
+      greater<T>(this, other, graph: _graph);
 
   Output<bool> operator >=(Output<T> other) =>
-      _graph.greaterEqual<T>(this, other);
+      greaterEqual<T>(this, other, graph: _graph);
 
-  Output<bool> operator <(Output<T> other) => _graph.less<T>(this, other);
+  Output<bool> operator <(Output<T> other) =>
+      less<T>(this, other, graph: _graph);
 
-  Output<bool> operator <=(Output<T> other) => _graph.lessEqual<T>(this, other);
+  Output<bool> operator <=(Output<T> other) =>
+      lessEqual<T>(this, other, graph: _graph);
 
-  Output<T> operator <<(Output<T> other) => _graph.leftShift<T>(this, other);
+  Output<T> operator <<(Output<T> other) =>
+      leftShift<T>(this, other, graph: _graph);
 
-  Output<T> operator >>(Output<T> other) => _graph.rightShift<T>(this, other);
+  Output<T> operator >>(Output<T> other) =>
+      rightShift<T>(this, other, graph: _graph);
 
-  T run() => runAsList()[0];
+  int _getType() native "Output_get_type";
 
-  List<T> runAsList() {
-    var sess = _graph.session..runner.fetchFromOutput(this);
-    return sess.runner.run<T>().toList(growable: false);
+  T run({Map<String, Tensor> feed: const {}}) => runAsList(feed: feed)[0];
+
+  List<T> runAsList({Map<String, Tensor> feed: const {}}) {
+    var runner = _graph.session.runner..fetchFromOutput(this);
+    feed?.forEach(runner.feed);
+    return runner.run<T>().toList(growable: false);
   }
 
   @override
