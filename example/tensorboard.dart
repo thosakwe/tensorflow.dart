@@ -9,7 +9,7 @@ main() {
   );
 
   new tf.FileWriter(logDir)
-    ..histogram('foo', tf.zeros(new tf.Shape(2, 3)))
+    ..histogram('zeros', tf.zeros(new tf.Shape(2, 3)))
     ..flush()
     ..runInTensorboard(host: 'localhost');
 }
