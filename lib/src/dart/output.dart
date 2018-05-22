@@ -2,7 +2,7 @@ part of tensorflow;
 
 class Output<T> {
   final Graph _graph;
-  Operation _initializer;
+  Output _initializer;
   Output _resource;
   int _operation;
   int _index;
@@ -29,7 +29,7 @@ class Output<T> {
 
   Shape get shape => new Shape._(_shape(_graph));
 
-  Operation get initializer => _initializer ?? noOp();
+  Output get initializer => _initializer ?? this;//noOp();
 
   Output<T> get value => _resource == null
       ? this

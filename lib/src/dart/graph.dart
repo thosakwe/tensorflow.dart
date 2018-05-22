@@ -40,7 +40,7 @@ class Graph {
   int _pointer;
 
   final SymbolTable _scope = new SymbolTable();
-  final Map<String, Output> _variables = {};
+  final Map<String, Variable> _variables = {};
   int _index = 0;
   List<Operation> _operations;
   Session _session;

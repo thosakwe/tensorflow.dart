@@ -7,6 +7,7 @@ class OperationDescription<T> {
   final int _pointer;
   int _index = 0;
   String _device;
+  Variable _variable;
 
   static int _OperationDescription_new(int graph, String type, String name)
       native "OperationDescription_new";
@@ -23,7 +24,12 @@ class OperationDescription<T> {
 
   /// Returns the builder to create an operation.
   void addInput(Output control) {
-    _addInput(control, _index++);
+    if (control is Variable) {
+      if (type == 'Assign') _variable = control;
+      addInput(control._value);
+    } else if (control != null) {
+      _addInput(control, _index++);
+    }
   }
 
   void _addInputList(List<Output> inputs)
@@ -40,7 +46,10 @@ class OperationDescription<T> {
   /// Add the [Operation] being built to the [Graph].
   Operation<T> finish() {
     setDevice(_device ?? Zone.current[_deviceSymbol]);
-    return new Operation<T>._fromPointer(_finish(TensorFlowException), _graph);
+    var op =
+        new Operation<T>._fromPointer(_finish(TensorFlowException), _graph);
+    if (_variable != null) _variable._value = op[0];
+    return op;
   }
 
   Tuple2/*<int, String>*/ _setAttrTensor(String name, Tensor value)

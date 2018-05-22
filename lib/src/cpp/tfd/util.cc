@@ -190,13 +190,13 @@ Dart_Handle tfd::get_tensor_value(TF_Tensor *tensor) {
     // TODO: Other data types
 
     // Throw an UnsupportedError
-    Dart_Handle unsupportedErrorType = Dart_GetClass(Dart_RootLibrary(),
+    /*Dart_Handle unsupportedErrorType = Dart_GetClass(Dart_RootLibrary(),
                                                      Dart_NewStringFromCString("UnsupportedError"));
     std::string msgbuf("Unsupported Tensor type: ");
     msgbuf.append(std::to_string(type));
     Dart_Handle msg = Dart_NewStringFromCString(msgbuf.c_str());
     Dart_Handle error = Dart_New(unsupportedErrorType, Dart_NewStringFromCString(""), 1, &msg);
-    Dart_ThrowException(error);
+    Dart_ThrowException(error);*/
     return Dart_Null();
 }
 

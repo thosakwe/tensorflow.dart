@@ -10,7 +10,7 @@ part of tensorflow;
 /// tf.zeros(new tf.Shape(3, 4), dtype: tf.DataType.DT_INT32)  // [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 /// ```
 Output<List<T>> zeros<T extends num>(Shape shape,
-    {DataType dtype: DataType.DT_FLOAT, String operationName}) {
+    {DataType dtype: DataType.DT_FLOAT, String operationName, Graph graph}) {
   Tensor tensor;
 
   if (dtype == DataType.DT_DOUBLE) {
@@ -83,6 +83,7 @@ Output<List<T>> zeros<T extends num>(Shape shape,
     value: tensor,
     dtype: dtype,
     operationName: operationName,
+    graph: graph,
   )..reshape(shape);
 }
 

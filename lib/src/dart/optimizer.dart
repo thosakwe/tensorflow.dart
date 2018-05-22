@@ -9,22 +9,22 @@ abstract class Optimizer {
           {@required double learningRate, bool useLocking: true}) =>
       new _GradientDescentOptimizer(learningRate, useLocking);
 
-  Output<T> _applyDense<T>(Output var$, Output<T> grad);
+  Output<T> _applyDense<T>(Variable var$, Output<T> grad);
 
   @mustCallSuper
   Output<T> minimize<T>(Output<T> grad) {
     var v = _init(grad);
-    v = _applyDense<T>(v, grad);
-    return v;
+    v.assignTo(_applyDense<T>(v, grad));
+    return v.initializedValue;
   }
 
-  Output _init(Output target) {
+  Variable _init(Output target) {
     var _var = getVariable(
       defaultGraph._scope.uniqueName('${_name}Optimizer/'),
       shape: target.shape,
       dtype: target.dtype,
     );
-    return _var..initializer.run();
+    return _var..initialize();
   }
 }
 
@@ -36,9 +36,9 @@ class _GradientDescentOptimizer extends Optimizer {
       : super._('GradientDescent');
 
   @override
-  Output<T> _applyDense<T>(Output var$, Output<T> grad) {
+  Output<T> _applyDense<T>(Variable var$, Output<T> grad) {
     return applyGradientDescent(
-      var$.value,
+      var$.initializedValue,
       constant(learningRate),
       grad,
       useLocking: useLocking,

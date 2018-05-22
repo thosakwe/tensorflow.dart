@@ -1,6 +1,6 @@
 part of tensorflow;
 
-Output<T> getVariable<T>(String name,
+Variable<T> getVariable<T>(String name,
     {DataType dtype: DataType.DT_FLOAT,
     @required Shape shape,
     Output<T> initializer}) {
@@ -14,29 +14,88 @@ Output<T> getVariable<T>(String name,
   return defaultGraph._variables.putIfAbsent(b.toString(), () {
     //dtype = dtype.value > 100 ? dtype : DataType.valueOf(dtype.value + 100);
     Output assignOp;
-    // TODO: Go back to variableV2
-    var v = temporaryVariable<T>(
-      varName: b.toString(),
+    var v = variableV2<T>(
+      operationName: b.toString(),
       dtype: dtype,
       shape: shape,
+      graph: defaultGraph,
     );
 
     if (initializer != null) {
       assignOp = initializer;
     } else {
       if (shape == Shape.scalar)
-        assignOp = constant(0.0, dtype: dtype);
+        assignOp = constant(0.0, dtype: dtype, graph: defaultGraph);
       else
-        assignOp = zeros(shape, dtype: dtype);
+        assignOp = zeros(shape, dtype: dtype, graph: defaultGraph);
     }
 
-    v = assign(v, assignOp);
-    return v;
-    //v._initializer = assignVariableOp(v, assignOp, dtype: assignOp.dtype);
-    var resource = readVariableOp(v);
-    return v.._resource = resource;
+    var init = assign(v, assignOp, graph: defaultGraph);
+    return new Variable<T>._(defaultGraph, dtype, b.toString(), v, init);
   });
 }
 
 DataType _toRef(DataType dtype) =>
     dtype.value >= 100 ? dtype : DataType.valueOf(dtype.value + 100);
+
+class Variable<T> extends Output<T> {
+  final DataType dtype;
+  final String name;
+  Output<T> _value, _variable;
+  bool _initialized = false;
+
+  Variable._(
+      Graph graph, this.dtype, this.name, this._value, Output<T> initializer)
+      : super._(graph) {
+    _initializer = initializer;
+    _operation = _value._operation;
+    _index = _value._index;
+    _variable = _value;
+  }
+
+  Output<T> get initializedValue {
+    initialize();
+    return assign(_variable, value);
+  }
+
+  Output<T> get value {
+    if (!_initialized)
+      throw "The variable '$name' has not been initialized yet.";
+    return _value;
+  }
+
+  Output<T> assignTo(Output<T> value) {
+    return _value = assign(_variable, value);
+  }
+
+  void initialize() {
+    if (!_initialized) {
+      _value = _graph.constant<T>(_initializer.run());
+      _initialized = true;
+    }
+  }
+
+  @override
+  int _getType() => _value._getType();
+
+  @override
+  int get index => _value.index;
+
+  @override
+  Operation get op => _value.op;
+
+  @override
+  void reshape(Shape shape) {
+    _value.reshape(shape);
+  }
+
+  @override
+  T run({Map<String, Tensor> feed: const {}}) => value.run(feed: feed);
+
+  @override
+  List<T> runAsList({Map<String, Tensor> feed: const {}}) =>
+      value.runAsList(feed: feed);
+
+  @override
+  Shape get shape => _value.shape;
+}

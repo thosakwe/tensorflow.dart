@@ -58,7 +58,10 @@ Graph importGraphDef(GraphDef graphDef) =>
     _importGraphDef(graphDef.writeToBuffer(), Graph);
 
 DataType inferType(x) {
-  if (x is Output) return x.dtype;
+  if (x is Output)
+    return x.dtype.value > 100
+        ? DataType.valueOf(x.dtype.value - 100)
+        : x.dtype;
   if (x is int) return DataType.DT_INT32;
   if (x is double) return DataType.DT_FLOAT;
   if (x is bool) return DataType.DT_BOOL;
