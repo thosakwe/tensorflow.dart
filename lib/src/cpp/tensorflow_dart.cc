@@ -34,6 +34,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     HandleError(Dart_StringToCString(name, &cname));
 
     // function_node.h
+    if (strcmp("FunctionNode_from_function_def", cname) == 0) result = tfd::FunctionNode_from_function_def;
     if (strcmp("FunctionNode_from_graph", cname) == 0) result = tfd::FunctionNode_from_graph;
 
         // graph.h

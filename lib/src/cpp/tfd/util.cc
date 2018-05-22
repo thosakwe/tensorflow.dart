@@ -197,6 +197,7 @@ Dart_Handle tfd::get_tensor_value(TF_Tensor *tensor) {
     Dart_Handle msg = Dart_NewStringFromCString(msgbuf.c_str());
     Dart_Handle error = Dart_New(unsupportedErrorType, Dart_NewStringFromCString(""), 1, &msg);
     Dart_ThrowException(error);
+    return Dart_Null();
 }
 
 TF_Operation *tfd::dereference_operation_ptr(Dart_Handle handle) {

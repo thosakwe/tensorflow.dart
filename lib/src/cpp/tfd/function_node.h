@@ -12,6 +12,7 @@
 
 namespace tfd {
     void FunctionNode_from_graph(Dart_NativeArguments arguments);
+    void FunctionNode_from_function_def(Dart_NativeArguments arguments);
 }
 
 #endif //TENSORFLOW_DART_FUNCTION_NODE_H
