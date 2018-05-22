@@ -15,7 +15,8 @@ import 'package:tuple/tuple.dart';
 import 'proto/proto.dart';
 export 'proto/proto.dart';
 
-part 'dart/data.dart';
+export 'dart/data.dart';
+export 'dart/tensorboard.dart';
 
 part 'dart/enums.dart';
 
@@ -31,6 +32,8 @@ part 'dart/operation.dart';
 
 part 'dart/operation_description.dart';
 
+part 'dart/optimizer.dart';
+
 part 'dart/output.dart';
 
 part 'dart/saved_model_bundle.dart';
@@ -45,7 +48,7 @@ part 'dart/variable.dart';
 
 String get version native "Version";
 
-Uint8List getAllOpsInternal() native "Operation_list";
+Uint8List _getAllOpsInternal() native "Operation_list";
 
 Graph _importGraphDef(Uint8List buffer, Type graphType)
     native "Graph_importGraphDef";

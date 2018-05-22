@@ -57,6 +57,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     else if (strcmp("Operation_type", cname) == 0) result = tfd::Operation_type;
     else if (strcmp("Operation_output", cname) == 0) result = tfd::Operation_output;
     else if (strcmp("OperationDescription_add_input", cname) == 0) result = tfd::OperationDescription_add_input;
+    else if (strcmp("OperationDescription_add_input_list", cname) == 0) result = tfd::OperationDescription_add_input_list;
     else if (strcmp("OperationDescription_finish", cname) == 0) result = tfd::OperationDescription_finish;
     else if (strcmp("OperationDescription_new", cname) == 0) result = tfd::OperationDescription_new;
     else if (strcmp("OperationDescription_set_attr_bool", cname) == 0)

@@ -34,6 +34,7 @@ class SavedModelBundle {
       List<String> tags,
       Uint8List runOptions) native "SavedModelBundle_new";
 
+  /*
   static void restoreSession(String p, MetaGraphDef metaGraphDef, Graph graph) {
     // Feed in the name of the checkpoint file.
     //
@@ -44,17 +45,27 @@ class SavedModelBundle {
       ..addTarget(metaGraphDef.saverDef.restoreOpName)
       //..fetch(metaGraphDef.saverDef.restoreOpName)
       ..run();
-  }
+  }*/
 
-  void restore(String p) {
+  void restoreCheckPoint(String p, {DataType dtype}) {
     // Feed in the name of the checkpoint file.
     //
-    var checkPointFile = 'file://' + path.absolute(p);
+    var checkPointFile = path.absolute(p);
+
+    var o = restore(
+      constant(checkPointFile),
+      constant(metaGraphDef.saverDef.filenameTensorName.replaceAll(':0', '')),
+      dt: dtype,
+    );
+    throw o.run();
+
+    /*
     graph.session.runner
       ..feed(metaGraphDef.saverDef.filenameTensorName.replaceAll(':0', ''),
           new Tensor.from(checkPointFile))
       ..addTarget(metaGraphDef.saverDef.restoreOpName)
       //..fetch(metaGraphDef.saverDef.restoreOpName)
       ..run();
+      */
   }
 }

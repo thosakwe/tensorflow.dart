@@ -2,7 +2,8 @@ part of tensorflow;
 
 class Output<T> {
   final Graph _graph;
-  Output<T> _initializer;
+  Operation _initializer;
+  Output _resource;
   int _operation;
   int _index;
   int _dtype;
@@ -28,8 +29,12 @@ class Output<T> {
 
   Shape get shape => new Shape._(_shape(_graph));
 
-  Output<T> get initializer =>
-      _initializer ??= throw new UnsupportedError('Not a variable: $this');
+  Operation get initializer => _initializer ?? noOp();
+
+  Output<T> get value => _resource == null
+      ? this
+      : readVariableOp(
+          _resource); // ??= throw new UnsupportedError('Not a variable: $this'));
 
   Output<T> operator *(Output<T> other) => mul<T>(this, other, graph: _graph);
 
@@ -89,6 +94,8 @@ class Output<T> {
 
   @override
   String toString() {
-    return 'Output { operation: \'' + op.name + '\', index: $_index }';
+    return 'Output { operation: \'' +
+        op.name +
+        '\', index: $_index, type: $dtype }';
   }
 }

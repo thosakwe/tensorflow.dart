@@ -112,6 +112,20 @@ void tfd::OperationDescription_add_input(Dart_NativeArguments arguments) {
     TF_AddInput(desc, input);
 }
 
+void tfd::OperationDescription_add_input_list(Dart_NativeArguments arguments) {
+    Dart_Handle listHandle = Dart_GetNativeArgument(arguments, 1);
+    auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
+    intptr_t length;
+    HandleError(Dart_ListLength(listHandle, &length));
+    auto *inputs = new TF_Output[length];
+
+    for (intptr_t i = 0; i < length; i++) {
+        inputs[i] = convert_output_wrapper(Dart_ListGetAt(listHandle, i));
+    }
+
+    TF_AddInputList(desc, inputs, (int) length);
+}
+
 void tfd::OperationDescription_finish(Dart_NativeArguments arguments) {
     auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
     auto *status = TF_NewStatus();

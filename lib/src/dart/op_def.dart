@@ -1552,6 +1552,7 @@ SampleDistortedBoundingBoxV2Output sampleDistortedBoundingBoxV2<T>(
       graph, result$, result$[0], result$[1], result$[2]);
 }
 
+/// This operation has no outputs.
 Operation accumulatorApplyGradient<T>(
     Output handle, Output localStep, Output gradient,
     {Graph graph, String operationName, DataType dtype}) {
@@ -1685,6 +1686,10 @@ Output logicalAnd(Output x, Output y, {Graph graph, String operationName}) {
 }
 
 /// Writes a `GraphDef` protocol buffer to a `SummaryWriter`.
+/// This operation has no outputs.
+/// * [writer]: Handle of `SummaryWriter`.
+/// * [step]: The step to write the summary for.
+/// * [tensor]: A scalar string of the serialized tf.GraphDef proto.
 Operation writeGraphSummary(Output writer, Output step, Output tensor,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -1788,6 +1793,9 @@ Output polygamma<T>(Output a, Output x, {Graph graph, String operationName}) {
 /// Outputs a `tf.Event` protocol buffer.
 /// When CreateSummaryDbWriter is being used, this op can be useful for
 /// importing data from event logs.
+/// This operation has no outputs.
+/// * [writer]: A handle to a summary writer.
+/// * [event]: A string containing a binary-encoded tf.Event proto.
 Operation importEvent(Output writer, Output event,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -2142,6 +2150,7 @@ Output acosh<T>(Output x, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceApplyProximalAdagrad<T>(
     Output var$, Output accum, Output lr, Output l1, Output l2, Output grad,
     {Graph graph, String operationName, bool useLocking: false}) {
@@ -2306,6 +2315,7 @@ Output dilation2D<T>(Output input, Output filter,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation deserializeIterator(Output resourceHandle, Output serialized,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -2397,6 +2407,7 @@ Output rsqrt<T>(Output x, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation initializeTableFromTextFile(Output tableHandle, Output filename,
     {Graph graph,
     String operationName,
@@ -2950,6 +2961,7 @@ QuantizedRelu6Output quantizedRelu6<T>(
       graph, result$, result$[0], result$[1], result$[2]);
 }
 
+/// This operation has no outputs.
 Operation resourceStridedSliceAssign<T>(
     Output ref, Output begin, Output end, Output strides, Output value,
     {Graph graph,
@@ -2986,6 +2998,7 @@ Output truncateMod<T>(Output x, Output y, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceApplyFtrl<T>(Output var$, Output accum, Output linear,
     Output grad, Output lr, Output l1, Output l2, Output lrPower,
     {Graph graph, String operationName, bool useLocking: false}) {
@@ -3796,6 +3809,7 @@ Output split<T>(Output splitDim, Output value,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 @Deprecated(
     'DEPRECATED at GraphDef version 19: Moving word2vec into tensorflow_models/tutorials and deprecating its ops here as a result')
 Operation negTrain(
@@ -3832,6 +3846,7 @@ Output concatV2<T>(List<Output> values, Output axis,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceApplyPowerSign<T>(Output var$, Output m, Output lr,
     Output logbase, Output signDecay, Output beta, Output grad,
     {Graph graph, String operationName, bool useLocking: false}) {
@@ -4148,6 +4163,7 @@ Output serializeIterator(Output resourceHandle,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceApplyCenteredRMSProp<T>(
     Output var$,
     Output mg,
@@ -4201,6 +4217,7 @@ Output maxPool3DGrad<T>(Output origInput, Output origOutput, Output grad,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceApplyRMSProp<T>(Output var$, Output ms, Output mom, Output lr,
     Output rho, Output momentum, Output epsilon, Output grad,
     {Graph graph, String operationName, bool useLocking: false}) {
@@ -4246,6 +4263,7 @@ Output sigmoid<T>(Output x, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceSparseApplyAdadelta<T>(
     Output var$,
     Output accum,
@@ -4277,6 +4295,7 @@ Operation resourceSparseApplyAdadelta<T>(
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation resourceApplyAdam<T>(
     Output var$,
     Output m,
@@ -4310,6 +4329,7 @@ Operation resourceApplyAdam<T>(
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation resourceSparseApplyMomentum<T>(Output var$, Output accum, Output lr,
     Output grad, Output indices, Output momentum,
     {Graph graph,
@@ -4334,6 +4354,7 @@ Operation resourceSparseApplyMomentum<T>(Output var$, Output accum, Output lr,
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation resourceApplyMomentum<T>(
     Output var$, Output accum, Output lr, Output grad, Output momentum,
     {Graph graph,
@@ -4406,6 +4427,7 @@ Output editDistance<T>(
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceApplyFtrlV2<T>(
     Output var$,
     Output accum,
@@ -4478,6 +4500,7 @@ Output sparseApplyFtrlV2<T>(
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceSparseApplyFtrl<T>(
     Output var$,
     Output accum,
@@ -4517,6 +4540,7 @@ Output sign<T>(Output x, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceApplyAddSign<T>(Output var$, Output m, Output lr,
     Output alpha, Output signDecay, Output beta, Output grad,
     {Graph graph, String operationName, bool useLocking: false}) {
@@ -4561,6 +4585,7 @@ Output barrier(
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceSparseApplyProximalAdagrad<T>(Output var$, Output accum,
     Output lr, Output l1, Output l2, Output grad, Output indices,
     {Graph graph,
@@ -4612,6 +4637,7 @@ Output sparseToDense<T>(Output sparseIndices, Output outputShape,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceApplyAdagradDA<T>(
     Output var$,
     Output gradientAccumulator,
@@ -4670,6 +4696,7 @@ Output sparseApplyAdagradDA<T>(
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceSparseApplyAdagrad<T>(
     Output var$, Output accum, Output lr, Output grad, Output indices,
     {Graph graph,
@@ -4697,6 +4724,7 @@ Output sqrt<T>(Output x, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceApplyAdagrad<T>(
     Output var$, Output accum, Output lr, Output grad,
     {Graph graph, String operationName, bool useLocking: false}) {
@@ -4756,6 +4784,7 @@ Output sparseSegmentSqrtNWithNumSegments<T>(
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceApplyProximalGradientDescent<T>(
     Output var$, Output alpha, Output l1, Output l2, Output delta,
     {Graph graph, String operationName, bool useLocking: false}) {
@@ -4808,6 +4837,7 @@ Output sparseApplyProximalGradientDescent<T>(Output var$, Output alpha,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation queueEnqueue<T>(Output handle, List<Output> components,
     {Graph graph,
     String operationName,
@@ -4919,6 +4949,7 @@ Output matrixLogarithm<T>(Output input, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceApplyGradientDescent<T>(
     Output var$, Output alpha, Output delta,
     {Graph graph, String operationName, bool useLocking: false}) {
@@ -5034,6 +5065,7 @@ Output fakeQuantWithMinMaxArgs(Output inputs,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceScatterNdUpdate<T>(Output ref, Output indices, Output updates,
     {Graph graph,
     String operationName,
@@ -5262,6 +5294,13 @@ Output iteratorFromStringHandle(Output stringHandle,
 /// *  If `max_outputs` is 1, the summary value tag is '*tag*/audio'.
 /// *  If `max_outputs` is greater than 1, the summary value tags are
 /// generated sequentially as '*tag*/audio/0', '*tag*/audio/1', etc.
+/// This operation has no outputs.
+/// * [writer]: A handle to a summary writer.
+/// * [step]: The step to write the summary for.
+/// * [tag]: Scalar. Used to build the `tag` attribute of the summary values.
+/// * [tensor]: 2-D of shape `[batch_size, frames]`.
+/// * [sampleRate]: The sample rate of the signal in hertz.
+/// attr [maxOutputs]: Max number of batch elements to generate audio for.
 Operation writeAudioSummary(
     Output writer, Output step, Output tag, Output tensor, Output sampleRate,
     {Graph graph, String operationName, int maxOutputs: 3}) {
@@ -5277,6 +5316,7 @@ Operation writeAudioSummary(
   return op$.finish();
 }
 
+/// This operation has no outputs.
 @Deprecated('DEPRECATED at GraphDef version 16: Use TensorArrayCloseV3')
 Operation tensorArrayClose(Output handle, {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -5358,6 +5398,7 @@ Output matrixSolve<T>(Output matrix, Output rhs,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation writeFile(Output filename, Output contents,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -5395,6 +5436,14 @@ Operation writeFile(Output filename, Output contents,
 /// pixel in the output image).  Non-finite values in the input tensor are
 /// replaced by this tensor in the output image.  The default value is the color
 /// red.
+/// This operation has no outputs.
+/// * [writer]: A handle to a summary writer.
+/// * [step]: The step to write the summary for.
+/// * [tag]: Scalar. Used to build the `tag` attribute of the summary values.
+/// * [tensor]: 4-D of shape `[batch_size, height, width, channels]` where
+/// `channels` is 1, 3, or 4.
+/// * [badColor]: Color to use for pixels with non-finite values.
+/// attr [maxImages]: Max number of batch elements to generate images for.
 Operation writeImageSummary<T>(
     Output writer, Output step, Output tag, Output tensor, Output badColor,
     {Graph graph, String operationName, int maxImages: 3}) {
@@ -5423,6 +5472,11 @@ Output tan<T>(Output x, {Graph graph, String operationName}) {
 /// [`Summary`](https://www.tensorflow.org/code/tensorflow/core/framework/summary.proto)
 /// has one summary value containing a histogram for `values`.
 /// This op reports an `InvalidArgument` error if any value is not finite.
+/// This operation has no outputs.
+/// * [writer]: A handle to a summary writer.
+/// * [step]: The step to write the summary for.
+/// * [tag]: Scalar.  Tag to use for the `Summary.Value`.
+/// * [values]: Any shape. Values to use to build the histogram.
 Operation writeHistogramSummary<T>(
     Output writer, Output step, Output tag, Output values,
     {Graph graph, String operationName}) {
@@ -5519,6 +5573,13 @@ BatchOutput batch<T>(List<Output> inTensors,
 }
 
 /// Outputs a `Summary` protocol buffer with a tensor.
+/// This operation has no outputs.
+/// * [writer]: A handle to a summary writer.
+/// * [step]: The step to write the summary for.
+/// * [tensor]: A tensor to serialize.
+/// * [tag]: The summary's tag.
+/// * [summaryMetadata]: Serialized SummaryMetadata protocol buffer containing
+/// plugin-related metadata for this summary.
 Operation writeSummary<T>(Output writer, Output step, Output tensor, Output tag,
     Output summaryMetadata,
     {Graph graph, String operationName}) {
@@ -5534,6 +5595,8 @@ Operation writeSummary<T>(Output writer, Output step, Output tensor, Output tag,
 }
 
 /// Flushes the writer's unwritten events.
+/// This operation has no outputs.
+/// * [writer]: A handle to the summary writer resource.
 Operation flushSummaryWriter(Output writer,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -5549,6 +5612,16 @@ Operation flushSummaryWriter(Output writer,
 /// will create the schema if it doesn't exist. Entries in the Users,
 /// Experiments, and Runs tables will be created automatically if they
 /// don't already exist.
+/// This operation has no outputs.
+/// * [writer]: Handle to SummaryWriter resource to overwrite.
+/// * [dbUri]: For example "file:/tmp/foo.sqlite".
+/// * [experimentName]: Can't contain ASCII control characters or <>. Case
+/// sensitive. If empty, then the Run will not be associated with any
+/// Experiment.
+/// * [runName]: Can't contain ASCII control characters or <>. Case sensitive.
+/// If empty, then each Tag will not be associated with any Run.
+/// * [userName]: Must be valid as both a DNS label and Linux username. If
+/// empty, then the Experiment will not be associated with any User.
 Operation createSummaryDbWriter(Output writer, Output dbUri,
     Output experimentName, Output runName, Output userName,
     {Graph graph, String operationName}) {
@@ -5589,6 +5662,7 @@ Output sparseApplyRMSProp<T>(Output var$, Output ms, Output mom, Output lr,
 /// Returns a handle to be used to access a summary writer.
 /// The summary writer is an in-graph resource which can be used by ops to write
 /// summaries to event files.
+/// This operation has one output: the summary writer resource. Scalar handle.
 Output summaryWriter(
     {Graph graph, String operationName, String sharedName, String container}) {
   graph ??= defaultGraph;
@@ -6470,6 +6544,7 @@ SparseSplitOutput sparseSplit<T>(
       graph, result$, result$[0], result$[1], result$[2]);
 }
 
+/// This operation has no outputs.
 Operation destroyResourceOp(Output resource,
     {Graph graph, String operationName, bool ignoreLookupError: true}) {
   graph ??= defaultGraph;
@@ -6584,6 +6659,7 @@ DenseToSparseSetOperationOutput denseToSparseSetOperation<T>(
       graph, result$, result$[0], result$[1], result$[2]);
 }
 
+/// This operation has no outputs.
 Operation sdcaShrinkL1(List<Output> weights,
     {Graph graph,
     String operationName,
@@ -6600,6 +6676,7 @@ Operation sdcaShrinkL1(List<Output> weights,
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation consumeMutexLock(Output mutexLock,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -6697,6 +6774,7 @@ Output batchCholeskyGrad<T>(Output l, Output grad,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceScatterAdd<T>(Output resource, Output indices, Output updates,
     {Graph graph, String operationName, DataType dtype, DataType tindices}) {
   dtype ??= inferType(resource);
@@ -6805,6 +6883,7 @@ Output barrierReadySize(Output handle, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation mapStage<T>(Output key, Output indices, List<Output> values,
     {Graph graph,
     String operationName,
@@ -6893,6 +6972,7 @@ Output remoteFusedGraphExecute<T>(List<Output> inputs,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceSparseApplyRMSProp<T>(
     Output var$,
     Output ms,
@@ -7139,6 +7219,7 @@ Output decodeRaw<T>(Output bytes,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation saveSlices<T>(Output filename, Output tensorNames,
     Output shapesAndSlices, List<Output> data,
     {Graph graph, String operationName, List<DataType> t}) {
@@ -7583,6 +7664,7 @@ Output transpose<T>(Output x, Output perm,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation assert$<T>(Output condition, List<Output> data,
     {Graph graph, String operationName, List<DataType> t, int summarize: 3}) {
   graph ??= defaultGraph;
@@ -7595,6 +7677,7 @@ Operation assert$<T>(Output condition, List<Output> data,
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation controlTrigger({Graph graph, String operationName}) {
   graph ??= defaultGraph;
   var op$ = graph.newOperation('ControlTrigger',
@@ -7621,6 +7704,7 @@ Output nextIteration<T>(Output data, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation initializeTableV2<T>(Output tableHandle, Output keys, Output values,
     {Graph graph, String operationName, DataType tkey, DataType tval}) {
   graph ??= defaultGraph;
@@ -7751,6 +7835,11 @@ Output mutableHashTableV2(
 
 /// Writes a `Summary` protocol buffer with scalar values.
 /// The input `tag` and `value` must have the scalars.
+/// This operation has no outputs.
+/// * [writer]: A handle to a summary writer.
+/// * [step]: The step to write the summary for.
+/// * [tag]: Tag for the summary.
+/// * [value]: Value for the summary.
 Operation writeScalarSummary<T>(
     Output writer, Output step, Output tag, Output value,
     {Graph graph, String operationName}) {
@@ -7903,6 +7992,7 @@ Output sparseDenseCwiseDiv<T>(
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation lookupTableImport<T>(Output tableHandle, Output keys, Output values,
     {Graph graph, String operationName, DataType tin, DataType tout}) {
   graph ??= defaultGraph;
@@ -7960,6 +8050,7 @@ LookupTableExportV2Output lookupTableExportV2<T>(Output tableHandle,
       graph, result$, result$[0], result$[1]);
 }
 
+/// This operation has no outputs.
 Operation assignVariableOp<T>(Output resource, Output value,
     {Graph graph, String operationName, DataType dtype}) {
   dtype ??= inferType(resource);
@@ -7981,6 +8072,7 @@ Output lookupTableSize(Output tableHandle,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation lookupTableInsert<T>(Output tableHandle, Output keys, Output values,
     {Graph graph, String operationName, DataType tin, DataType tout}) {
   graph ??= defaultGraph;
@@ -7994,6 +8086,7 @@ Operation lookupTableInsert<T>(Output tableHandle, Output keys, Output values,
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation initializeTable<T>(Output tableHandle, Output keys, Output values,
     {Graph graph, String operationName, DataType tkey, DataType tval}) {
   graph ??= defaultGraph;
@@ -8566,6 +8659,7 @@ Output pack<T>(List<Output> values,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation barrierClose(Output handle,
     {Graph graph, String operationName, bool cancelPendingEnqueues: false}) {
   graph ??= defaultGraph;
@@ -8713,6 +8807,7 @@ Output maxPool<T>(Output input,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation orderedMapClear(
     {Graph graph,
     String operationName,
@@ -8732,6 +8827,7 @@ Operation orderedMapClear(
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation queueCloseV2(Output handle,
     {Graph graph, String operationName, bool cancelPendingEnqueues: false}) {
   graph ??= defaultGraph;
@@ -8817,6 +8913,7 @@ Output applyFtrlV2<T>(Output var$, Output accum, Output linear, Output grad,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 @Deprecated('DEPRECATED at GraphDef version 26: Use TensorArrayCloseV3')
 Operation tensorArrayCloseV2(Output handle,
     {Graph graph, String operationName}) {
@@ -8846,6 +8943,7 @@ Output avgPool3DGrad<T>(Output origInputShape, Output grad,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation readerReset(Output readerHandle,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -8974,6 +9072,7 @@ Output stagePeek<T>(Output index,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation readerRestoreStateV2(Output readerHandle, Output state,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -9031,6 +9130,7 @@ Output resizeArea<T>(Output images, Output size,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation readerRestoreState(Output readerHandle, Output state,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -9282,6 +9382,7 @@ Output restoreSlice<T>(
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation save<T>(Output filename, Output tensorNames, List<Output> data,
     {Graph graph, String operationName, List<DataType> t}) {
   graph ??= defaultGraph;
@@ -9583,6 +9684,7 @@ Output decodeGif(Output contents, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation assignSubVariableOp<T>(Output resource, Output value,
     {Graph graph, String operationName, DataType dtype}) {
   dtype ??= inferType(resource);
@@ -9917,6 +10019,7 @@ Output lookupTableSizeV2(Output tableHandle,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation enqueueInQueueDataset<T>(Output queue, List<Output> components,
     {Graph graph, String operationName, List<DataType> tcomponents}) {
   graph ??= defaultGraph;
@@ -9928,6 +10031,7 @@ Operation enqueueInQueueDataset<T>(Output queue, List<Output> components,
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation lookupTableImportV2<T>(Output tableHandle, Output keys, Output values,
     {Graph graph, String operationName, DataType tin, DataType tout}) {
   graph ??= defaultGraph;
@@ -9941,6 +10045,7 @@ Operation lookupTableImportV2<T>(Output tableHandle, Output keys, Output values,
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation tensorArrayCloseV3(Output handle,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -9950,6 +10055,7 @@ Operation tensorArrayCloseV3(Output handle,
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation saveV2<T>(Output prefix, Output tensorNames, Output shapeAndSlices,
     List<Output> tensors,
     {Graph graph, String operationName, List<DataType> dtypes}) {
@@ -9964,6 +10070,7 @@ Operation saveV2<T>(Output prefix, Output tensorNames, Output shapeAndSlices,
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation orderedMapStage<T>(Output key, Output indices, List<Output> values,
     {Graph graph,
     String operationName,
@@ -10025,6 +10132,7 @@ Output fractionalMaxPoolGrad<T>(Output origInput, Output origOutput,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation iteratorSetStatsAggregator(
     Output iteratorHandle, Output statsAggregatorHandle,
     {Graph graph, String operationName}) {
@@ -10124,6 +10232,7 @@ StringSplitOutput stringSplit(Output input, Output delimiter,
       graph, result$, result$[0], result$[1], result$[2]);
 }
 
+/// This operation has no outputs.
 Operation resourceScatterUpdate<T>(
     Output resource, Output indices, Output updates,
     {Graph graph, String operationName, DataType dtype, DataType tindices}) {
@@ -10210,6 +10319,7 @@ ThreadUnsafeUnigramCandidateSamplerOutput threadUnsafeUnigramCandidateSampler(
       graph, result$, result$[0], result$[1], result$[2]);
 }
 
+/// This operation has no outputs.
 Operation stackCloseV2(Output handle, {Graph graph, String operationName}) {
   graph ??= defaultGraph;
   var op$ = graph.newOperation('StackCloseV2',
@@ -10256,6 +10366,7 @@ Output tensorArrayReadV3<T>(Output handle, Output index, Output flowIn,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceSparseApplyFtrlV2<T>(
     Output var$,
     Output accum,
@@ -10415,6 +10526,7 @@ Output oneShotIterator(
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceSparseApplyAdagradDA<T>(
     Output var$,
     Output gradientAccumulator,
@@ -10692,6 +10804,7 @@ Output dataFormatDimMap<T>(Output x,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation stackClose(Output handle, {Graph graph, String operationName}) {
   graph ??= defaultGraph;
   var op$ = graph.newOperation(
@@ -11240,6 +11353,7 @@ Output sparseApplyCenteredRMSProp<T>(
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceSparseApplyCenteredRMSProp<T>(
     Output var$,
     Output mg,
@@ -11362,6 +11476,7 @@ Output randomDataset(Output seed, Output seed2,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation mergeV2Checkpoints(
     Output checkpointPrefixes, Output destinationPrefix,
     {Graph graph, String operationName, bool deleteOldDirs: true}) {
@@ -11374,6 +11489,7 @@ Operation mergeV2Checkpoints(
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation queueClose(Output handle,
     {Graph graph, String operationName, bool cancelPendingEnqueues: false}) {
   graph ??= defaultGraph;
@@ -11720,6 +11836,7 @@ Output skipDataset(Output inputDataset, Output count,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation sparseAccumulatorApplyGradient<T>(Output handle, Output localStep,
     Output gradientIndices, Output gradientValues, Output gradientShape,
     {Graph graph, String operationName, DataType dtype, bool hasKnownShape}) {
@@ -11824,6 +11941,7 @@ SparseToSparseSetOperationOutput sparseToSparseSetOperation<T>(
       graph, result$, result$[0], result$[1], result$[2]);
 }
 
+/// This operation has no outputs.
 Operation lookupTableInsertV2<T>(Output tableHandle, Output keys, Output values,
     {Graph graph, String operationName, DataType tin, DataType tout}) {
   graph ??= defaultGraph;
@@ -11837,6 +11955,7 @@ Operation lookupTableInsertV2<T>(Output tableHandle, Output keys, Output values,
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation barrierInsertMany<T>(Output handle, Output keys, Output values,
     {Graph graph, String operationName, int componentIndex}) {
   graph ??= defaultGraph;
@@ -11921,6 +12040,7 @@ Output selfAdjointEig<T>(Output input, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation readerResetV2(Output readerHandle,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -12034,6 +12154,7 @@ DeserializeSparseOutput deserializeSparse<T>(Output serializedSparse,
       graph, result$, result$[0], result$[1], result$[2]);
 }
 
+/// This operation has no outputs.
 Operation mapClear(
     {Graph graph,
     String operationName,
@@ -12226,6 +12347,13 @@ Output datasetToSingleElement<T>(Output dataset,
 }
 
 /// Creates a summary file writer accessible by the given resource handle.
+/// This operation has no outputs.
+/// * [writer]: A handle to the summary writer resource
+/// * [logdir]: Directory where the event file will be written.
+/// * [maxQueue]: Size of the queue of pending events and summaries.
+/// * [flushMillis]: How often, in milliseconds, to flush the pending events and
+/// summaries to disk.
+/// * [filenameSuffix]: Every event file's name is suffixed with this suffix.
 Operation createSummaryFileWriter(Output writer, Output logdir, Output maxQueue,
     Output flushMillis, Output filenameSuffix,
     {Graph graph, String operationName}) {
@@ -12507,6 +12635,7 @@ Output atanh<T>(Output x, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation makeIterator(Output dataset, Output iterator,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -12651,6 +12780,7 @@ Output stageSize(
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation assignAddVariableOp<T>(Output resource, Output value,
     {Graph graph, String operationName, DataType dtype}) {
   dtype ??= inferType(resource);
@@ -12808,6 +12938,7 @@ Output unstage<T>(
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation stage<T>(List<Output> values,
     {Graph graph,
     String operationName,
@@ -12842,6 +12973,7 @@ Output tensorSliceDataset<T>(List<Output> components,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation deleteSessionTensor(Output handle,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -12898,6 +13030,8 @@ Output div<T>(Output x, Output y, {Graph graph, String operationName}) {
 /// Flushes and closes the summary writer.
 /// Also removes it from the resource manager. To reopen, use another
 /// CreateSummaryFileWriter op.
+/// This operation has no outputs.
+/// * [writer]: A handle to the summary writer resource.
 Operation closeSummaryWriter(Output writer,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;
@@ -13304,6 +13438,7 @@ Output tensorArrayRead<T>(Output handle, Output index, Output flowIn,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation stageClear(
     {Graph graph,
     String operationName,
@@ -13418,6 +13553,7 @@ Output mergeSummary(List<Output> inputs,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation queueEnqueueManyV2<T>(Output handle, List<Output> components,
     {Graph graph,
     String operationName,
@@ -13490,6 +13626,7 @@ TensorArrayConcatV3Output tensorArrayConcatV3<T>(Output handle, Output flowIn,
       graph, result$, result$[0], result$[1]);
 }
 
+/// This operation has no outputs.
 Operation resourceApplyAdadelta<T>(Output var$, Output accum,
     Output accumUpdate, Output lr, Output rho, Output epsilon, Output grad,
     {Graph graph, String operationName, bool useLocking: false}) {
@@ -14223,6 +14360,7 @@ Output sparseApplyFtrl<T>(Output var$, Output accum, Output linear, Output grad,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation resourceSparseApplyProximalGradientDescent<T>(Output var$,
     Output alpha, Output l1, Output l2, Output grad, Output indices,
     {Graph graph,
@@ -14337,6 +14475,7 @@ Output rint<T>(Output x, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation abort(
     {Graph graph,
     String operationName,
@@ -14658,6 +14797,7 @@ LearnedUnigramCandidateSamplerOutput learnedUnigramCandidateSampler(
       graph, result$, result$[0], result$[1], result$[2]);
 }
 
+/// This operation has no outputs.
 Operation queueEnqueueMany<T>(Output handle, List<Output> components,
     {Graph graph,
     String operationName,
@@ -14673,6 +14813,7 @@ Operation queueEnqueueMany<T>(Output handle, List<Output> components,
   return op$.finish();
 }
 
+/// This operation has no outputs.
 Operation noOp({Graph graph, String operationName}) {
   graph ??= defaultGraph;
   var op$ = graph.newOperation(
@@ -14790,6 +14931,7 @@ AllCandidateSamplerOutput allCandidateSampler(Output trueClasses,
       graph, result$, result$[0], result$[1], result$[2]);
 }
 
+/// This operation has no outputs.
 Operation queueEnqueueV2<T>(Output handle, List<Output> components,
     {Graph graph,
     String operationName,
@@ -15423,6 +15565,7 @@ Output applyPowerSign<T>(Output var$, Output m, Output lr, Output logbase,
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation initializeTableFromTextFileV2(Output tableHandle, Output filename,
     {Graph graph,
     String operationName,
@@ -15452,6 +15595,7 @@ Output exit<T>(Output data, {Graph graph, String operationName}) {
   return op$.finish()[0];
 }
 
+/// This operation has no outputs.
 Operation accumulatorSetGlobalStep(Output handle, Output newGlobalStep,
     {Graph graph, String operationName}) {
   graph ??= defaultGraph;

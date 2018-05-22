@@ -26,8 +26,13 @@ class OperationDescription<T> {
     _addInput(control, _index++);
   }
 
-  void addInputList(List<Output> inputs)
+  void _addInputList(List<Output> inputs)
       native "OperationDescription_add_input_list";
+
+  void addInputList(List<Output> value) {
+    if (value == null) return;
+    _addInputList(value);
+  }
 
   int _finish(Type tensorFlowExceptionType)
       native "OperationDescription_finish";

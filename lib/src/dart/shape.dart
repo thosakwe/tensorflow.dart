@@ -162,5 +162,5 @@ class Shape {
 
   @override
   bool operator ==(other) =>
-      other is Shape && const ListEquality<int>().equals(_dims, _dims);
+      other is Shape && const ListEquality<int>().equals(other._dims, _dims);
 }

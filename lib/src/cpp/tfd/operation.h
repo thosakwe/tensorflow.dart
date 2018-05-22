@@ -23,6 +23,7 @@ namespace tfd
     void Operation_output(Dart_NativeArguments arguments);
 
     void OperationDescription_add_input(Dart_NativeArguments arguments);
+    void OperationDescription_add_input_list(Dart_NativeArguments arguments);
     void OperationDescription_finish(Dart_NativeArguments arguments);
     void OperationDescription_new(Dart_NativeArguments arguments);
     void OperationDescription_set_attr_bool(Dart_NativeArguments arguments);

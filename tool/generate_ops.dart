@@ -173,11 +173,16 @@ main() async {
                 op.inputArg.any((a) => a.type == tf.DataType.DT_INVALID) ||
                 op.outputArg.any((a) => a.type == tf.DataType.DT_INVALID);
 
-        if (op.outputArg.isEmpty)
+        if (op.outputArg.isEmpty) {
+          method.docs.addAll(getDocs('This operation has no outputs.'));
           method.returns = refer('Operation');
-        else if (op.outputArg.length == 1)
-          method.returns = convertType(op.outputArg[0].type, 0, typeAttr);
-        else {
+        }
+        else if (op.outputArg.length == 1) {
+          var output = op.outputArg[0];
+          if (output.hasDescription())
+            method.docs.addAll(getDocs('This operation has one output: ${output.description}'));
+          method.returns = convertType(output.type, 0, typeAttr);
+        } else {
           // Create a custom output class.
           resultTypeName = new ReCase(op.name).pascalCase;
           outputTypeName = '${resultTypeName}Output';
@@ -241,6 +246,11 @@ main() async {
                             .add(new Parameter((p) => p
                               ..name = name
                               ..toThis = true));
+
+                        if (output.hasDescription()) {
+                          outputField.docs.addAll(getDocs(output.description));
+                          resultField.docs.addAll(getDocs(output.description));
+                        }
                       }));
                     }));
                   }
@@ -307,6 +317,10 @@ main() async {
             b
               ..name = escapeName(new ReCase(input.name).camelCase)
               ..type = type;
+
+            if (input.hasDescription())
+              method.docs
+                  .addAll(getDocs('* [${b.name}]: ${input.description}'));
           });
           method.requiredParameters.add(p);
 
@@ -324,6 +338,10 @@ main() async {
               ..name = paramName
               ..named = true
               ..type = refer(dartType(attr.type, true));
+
+            if (attr.hasDescription())
+              method.docs
+                  .addAll(getDocs('attr [${b.name}]: ${attr.description}'));
 
             if (attr.hasDefaultValue())
               b.defaultTo = convertDefaultValue(attr.defaultValue)?.code;

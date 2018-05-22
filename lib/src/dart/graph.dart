@@ -109,8 +109,9 @@ class Graph {
     var tensor = value is Tensor
         ? value
         : new Tensor.from(value is Shape ? value.dimensions : value);
+    if (dtype != null) tensor = tensor.cast(dtype);
     var op = newOperation<T>('Const',
-        operationName ?? _scope.uniqueName('Constant_${value.runtimeType}'))
+        operationName ?? _scope.uniqueName('Const/${value.runtimeType}/'))
       ..setAttrType('dtype', dtype ?? tensor.dtype)
       ..setAttrTensor('value', tensor);
     return op.finish()[0];

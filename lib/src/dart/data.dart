@@ -1,1 +1,1 @@
-part of tensorflow;
+import '../../tensorflow.dart' as tf;

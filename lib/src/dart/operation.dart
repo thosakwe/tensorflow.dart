@@ -13,7 +13,7 @@ class Operation<T> {
 
   Operation._fromPointer(this._pointer, this._graph);
 
-  static OpList list() => new OpList.fromBuffer(getAllOpsInternal());
+  static OpList list() => new OpList.fromBuffer(_getAllOpsInternal());
 
   //static int _Operation_new() native "Operation_new";
 
@@ -46,6 +46,19 @@ class Operation<T> {
       .._operation = result.item1
       .._index = result.item2;
       */
+  }
+
+  void run() {
+    if (numOutputs == 0) {
+      _graph.session.runner
+        ..addTarget(name)
+        ..fetch(name)
+        ..run();
+    } else {
+      _graph.session.runner
+        ..fetch(name)
+        ..run();
+    }
   }
 
   /// Returns a symbolic handle to some of the tensors produced by this operation.
