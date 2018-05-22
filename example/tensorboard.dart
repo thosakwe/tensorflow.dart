@@ -7,6 +7,9 @@ main() {
     p.dirname(p.fromUri(Platform.script)),
     'logs',
   );
-  var writer = new tf.FileWriter(logDir);
-  return writer.runInTensorboard(host: 'localhost');
+
+  new tf.FileWriter(logDir)
+    ..histogram('foo', tf.zeros(new tf.Shape(2, 3)))
+    ..flush()
+    ..runInTensorboard(host: 'localhost');
 }

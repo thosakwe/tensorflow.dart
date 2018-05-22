@@ -181,15 +181,25 @@ void tfd::OperationDescription_set_attr_tensor(Dart_NativeArguments arguments) {
     auto *status = TF_NewStatus();
     const char *name;
     HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
-    TF_SetAttrTensor(desc, name, convert_tensor(tensorHandle), status);
 
-    int code = TF_GetCode(status);
+    auto *tensor = convert_tensor(tensorHandle);
     Dart_Handle tuple[2];
-    tuple[0] = Dart_NewInteger(code);
 
-    if (code != 0)
-        tuple[1] = Dart_NewStringFromCString(TF_Message(status));
-    else tuple[1] = Dart_Null();
+    if (tensor == nullptr) {
+        tuple[0] = Dart_NewInteger(TF_NOT_FOUND);
+        tuple[1] = Dart_NewStringFromCString("This tensor returned a null pointer.");
+    } else {
+
+
+        TF_SetAttrTensor(desc, name, tensor, status);
+
+        int code = TF_GetCode(status);
+        tuple[0] = Dart_NewInteger(code);
+
+        if (code != 0)
+            tuple[1] = Dart_NewStringFromCString(TF_Message(status));
+        else tuple[1] = Dart_Null();
+    }
 
     TF_DeleteStatus(status);
     Dart_Handle out = Dart_New(getTuple2Type(), Dart_NewStringFromCString(""), 2, tuple);

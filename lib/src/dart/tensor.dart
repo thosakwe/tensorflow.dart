@@ -13,18 +13,20 @@ class Tensor {
   factory Tensor(DataType dtype, Shape shape, Uint8List data) =>
       new Tensor._(dtype.value, data, shape.dimensions);
 
-  factory Tensor.from(value) {
+  /// Converts an arbitrary value into a Tensor.
+  ///
+  /// [dtype] may be ignored.
+  factory Tensor.from(value, {DataType dtype}) {
+    if (value is Tensor) return value.cast(dtype ?? value.dtype);
     if (value is String) return new Tensor.fromString(value);
     if (value is bool) return new Tensor.fromBool(value);
-    if (value is double) return new Tensor.fromFloat(value);
-    if (value is int) return new Tensor.fromInt(value);
+    if (value is double) return new Tensor.fromDouble(value, dtype: dtype);
+    if (value is int) return new Tensor.fromInt(value, dtype: dtype);
     if (value is Shape) return new Tensor.fromShape(value);
     if (value is Int32)
-      return new Tensor.fromInt32List(new Int32List.fromList([value.toInt()]))
-          .asScalar;
+      return new Tensor.fromInt(value.toInt(), dtype: DataType.DT_INT32);
     if (value is Int64)
-      return new Tensor.fromInt64List(new Int64List.fromList([value.toInt()]))
-          .asScalar;
+      return new Tensor.fromInt(value.toInt(), dtype: DataType.DT_INT64);
     if (value is Int8List) return new Tensor.fromInt8List(value);
     if (value is Int16List) return new Tensor.fromInt16List(value);
     if (value is Int32List) return new Tensor.fromInt32List(value);
@@ -41,9 +43,10 @@ class Tensor {
       var first = value.first;
 
       if (first is int)
-        return new Tensor.fromInt64List(new Int64List.fromList(value));
+        return new Tensor.fromInt32List(new Int32List.fromList(value));
       if (first is double)
-        return new Tensor.fromFloat64List(new Float64List.fromList(value));
+        return new Tensor.fromFloat32List(new Float32List.fromList(value));
+      // TODO: String list?
     }
 
     throw new ArgumentError('Cannot convert $value into a Tensor.');
@@ -64,20 +67,51 @@ class Tensor {
         new Uint8List.view(result.item3.buffer, 9), Shape.scalar.dimensions);
     */
     var bytes = new List.filled(padding ? 8 : 0, 0, growable: true)
-      ..addAll(utf8.encode(s))
-      ..add(0);
+          ..addAll(utf8.encode(s))
+        //..add(0)
+        ;
+
     return new Tensor(
         DataType.DT_STRING, Shape.scalar, new Uint8List.fromList(bytes));
   }
 
-  factory Tensor.fromInt(int n) =>
-      new Tensor.fromInt32List(new Int32List.fromList([n])).asScalar;
+  factory Tensor.fromInt(int n, {DataType dtype: DataType.DT_INT32}) {
+    switch (dtype) {
+      case DataType.DT_INT8:
+        return new Tensor.fromInt8List(new Int8List.fromList([n])).asScalar;
+      case DataType.DT_INT16:
+        return new Tensor.fromInt16List(new Int16List.fromList([n])).asScalar;
+      case DataType.DT_INT32:
+        return new Tensor.fromInt32List(new Int32List.fromList([n])).asScalar;
+      case DataType.DT_INT64:
+        return new Tensor.fromInt64List(new Int64List.fromList([n])).asScalar;
+      case DataType.DT_UINT8:
+        return new Tensor.fromUint8List(new Uint8List.fromList([n])).asScalar;
+      case DataType.DT_UINT16:
+        return new Tensor.fromUint16List(new Uint16List.fromList([n])).asScalar;
+      case DataType.DT_UINT32:
+        return new Tensor.fromUint32List(new Uint32List.fromList([n])).asScalar;
+      case DataType.DT_UINT64:
+        return new Tensor.fromUint64List(new Uint64List.fromList([n])).asScalar;
+    }
 
-  factory Tensor.fromFloat(double n) =>
-      new Tensor.fromFloat32List(new Float32List.fromList([n])).asScalar;
+    if (dtype == null) return new Tensor.fromInt(n);
+    throw new ArgumentError('Not an integer type: $dtype');
+  }
 
-  factory Tensor.fromDouble(double n) =>
-      new Tensor.fromFloat64List(new Float64List.fromList([n])).asScalar;
+  factory Tensor.fromDouble(double n, {DataType dtype: DataType.DT_FLOAT}) {
+    switch (dtype) {
+      case DataType.DT_FLOAT:
+        return new Tensor.fromFloat32List(new Float32List.fromList([n]))
+            .asScalar;
+      case DataType.DT_DOUBLE:
+        return new Tensor.fromFloat64List(new Float64List.fromList([n]))
+            .asScalar;
+    }
+
+    if (dtype == null) return new Tensor.fromDouble(n);
+    throw new ArgumentError('Not a float/double type: $dtype');
+  }
 
   factory Tensor.fromShape(Shape shape) {
     if (shape.size == 0)
@@ -122,6 +156,9 @@ class Tensor {
   Tensor get asScalar => reshape(Shape.scalar);
 
   /// Casts this tensor to another type.
+  ///
+  /// WARNING: This does not resize data, which may lead to segfaults
+  /// if the output type is larger than the source type.
   Tensor cast(DataType type) => new Tensor(type, shape, _data);
 
   /// Returns this [Tensor] as a n-dimensional scalar.
@@ -165,8 +202,10 @@ class Tensor {
   int get asUint64 => asInt64List[0];
 
   /// Returns the value in a scalar [String] tensor.
-  String get asString =>
-      new String.fromCharCodes(new Uint8List.view(asUint8List.buffer, 8));
+  String get asString => dtype == DataType.DT_STRING
+      ? utf8.decode(new Uint8List.view(asUint8List.buffer),
+          allowMalformed: true)
+      : throw new ArgumentError('Not a string type: $dtype');
 
   /// Returns the size, in bytes, of the tensor data.
   int get length => _data.length;
@@ -239,7 +278,7 @@ class Tensor {
       case DataType.DT_DOUBLE:
         return asFloat64;
       default:
-        throw new ArgumentError('Not a float type: $dtype');
+        throw new ArgumentError('Not a float/double type: $dtype');
     }
   }
 

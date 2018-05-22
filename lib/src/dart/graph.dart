@@ -27,8 +27,9 @@ T withVariableScope<T>(String name, T Function() f) {
 T withDeviceScope<T>(String device, T Function() f) =>
     Zone.current.fork(zoneValues: {_deviceSymbol: device}).run<T>(f);
 
-Output<T> constant<T>(T value, {String operationName, DataType dtype}) {
-  return defaultGraph.constant<T>(value,
+Output<T> constant<T>(T value, {String operationName, DataType dtype, Graph graph}) {
+  graph ??= defaultGraph;
+  return graph.constant<T>(value,
       operationName: operationName, dtype: dtype);
 }
 
@@ -108,8 +109,8 @@ class Graph {
   Output<T> constant<T>(T value, {String operationName, DataType dtype}) {
     var tensor = value is Tensor
         ? value
-        : new Tensor.from(value is Shape ? value.dimensions : value);
-    if (dtype != null) tensor = tensor.cast(dtype);
+        : new Tensor.from(value is Shape ? value.dimensions : value, dtype: dtype);
+    //if (dtype != null) tensor = tensor.cast(dtype);
     var op = newOperation<T>('Const',
         operationName ?? _scope.uniqueName('Const/${value.runtimeType}/'))
       ..setAttrType('dtype', dtype ?? tensor.dtype)

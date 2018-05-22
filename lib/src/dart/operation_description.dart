@@ -43,7 +43,7 @@ class OperationDescription<T> {
     return new Operation<T>._fromPointer(_finish(TensorFlowException), _graph);
   }
 
-  Tuple2<int, String> _setAttrTensor(String name, Tensor value)
+  Tuple2/*<int, String>*/ _setAttrTensor(String name, Tensor value)
       native "OperationDescription_set_attr_tensor";
 
   void setAttrTensor(String name, Tensor value) {

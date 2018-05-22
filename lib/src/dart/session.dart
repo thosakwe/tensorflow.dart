@@ -34,7 +34,7 @@ class SessionRunner {
 
   SessionRunner._(this._session);
 
-  static Tuple4<int, String, List<Uint8List>, Uint8List> _Session_run(
+  static Tuple4/*<int, String, List<Uint8List>, Uint8List>*/ _Session_run(
       int graph,
       Uint8List config,
       Uint8List runOptions,

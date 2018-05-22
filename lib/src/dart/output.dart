@@ -77,7 +77,7 @@ class Output<T> {
 
   T run({Map<String, Tensor> feed: const {}}) => runAsList(feed: feed)[0];
 
-  Tuple2<int, String> _reshape(Graph graph, Int64List dims)
+  Tuple2/*<int, String>*/ _reshape(Graph graph, Int64List dims)
       native "Output_reshape";
 
   void reshape(Shape shape) {
