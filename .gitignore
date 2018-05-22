@@ -37,3 +37,4 @@ third_party/tensorflow*
 tensorflow.tar.gz
 inception5h
 .DS_Store
+example/logs
