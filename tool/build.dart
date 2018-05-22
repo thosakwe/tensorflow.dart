@@ -5,8 +5,6 @@ import 'package:path/path.dart' as p;
 import 'package:system_info/system_info.dart';
 
 final ArgParser argParser = new ArgParser()
-//..addFlag('download',
-//    negatable: false, help: 'Re-download Tensorflow binaries.')
   ..addFlag('force',
       abbr: 'f',
       negatable: false,
@@ -17,20 +15,24 @@ final ArgParser argParser = new ArgParser()
       abbr: 'o',
       help: 'The `TF_OS` variable to build with.',
       allowed: ['darwin', 'linux'],
-      defaultsTo: Platform.isMacOS ? 'darwin' : 'linux')
+      defaultsTo: Platform.environment['TF_OS'] ??
+          (Platform.isMacOS
+              ? 'darwin'
+              : (Platform.isWindows ? 'windows' : 'linux')))
   ..addOption('platform',
       abbr: 'p',
       help: 'The `TF_PLATFORM` variable to build with.',
-      defaultsTo: SysInfo.kernelArchitecture)
+      defaultsTo:
+          Platform.environment['TF_PLATFORM'] ?? SysInfo.kernelArchitecture)
   ..addOption('type',
       abbr: 't',
       help: 'The `TF_TYPE` variable to build with.',
       allowed: ['cpu', 'gpu'],
-      defaultsTo: 'cpu')
+      defaultsTo: Platform.environment['TF_TYPE'] ?? 'cpu')
   ..addOption('version',
       abbr: 'v',
       help: 'The `TF_VERSION` variable to build with.',
-      defaultsTo: '1.7.0');
+      defaultsTo: Platform.environment['TF_VERSION'] ?? '1.7.0');
 
 main(List<String> args, [bool isDownloading = false]) async {
   try {
