@@ -22,6 +22,7 @@ namespace tfd
     void Operation_type(Dart_NativeArguments arguments);
     void Operation_output(Dart_NativeArguments arguments);
 
+    void OperationDescription_add_control_input(Dart_NativeArguments arguments);
     void OperationDescription_add_input(Dart_NativeArguments arguments);
     void OperationDescription_add_input_list(Dart_NativeArguments arguments);
     void OperationDescription_finish(Dart_NativeArguments arguments);
@@ -30,9 +31,11 @@ namespace tfd
     void OperationDescription_set_attr_float(Dart_NativeArguments arguments);
     void OperationDescription_set_attr_int(Dart_NativeArguments arguments);
     void OperationDescription_set_attr_shape(Dart_NativeArguments arguments);
+    void OperationDescription_set_attr_shape_list(Dart_NativeArguments arguments);
     void OperationDescription_set_attr_string(Dart_NativeArguments arguments);
     void OperationDescription_set_attr_tensor(Dart_NativeArguments arguments);
     void OperationDescription_set_attr_type(Dart_NativeArguments arguments);
+    void OperationDescription_set_attr_type_list(Dart_NativeArguments arguments);
 }
 
 

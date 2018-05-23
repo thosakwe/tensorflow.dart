@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:core' as core;
-import 'dart:math' as math;
 import 'dart:typed_data';
 import 'dart-ext:tensorflow_dart';
 import 'package:collection/collection.dart';
@@ -16,7 +15,11 @@ import 'package:tuple/tuple.dart';
 import 'proto/proto.dart';
 export 'proto/proto.dart';
 
+export 'dart/control_flow.dart';
 export 'dart/data.dart';
+export 'dart/gradient_tape.dart';
+export 'dart/optimizer.dart';
+export 'dart/resource_variable.dart';
 export 'dart/tensorboard.dart';
 
 part 'dart/enums.dart';
@@ -32,8 +35,6 @@ part 'dart/op_def.dart';
 part 'dart/operation.dart';
 
 part 'dart/operation_description.dart';
-
-part 'dart/optimizer.dart';
 
 part 'dart/output.dart';
 
@@ -51,17 +52,16 @@ String get version native "Version";
 
 Uint8List _getAllOpsInternal() native "Operation_list";
 
+/*
 Graph _importGraphDef(Uint8List buffer, Type graphType)
     native "Graph_importGraphDef";
 
 Graph importGraphDef(GraphDef graphDef) =>
-    _importGraphDef(graphDef.writeToBuffer(), Graph);
+    _importGraphDef(graphDef.writeToBuffer(), Graph);*/
 
 DataType inferType(x) {
-  if (x is Output)
-    return x.dtype.value > 100
-        ? DataType.valueOf(x.dtype.value - 100)
-        : x.dtype;
+  if (x is DataType) return x.value > 100 ? DataType.valueOf(x.value - 100) : x;
+  if (x is Output) return inferType(x.dtype);
   if (x is int) return DataType.DT_INT32;
   if (x is double) return DataType.DT_FLOAT;
   if (x is bool) return DataType.DT_BOOL;
@@ -75,4 +75,14 @@ class TFFunction {
   final DataType dtype;
 
   const TFFunction(this.dtype);
+}
+
+String scopedName(String name) {
+  var b = new StringBuffer();
+  var scopes = Zone.current[_scopesSymbol] ?? [];
+  //shape ??= Shape.scalar;
+
+  for (var n in scopes) b.write('$n/');
+  b.write(name);
+  return b.toString();
 }

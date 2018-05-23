@@ -1,9 +1,10 @@
 part of tensorflow;
 
-Variable<T> getVariable<T>(String name,
+@deprecated
+Output<T> getVariable<T>(String name,
     {DataType dtype: DataType.DT_FLOAT,
-    @required Shape shape,
-    Output<T> initializer}) {
+    Shape shape,
+    Tensor initializer}) {
   var b = new StringBuffer();
   var scopes = Zone.current[_scopesSymbol] ?? [];
   //shape ??= Shape.scalar;
@@ -13,8 +14,8 @@ Variable<T> getVariable<T>(String name,
 
   return defaultGraph._variables.putIfAbsent(b.toString(), () {
     //dtype = dtype.value > 100 ? dtype : DataType.valueOf(dtype.value + 100);
-    Output assignOp;
-    var v = variableV2<T>(
+    Tensor assignOp;
+    var v = variableV2(
       operationName: b.toString(),
       dtype: dtype,
       shape: shape,
@@ -23,21 +24,26 @@ Variable<T> getVariable<T>(String name,
 
     if (initializer != null) {
       assignOp = initializer;
-    } else {
+    /*} else {
       if (shape == Shape.scalar)
-        assignOp = constant(0.0, dtype: dtype, graph: defaultGraph);
+        assignOp = new Tensor.from(0.0, dtype: dtype);
       else
-        assignOp = zeros(shape, dtype: dtype, graph: defaultGraph);
+        assignOp = new Tensor.from(shape.zeros).cast(dtype);
+    */
+      defaultGraph.session.runner.feed(b.toString(), assignOp);
     }
 
-    var init = assign(v, assignOp, graph: defaultGraph);
-    return new Variable<T>._(defaultGraph, dtype, b.toString(), v, init);
+
+    //v._initializer = assignVariableOp(v, assignOp, graph: defaultGraph, dtype: dtype);
+    //v._resource = readVariableOp(v, dtype: dtype);
+    return v;
   });
 }
 
 DataType _toRef(DataType dtype) =>
     dtype.value >= 100 ? dtype : DataType.valueOf(dtype.value + 100);
 
+/*
 class Variable<T> extends Output<T> {
   final DataType dtype;
   final String name;
@@ -99,3 +105,4 @@ class Variable<T> extends Output<T> {
   @override
   Shape get shape => _value.shape;
 }
+*/

@@ -26,9 +26,9 @@ class Session {
 class SessionRunner {
   final List<Tensor> _inputTensors = [];
   final List<Output> _inputs = [];
+  final List<Output> _outputs = [];
   final List<int> _targets = [];
   final Session _session;
-  Output _output;
 
   RunOptions options;
 
@@ -39,15 +39,14 @@ class SessionRunner {
       Uint8List config,
       Uint8List runOptions,
       List<Tensor> inputTensors,
-      Output output,
+      List<Output> outputs,
       int nOutputs,
       List<int> targets,
       List<Output> inputs) native "Session_run";
 
   /// Execute graph fragments to compute requested fetches and return metadata about the run.
   SessionRun<T> run<T>() {
-    _session._runner = null;
-    if (_output == null && false)
+    if (_outputs.isEmpty && _targets.isEmpty)
       throw 'The session has not been configured to run any node. Call `SessionRunner.fetch` first.';
 
     var result = _Session_run(
@@ -55,20 +54,30 @@ class SessionRunner {
       _session.config?.writeToBuffer(),
       options?.writeToBuffer(),
       _inputTensors,
-      _output,
-      _output?.op?.numOutputs ?? 0,
+      _outputs,
+      _outputs.length,
       // nOutputs,
       _targets,
       _inputs,
     );
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw new TensorFlowException(code, result.item2);
-    return new SessionRun._(result.item3, result.item4);
+    _session._runner = null;
+    var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
+    deps.clear();
+    var run = new SessionRun._(result.item3, result.item4);
+    _session._graph._runCallbacks
+      ..forEach((c) => c.f(run[c.index]))
+      ..clear();
+    return run;
   }
 
   /// Make [run]() execute operation, but not return any evaluated [Tensor]s.
   void addTarget(String operation) =>
       _targets.add(_session._graph[operation]._pointer);
+
+  /// Make [run]() execute operation, but not return any evaluated [Tensor]s.
+  void addTargetFromOutput(Output output) => addTarget(output.op.name);
 
   /// Avoid evaluating the [index]-th output of [operation] by substituting [tensor] for the value it produces
   void feed(String operation, Tensor tensor, {int index: 0}) {
@@ -76,26 +85,35 @@ class SessionRunner {
     _inputTensors.add(tensor);
   }
 
-  /// Make [run]() return the [index]-th output of [operation].
-  void _fetch(Operation op, {int index: 0}) {
+  int _fetch(Operation op, {int index: 0}) {
     if (op.numOutputs < 0)
       throw new ArgumentError("The operation '${op.name}' has no outputs" +
-          ", and therefore cannot be run.");
+          ", and therefore its results cannot be fetched.");
+
+    for (int i = 0; i < _outputs.length; i++) {
+      var output = _outputs[i];
+      if (output._operation == op._pointer && output._index == index) return i;
+    }
 
     var output = new Output._(_session._graph)
       .._operation = op._pointer
       .._index = index;
-    _output = output;
+    _outputs.add(output);
+    return _outputs.length - 1;
   }
 
   /// Make [run]() return the [index]-th output of [operation].
-  void fetch(String operation, {int index: 0}) {
+  ///
+  /// Returns the index at which the corresponding value will be visible in the [SessionRun].
+  int fetch(String operation, {int index: 0}) {
     var op = _session._graph[operation];
-    _fetch(op, index: index);
+    return _fetch(op, index: index);
   }
 
   /// Make [run]() return the [index]-th output of [output's] operation.
-  void fetchFromOutput(Output output) =>
+  ///
+  /// Returns the index at which the corresponding value will be visible in the [SessionRun].
+  int fetchFromOutput(Output output) =>
       fetch(output.op.name, index: output.index);
 }
 

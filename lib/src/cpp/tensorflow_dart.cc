@@ -18,7 +18,10 @@ DART_EXPORT Dart_Handle tensorflow_dart_Init(Dart_Handle parent_library) {
 }
 
 Dart_Handle HandleError(Dart_Handle handle) {
-    if (Dart_IsError(handle)) Dart_PropagateError(handle);
+    if (Dart_IsError(handle)) {
+        Dart_PropagateError(handle);
+    }
+
     return handle;
 }
 
@@ -57,8 +60,11 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     else if (strcmp("Operation_num_outputs", cname) == 0) result = tfd::Operation_num_outputs;
     else if (strcmp("Operation_type", cname) == 0) result = tfd::Operation_type;
     else if (strcmp("Operation_output", cname) == 0) result = tfd::Operation_output;
+    else if (strcmp("OperationDescription_add_control_input", cname) == 0)
+        result = tfd::OperationDescription_add_control_input;
     else if (strcmp("OperationDescription_add_input", cname) == 0) result = tfd::OperationDescription_add_input;
-    else if (strcmp("OperationDescription_add_input_list", cname) == 0) result = tfd::OperationDescription_add_input_list;
+    else if (strcmp("OperationDescription_add_input_list", cname) == 0)
+        result = tfd::OperationDescription_add_input_list;
     else if (strcmp("OperationDescription_finish", cname) == 0) result = tfd::OperationDescription_finish;
     else if (strcmp("OperationDescription_new", cname) == 0) result = tfd::OperationDescription_new;
     else if (strcmp("OperationDescription_set_attr_bool", cname) == 0)
@@ -69,11 +75,15 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
         result = tfd::OperationDescription_set_attr_int;
     else if (strcmp("OperationDescription_set_attr_shape", cname) == 0)
         result = tfd::OperationDescription_set_attr_shape;
+    else if (strcmp("OperationDescription_set_attr_shape_list", cname) == 0)
+        result = tfd::OperationDescription_set_attr_shape_list;
     else if (strcmp("OperationDescription_set_attr_string", cname) == 0)
         result = tfd::OperationDescription_set_attr_string;
     else if (strcmp("OperationDescription_set_attr_tensor", cname) == 0)
         result = tfd::OperationDescription_set_attr_tensor;
     else if (strcmp("OperationDescription_set_attr_type", cname) == 0) result = tfd::OperationDescription_set_attr_type;
+    else if (strcmp("OperationDescription_set_attr_type_list", cname) == 0)
+        result = tfd::OperationDescription_set_attr_type_list;
 
         // saved_model_bundle.h
     else if (strcmp("SavedModelBundle_new", cname) == 0) result = tfd::SavedModelBundle_new;

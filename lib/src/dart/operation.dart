@@ -31,6 +31,11 @@ class Operation<T> {
 
   Tuple2<int, int> _output(int idx) native "Operation_output";
 
+  /// Returns [op], but forces subsequent operations to depend upon it.
+  ///
+  /// Be careful using this at the top level.
+  void depend() => _depend(this);
+
   /// Returns a symbolic handle to one of the tensors produced by this operation.
   Output<T> operator [](int idx) {
     if (idx >= numOutputs)
@@ -48,17 +53,10 @@ class Operation<T> {
       */
   }
 
-  void run() {
-    if (numOutputs == 0) {
-      _graph.session.runner
-        ..addTarget(name)
-        ..fetch(name)
-        ..run();
-    } else {
-      _graph.session.runner
-        ..fetch(name)
-        ..run();
-    }
+  void run({Map<String, Tensor> feed: const {}}) {
+    var runner = _graph.session.runner..addTarget(name);
+    feed?.forEach(runner.feed);
+    runner.run();
   }
 
   /// Returns a symbolic handle to some of the tensors produced by this operation.

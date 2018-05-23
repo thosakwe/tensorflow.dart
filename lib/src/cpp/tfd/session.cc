@@ -14,7 +14,7 @@ void tfd::SessionRunGraph(Dart_NativeArguments arguments) {
     auto *status = TF_NewStatus();
     auto *session = TF_NewSession(graph, opts, status);
     TF_Tensor *tensorOutput = nullptr;
-    auto *output = new TF_Output;
+    auto *output = (TF_Output *) Dart_ScopeAllocate(sizeof(TF_Output));
 
     // Find the operation from the given Output.
     Dart_Handle outputInstance = Dart_GetNativeArgument(arguments, 1);
@@ -93,7 +93,7 @@ void tfd::Session_run(Dart_NativeArguments arguments) {
     Dart_Handle configHandle = Dart_GetNativeArgument(arguments, 1); // Uint8List config
     Dart_Handle runOptionsHandle = Dart_GetNativeArgument(arguments, 2); // Uint8List runOptions
     Dart_Handle inputTensorsHandle = Dart_GetNativeArgument(arguments, 3); // List<Uint8List> inputTensors
-    Dart_Handle outputHandle = Dart_GetNativeArgument(arguments, 4); // Output output
+    Dart_Handle outputsHandle = Dart_GetNativeArgument(arguments, 4); // List<Output> outputs
     Dart_Handle nOutputsHandle = Dart_GetNativeArgument(arguments, 5); // int nOutputs
     Dart_Handle targetsHandle = Dart_GetNativeArgument(arguments, 6); // List<int> targets
     Dart_Handle inputsHandle = Dart_GetNativeArgument(arguments, 7); // List<Output> inputs
@@ -140,16 +140,25 @@ void tfd::Session_run(Dart_NativeArguments arguments) {
 
 
      */
-    struct TF_Output output = {nullptr, -1};
-
-    if (!Dart_IsNull(outputHandle))
-        output = convert_output_wrapper(outputHandle, 0);
-
     int64_t nOutputs;
     HandleError(Dart_IntegerToInt64(nOutputsHandle, &nOutputs));
 
-    auto *tensorOutput = new TF_Tensor *[nOutputs];
+    struct TF_Output *outputs = nullptr;
+
+    if (!Dart_IsNull(outputsHandle) && nOutputs > 0) {
+        outputs = (struct TF_Output *) Dart_ScopeAllocate(sizeof(struct TF_Output) * nOutputs);
+
+        for (intptr_t i = 0; i < nOutputs; i++) {
+            Dart_Handle element = Dart_ListGetAt(outputsHandle, i);
+            outputs[i] = convert_output_wrapper(element);
+        }
+    }
+
     auto *metadata = TF_NewBuffer();
+    TF_Tensor **tensorOutput = nullptr;
+
+    if (nOutputs > 0)
+        tensorOutput = (TF_Tensor **) Dart_ScopeAllocate(sizeof(struct TF_Tensor *) * nOutputs);
 
     int nTargets = 0;
     TF_Output *inputs = nullptr;
@@ -201,7 +210,7 @@ void tfd::Session_run(Dart_NativeArguments arguments) {
                   inputs, // Inputs
                   inputTensors, // Input values
                   (int) nInputs, // nInputs
-                  &output, // Output struct
+                  outputs, // Output struct
                   tensorOutput, // Output tensor,
                   (int) nOutputs, // nOutputs,
                   (const TF_Operation *const *) targets, nTargets, // Targets?
@@ -221,7 +230,7 @@ void tfd::Session_run(Dart_NativeArguments arguments) {
 
     tuple[0] = Dart_NewInteger(code);//
 
-    if (tensorOutput[0] == nullptr || code != 0) {
+    if (tensorOutput != nullptr && (tensorOutput[0] == nullptr || code != 0)) {
         tuple[1] = Dart_NewStringFromCString(TF_Message(status));
     } else {
         tuple[1] = Dart_EmptyString();
@@ -230,12 +239,14 @@ void tfd::Session_run(Dart_NativeArguments arguments) {
     // Create a List of Uint8Lists, one per tensor.
     Dart_Handle tensors = tuple[2] = Dart_NewList(nOutputs);
 
-    for (int i = 0; i < nOutputs; i++) {
-        auto *tensor = tensorOutput[i];
-        Dart_ListSetAt(tensors, i, get_tensor_value(tensor));
-        //size_t size = TF_TensorByteSize(tensor);
-        //auto *data = TF_TensorData(tensor);
-        //Dart_ListSetAt(tensors, i, Dart_NewExternalTypedData(Dart_TypedData_kUint8, data, size));
+    if (tensorOutput != nullptr) {
+        for (int i = 0; i < nOutputs; i++) {
+            auto *tensor = tensorOutput[i];
+            Dart_ListSetAt(tensors, i, get_tensor_value(tensor));
+            //size_t size = TF_TensorByteSize(tensor);
+            //auto *data = TF_TensorData(tensor);
+            //Dart_ListSetAt(tensors, i, Dart_NewExternalTypedData(Dart_TypedData_kUint8, data, size));
+        }
     }
 
     // Create a Uint8List for the run metadata.

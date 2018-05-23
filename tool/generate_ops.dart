@@ -25,7 +25,8 @@ String escapeName(String name) {
     'sourceOutput',
     'graph',
     'operationName',
-    'run'
+    'run',
+    'print'
   ].contains(name)
       ? name + '\$'
       : name;

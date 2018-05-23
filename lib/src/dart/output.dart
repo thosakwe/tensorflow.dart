@@ -2,13 +2,18 @@ part of tensorflow;
 
 class Output<T> {
   final Graph _graph;
-  Output _initializer;
+  Operation _initializer;
   Output _resource;
   int _operation;
   int _index;
   int _dtype;
+  Int64List __shape;
 
   Output._(this._graph);
+
+  void depend() {
+    _graph.session.runner.addTarget(op.name);
+  }
 
   DataType get dtype {
     if (_dtype == null) {
@@ -27,16 +32,16 @@ class Output<T> {
 
   Int64List _shape(Graph graph) native "Output_shape";
 
-  Shape get shape => new Shape._(_shape(_graph));
+  Shape get shape => new Shape._(__shape ??= _shape(_graph));
 
-  Output get initializer => _initializer ?? this;//noOp();
+  T get value => identity(this).run();
 
-  Output<T> get value => _resource == null
-      ? this
-      : readVariableOp(
-          _resource); // ??= throw new UnsupportedError('Not a variable: $this'));
+  Output<T> operator ~() => neg<T>(this, graph: _graph);
 
   Output<T> operator *(Output<T> other) => mul<T>(this, other, graph: _graph);
+
+  Output<T> operator ~/(Output<T> other) =>
+      truncateDiv<T>(this, other, graph: _graph);
 
   Output<T> operator /(Output<T> other) => div<T>(this, other, graph: _graph);
 
@@ -75,8 +80,6 @@ class Output<T> {
 
   int _getType() native "Output_get_type";
 
-  T run({Map<String, Tensor> feed: const {}}) => runAsList(feed: feed)[0];
-
   Tuple2/*<int, String>*/ _reshape(Graph graph, Int64List dims)
       native "Output_reshape";
 
@@ -86,10 +89,18 @@ class Output<T> {
     if (code != Code.ok) throw new TensorFlowException(code, result.item2);
   }
 
+  void feed(Tensor value) {
+    _graph.session.runner.feed(op.name, value);
+  }
+
   List<T> runAsList({Map<String, Tensor> feed: const {}}) {
     var runner = _graph.session.runner..fetchFromOutput(this);
     feed?.forEach(runner.feed);
     return runner.run<T>().toList(growable: false);
+  }
+
+  T run({Map<String, Tensor> feed: const {}}) {
+    return runAsList(feed: feed)[0];
   }
 
   @override
@@ -98,4 +109,33 @@ class Output<T> {
         op.name +
         '\', index: $_index, type: $dtype }';
   }
+}
+
+class DelegatingOutput<T> extends Output<T> {
+  final Output<T> inner;
+
+  DelegatingOutput(this.inner) : super._(inner._graph);
+
+  int get _operation => inner._operation;
+
+  Operation get _initializer => inner._initializer;
+
+  Output get _resource => inner._resource;
+
+  int get _index => inner._index;
+
+  int get _dtype => inner._dtype;
+
+  Shape get shape => inner.shape;
+
+  int _getType() => inner._getType();
+
+  void depend() => inner.depend();
+
+  void reshape(Shape shape) => inner.reshape(shape);
+
+  void feed(Tensor from) => inner.feed(from);
+
+  List<T> runAsList({Map<String, Tensor> feed: const {}}) =>
+      inner.runAsList(feed: feed);
 }

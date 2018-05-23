@@ -7,7 +7,6 @@ class OperationDescription<T> {
   final int _pointer;
   int _index = 0;
   String _device;
-  Variable _variable;
 
   static int _OperationDescription_new(int graph, String type, String name)
       native "OperationDescription_new";
@@ -15,21 +14,26 @@ class OperationDescription<T> {
   OperationDescription._(this._graph, this.type, this.name)
       : _pointer = _OperationDescription_new(_graph._pointer, type, name);
 
-  /// Ensure that the operation does not execute before the control operation does.
-  void addControlInput(Operation control)
+  void _addControlInput(int control)
       native "OperationDescription_add_control_input";
+
+  /// Ensure that the operation does not execute before the control operation does.
+  void addControlInput(Operation control) {
+    if (control == null) return;
+    _addControlInput(control._pointer);
+  }
 
   void _addInput(Output control, int index)
       native "OperationDescription_add_input";
 
   /// Returns the builder to create an operation.
   void addInput(Output control) {
-    if (control is Variable) {
-      if (type == 'Assign') _variable = control;
-      addInput(control._value);
-    } else if (control != null) {
+    if (control == null)
+      return;
+    else if (control is DelegatingOutput)
+      addInput(control.inner);
+    else
       _addInput(control, _index++);
-    }
   }
 
   void _addInputList(List<Output> inputs)
@@ -37,7 +41,8 @@ class OperationDescription<T> {
 
   void addInputList(List<Output> value) {
     if (value == null) return;
-    _addInputList(value);
+    _addInputList(
+        value.map((o) => o is DelegatingOutput ? o.inner : o).toList());
   }
 
   int _finish(Type tensorFlowExceptionType)
@@ -45,21 +50,21 @@ class OperationDescription<T> {
 
   /// Add the [Operation] being built to the [Graph].
   Operation<T> finish() {
+    var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
+    deps.forEach(addControlInput);
+
     setDevice(_device ?? Zone.current[_deviceSymbol]);
-    var op =
-        new Operation<T>._fromPointer(_finish(TensorFlowException), _graph);
-    if (_variable != null) _variable._value = op[0];
-    return op;
+    return new Operation<T>._fromPointer(_finish(TensorFlowException), _graph);
   }
 
-  Tuple2/*<int, String>*/ _setAttrTensor(String name, Tensor value)
+  Tuple3/*<int, String, Tensor>*/ _setAttrTensor(String name, Tensor value)
       native "OperationDescription_set_attr_tensor";
 
   void setAttrTensor(String name, Tensor value) {
     if (value == null) return;
     var result = _setAttrTensor(name, value);
     var code = _codeFrom(result.item1);
-    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+    if (code != Code.ok) throw new TensorFlowException(code, '${result.item2} ${result.item3}');
   }
 
   void setAttrFunc(String name, Func value) native "";
@@ -118,13 +123,20 @@ class OperationDescription<T> {
     _setAttrShape(name, value.dimensions);
   }
 
-  void setAttrShapeList(String name, List<Shape> value) native "";
+  void _setAttrShapeList(String name, List<Int64List> value)
+      native "OperationDescription_set_attr_shape_list";
+
+  void setAttrShapeList(String name, List<Shape> value) {
+    if (value == null) return null;
+    _setAttrShapeList(name, value.map((s) => s.dimensions).toList());
+  }
 
   void _setAttrType(String name, int value)
       native "OperationDescription_set_attr_type";
 
   void setAttrType(String name, DataType value) {
-    if (value == null) throw "Missing required attr '$name' on '${this.name}'.";
+    if (value == null)
+      return; //throw "Missing required attr '$name' on '${this.name}'.";
     _setAttrType(name, value.value);
   }
 

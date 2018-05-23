@@ -7620,7 +7620,7 @@ Output slideDataset(Output inputDataset, Output windowSize, Output stride,
   return op$.finish()[0];
 }
 
-Output print<T>(Output input, List<Output> data,
+Output print$<T>(Output input, List<Output> data,
     {Graph graph,
     String operationName,
     List<DataType> u,

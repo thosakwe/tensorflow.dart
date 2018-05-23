@@ -1,5 +1,36 @@
 part of tensorflow;
 
+/// Creates a single zero-value tensor for a scalar.
+Output zero(DataType dtype, {Graph graph, String operationName}) {
+  var value;
+  dtype = inferType(dtype);
+
+  switch (dtype) {
+    case DataType.DT_INT8:
+    case DataType.DT_INT16:
+    case DataType.DT_INT32:
+    case DataType.DT_INT64:
+    case DataType.DT_UINT8:
+    case DataType.DT_UINT16:
+    case DataType.DT_UINT32:
+    case DataType.DT_UINT64:
+      value = 0;
+      break;
+    case DataType.DT_FLOAT:
+    case DataType.DT_DOUBLE:
+      value = 0.0;
+      break;
+  }
+
+  if (value != null)
+    return constant(value,
+        shape: Shape.scalar,
+        dtype: dtype,
+        operationName: operationName,
+        graph: graph);
+  throw new ArgumentError('Not a scalar type: $dtype');
+}
+
 /// Creates a tensor with all elements set to zero.
 ///
 /// This operation returns a tensor of type [dtype] with shape [shape] and all elements set to `0`.
@@ -95,7 +126,7 @@ class Shape {
   factory Shape.dims(List<int> dims) =>
       new Shape._(new Int64List.fromList(dims));
 
-  Shape._(this._dims);
+  const Shape._(this._dims);
 
   //factory Shape._(Int64List dims) native "Shape_new";
 
@@ -150,7 +181,7 @@ class Shape {
   //static Shape unknown() native "Shape_unknown";
 
   /// Returns a Shape representing a scalar value.
-  static Shape get scalar => new Shape.dims([]);
+  static const Shape scalar = const Shape._(const []);
 
   /// Returns a reversed version of this dimension vector.
   Shape get reversed => new Shape.dims(_dims.reversed.toList());
@@ -158,10 +189,66 @@ class Shape {
   /// Create a Shape representing an unknown number of dimensions.
   Int64List get dimensions => new Int64List.fromList(_dims);
 
+  /// Convert a 1D list into a list with the correct dimensions.
+  ///
+  /// Say you received [1, 2, 3, 4, 5, 6, 7, 8].
+  /// But your shape is 2x2x2.
+  /// What you want is: [[[1, 2], [3, 4]], [[5, 6], [7, 8]]].
+  ///
+  /// The given list is always [flatten]ed internally before computation,
+  /// so the shape does not matter.
+  List apply<T>(Iterable<T> items) {
+    var out = flatten(items);
+
+    if (this == scalar)
+      throw new UnsupportedError('The scalar shape cannot populate a list.');
+
+    if (out.length != size)
+      throw new UnsupportedError('$items does not the match the shape $this.');
+
+    // Say you received [1, 2, 3, 4, 5, 6, 7, 8].
+    // But your shape is 2x2x2.
+    // What you want is: [[[1, 2], [3, 4]], [[5, 6], [7, 8]]].
+    int i = 0;
+
+    List compute(int dim) {
+      // At idx 0, size is 2.
+      var size = _dims[dim];
+
+      if (dim < _dims.length - 1) {
+        // We want to create 2 lists of whatever the next dimension is.
+        // In this case, 2 lists of 2.
+        return new List.generate(size, (_) => compute(dim + 1));
+      } else {
+        // If this is the last dimension, then just return elements
+        // of the linear list.
+        return new List.generate(size, (_) => out.elementAt(i++));
+      }
+    }
+
+    return compute(0);
+  }
+
   @override
   String toString() => dimensions.toString();
 
   @override
   bool operator ==(other) =>
-      other is Shape && const ListEquality<int>().equals(other._dims, _dims);
+      other is Shape &&
+      (other.hashCode == hashCode ||
+          const ListEquality<int>().equals(other._dims, _dims));
+}
+
+/// Flattens a multi-dimensional list.
+List flatten(Iterable iterable) {
+  var out = [];
+
+  for (var x in iterable) {
+    if (x is Iterable)
+      out.addAll(flatten(x));
+    else
+      out.add(x);
+  }
+
+  return out;
 }

@@ -96,11 +96,19 @@ void tfd::Operation_type(Dart_NativeArguments arguments) {
 void tfd::OperationDescription_new(Dart_NativeArguments arguments) {
     uint64_t graph;
     const char *type, *name;
+
     HandleError(Dart_IntegerToUint64(Dart_GetNativeArgument(arguments, 0), &graph)); // int graph
     HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &type)); // String type
     HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 2), &name)); // String name
     auto *desc = TF_NewOperation((TF_Graph *) graph, type, name);
     Dart_SetReturnValue(arguments, Dart_NewIntegerFromUint64((uint64_t) desc));
+}
+
+void tfd::OperationDescription_add_control_input(Dart_NativeArguments arguments) {
+    auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
+    uint64_t ptr;
+    HandleError(Dart_IntegerToUint64(Dart_GetNativeArgument(arguments, 1), &ptr));
+    TF_AddControlInput(desc, (TF_Operation *) ptr);
 }
 
 void tfd::OperationDescription_add_input(Dart_NativeArguments arguments) {
@@ -183,11 +191,12 @@ void tfd::OperationDescription_set_attr_tensor(Dart_NativeArguments arguments) {
     HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
 
     auto *tensor = convert_tensor(tensorHandle);
-    Dart_Handle tuple[2];
+    Dart_Handle tuple[3];
 
     if (tensor == nullptr) {
         tuple[0] = Dart_NewInteger(TF_NOT_FOUND);
         tuple[1] = Dart_NewStringFromCString("This tensor returned a null pointer.");
+        tuple[2] = tensorHandle;
     } else {
 
 
@@ -198,11 +207,11 @@ void tfd::OperationDescription_set_attr_tensor(Dart_NativeArguments arguments) {
 
         if (code != 0)
             tuple[1] = Dart_NewStringFromCString(TF_Message(status));
-        else tuple[1] = Dart_Null();
+        else tuple[1] = tuple[2] = Dart_Null();
     }
 
     TF_DeleteStatus(status);
-    Dart_Handle out = Dart_New(getTuple2Type(), Dart_NewStringFromCString(""), 2, tuple);
+    Dart_Handle out = Dart_New(getTuple3Type(), Dart_NewStringFromCString(""), 3, tuple);
     Dart_SetReturnValue(arguments, out);
 }
 
@@ -213,6 +222,30 @@ void tfd::OperationDescription_set_attr_type(Dart_NativeArguments arguments) {
     HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
     HandleError(Dart_IntegerToInt64(Dart_GetNativeArgument(arguments, 2), &value));
     TF_SetAttrType(desc, name, (TF_DataType) value);
+}
+
+void tfd::OperationDescription_set_attr_type_list(Dart_NativeArguments arguments) {
+    Dart_Handle typesHandle = Dart_GetNativeArgument(arguments, 2); // Int32List
+    auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
+    const char *name;
+    intptr_t length = 0;
+    HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
+    HandleError(Dart_ListLength(typesHandle, &length));
+
+    if (length == 0)
+        TF_SetAttrTypeList(desc, name, nullptr, 0);
+    else {
+        auto *data = (TF_DataType *) Dart_ScopeAllocate(sizeof(TF_DataType) * length);
+
+        for (intptr_t i = 0; i < length; i++) {
+            Dart_Handle intHandle = Dart_ListGetAt(typesHandle, i);
+            int64_t value;
+            HandleError(Dart_IntegerToInt64(intHandle, &value));
+            data[i] = (TF_DataType) value;
+        }
+
+        TF_SetAttrTypeList(desc, name, data, (int) length);
+    }
 }
 
 void tfd::OperationDescription_set_attr_shape(Dart_NativeArguments arguments) {
@@ -226,6 +259,42 @@ void tfd::OperationDescription_set_attr_shape(Dart_NativeArguments arguments) {
     HandleError(Dart_TypedDataAcquireData(dimsHandle, &type, (void **) &dims, &length));
     TF_SetAttrShape(desc, name, dims, (int) length);
     HandleError(Dart_TypedDataReleaseData(dimsHandle));
+}
+
+void tfd::OperationDescription_set_attr_shape_list(Dart_NativeArguments arguments) {
+    auto shapesHandle = Dart_GetNativeArgument(arguments, 2); // List<Int64List>
+    auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
+    const char *name;
+    intptr_t n_shapes = 0;
+    HandleError(Dart_StringToCString(Dart_GetNativeArgument(arguments, 1), &name));
+    HandleError(Dart_ListLength(shapesHandle, &n_shapes));
+
+    if (n_shapes == 0) {
+        TF_SetAttrShapeList(desc, name, nullptr, nullptr, 0);
+    } else {
+        auto **shapes = (int64_t **) Dart_ScopeAllocate(sizeof(int64_t *) * n_shapes);
+        auto *sizes = (int32_t *) Dart_ScopeAllocate(sizeof(int32_t) * n_shapes);
+        auto *handles = (Dart_Handle *) Dart_ScopeAllocate(sizeof(Dart_Handle) * n_shapes);
+        memset(handles, 0, (size_t) n_shapes);
+
+        for (intptr_t i = 0; i < n_shapes; i++) {
+            Dart_Handle shapeHandle = Dart_ListGetAt(shapesHandle, i);
+            Dart_TypedData_Type type;
+            int64_t *data;
+            intptr_t length;
+            HandleError(Dart_TypedDataAcquireData(shapeHandle, &type, (void **) &data, &length));
+            shapes[i] = data;
+            sizes[i] = (int32_t) length;
+            handles[i] = shapeHandle;
+        }
+
+        TF_SetAttrShapeList(desc, name, (const int64_t *const *) shapes, sizes, (int) n_shapes);
+
+        for (intptr_t i = 0; i < n_shapes; i++) {
+            Dart_Handle handle = handles[i];
+            if (handle != nullptr) Dart_TypedDataReleaseData(handle);
+        }
+    }
 }
 
 void tfd::OperationDescription_set_attr_string(Dart_NativeArguments arguments) {

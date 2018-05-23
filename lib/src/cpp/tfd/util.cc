@@ -1,6 +1,7 @@
 //
 // Created by Tobe on 4/15/18.
 //
+#include <cstring>
 #include <iostream>
 #include <string>
 #include "../tensorflow_dart.h"
@@ -182,8 +183,12 @@ Dart_Handle tfd::get_tensor_value(TF_Tensor *tensor) {
         } else {
             return Dart_NewExternalTypedData(Dart_TypedData_kUint64, v, length);
         }
-    } else if (type == TF_RESOURCE || type == TF_VARIANT) {
+    } else if (type == TF_RESOURCE) {
         size_t size = TF_TensorByteSize(tensor);
+        //char msg[size];
+        //memset((void *) msg, 0, size);
+        //sprintf(msg, "Resource { size: %zu }", size);
+        //return Dart_NewStringFromCString(msg);
         return Dart_NewExternalTypedData(Dart_TypedData_kUint8, TF_TensorData(tensor), size);
     }
 

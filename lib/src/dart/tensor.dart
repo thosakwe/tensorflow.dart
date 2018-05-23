@@ -168,41 +168,49 @@ class Tensor {
   /// The [DataType] of elements stored in the Tensor.
   DataType get dtype => DataType.valueOf(_dataType);
 
+  /// A object that can read the contents of this tensor.
+  ByteData get byteData => new ByteData.view(_data.buffer);
+
   /// Returns the value in a scalar [bool] tensor.
   bool get asBool => asUint8 == 1;
 
   /// Returns the value in a scalar `FLOAT` tensor.
-  double get asFloat32 => asFloatList[0];
+  double get asFloat32 => byteData.getFloat32(0);
 
   /// Returns the value in a scalar `DUBLE` tensor.
-  double get asFloat64 => asFloatList[0];
+  double get asFloat64 => byteData.getFloat64(0);
 
   /// Returns the value in a scalar `INT8` tensor.
-  int get asInt8 => asInt8List[0];
+  int get asInt8 => byteData.getInt8(0);
 
   /// Returns the value in a scalar `INT16` tensor.
-  int get asInt16 => asInt16List[0];
+  int get asInt16 => byteData.getInt16(0);
 
   /// Returns the value in a scalar `INT32` tensor.
-  Int32 get asInt32 => new Int32(asInt32List[0]);
+  int get asInt32 => byteData.getInt32(0);
 
   /// Returns the value in a scalar `INT64` tensor.
-  Int64 get asInt64 => new Int64(asInt64List[0]);
+  int get asInt64 => byteData.getInt64(0);
 
   /// Returns the value in a scalar `UINT8` tensor.
-  int get asUint8 => asInt8List[0];
+  int get asUint8 => byteData.getUint8(0);
 
   /// Returns the value in a scalar `UINT16` tensor.
-  int get asUint16 => asInt16List[0];
+  int get asUint16 => byteData.getUint16(0);
 
   /// Returns the value in a scalar `UINT32` tensor.
-  int get asUint32 => asInt32List[0];
+  int get asUint32 => byteData.getUint32(0);
 
   /// Returns the value in a scalar `UINT64` tensor.
-  int get asUint64 => asInt64List[0];
+  int get asUint64 => byteData.getUint64(0);
 
   /// Returns the value in a scalar [String] tensor.
   String get asString => dtype == DataType.DT_STRING
+      ? new String.fromCharCodes(new Uint8List.view(asUint8List.buffer))
+      : throw new ArgumentError('Not a string type: $dtype');
+
+  /// Returns the value in a scalar UTF-8 [String] tensor.
+  String get asUtf8String => dtype == DataType.DT_STRING
       ? utf8.decode(new Uint8List.view(asUint8List.buffer),
           allowMalformed: true)
       : throw new ArgumentError('Not a string type: $dtype');
@@ -316,6 +324,16 @@ class Tensor {
       default:
         throw new ArgumentError('Not a float type: $dtype');
     }
+  }
+
+  String toString() {
+    return 'Tensor { dtype: ' +
+        dtype.toString() +
+        ', shape: ' +
+        shape.toString() +
+        ', data: ' +
+        asUint8List.toString() +
+        ' }';
   }
 }
 

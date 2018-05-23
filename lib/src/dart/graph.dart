@@ -1,10 +1,12 @@
 part of tensorflow;
 
+const Symbol _controlInputsSymbol = #tf_control_inputs;
 const Symbol _defaultGraphSymbol = #tf_default_graph;
 const Symbol _deviceSymbol = #tf_device;
 const Symbol _scopesSymbol = #tf_variable_scopes;
 
 Graph _defaultGraph;
+List<Operation> _topLevelDeps = [];
 
 Graph get defaultGraph =>
     _defaultGraph ??= Zone.current[_defaultGraphSymbol] ?? new Graph();
@@ -27,20 +29,48 @@ T withVariableScope<T>(String name, T Function() f) {
 T withDeviceScope<T>(String device, T Function() f) =>
     Zone.current.fork(zoneValues: {_deviceSymbol: device}).run<T>(f);
 
-Output<T> constant<T>(T value, {String operationName, DataType dtype, Graph graph}) {
+/// Executes a function, applying [dependencies] to each created node.
+T withControlDependencies<T>(Iterable<Operation> dependencies, T Function() f) {
+  var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
+  var zone = Zone.current.fork(zoneValues: {
+    _controlInputsSymbol: new List.from(deps)..addAll(dependencies)
+  });
+  return zone.run<T>(f);
+}
+
+/// Returns [op], but forces subsequent operations to depend upon it.
+///
+/// Be careful using this at the top level.
+Operation _depend(Operation op) {
+  var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
+  deps.add(op);
+  return op;
+}
+
+Output<T> constant<T>(T value,
+    {String operationName, DataType dtype, Graph graph, Shape shape}) {
   graph ??= defaultGraph;
   return graph.constant<T>(value,
-      operationName: operationName, dtype: dtype);
+      operationName: operationName, dtype: dtype, shape: shape);
+}
+
+class _RunCallback {
+  final int index;
+  final void Function(Object) f;
+
+  _RunCallback(this.index, this.f);
 }
 
 /// A data flow graph representing a TensorFlow computation.
 class Graph {
   static int _Graph_new() native "Graph_new";
 
+  final List<_RunCallback> _runCallbacks = [];
+
   int _pointer;
 
   final SymbolTable _scope = new SymbolTable();
-  final Map<String, Variable> _variables = {};
+  final Map<String, Output> _variables = {};
   int _index = 0;
   List<Operation> _operations;
   Session _session;
@@ -48,6 +78,11 @@ class Graph {
   Graph() : _pointer = _Graph_new();
 
   Graph._fromPointer(this._pointer);
+
+  void addCallback(int i, void Function(Object) f) {
+    if (!_runCallbacks.any((c) => c.index == i && c.f == f))
+      _runCallbacks.add(new _RunCallback(i, f));
+  }
 
   static Tuple3<int, String, int> _importGraphDef(
       Uint8List graphDef, String prefix) native "Graph_from_graph_def";
@@ -106,11 +141,15 @@ class Graph {
     return new GraphDef.fromBuffer(result.item3);
   }
 
-  Output<T> constant<T>(T value, {String operationName, DataType dtype}) {
+  Output<T> constant<T>(T value,
+      {String operationName, DataType dtype, Shape shape}) {
+    if (value is Output<T>) return value;
     var tensor = value is Tensor
         ? value
-        : new Tensor.from(value is Shape ? value.dimensions : value, dtype: dtype);
-    //if (dtype != null) tensor = tensor.cast(dtype);
+        : new Tensor.from(value is Shape ? value.dimensions : value,
+            dtype: dtype);
+    if (dtype != null) tensor = tensor.cast(dtype);
+    if (shape != null) tensor = tensor.reshape(shape);
     var op = newOperation<T>('Const',
         operationName ?? _scope.uniqueName('Const/${value.runtimeType}/'))
       ..setAttrType('dtype', dtype ?? tensor.dtype)
