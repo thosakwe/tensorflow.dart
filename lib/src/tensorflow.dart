@@ -86,3 +86,61 @@ String scopedName(String name) {
   b.write(name);
   return b.toString();
 }
+
+/// Applies [op] to [value] until it is a scalar.
+Output<T> reduce<T>(Output<T> value, Output<T> Function(Output<T>) op,
+    {Graph graph}) {
+  var lastShape = value.shape;
+  while (value.shape != Shape.scalar) {
+    value = withScope(graph, () => op(value));
+
+    if (value.shape == lastShape) break;
+    lastShape = value.shape;
+  }
+  return value;
+}
+
+/// Reduces input_tensor along the dimensions given in axis.
+///
+/// Unless [keepDims] is true, the rank of the tensor is reduced by 1 for each entry in axis.
+/// If [keepDims] is true, the reduced dimensions are retained with length 1.
+Output<T> reduceMean<T>(Output<T> value, Output axis,
+    {Graph graph, bool keepDims: true, DataType tidx: DataType.DT_INT32}) {
+  return reduce<T>(value,
+      (v) => mean(v, axis, keepDims: keepDims, graph: graph, tidx: tidx));
+}
+
+/// Same as [reduceMean], but performs a product.
+Output<T> reduceProd<T>(Output<T> value, Output axis,
+    {Graph graph, bool keepDims: true, DataType tidx: DataType.DT_INT32}) {
+  return reduce<T>(value,
+      (v) => prod(v, axis, keepDims: keepDims, graph: graph, tidx: tidx));
+}
+
+/// Same as [reduceMean], but performs a sum.
+Output<T> reduceSum<T>(Output<T> value, Output axis,
+    {Graph graph, bool keepDims: true, DataType tidx: DataType.DT_INT32}) {
+  return reduce<T>(
+      value, (v) => sum(v, axis, keepDims: keepDims, graph: graph, tidx: tidx));
+}
+
+/// Same as [reduceMean], but performs a logical "and."
+Output<T> reduceAll<T>(Output<T> value, Output axis,
+    {Graph graph, bool keepDims: true, DataType tidx: DataType.DT_INT32}) {
+  return reduce<T>(
+      value, (v) => all(v, axis, keepDims: keepDims, graph: graph, tidx: tidx));
+}
+
+/// Same as [reduceMean], but performs a "min."
+Output<T> reduceMin<T>(Output<T> value, Output axis,
+    {Graph graph, bool keepDims: true, DataType tidx: DataType.DT_INT32}) {
+  return reduce<T>(
+      value, (v) => min(v, axis, keepDims: keepDims, graph: graph, tidx: tidx));
+}
+
+/// Same as [reduceMean], but performs a "max."
+Output<T> reduceMax<T>(Output<T> value, Output axis,
+    {Graph graph, bool keepDims: true, DataType tidx: DataType.DT_INT32}) {
+  return reduce<T>(
+      value, (v) => max(v, axis, keepDims: keepDims, graph: graph, tidx: tidx));
+}

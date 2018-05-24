@@ -26,3 +26,4 @@ dev_dependencies:
 scripts:
   build: dart tool/build.dart
   get: dart tool/build.dart
+after_install: tool/build.dart

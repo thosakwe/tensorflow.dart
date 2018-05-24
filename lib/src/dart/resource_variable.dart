@@ -3,65 +3,88 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:meta/meta.dart';
 import 'package:tensorflow/tensorflow.dart';
+import 'package:tensorflow/tensorflow.dart' as tf show assign;
 
 /// A value whose value is mutable.
-///
-/// Uses `ResourceVariable` under-the-hood.
 class Variable<T> {
-  final Output<Uint8List> handle;
+  final Output handle;
   final DataType dtype;
-  final Shape shape;
+  final Shape _shape;
   final String name;
+  final bool isResourceVariable;
   final Graph _graph;
   Operation _dep;
   String _id;
   Output<T> _pending;
   int _watcher;
 
-  Variable(
+  Variable(this.name,
       {@required this.dtype,
-      @required this.shape,
-      this.name,
+      @required Shape shape,
       Graph graph,
       String container,
       Output<T> initializer})
       : _graph = graph ?? defaultGraph,
         _pending = initializer ??
-            (shape == Shape.scalar
-                ? zero(dtype)
-                : zeros(shape, dtype: dtype)),
+            (shape == Shape.scalar ? zero(dtype) : zeros(shape, dtype: dtype)),
+        _shape = shape,
+        handle = variableV2(
+            graph: graph,
+            dtype: dtype,
+            shape: shape,
+            container: container,
+            sharedName: name,
+            operationName: scopedName(name)),
+        isResourceVariable = false {
+    _id = scopedName(name);
+  }
+
+  /// Uses `ResourceVariable` under-the-hood.
+  Variable.resource(this.name,
+      {@required this.dtype,
+      @required Shape shape,
+      Graph graph,
+      String container,
+      Output<T> initializer})
+      : _graph = graph ?? defaultGraph,
+        _pending = initializer ??
+            (shape == Shape.scalar ? zero(dtype) : zeros(shape, dtype: dtype)),
+        _shape = shape,
         handle = varHandleOp(
             graph: graph,
             dtype: dtype,
             shape: shape,
             container: container,
             sharedName: name,
-            operationName: scopedName(name)) {
+            operationName: scopedName(name)),
+        isResourceVariable = true {
     _id = new String.fromCharCodes(handle.run());
   }
 
   String get id => _id;
 
-  Output get read => readVariableOp(handle, graph: _graph, dtype: dtype);
+  Output get read => !isResourceVariable
+      ? value
+      : readVariableOp(handle, graph: _graph, dtype: dtype);
+
+  Shape get shape => _shape;// isResourceVariable ? handle.shape : _shape;
 
   Output<T> get value {
-    var deps = <Operation>[];
+    if (!isResourceVariable) {
+      return tf.assign(handle, _pending);
+    } else {
+      var deps = <Operation>[];
 
-    if (_pending != null) {
-      //print('Requirement for $name: $_pending');
-      deps.add(_dep = _assignOp(_pending));
-      _pending = null;
-    } else if (_dep != null) {
-      deps.add(_dep);
+      if (_pending != null) {
+        //print('Requirement for $name: $_pending');
+        deps.add(_dep = _assignOp(_pending));
+        _pending = null;
+      } else if (_dep != null) {
+        deps.add(_dep);
+      }
+
+      return withControlDependencies(deps, () => identity(read));
     }
-
-    return withControlDependencies(
-      deps,
-      () => // new _VariableValue<T>(
-          //this,
-          identity(read),
-      //),
-    );
   }
 
   /// Updates the stored value after the next run.
@@ -72,7 +95,8 @@ class Variable<T> {
       //print('$name is now $v!');
       _dep = null;
       _watcher = null;
-      _pending = constant(v, dtype: dtype, shape: shape);
+      _pending =
+          constant(v is Iterable ? flatten(v) : v, dtype: dtype, shape: shape);
     });
   }
 
@@ -85,19 +109,29 @@ class Variable<T> {
 
   /// Assigns a [value], and runs a callback that ensures the value is respected.
   U withValue<U>(Output<T> value, U Function() f, {String operationName}) {
+    if (!isResourceVariable)
+      return withControlDependencies(
+          [assign(value, operationName: operationName).op], f);
     return withControlDependencies<U>(
         [_assignOp(value, operationName: operationName)], f);
   }
 
-  Output<T> assign(Output<T> value, {String operationName}) {
+  Output<T> assign(Output<T> value,
+      {String operationName, bool useLocking: true}) {
+    if (!isResourceVariable) {
+      watch();
+      return tf.assign(handle, _pending = value,
+          operationName: operationName, useLocking: useLocking);
+    }
+
     return withValue(value, () {
       watch();
       return value;
     }, operationName: operationName);
   }
 
+  /*
   Output<T> assignAdd(Output<T> value, {String operationName}) {
-    watch();
     return withControlDependencies(
         [_assignAddOp(value, operationName: operationName)], () {
       watch();
@@ -106,13 +140,12 @@ class Variable<T> {
   }
 
   Output<T> assignSub(Output<T> value, {String operationName}) {
-    watch();
     return withControlDependencies(
         [_assignSubOp(value, operationName: operationName)], () {
       watch();
       return value;
     });
-  }
+  }*/
 
   Operation _assignOp(Output<T> value, {String operationName}) {
     return assignVariableOp(handle, _pending = value,

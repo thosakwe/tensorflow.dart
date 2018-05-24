@@ -13,6 +13,7 @@ Graph get defaultGraph =>
 
 /// Executes code within the context of a single [Graph].
 T withScope<T>(Graph graph, T Function() f) {
+  if (graph == null || graph == defaultGraph) return f();
   var zone = Zone.current.fork(zoneValues: {_defaultGraphSymbol: graph});
   return zone.run<T>(f);
 }
@@ -146,8 +147,10 @@ class Graph {
     if (value is Output<T>) return value;
     var tensor = value is Tensor
         ? value
-        : new Tensor.from(value is Shape ? value.dimensions : value,
-            dtype: dtype);
+        : value is Shape
+            ? new Tensor.from(new Int32List.fromList(value.dimensions),
+                dtype: DataType.DT_INT32)
+            : new Tensor.from(value, dtype: dtype);
     if (dtype != null) tensor = tensor.cast(dtype);
     if (shape != null) tensor = tensor.reshape(shape);
     var op = newOperation<T>('Const',

@@ -51,17 +51,13 @@ class QuantizedBatchNormWithGlobalNormalizationOutput<T> {
 
   QuantizedBatchNormWithGlobalNormalization run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
     return new QuantizedBatchNormWithGlobalNormalization<T>(
-        result0, result1, result2);
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -144,16 +140,13 @@ class QuantizedReluXOutput<T> {
 
   QuantizedReluX run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedReluX<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedReluX<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -203,16 +196,12 @@ class QuantizedReluOutput<T> {
 
   QuantizedRelu run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedRelu<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedRelu<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -283,13 +272,11 @@ class TopKV2Output<T> {
 
   TopKV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new TopKV2<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new TopKV2<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -326,13 +313,11 @@ class TopKOutput<T> {
 
   TopK run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new TopK<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new TopK<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -382,13 +367,12 @@ class SparseSoftmaxCrossEntropyWithLogitsOutput<T> {
 
   SparseSoftmaxCrossEntropyWithLogits run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new SparseSoftmaxCrossEntropyWithLogits<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new SparseSoftmaxCrossEntropyWithLogits<T>(
+        result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -832,22 +816,15 @@ class FusedBatchNormV2Output<T> {
 
   FusedBatchNormV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    runner.fetch(op.name, index: 4);
-    feed?.forEach(runner.feed);
-    var result4 = runner.run()[0];
-    return new FusedBatchNormV2<T>(result0, result1, result2, result3, result4);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var idx$4 = runner.fetch(op.name, index: 4);
+    var result$ = runner.run();
+    return new FusedBatchNormV2<T>(result$[idx$0], result$[idx$1],
+        result$[idx$2], result$[idx$3], result$[idx$4]);
   }
 }
 
@@ -934,22 +911,15 @@ class FusedBatchNormOutput<T> {
 
   FusedBatchNorm run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    runner.fetch(op.name, index: 4);
-    feed?.forEach(runner.feed);
-    var result4 = runner.run()[0];
-    return new FusedBatchNorm<T>(result0, result1, result2, result3, result4);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var idx$4 = runner.fetch(op.name, index: 4);
+    var result$ = runner.run();
+    return new FusedBatchNorm<T>(result$[idx$0], result$[idx$1], result$[idx$2],
+        result$[idx$3], result$[idx$4]);
   }
 }
 
@@ -1024,13 +994,11 @@ class RequantizationRangeOutput<T> {
 
   RequantizationRange run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new RequantizationRange<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new RequantizationRange<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -1083,16 +1051,13 @@ class QuantizeDownAndShrinkRangeOutput<T> {
 
   QuantizeDownAndShrinkRange run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizeDownAndShrinkRange<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizeDownAndShrinkRange<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -1138,16 +1103,13 @@ class QuantizedMatMulOutput<T> {
 
   QuantizedMatMul run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedMatMul<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedMatMul<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -1228,23 +1190,15 @@ class BatchNormWithGlobalNormalizationGradOutput<T> {
 
   BatchNormWithGlobalNormalizationGrad run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    runner.fetch(op.name, index: 4);
-    feed?.forEach(runner.feed);
-    var result4 = runner.run()[0];
-    return new BatchNormWithGlobalNormalizationGrad<T>(
-        result0, result1, result2, result3, result4);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var idx$4 = runner.fetch(op.name, index: 4);
+    var result$ = runner.run();
+    return new BatchNormWithGlobalNormalizationGrad<T>(result$[idx$0],
+        result$[idx$1], result$[idx$2], result$[idx$3], result$[idx$4]);
   }
 }
 
@@ -1500,16 +1454,13 @@ class SampleDistortedBoundingBoxV2Output<T> {
 
   SampleDistortedBoundingBoxV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SampleDistortedBoundingBoxV2<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SampleDistortedBoundingBoxV2<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -1621,16 +1572,13 @@ class SparseReduceSumSparseOutput<T> {
 
   SparseReduceSumSparse run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SparseReduceSumSparse<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SparseReduceSumSparse<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -1730,16 +1678,12 @@ class QuantizeV2Output<T> {
 
   QuantizeV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizeV2<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizeV2<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -1946,16 +1890,13 @@ class UniformCandidateSamplerOutput {
 
   UniformCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new UniformCandidateSampler(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new UniformCandidateSampler(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -2212,16 +2153,12 @@ class RequantizeOutput<T> {
 
   Requantize run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new Requantize<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new Requantize<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -2351,16 +2288,13 @@ class QuantizedInstanceNormOutput<T> {
 
   QuantizedInstanceNorm run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedInstanceNorm<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedInstanceNorm<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -2696,16 +2630,13 @@ class QuantizedMaxPoolOutput<T> {
 
   QuantizedMaxPool run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedMaxPool<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedMaxPool<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -2768,13 +2699,11 @@ class TensorArrayV3Output {
 
   TensorArrayV3 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new TensorArrayV3(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new TensorArrayV3(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -2863,13 +2792,11 @@ class BroadcastGradientArgsOutput<T> {
 
   BroadcastGradientArgs run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new BroadcastGradientArgs<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new BroadcastGradientArgs<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -2919,16 +2846,13 @@ class QuantizedRelu6Output<T> {
 
   QuantizedRelu6 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedRelu6<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedRelu6<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -3106,16 +3030,13 @@ class UniqueWithCountsV2Output<T> {
 
   UniqueWithCountsV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new UniqueWithCountsV2<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new UniqueWithCountsV2<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -3159,13 +3080,11 @@ class UniqueV2Output<T> {
 
   UniqueV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new UniqueV2<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new UniqueV2<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -3218,13 +3137,11 @@ class UniqueOutput<T> {
 
   Unique run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new Unique<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new Unique<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -3380,16 +3297,13 @@ class FakeQuantWithMinMaxVarsGradientOutput {
 
   FakeQuantWithMinMaxVarsGradient run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new FakeQuantWithMinMaxVarsGradient(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new FakeQuantWithMinMaxVarsGradient(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -3585,17 +3499,13 @@ class FakeQuantWithMinMaxVarsPerChannelGradientOutput {
 
   FakeQuantWithMinMaxVarsPerChannelGradient run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
     return new FakeQuantWithMinMaxVarsPerChannelGradient(
-        result0, result1, result2);
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -3659,19 +3569,14 @@ class ParseSingleExampleOutput<T> {
 
   ParseSingleExample run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    return new ParseSingleExample<T>(result0, result1, result2, result3);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var result$ = runner.run();
+    return new ParseSingleExample<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2], result$[idx$3]);
   }
 }
 
@@ -4003,29 +3908,17 @@ class SkipgramOutput {
 
   Skipgram run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    runner.fetch(op.name, index: 4);
-    feed?.forEach(runner.feed);
-    var result4 = runner.run()[0];
-    runner.fetch(op.name, index: 5);
-    feed?.forEach(runner.feed);
-    var result5 = runner.run()[0];
-    runner.fetch(op.name, index: 6);
-    feed?.forEach(runner.feed);
-    var result6 = runner.run()[0];
-    return new Skipgram(
-        result0, result1, result2, result3, result4, result5, result6);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var idx$4 = runner.fetch(op.name, index: 4);
+    var idx$5 = runner.fetch(op.name, index: 5);
+    var idx$6 = runner.fetch(op.name, index: 6);
+    var result$ = runner.run();
+    return new Skipgram(result$[idx$0], result$[idx$1], result$[idx$2],
+        result$[idx$3], result$[idx$4], result$[idx$5], result$[idx$6]);
   }
 }
 
@@ -4119,16 +4012,13 @@ class UniqueWithCountsOutput<T> {
 
   UniqueWithCounts run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new UniqueWithCounts<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new UniqueWithCounts<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -4897,16 +4787,13 @@ class BarrierTakeManyOutput<T> {
 
   BarrierTakeMany run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new BarrierTakeMany<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new BarrierTakeMany<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -5351,13 +5238,11 @@ class TensorArrayConcatV2Output<T> {
 
   TensorArrayConcatV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new TensorArrayConcatV2<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new TensorArrayConcatV2<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -5518,16 +5403,12 @@ class BatchOutput<T> {
 
   Batch run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new Batch<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new Batch<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -5736,16 +5617,12 @@ class QuantizedAddOutput<T> {
 
   QuantizedAdd run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedAdd<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedAdd<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -5874,16 +5751,13 @@ class QuantizedResizeBilinearOutput<T> {
 
   QuantizedResizeBilinear run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedResizeBilinear<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedResizeBilinear<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -6056,13 +5930,11 @@ class SparseFillEmptyRowsGradOutput<T> {
 
   SparseFillEmptyRowsGrad run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new SparseFillEmptyRowsGrad<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new SparseFillEmptyRowsGrad<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -6103,16 +5975,13 @@ class QuantizedConv2DOutput<T> {
 
   QuantizedConv2D run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedConv2D<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedConv2D<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -6190,19 +6059,14 @@ class SparseFillEmptyRowsOutput<T> {
 
   SparseFillEmptyRows run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    return new SparseFillEmptyRows<T>(result0, result1, result2, result3);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var result$ = runner.run();
+    return new SparseFillEmptyRows<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2], result$[idx$3]);
   }
 }
 
@@ -6313,13 +6177,11 @@ class SparseSparseMaximumOutput<T> {
 
   SparseSparseMaximum run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new SparseSparseMaximum<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new SparseSparseMaximum<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -6441,13 +6303,11 @@ class SparseReorderOutput<T> {
 
   SparseReorder run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new SparseReorder<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new SparseReorder<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -6505,16 +6365,12 @@ class SparseSplitOutput<T> {
 
   SparseSplit run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SparseSplit<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SparseSplit<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -6615,16 +6471,13 @@ class DenseToSparseSetOperationOutput<T> {
 
   DenseToSparseSetOperation run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new DenseToSparseSetOperation<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new DenseToSparseSetOperation<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -6702,16 +6555,13 @@ class QuantizedBiasAddOutput<T> {
 
   QuantizedBiasAdd run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedBiasAdd<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedBiasAdd<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -6815,23 +6665,15 @@ class FusedBatchNormGradV2Output<T> {
 
   FusedBatchNormGradV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    runner.fetch(op.name, index: 4);
-    feed?.forEach(runner.feed);
-    var result4 = runner.run()[0];
-    return new FusedBatchNormGradV2<T>(
-        result0, result1, result2, result3, result4);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var idx$4 = runner.fetch(op.name, index: 4);
+    var result$ = runner.run();
+    return new FusedBatchNormGradV2<T>(result$[idx$0], result$[idx$1],
+        result$[idx$2], result$[idx$3], result$[idx$4]);
   }
 }
 
@@ -7090,19 +6932,14 @@ class CTCBeamSearchDecoderOutput {
 
   CTCBeamSearchDecoder run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    return new CTCBeamSearchDecoder(result0, result1, result2, result3);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var result$ = runner.run();
+    return new CTCBeamSearchDecoder(
+        result$[idx$0], result$[idx$1], result$[idx$2], result$[idx$3]);
   }
 }
 
@@ -7294,13 +7131,11 @@ class SparseSparseMinimumOutput<T> {
 
   SparseSparseMinimum run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new SparseSparseMinimum<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new SparseSparseMinimum<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -7884,16 +7719,12 @@ class SparseConcatOutput<T> {
 
   SparseConcat run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SparseConcat<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SparseConcat<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -8019,13 +7850,11 @@ class LookupTableExportV2Output<T> {
 
   LookupTableExportV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new LookupTableExportV2<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new LookupTableExportV2<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -8211,32 +8040,25 @@ class ParseSingleSequenceExampleOutput<T> {
 
   ParseSingleSequenceExample run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    runner.fetch(op.name, index: 4);
-    feed?.forEach(runner.feed);
-    var result4 = runner.run()[0];
-    runner.fetch(op.name, index: 5);
-    feed?.forEach(runner.feed);
-    var result5 = runner.run()[0];
-    runner.fetch(op.name, index: 6);
-    feed?.forEach(runner.feed);
-    var result6 = runner.run()[0];
-    runner.fetch(op.name, index: 7);
-    feed?.forEach(runner.feed);
-    var result7 = runner.run()[0];
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var idx$4 = runner.fetch(op.name, index: 4);
+    var idx$5 = runner.fetch(op.name, index: 5);
+    var idx$6 = runner.fetch(op.name, index: 6);
+    var idx$7 = runner.fetch(op.name, index: 7);
+    var result$ = runner.run();
     return new ParseSingleSequenceExample<T>(
-        result0, result1, result2, result3, result4, result5, result6, result7);
+        result$[idx$0],
+        result$[idx$1],
+        result$[idx$2],
+        result$[idx$3],
+        result$[idx$4],
+        result$[idx$5],
+        result$[idx$6],
+        result$[idx$7]);
   }
 }
 
@@ -8337,13 +8159,11 @@ class LookupTableExportOutput<T> {
 
   LookupTableExport run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new LookupTableExport<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new LookupTableExport<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -8400,16 +8220,12 @@ class BatchSvdOutput<T> {
 
   BatchSvd run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new BatchSvd<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new BatchSvd<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -8497,16 +8313,12 @@ class SvdOutput<T> {
 
   Svd run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new Svd<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new Svd<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -8548,13 +8360,11 @@ class QrOutput<T> {
 
   Qr run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new Qr<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new Qr<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -8593,16 +8403,12 @@ class SparseCrossOutput<T> {
 
   SparseCross run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SparseCross<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SparseCross<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -8683,13 +8489,11 @@ class SelfAdjointEigV2Output<T> {
 
   SelfAdjointEigV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new SelfAdjointEigV2<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new SelfAdjointEigV2<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -8738,16 +8542,13 @@ class QuantizedConcatOutput<T> {
 
   QuantizedConcat run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedConcat<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedConcat<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -8969,16 +8770,12 @@ class SparseSliceOutput<T> {
 
   SparseSlice run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SparseSlice<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SparseSlice<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -9178,13 +8975,11 @@ class ReaderReadOutput {
 
   ReaderRead run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new ReaderRead(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new ReaderRead(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -9231,13 +9026,11 @@ class SparseAddGradOutput<T> {
 
   SparseAddGrad run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new SparseAddGrad<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new SparseAddGrad<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -9526,16 +9319,13 @@ class SampleDistortedBoundingBoxOutput<T> {
 
   SampleDistortedBoundingBox run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SampleDistortedBoundingBox<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SampleDistortedBoundingBox<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -9624,13 +9414,11 @@ class ListDiffOutput<T> {
 
   ListDiff run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new ListDiff<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new ListDiff<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -9723,23 +9511,15 @@ class FusedBatchNormGradOutput<T> {
 
   FusedBatchNormGrad run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    runner.fetch(op.name, index: 4);
-    feed?.forEach(runner.feed);
-    var result4 = runner.run()[0];
-    return new FusedBatchNormGrad<T>(
-        result0, result1, result2, result3, result4);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var idx$4 = runner.fetch(op.name, index: 4);
+    var result$ = runner.run();
+    return new FusedBatchNormGrad<T>(result$[idx$0], result$[idx$1],
+        result$[idx$2], result$[idx$3], result$[idx$4]);
   }
 }
 
@@ -9910,13 +9690,11 @@ class TensorArrayConcatOutput<T> {
 
   TensorArrayConcat run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new TensorArrayConcat<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new TensorArrayConcat<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -10196,16 +9974,12 @@ class StringSplitOutput {
 
   StringSplit run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new StringSplit(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new StringSplit(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -10268,16 +10042,13 @@ class ThreadUnsafeUnigramCandidateSamplerOutput {
 
   ThreadUnsafeUnigramCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new ThreadUnsafeUnigramCandidateSampler(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new ThreadUnsafeUnigramCandidateSampler(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -10585,13 +10356,11 @@ class SwitchOutput<T> {
 
   Switch run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new Switch<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new Switch<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -10639,13 +10408,11 @@ class CTCLossOutput {
 
   CTCLoss run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new CTCLoss(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new CTCLoss(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -10868,16 +10635,13 @@ class SparseReduceMaxSparseOutput<T> {
 
   SparseReduceMaxSparse run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SparseReduceMaxSparse<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SparseReduceMaxSparse<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -10954,16 +10718,12 @@ class QuantizedMulOutput<T> {
 
   QuantizedMul run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedMul<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedMul<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -11100,13 +10860,11 @@ class TensorListPopBackOutput<T> {
 
   TensorListPopBack run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new TensorListPopBack<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new TensorListPopBack<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -11157,13 +10915,11 @@ class ReaderReadUpToV2Output {
 
   ReaderReadUpToV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new ReaderReadUpToV2(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new ReaderReadUpToV2(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -11215,13 +10971,11 @@ class ReaderReadUpToOutput {
 
   ReaderReadUpTo run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new ReaderReadUpTo(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new ReaderReadUpTo(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -11413,16 +11167,13 @@ class FractionalAvgPoolOutput<T> {
 
   FractionalAvgPool run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new FractionalAvgPool<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new FractionalAvgPool<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -11718,13 +11469,11 @@ class RefMergeOutput<T> {
 
   RefMerge run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new RefMerge<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new RefMerge<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -11890,16 +11639,13 @@ class SparseToSparseSetOperationOutput<T> {
 
   SparseToSparseSetOperation run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SparseToSparseSetOperation<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SparseToSparseSetOperation<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -12114,16 +11860,13 @@ class DeserializeSparseOutput<T> {
 
   DeserializeSparse run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new DeserializeSparse<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new DeserializeSparse<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -12243,16 +11986,13 @@ class DenseToDenseSetOperationOutput<T> {
 
   DenseToDenseSetOperation run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new DenseToDenseSetOperation<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new DenseToDenseSetOperation<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -12299,13 +12039,11 @@ class SoftmaxCrossEntropyWithLogitsOutput<T> {
 
   SoftmaxCrossEntropyWithLogits run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new SoftmaxCrossEntropyWithLogits<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new SoftmaxCrossEntropyWithLogits<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -12460,13 +12198,11 @@ class MapUnstageNoKeyOutput<T> {
 
   MapUnstageNoKey run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new MapUnstageNoKey<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new MapUnstageNoKey<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -12571,19 +12307,14 @@ class ParseExampleOutput<T> {
 
   ParseExample run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    return new ParseExample<T>(result0, result1, result2, result3);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var result$ = runner.run();
+    return new ParseExample<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2], result$[idx$3]);
   }
 }
 
@@ -12719,19 +12450,14 @@ class CTCGreedyDecoderOutput {
 
   CTCGreedyDecoder run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    runner.fetch(op.name, index: 3);
-    feed?.forEach(runner.feed);
-    var result3 = runner.run()[0];
-    return new CTCGreedyDecoder(result0, result1, result2, result3);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var idx$3 = runner.fetch(op.name, index: 3);
+    var result$ = runner.run();
+    return new CTCGreedyDecoder(
+        result$[idx$0], result$[idx$1], result$[idx$2], result$[idx$3]);
   }
 }
 
@@ -12861,16 +12587,13 @@ class QuantizedReshapeOutput<T> {
 
   QuantizedReshape run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedReshape<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedReshape<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -13158,16 +12881,13 @@ class ComputeAccidentalHitsOutput {
 
   ComputeAccidentalHits run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new ComputeAccidentalHits(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new ComputeAccidentalHits(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -13309,13 +13029,11 @@ class BatchSelfAdjointEigV2Output<T> {
 
   BatchSelfAdjointEigV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new BatchSelfAdjointEigV2<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new BatchSelfAdjointEigV2<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -13590,13 +13308,11 @@ class TensorArrayConcatV3Output<T> {
 
   TensorArrayConcatV3 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new TensorArrayConcatV3<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new TensorArrayConcatV3<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -13666,13 +13382,11 @@ class TensorArrayGradV3Output {
 
   TensorArrayGradV3 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new TensorArrayGradV3(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new TensorArrayGradV3(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -13709,13 +13423,11 @@ class RefSwitchOutput<T> {
 
   RefSwitch run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new RefSwitch<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new RefSwitch<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -13867,16 +13579,13 @@ class LogUniformCandidateSamplerOutput {
 
   LogUniformCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new LogUniformCandidateSampler(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new LogUniformCandidateSampler(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -13994,13 +13703,11 @@ class SparseReshapeOutput {
 
   SparseReshape run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new SparseReshape(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new SparseReshape(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -14073,16 +13780,12 @@ class SparseAddOutput<T> {
 
   SparseAdd run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SparseAdd<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SparseAdd<T>(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -14206,16 +13909,13 @@ class DeserializeManySparseOutput<T> {
 
   DeserializeManySparse run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new DeserializeManySparse<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new DeserializeManySparse<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -14427,13 +14127,11 @@ class OrderedMapUnstageNoKeyOutput<T> {
 
   OrderedMapUnstageNoKey run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new OrderedMapUnstageNoKey<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new OrderedMapUnstageNoKey<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -14502,13 +14200,11 @@ class MergeOutput<T> {
 
   Merge run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new Merge<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new Merge<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -14569,16 +14265,13 @@ class FixedUnigramCandidateSamplerOutput {
 
   FixedUnigramCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new FixedUnigramCandidateSampler(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new FixedUnigramCandidateSampler(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -14746,16 +14439,13 @@ class LearnedUnigramCandidateSamplerOutput {
 
   LearnedUnigramCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new LearnedUnigramCandidateSampler(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new LearnedUnigramCandidateSampler(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -14885,16 +14575,13 @@ class AllCandidateSamplerOutput {
 
   AllCandidateSampler run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new AllCandidateSampler(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new AllCandidateSampler(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -15006,13 +14693,11 @@ class LogMatrixDeterminantOutput<T> {
 
   LogMatrixDeterminant run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new LogMatrixDeterminant<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new LogMatrixDeterminant<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -15137,16 +14822,12 @@ class SdcaOptimizerOutput {
 
   SdcaOptimizer run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SdcaOptimizer(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SdcaOptimizer(result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -15402,13 +15083,11 @@ class MaxPoolWithArgmaxOutput<T> {
 
   MaxPoolWithArgmax run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new MaxPoolWithArgmax<T>(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new MaxPoolWithArgmax<T>(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -15504,16 +15183,13 @@ class QuantizedAvgPoolOutput<T> {
 
   QuantizedAvgPool run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new QuantizedAvgPool<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new QuantizedAvgPool<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -15636,13 +15312,11 @@ class ReaderReadV2Output {
 
   ReaderReadV2 run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new ReaderReadV2(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new ReaderReadV2(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -15759,13 +15433,11 @@ class DecodeWavOutput {
 
   DecodeWav run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new DecodeWav(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new DecodeWav(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -15883,16 +15555,13 @@ class FractionalMaxPoolOutput<T> {
 
   FractionalMaxPool run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new FractionalMaxPool<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new FractionalMaxPool<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -15964,13 +15633,11 @@ class GenerateVocabRemappingOutput {
 
   GenerateVocabRemapping run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    return new GenerateVocabRemapping(result0, result1);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var result$ = runner.run();
+    return new GenerateVocabRemapping(result$[idx$0], result$[idx$1]);
   }
 }
 
@@ -16109,16 +15776,13 @@ class SparseAccumulatorTakeGradientOutput<T> {
 
   SparseAccumulatorTakeGradient run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new SparseAccumulatorTakeGradient<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new SparseAccumulatorTakeGradient<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 
@@ -16207,16 +15871,13 @@ class TakeManySparseFromTensorsMapOutput<T> {
 
   TakeManySparseFromTensorsMap run({Map<String, Tensor> feed}) {
     var runner = _graph.session.runner;
-    runner.fetch(op.name, index: 0);
     feed?.forEach(runner.feed);
-    var result0 = runner.run()[0];
-    runner.fetch(op.name, index: 1);
-    feed?.forEach(runner.feed);
-    var result1 = runner.run()[0];
-    runner.fetch(op.name, index: 2);
-    feed?.forEach(runner.feed);
-    var result2 = runner.run()[0];
-    return new TakeManySparseFromTensorsMap<T>(result0, result1, result2);
+    var idx$0 = runner.fetch(op.name, index: 0);
+    var idx$1 = runner.fetch(op.name, index: 1);
+    var idx$2 = runner.fetch(op.name, index: 2);
+    var result$ = runner.run();
+    return new TakeManySparseFromTensorsMap<T>(
+        result$[idx$0], result$[idx$1], result$[idx$2]);
   }
 }
 

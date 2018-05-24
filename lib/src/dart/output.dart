@@ -99,6 +99,9 @@ class Output<T> {
     return runner.run<T>().toList(growable: false);
   }
 
+  List runApplyShape({Map<String, Tensor> feed: const {}}) =>
+      shape.apply(run(feed: feed) as Iterable);
+
   T run({Map<String, Tensor> feed: const {}}) {
     return runAsList(feed: feed)[0];
   }

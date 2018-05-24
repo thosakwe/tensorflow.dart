@@ -177,11 +177,11 @@ main() async {
         if (op.outputArg.isEmpty) {
           method.docs.addAll(getDocs('This operation has no outputs.'));
           method.returns = refer('Operation');
-        }
-        else if (op.outputArg.length == 1) {
+        } else if (op.outputArg.length == 1) {
           var output = op.outputArg[0];
           if (output.hasDescription())
-            method.docs.addAll(getDocs('This operation has one output: ${output.description}'));
+            method.docs.addAll(getDocs(
+                'This operation has one output: ${output.description}'));
           method.returns = convertType(output.type, 0, typeAttr);
         } else {
           // Create a custom output class.
@@ -273,22 +273,26 @@ main() async {
                         refer('Tensor'),
                       ]))))
                   ..body = new Block((b) {
-                    b.statements.add(
+                    b.statements.addAll([
                       new Code('var runner = _graph.session.runner;'),
-                    );
+                      new Code('feed?.forEach(runner.feed);'),
+                    ]);
 
                     for (int i = 0; i < op.outputArg.length; i++) {
                       b.statements.addAll([
-                        new Code('runner.fetch(op.name, index: $i);'),
-                        new Code('feed?.forEach(runner.feed);'),
-                        new Code('var result$i = runner.run()[0];'),
+                        new Code(
+                            'var idx\$$i = runner.fetch(op.name, index: $i);'),
                       ]);
                     }
+
+                    b.statements.add(
+                      new Code('var result\$ = runner.run();'),
+                    );
 
                     var args = <Expression>[];
 
                     for (int i = 0; i < op.outputArg.length; i++)
-                      args.add(refer('result$i'));
+                      args.add(refer('result\$').index(refer('idx\$$i')));
 
                     b.statements.add(refer(resultTypeName)
                         .newInstance(args, {}, hasT ? [refer('T')] : [])
