@@ -25,7 +25,7 @@ class Func {
       List<Output> inputs) native "FunctionNode_from_graph";
 
   factory Func(String name, void Function(FuncBuilder) build,
-      {Function gradient}) {
+      {Func gradient}) {
     var builder = new FuncBuilder._(name);
     withScope(builder.graph, () => build(builder));
     var result = _fromGraph(
