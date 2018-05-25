@@ -20,6 +20,8 @@ namespace tfd
 
     TF_OperationDescription *dereference_operation_description_ptr(Dart_Handle handle);
 
+    TF_Function *dereference_function_ptr(Dart_Handle handle);
+
     TF_Tensor *convert_tensor(Dart_Handle handle);
 
     Dart_Handle get_tensor_value(TF_Tensor *tensor);

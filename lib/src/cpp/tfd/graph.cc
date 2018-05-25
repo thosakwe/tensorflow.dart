@@ -242,9 +242,10 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
 
     Dart_Handle outputType = Dart_GetNativeArgument(arguments, 5);
     Dart_Handle outputInstance = Dart_New(outputType, Dart_NewStringFromCString("_"), 1, &graphHandle);
-    Dart_SetField(outputInstance, Dart_NewStringFromCString("_operation"),
-                  Dart_NewIntegerFromUint64((uint64_t) operation));
-    Dart_SetField(outputInstance, Dart_NewStringFromCString("_index"), Dart_GetNativeArgument(arguments, 4));
+    HandleError(Dart_SetField(outputInstance, Dart_NewStringFromCString("_operation"),
+                              Dart_NewIntegerFromUint64((uint64_t) operation)));
+    HandleError(
+            Dart_SetField(outputInstance, Dart_NewStringFromCString("_index"), Dart_GetNativeArgument(arguments, 4)));
     Dart_SetReturnValue(arguments, outputInstance);
 }
 

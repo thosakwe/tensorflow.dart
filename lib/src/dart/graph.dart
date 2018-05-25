@@ -5,11 +5,11 @@ const Symbol _defaultGraphSymbol = #tf_default_graph;
 const Symbol _deviceSymbol = #tf_device;
 const Symbol _scopesSymbol = #tf_variable_scopes;
 
-Graph _defaultGraph;
+Graph _topLevelDefaultGraph;
 List<Operation> _topLevelDeps = [];
 
 Graph get defaultGraph =>
-    _defaultGraph ??= Zone.current[_defaultGraphSymbol] ?? new Graph();
+    Zone.current[_defaultGraphSymbol] ?? (_topLevelDefaultGraph ??= new Graph());
 
 /// Executes code within the context of a single [Graph].
 T withScope<T>(Graph graph, T Function() f) {
@@ -22,7 +22,8 @@ T withScope<T>(Graph graph, T Function() f) {
 T withVariableScope<T>(String name, T Function() f) {
   var scopes = Zone.current[_scopesSymbol] ?? [];
   var zone = Zone.current
-      .fork(zoneValues: {_scopesSymbol: new List.from(scopes)..add(name)});
+      .fork(zoneValues: {_scopesSymbol: new List.from(scopes)
+    ..add(name)});
   return zone.run<T>(f);
 }
 
@@ -34,7 +35,8 @@ T withDeviceScope<T>(String device, T Function() f) =>
 T withControlDependencies<T>(Iterable<Operation> dependencies, T Function() f) {
   var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
   var zone = Zone.current.fork(zoneValues: {
-    _controlInputsSymbol: new List.from(deps)..addAll(dependencies)
+    _controlInputsSymbol: new List.from(deps)
+      ..addAll(dependencies)
   });
   return zone.run<T>(f);
 }
@@ -72,6 +74,7 @@ class Graph {
 
   final SymbolTable _scope = new SymbolTable();
   final Map<String, Output> _variables = {};
+  final List<Func> _functions = [];
   int _index = 0;
   List<Operation> _operations;
   Session _session;
@@ -85,8 +88,8 @@ class Graph {
       _runCallbacks.add(new _RunCallback(i, f));
   }
 
-  static Tuple3<int, String, int> _importGraphDef(
-      Uint8List graphDef, String prefix) native "Graph_from_graph_def";
+  static Tuple3<int, String, int> _importGraphDef(Uint8List graphDef,
+      String prefix) native "Graph_from_graph_def";
 
   /// Import a serialized representation of a TensorFlow graph.
   factory Graph.fromGraphDef(GraphDef graphDef, {String prefix}) {
@@ -125,6 +128,10 @@ class Graph {
   void reset() {
     close();
     _pointer = _Graph_new();
+    _operations = null;
+    _runCallbacks.clear();
+    _variables.clear();
+    _functions.clear();
   }
 
   /// Returns a builder to add Operations to the Graph.
@@ -148,9 +155,9 @@ class Graph {
     var tensor = value is Tensor
         ? value
         : value is Shape
-            ? new Tensor.from(new Int32List.fromList(value.dimensions),
-                dtype: DataType.DT_INT32)
-            : new Tensor.from(value, dtype: dtype);
+        ? new Tensor.from(new Int32List.fromList(value.dimensions),
+        dtype: DataType.DT_INT32)
+        : new Tensor.from(value, dtype: dtype);
     if (dtype != null) tensor = tensor.cast(dtype);
     if (shape != null) tensor = tensor.reshape(shape);
     var op = newOperation<T>('Const',
@@ -162,8 +169,11 @@ class Graph {
 
   void _copyFunction(int func, int grad) native "Graph_copy_function";
 
-  void copyFunction(Func func, {Func grad}) =>
-      _copyFunction(func._pointer, grad?._pointer);
+  void copyFunction(Func func, {Func grad}) {
+    if (_functions.contains(func)) return;
+    _copyFunction(func._pointer, grad?._pointer);
+    _functions.add(func);
+  }
 
   /*
   Output<T> _constant<T>(T value, {String operationName, DataType dtype}) {
@@ -217,6 +227,10 @@ class Graph {
   bool operator ==(other) => other is Graph && other._pointer == _pointer;
 
   int _iter_next(int index) native "Graph_iter_next";
+
+  @override
+  String toString() =>
+      'Graph { pointer: 0x' + _pointer.toRadixString(16) + ' }';
 }
 
 class _OperationIterator extends Iterator<Operation> {

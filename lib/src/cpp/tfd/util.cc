@@ -213,6 +213,10 @@ TF_OperationDescription *tfd::dereference_operation_description_ptr(Dart_Handle 
     return (TF_OperationDescription *) dereference_ptr(handle);
 }
 
+TF_Function *tfd::dereference_function_ptr(Dart_Handle handle) {
+    return (TF_Function *) dereference_ptr(handle);
+}
+
 void tfd::throwCoreError(const char *msg, const char *errorType) {
     Dart_Handle unsupportedErrorType = Dart_GetClass(Dart_RootLibrary(), Dart_NewStringFromCString(errorType));
     Dart_Handle msgh = Dart_NewStringFromCString(msg);

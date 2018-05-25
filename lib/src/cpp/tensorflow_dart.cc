@@ -39,6 +39,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     // function_node.h
     if (strcmp("FunctionNode_from_function_def", cname) == 0) result = tfd::FunctionNode_from_function_def;
     if (strcmp("FunctionNode_from_graph", cname) == 0) result = tfd::FunctionNode_from_graph;
+    if (strcmp("FunctionNode_to_function_def", cname) == 0) result = tfd::FunctionNode_to_function_def;
 
         // graph.h
     else if (strcmp("Graph_copy_function", cname) == 0) result = tfd::Graph_copy_function;
@@ -71,6 +72,8 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
         result = tfd::OperationDescription_set_attr_bool;
     else if (strcmp("OperationDescription_set_attr_float", cname) == 0)
         result = tfd::OperationDescription_set_attr_float;
+    else if (strcmp("OperationDescription_set_attr_func", cname) == 0)
+        result = tfd::OperationDescription_set_attr_func;
     else if (strcmp("OperationDescription_set_attr_int", cname) == 0)
         result = tfd::OperationDescription_set_attr_int;
     else if (strcmp("OperationDescription_set_attr_shape", cname) == 0)

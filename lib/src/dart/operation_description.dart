@@ -64,10 +64,17 @@ class OperationDescription<T> {
     if (value == null) return;
     var result = _setAttrTensor(name, value);
     var code = _codeFrom(result.item1);
-    if (code != Code.ok) throw new TensorFlowException(code, '${result.item2} ${result.item3}');
+    if (code != Code.ok)
+      throw new TensorFlowException(code, '${result.item2} ${result.item3}');
   }
 
-  void setAttrFunc(String name, Func value) native "";
+  void _setAttrFunc(String name, String value)
+      native "OperationDescription_set_attr_func";
+
+  void setAttrFunc(String name, Func value) {
+    if (value == null) return;
+    _setAttrFunc(name, value.name);
+  }
 
   void setAttrTensorList(String name, List<Tensor> value) native "";
 

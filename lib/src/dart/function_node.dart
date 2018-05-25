@@ -1,35 +1,68 @@
 part of tensorflow;
 
-@Deprecated('Not yet fully supported')
 class Func {
   final int _pointer;
+  final String name;
   int _graphPointer;
 
-  Func._(this._pointer);
+  Func._(this._pointer, this.name);
 
   static int _fromFunctionDef(Uint8List functionDef)
       native "FunctionNode_from_function_def";
 
   factory Func.fromFunctionDef(FunctionDef functionDef) {
-    return new Func._(_fromFunctionDef(functionDef.writeToBuffer()));
+    return new Func._(_fromFunctionDef(functionDef.writeToBuffer()),
+        functionDef.signature.name);
   }
 
+  static Tuple3<int, String, int> _fromGraph(
+      Graph graph,
+      String name,
+      List<Output> outputs,
+      List<String> outputNames,
+      String description,
+      List<Output> inputs) native "FunctionNode_from_graph";
 
-  static int _fromGraph(Graph graph, String name) native "FunctionNode_from_graph";
+  factory Func(String name, void Function(FuncBuilder) build) {
+    var builder = new FuncBuilder._(name);
+    withScope(builder.graph, () => build(builder));
+    var result = _fromGraph(
+        builder.graph,
+        builder.name,
+        builder.outputs.values.toList(),
+        builder.outputs.keys.toList(),
+        builder.description,
+        builder.arguments._args.values.toList());
+    builder.graph.close();
 
-  factory Func(String name, void Function(FuncArguments) f) {
-    var graph = new Graph();
-    var func = withScope(graph, () {
-      var args = new FuncArguments._();
-      f(args);
-    });
-    return func;
-    return func.._graphPointer = graph;
+    var code = _codeFrom(result.item1);
+    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+    return new Func._(result.item3, name);
   }
 
-  Uint8List _toFunctionDef() native "FunctionNode_to_function_def";
+  Tuple3<int, String, Uint8List> _toFunctionDef()
+      native "FunctionNode_to_function_def";
 
-  FunctionDef toFunctionDef() => new FunctionDef.fromBuffer(_toFunctionDef());
+  FunctionDef toFunctionDef() {
+    var result = _toFunctionDef();
+    var code = _codeFrom(result.item1);
+    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+    return new FunctionDef.fromBuffer(result.item3);
+  }
+
+  void copyIntoGraph({Func grad, Graph graph}) {
+    (graph ?? defaultGraph).copyFunction(this, grad: grad);
+  }
+
+  Operation<T> call<T>(List<Output> arguments,
+      {Graph graph, String operationName}) {
+    graph ??= defaultGraph;
+    copyIntoGraph(graph: graph);
+    var desc = graph.newOperation(
+        name, operationName ??= graph._scope.uniqueName('$name/'));
+    arguments.forEach(desc.addInput);
+    return desc.finish();
+  }
 }
 
 class FuncArguments {
@@ -42,7 +75,17 @@ class FuncArguments {
     return _args.putIfAbsent(name, () {
       _argCount++;
       shape ??= Shape.scalar;
-      return temporaryVariable(dtype: dtype, shape: shape, varName: name);
+      return placeholder(dtype: dtype, shape: shape, operationName: name);
     });
   }
+}
+
+class FuncBuilder {
+  final String name;
+  final FuncArguments arguments = new FuncArguments._();
+  final Graph graph = new Graph();
+  final Map<String, Output> outputs = {};
+  String description;
+
+  FuncBuilder._(this.name);
 }
