@@ -171,6 +171,7 @@ class Graph {
 
   void copyFunction(Func func, {Func grad}) {
     if (_functions.contains(func)) return;
+    grad ??= func.gradient;
     _copyFunction(func._pointer, grad?._pointer);
     _functions.add(func);
   }

@@ -3,6 +3,7 @@ part of tensorflow;
 class Func {
   final int _pointer;
   final String name;
+  Func gradient;
   int _graphPointer;
 
   Func._(this._pointer, this.name);
@@ -23,7 +24,8 @@ class Func {
       String description,
       List<Output> inputs) native "FunctionNode_from_graph";
 
-  factory Func(String name, void Function(FuncBuilder) build) {
+  factory Func(String name, void Function(FuncBuilder) build,
+      {Function gradient}) {
     var builder = new FuncBuilder._(name);
     withScope(builder.graph, () => build(builder));
     var result = _fromGraph(
@@ -37,7 +39,7 @@ class Func {
 
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw new TensorFlowException(code, result.item2);
-    return new Func._(result.item3, name);
+    return new Func._(result.item3, name)..gradient = gradient;
   }
 
   Tuple3<int, String, Uint8List> _toFunctionDef()
@@ -50,8 +52,8 @@ class Func {
     return new FunctionDef.fromBuffer(result.item3);
   }
 
-  void copyIntoGraph({Func grad, Graph graph}) {
-    (graph ?? defaultGraph).copyFunction(this, grad: grad);
+  void copyIntoGraph({Graph graph}) {
+    (graph ?? defaultGraph).copyFunction(this, grad: gradient);
   }
 
   Operation<T> call<T>(List<Output> arguments,
