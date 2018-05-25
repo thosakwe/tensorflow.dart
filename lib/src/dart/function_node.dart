@@ -22,11 +22,16 @@ class Func {
       List<Output> outputs,
       List<String> outputNames,
       String description,
-      List<Output> inputs) native "FunctionNode_from_graph";
+      List<Output> inputs,
+      int nOpers,
+      List<int> operations,
+      bool appendHashToName) native "FunctionNode_from_graph";
 
   factory Func(String name, void Function(FuncBuilder) build,
-      {Func gradient}) {
-    var builder = new FuncBuilder._(name);
+      {Func gradient, Graph existingGraph}) {
+    var builder = existingGraph == null
+        ? new FuncBuilder._(name)
+        : new FuncBuilder._fromExisting(existingGraph, name);
     withScope(builder.graph, () => build(builder));
     var result = _fromGraph(
         builder.graph,
@@ -34,7 +39,10 @@ class Func {
         builder.outputs.values.toList(),
         builder.outputs.keys.toList(),
         builder.description,
-        builder.arguments._args.values.toList());
+        builder.arguments._args.values.toList(),
+        -1,
+        [],
+        builder.appendHashToName);
     builder.graph.close();
 
     var code = _codeFrom(result.item1);
@@ -85,9 +93,12 @@ class FuncArguments {
 class FuncBuilder {
   final String name;
   final FuncArguments arguments = new FuncArguments._();
-  final Graph graph = new Graph();
+  final Graph graph;
   final Map<String, Output> outputs = {};
+  bool appendHashToName = false;
   String description;
 
-  FuncBuilder._(this.name);
+  FuncBuilder._(this.name) : graph = new Graph();
+
+  FuncBuilder._fromExisting(this.graph, this.name);
 }

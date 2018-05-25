@@ -112,6 +112,32 @@ class Output<T> {
         op.name +
         '\', index: $_index, type: $dtype }';
   }
+
+  Func toFunc(
+      {String name,
+      String description,
+      Func gradient,
+      List<Output> arguments,
+      List<Operation> operations,
+      bool appendHashToName: false}) {
+    var ops = new List<int>.from(operations?.map((o) => o._pointer) ?? [])
+      ..add(_operation);
+    var result = Func._fromGraph(
+        _graph,
+        name ?? op.name,
+        [this],
+        ['result'],
+        description,
+        arguments ?? [],
+        1,
+        ops,
+        appendHashToName);
+    var code = _codeFrom(result.item1);
+    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+    var f = new Func._(result.item3, name ?? op.name)..gradient = gradient;
+    f.copyIntoGraph(graph: _graph);
+    return f;
+  }
 }
 
 class DelegatingOutput<T> extends Output<T> {

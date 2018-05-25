@@ -46,6 +46,10 @@ class Tensor {
         return new Tensor.fromInt32List(new Int32List.fromList(value));
       if (first is double)
         return new Tensor.fromFloat32List(new Float32List.fromList(value));
+      if (first is Iterable) {
+        var shape = Shape.infer(value);
+        return new Tensor.from(flatten(value), dtype: dtype).reshape(shape);
+      }
       // TODO: String list?
     }
 
@@ -67,9 +71,8 @@ class Tensor {
         new Uint8List.view(result.item3.buffer, 9), Shape.scalar.dimensions);
     */
     var bytes = new List.filled(padding ? 8 : 0, 0, growable: true)
-          ..addAll(utf8.encode(s))
-        //..add(0)
-        ;
+      ..addAll(utf8.encode(s));
+    //..add(0)
 
     return new Tensor(
         DataType.DT_STRING, Shape.scalar, new Uint8List.fromList(bytes));

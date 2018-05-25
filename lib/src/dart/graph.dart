@@ -9,7 +9,8 @@ Graph _topLevelDefaultGraph;
 List<Operation> _topLevelDeps = [];
 
 Graph get defaultGraph =>
-    Zone.current[_defaultGraphSymbol] ?? (_topLevelDefaultGraph ??= new Graph());
+    Zone.current[_defaultGraphSymbol] ??
+    (_topLevelDefaultGraph ??= new Graph());
 
 /// Executes code within the context of a single [Graph].
 T withScope<T>(Graph graph, T Function() f) {
@@ -22,8 +23,7 @@ T withScope<T>(Graph graph, T Function() f) {
 T withVariableScope<T>(String name, T Function() f) {
   var scopes = Zone.current[_scopesSymbol] ?? [];
   var zone = Zone.current
-      .fork(zoneValues: {_scopesSymbol: new List.from(scopes)
-    ..add(name)});
+      .fork(zoneValues: {_scopesSymbol: new List.from(scopes)..add(name)});
   return zone.run<T>(f);
 }
 
@@ -35,8 +35,7 @@ T withDeviceScope<T>(String device, T Function() f) =>
 T withControlDependencies<T>(Iterable<Operation> dependencies, T Function() f) {
   var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
   var zone = Zone.current.fork(zoneValues: {
-    _controlInputsSymbol: new List.from(deps)
-      ..addAll(dependencies)
+    _controlInputsSymbol: new List.from(deps)..addAll(dependencies)
   });
   return zone.run<T>(f);
 }
@@ -88,8 +87,8 @@ class Graph {
       _runCallbacks.add(new _RunCallback(i, f));
   }
 
-  static Tuple3<int, String, int> _importGraphDef(Uint8List graphDef,
-      String prefix) native "Graph_from_graph_def";
+  static Tuple3<int, String, int> _importGraphDef(
+      Uint8List graphDef, String prefix) native "Graph_from_graph_def";
 
   /// Import a serialized representation of a TensorFlow graph.
   factory Graph.fromGraphDef(GraphDef graphDef, {String prefix}) {
@@ -115,11 +114,11 @@ class Graph {
 
   /// All the [Operation]s in the graph.
   List<Operation> get operations {
-    if (_operations != null) return _operations;
+    //if (_operations != null) return _operations;
     var it = _iterator;
     var out = <Operation>[];
     while (it.moveNext()) out.add(it.current);
-    return _operations = new List<Operation>.unmodifiable(out);
+    return new List<Operation>.unmodifiable(out);
   }
 
   /// Release resources associated with the Graph.
@@ -154,10 +153,10 @@ class Graph {
     if (value is Output<T>) return value;
     var tensor = value is Tensor
         ? value
-        : value is Shape
-        ? new Tensor.from(new Int32List.fromList(value.dimensions),
-        dtype: DataType.DT_INT32)
-        : new Tensor.from(value, dtype: dtype);
+        : (value is Shape
+            ? new Tensor.from(new Int32List.fromList(value.dimensions),
+                dtype: DataType.DT_INT32)
+            : new Tensor.from(value, dtype: dtype));
     if (dtype != null) tensor = tensor.cast(dtype);
     if (shape != null) tensor = tensor.reshape(shape);
     var op = newOperation<T>('Const',
@@ -170,10 +169,10 @@ class Graph {
   void _copyFunction(int func, int grad) native "Graph_copy_function";
 
   void copyFunction(Func func, {Func grad}) {
-    if (_functions.contains(func)) return;
+    //if (_functions.contains(func)) return;
     grad ??= func.gradient;
     _copyFunction(func._pointer, grad?._pointer);
-    _functions.add(func);
+    //_functions.add(func);
   }
 
   /*
@@ -232,6 +231,13 @@ class Graph {
   @override
   String toString() =>
       'Graph { pointer: 0x' + _pointer.toRadixString(16) + ' }';
+
+  T findNecessaryOps<T>(List<Operation> operations, T Function() f) {
+    var current = this.operations;
+    var result = withScope<T>(this, f);
+    operations.addAll(this.operations.where((o) => !current.contains(o)));
+    return result;
+  }
 }
 
 class _OperationIterator extends Iterator<Operation> {

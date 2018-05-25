@@ -229,6 +229,24 @@ class Shape {
     return compute(0);
   }
 
+  /// Infers the shape of a single item, or collection of [items].
+  static Shape infer(items) {
+    if (items is Shape) return items;
+    if (items is Tensor) return items.shape;
+    if (items is Output) return items.shape;
+    if (items is! Iterable) return Shape.scalar;
+
+    var dims = <int>[];
+    var list = items;
+
+    while (list is Iterable) {
+      dims.add(list.length);
+      if (list.isNotEmpty) list = list.elementAt(0);
+    }
+
+    return dims.isEmpty ? Shape.scalar : new Shape.dims(dims);
+  }
+
   @override
   String toString() => dimensions.toString();
 

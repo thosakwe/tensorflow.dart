@@ -12,12 +12,18 @@ void tfd::FunctionNode_from_graph(Dart_NativeArguments arguments) {
     Dart_Handle outputNamesHandle = Dart_GetNativeArgument(arguments, 3); // List<String> outputNames
     Dart_Handle descriptionHandle = Dart_GetNativeArgument(arguments, 4); // String description
     Dart_Handle inputsHandle = Dart_GetNativeArgument(arguments, 5); // List<Output> inputs
+    Dart_Handle nOpersHandle = Dart_GetNativeArgument(arguments, 6); // int nOpers
+    Dart_Handle opersHandle = Dart_GetNativeArgument(arguments, 7); // List<int> Operations
+    Dart_Handle appendHashHandle = Dart_GetNativeArgument(arguments, 8); // bool appendHashToName
 
+    TF_Operation **opers = nullptr;
     TF_Output *inputs = nullptr, *outputs = nullptr;
     TF_FunctionOptions *options = nullptr;
     auto *status = TF_NewStatus();
     const char *description = nullptr, *fnName, **outputNames = nullptr;
     TF_Graph *graph;
+    bool appendHash;
+    int64_t nOpers;
     intptr_t nInputs, nOutputs;
 
     HandleError(Dart_StringToCString(nameHandle, &fnName));
@@ -25,6 +31,24 @@ void tfd::FunctionNode_from_graph(Dart_NativeArguments arguments) {
     // Read graph, name
     graph = dereference_graph_ptr(graphHandle);
     HandleError(Dart_StringToCString(nameHandle, &fnName));
+
+    // Read opers
+    HandleError(Dart_IntegerToInt64(nOpersHandle, &nOpers));
+
+    if (nOpers != -1) {
+        intptr_t length;
+        HandleError(Dart_ListLength(opersHandle, &length));
+
+        if (length > 0) {
+            opers = (TF_Operation **) Dart_ScopeAllocate(sizeof(TF_Operation *) * length);
+
+            for (intptr_t i = 0; i < length; i++) {
+                uint64_t ptr;
+                HandleError(Dart_IntegerToUint64(Dart_ListGetAt(opersHandle, i), &ptr));
+                opers[i] = (TF_Operation *) ptr;
+            }
+        }
+    }
 
     // Read outputs, output_names
     HandleError(Dart_ListLength(outputsHandle, &nOutputs));
@@ -54,11 +78,14 @@ void tfd::FunctionNode_from_graph(Dart_NativeArguments arguments) {
         }
     }
 
+    // Read appendHash
+    HandleError(Dart_BooleanValue(appendHashHandle, &appendHash));
+
     auto *function = TF_GraphToFunction(
             graph, // fn_body
             fnName, // fn_name
-            0, // append_hash
-            -1, nullptr, // n_opers, opers
+            (unsigned char) (appendHash ? 1 : 0), // append_hash
+            (int) nOpers, (const TF_Operation *const *) opers, // n_opers, opers
             (int) nInputs, inputs, // n_inputs, inputs
             (int) nOutputs, outputs, (const char *const *) outputNames, // n_outputs, outputs, output_names
             options, // options

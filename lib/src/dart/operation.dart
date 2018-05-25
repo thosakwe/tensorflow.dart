@@ -65,4 +65,7 @@ class Operation<T> {
 
   @override
   String toString() => 'Operation(type: $type, name: $name)';
+
+  @override
+  bool operator ==(other) => other is Operation && other._pointer == _pointer;
 }
