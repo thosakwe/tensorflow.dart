@@ -176,49 +176,42 @@ class Graph {
   }
 
   /*
-  Output<T> _constant<T>(T value, {String operationName, DataType dtype}) {
-    _count++;
-    dtype ??= inferType(value);
 
-    /*if (value is List) {
-      if (dtype == null && value.isNotEmpty) dtype = inferType(value[0]);
-      Output<dynamic> stack = stackV2(value.length, elemType: dtype);
+    // Returns Tuple3<int, String, List<Output>>
+    Dart_Handle graphHandle = Dart_GetNativeArgument(arguments, 0); // this
+    Dart_Handle ysHandle = Dart_GetNativeArgument(arguments, 1); // List<Output> y
+    Dart_Handle xsHandle = Dart_GetNativeArgument(arguments, 2); // List<Output> x
+    Dart_Handle dxsHandle = Dart_GetNativeArgument(arguments, 3); // List<Output> dx?
+    Dart_Handle outputTypeHandle = Dart_GetNativeArgument(arguments, 4); // Type outputType
+ */
 
-      for (var item in value.reversed) {
-        stackPushV2(stack, item);
-      }
+  Tuple3<int, String, List<Output>> _addGradients(
+      List<Output> y,
+      List<Output> x,
+      List<Output> dx,
+      Type outputType) native "Graph_add_gradients";
 
-      //stack = stackCloseV2(stack);
-      return stack;
-    } else if (value is Iterable) {
-      return constant<dynamic>(value.toList(),
-          operationName: operationName, dtype: dtype);
-    }*/
-
-    if (value is Shape)
-      return constant<dynamic>(value.dimensions,
-          operationName: operationName, dtype: dtype);
-
-    return _constant(
-        value,
-        Output,
-        operationName ?? _scope.uniqueName('Constant_${value.runtimeType}'),
-        dtype?.value ?? -1,
-        0 ?? _index++,
-        Shape,
-        (x) => inferType(x).value);
-  }*/
-
-  /*
-  Output _constant(
-      value,
-      Type outputType,
-      String operationName,
-      int dtype,
-      int index,
-      Type shapeType,
-      int Function(Object) inferType) native "Constant";
-      */
+  /// Adds operations to compute the partial derivatives of sum of `y`s w.r.t `x`s,
+  /// i.e., d(y_1 + y_2 + ...)/dx_1, d(y_1 + y_2 + ...)/dx_2...
+  ///
+  /// [dx] are used as initial gradients (which represent the symbolic partial
+  /// derivatives of some loss function `L` w.r.t. `y`).
+  /// [dx] must be `null` or have the same size as [y].
+  /// If [dx] is `null`, the implementation will use dx of `OnesLike` for all
+  /// shapes in [y].
+  ///
+  /// The partial derivatives are returned.
+  ///
+  /// WARNING: This function does not yet support all the gradients that python
+  /// supports. See
+  /// https:///www.tensorflow.org/code/tensorflow/cc/gradients/README.md
+  /// for instructions on how to add C++ more gradients.
+  List<Output> addGradients(List<Output> y, List<Output> x, {List<Output> dx}) {
+    var result = _addGradients(y, x, dx, Output);
+    var code = _codeFrom(result.item1);
+    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+    return result.item3;
+  }
 
   @override
   int get hashCode => _pointer;

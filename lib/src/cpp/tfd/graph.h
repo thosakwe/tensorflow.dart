@@ -10,6 +10,7 @@
 
 namespace tfd
 {
+    void Graph_add_gradients(Dart_NativeArguments arguments);
     void Graph_copy_function(Dart_NativeArguments arguments);
     void Graph_new(Dart_NativeArguments arguments);
     void Graph_delete(Dart_NativeArguments arguments);

@@ -5,6 +5,10 @@
 #include "function_node.h"
 #include "util.h"
 
+void tfd::FunctionNode_add_gradients(Dart_NativeArguments arguments) {
+    Dart_Handle functionHandle = Dart_GetNativeArgument(arguments, 0); // `this`
+}
+
 void tfd::FunctionNode_from_graph(Dart_NativeArguments arguments) {
     Dart_Handle graphHandle = Dart_GetNativeArgument(arguments, 0); // Graph graph
     Dart_Handle nameHandle = Dart_GetNativeArgument(arguments, 1); // String name
@@ -137,3 +141,5 @@ void tfd::FunctionNode_to_function_def(Dart_NativeArguments arguments) {
     TF_DeleteBuffer(buf);
     TF_DeleteStatus(status);
 }
+
+

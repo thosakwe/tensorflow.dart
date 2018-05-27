@@ -11,6 +11,7 @@
 #include "util.h"
 
 namespace tfd {
+    void FunctionNode_add_gradients(Dart_NativeArguments arguments);
     void FunctionNode_from_graph(Dart_NativeArguments arguments);
     void FunctionNode_from_function_def(Dart_NativeArguments arguments);
     void FunctionNode_to_function_def(Dart_NativeArguments arguments);

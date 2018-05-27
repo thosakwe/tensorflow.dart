@@ -9,6 +9,69 @@
 
 using namespace tfd;
 
+void tfd::Graph_add_gradients(Dart_NativeArguments arguments) {
+    // Returns Tuple3<int, String, List<Output>>
+    Dart_Handle graphHandle = Dart_GetNativeArgument(arguments, 0); // this
+    Dart_Handle ysHandle = Dart_GetNativeArgument(arguments, 1); // List<Output> y
+    Dart_Handle xsHandle = Dart_GetNativeArgument(arguments, 2); // List<Output> x
+    Dart_Handle dxsHandle = Dart_GetNativeArgument(arguments, 3); // List<Output> dx?
+    Dart_Handle outputTypeHandle = Dart_GetNativeArgument(arguments, 4); // Type outputType
+    auto *graph = dereference_graph_ptr(graphHandle);
+    auto *status = TF_NewStatus();
+    TF_Output *y = nullptr, *x = nullptr, *dx = nullptr, *dy = nullptr;
+    intptr_t ny, nx;
+
+    HandleError(Dart_ListLength(ysHandle, &ny));
+    HandleError(Dart_ListLength(xsHandle, &nx));
+
+    if (ny > 0) {
+        y = (TF_Output *) Dart_ScopeAllocate(sizeof(TF_Output) * ny);
+
+        for (intptr_t i = 0; i < ny; i++)
+            y[i] = convert_output_wrapper(Dart_ListGetAt(ysHandle, i));
+    }
+
+
+    if (nx > 0) {
+        x = (TF_Output *) Dart_ScopeAllocate(sizeof(TF_Output) * nx);
+        dy = (TF_Output *) Dart_ScopeAllocate(sizeof(TF_Output) * nx);
+
+        for (intptr_t i = 0; i < nx; i++)
+            x[i] = convert_output_wrapper(Dart_ListGetAt(xsHandle, i));
+
+        if (!Dart_IsNull(dxsHandle)) {
+            dx = (TF_Output *) Dart_ScopeAllocate(sizeof(TF_Output) * nx);
+
+            for (intptr_t i = 0; i < nx; i++)
+                dx[i] = convert_output_wrapper(Dart_ListGetAt(dxsHandle, i));
+        }
+    }
+
+
+    TF_AddGradients(graph, y, (int) ny, x, (int) nx, dx, status, dy);
+
+    TF_Code code = TF_GetCode(status);
+    Dart_Handle tuple[3] = {Dart_NewInteger(code), Dart_Null(), Dart_Null()};
+
+    if (code != TF_OK)
+        tuple[1] = Dart_NewStringFromCString(TF_Message(status));
+    else {
+        Dart_Handle outYs = tuple[2] = Dart_NewList(nx);
+
+        for (intptr_t i = 0; i < nx; i++) {
+            TF_Output output = dy[i];
+            auto *args = new Dart_Handle[3]{Dart_NewIntegerFromUint64((uint64_t) output.oper),
+                                            Dart_NewInteger(output.index),
+                                            graphHandle};
+            outYs[i] = Dart_New(outputTypeHandle, Dart_NewStringFromCString("__"), 3, args);
+        }
+    }
+
+    Dart_Handle out = Dart_New(getTuple3Type(), Dart_NewStringFromCString(""), 3, tuple);
+    Dart_SetReturnValue(arguments, out);
+    TF_DeleteStatus(status);
+}
+
 void tfd::Graph_copy_function(Dart_NativeArguments arguments) {
     Dart_Handle graphHandle = Dart_GetNativeArgument(arguments, 0);
     Dart_Handle funcHandle = Dart_GetNativeArgument(arguments, 1);

@@ -42,6 +42,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
     if (strcmp("FunctionNode_to_function_def", cname) == 0) result = tfd::FunctionNode_to_function_def;
 
         // graph.h
+    else if (strcmp("Graph_add_gradients", cname) == 0) result = tfd::Graph_add_gradients;
     else if (strcmp("Graph_copy_function", cname) == 0) result = tfd::Graph_copy_function;
     else if (strcmp("Graph_new", cname) == 0) result = tfd::Graph_new;
     else if (strcmp("Graph_delete", cname) == 0) result = tfd::Graph_delete;

@@ -11,6 +11,8 @@ class Output<T> {
 
   Output._(this._graph);
 
+  Output.__(this._graph, this._operation, this._index);
+
   void depend() {
     _graph.session.runner.addTarget(op.name);
   }
