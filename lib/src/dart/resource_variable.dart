@@ -67,6 +67,7 @@ class Variable<T> {
       ? value
       : readVariableOp(handle, graph: _graph, dtype: dtype);
 
+
   Shape get shape => _shape;// isResourceVariable ? handle.shape : _shape;
 
   Output<T> get value {

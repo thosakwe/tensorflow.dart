@@ -14,11 +14,13 @@ void main() {
 
   var w1 = new Variable.resource('w1',
       shape: new Shape(2, 1), dtype: DataType.DT_FLOAT);
-  var assignW1 = w1.assign(constant(w1.shape.apply([0.1, 0.2])));
+  w1.assign(constant(w1.shape.apply([0.1, 0.2]))).run();
 
   var layer1 = tanh(matMul(x, w1.value));
 
-  var gradOutputs = <Output>[];
+  var dydx = defaultGraph.addGradients([layer1], [x])[0];
+  var result = dydx.run();
+  print('dy/dx = $result');
 }
 
 /*

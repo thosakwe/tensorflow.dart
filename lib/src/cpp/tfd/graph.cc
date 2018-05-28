@@ -60,10 +60,10 @@ void tfd::Graph_add_gradients(Dart_NativeArguments arguments) {
 
         for (intptr_t i = 0; i < nx; i++) {
             TF_Output output = dy[i];
-            auto *args = new Dart_Handle[3]{Dart_NewIntegerFromUint64((uint64_t) output.oper),
-                                            Dart_NewInteger(output.index),
-                                            graphHandle};
-            outYs[i] = Dart_New(outputTypeHandle, Dart_NewStringFromCString("__"), 3, args);
+            auto *args = new Dart_Handle[3]{graphHandle, Dart_NewIntegerFromUint64((uint64_t) output.oper),
+                                            Dart_NewInteger(output.index)};
+            Dart_Handle outY = Dart_New(outputTypeHandle, Dart_NewStringFromCString("__"), 3, args);
+            HandleError(Dart_ListSetAt(outYs, i, outY));
         }
     }
 

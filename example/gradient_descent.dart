@@ -16,15 +16,11 @@ void main() {
   // The initializer for random data.
 
   // Create m, b variables.
-  m = new Variable('m', dtype: dtype, shape: Shape.scalar);
-  b = new Variable('b', dtype: dtype, shape: shape);
+  m = new Variable.resource('m', dtype: dtype, shape: shape);
+  b = new Variable.resource('b', dtype: dtype, shape: shape);
 
-  print(randomUniform(constant(shape), dtype: DataType.DT_FLOAT).shape);
-
-  group([
-    m.assign(randomUniform(constant(shape), dtype: DataType.DT_FLOAT)),
-    b.assign(randomUniform(constant(shape), dtype: DataType.DT_FLOAT)),
-  ]).depend();
+  m.assign(randomUniform(constant(shape), dtype: DataType.DT_FLOAT)).run();
+  b.assign(randomUniform(constant(shape), dtype: DataType.DT_FLOAT)).run();
 
   print('Initial m: ${m.value.runApplyShape()}');
   print('Initial b: ${b.value.runApplyShape()}');
@@ -41,20 +37,17 @@ void main() {
   var loss = reduceMean(squaredDelta, constant(0), keepDims: false);
 
   // Learning rate.
-  var alpha = constant(0.3);
 
-  for (int i = 0; i < 3; i++) {
-    print('\n\nm@$i: ${m.value.runApplyShape()}');
-    print('b@$i: ${b.value.runApplyShape()}');
-    x.feed(xValues);
-    y.feed(yValues);
-    print('Loss: ${loss.run()}');
+  var optimizer =
+      new Optimizer.gradientDescent(learningRate: 0.5, train: [m, b]);
+  var train = optimizer.minimize(loss, gradLoss: [x]);
 
-    var runner = defaultGraph.session.runner
-      // ..fetch(resourceApplyGradientDescent(m.handle, alpha, loss).name)
-      ..fetchFromOutput(applyGradientDescent(m.handle, alpha, loss));
-    m.watch();
-    print(runner.run());
+  for (int epoch = 0; epoch < epochs; epoch++) {
+    //print('Epoch: $epoch');
+    x.feed(new Tensor.from(xs));
+    y.feed(new Tensor.from(ys));
+    train.run();
+    //m.watch();
   }
 
   /*
