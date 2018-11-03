@@ -1,4 +1,4 @@
-<div style="text-align: center">
+<div align="center" style="text-align: center">
   <img src="https://github.com/thosakwe/tensorflow.dart/raw/master/logo/tensorflow-layout-400.png"><br><br>
   <hr><br>
   <a href="https://pub.dartlang.org/packages/tensorflow"><img alt="Pub" src="https://img.shields.io/pub/v/tensorflow.svg"></a>
