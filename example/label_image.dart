@@ -108,7 +108,7 @@ void printUsage(IOSink sink) {
     ..writeln('to label JPEG images.')
     ..writeln('TensorFlow version: ${tf.version}')
     ..writeln()
-    ..writeln('Usage: label_image <image file>')
+    ..writeln('Usage: label_image <model_dir> <image file>')
     ..writeln()
     ..writeln('Where:')
     ..writeln(
