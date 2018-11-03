@@ -1,8 +1,8 @@
 part of tensorflow;
 
 /// Creates a single zero-value tensor for a scalar.
-Output zero(DataType dtype, {Graph graph, String operationName}) {
-  var value;
+Output<T> zero<T>(DataType dtype, {Graph graph, String operationName}) {
+  T value;
   dtype = inferType(dtype);
 
   switch (dtype) {
@@ -14,16 +14,16 @@ Output zero(DataType dtype, {Graph graph, String operationName}) {
     case DataType.DT_UINT16:
     case DataType.DT_UINT32:
     case DataType.DT_UINT64:
-      value = 0;
+      value = 0 as T;
       break;
     case DataType.DT_FLOAT:
     case DataType.DT_DOUBLE:
-      value = 0.0;
+      value = 0.0 as T;
       break;
   }
 
   if (value != null)
-    return constant(value,
+    return constant<T>(value,
         shape: Shape.scalar,
         dtype: dtype,
         operationName: operationName,
@@ -240,8 +240,8 @@ class Shape {
     var list = items;
 
     while (list is Iterable) {
-      dims.add(list.length);
-      if (list.isNotEmpty) list = list.elementAt(0);
+      dims.add(list.length as int);
+      if (list.isNotEmpty == true) list = list.elementAt(0);
     }
 
     return dims.isEmpty ? Shape.scalar : new Shape.dims(dims);

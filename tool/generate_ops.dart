@@ -26,16 +26,17 @@ String escapeName(String name) {
     'graph',
     'operationName',
     'run',
+    'for',
     'print'
   ].contains(name)
       ? name + '\$'
       : name;
 }
 
-Reference convertType(tf.DataType type, int index, List<tf.OpDef_AttrDef> attrs,
+Reference convertType(tf.OpDef_ArgDef argDef, int index, tf.OpDef opDef,
     [bool wrapped = true]) {
   var t = (() {
-    switch (type) {
+    switch (argDef.type) {
       case tf.DataType.DT_BOOL:
         return new Reference('bool');
         break;
@@ -63,15 +64,21 @@ Reference convertType(tf.DataType type, int index, List<tf.OpDef_AttrDef> attrs,
 
   if (!wrapped) return t ?? refer('dynamic');
 
+  if (t is TypeReference && t.symbol == 'Output') {
+    return t;
+  }
+
   return new TypeReference((b) {
     b.symbol = 'Output';
-
-    Reference t;
-    if (t != null) b.types.add(t);
+    if (argDef.typeListAttr?.isNotEmpty == true) {
+      b.types.add(new TypeReference((b) => b
+        ..symbol = 'List'
+        ..types.add(t)));
+    } else if (t != null) b.types.add(t);
   });
 }
 
-main() async {
+main(List<String> args) async {
   var ops =
       tf.Operation.list(); //new tf.OpList.fromBuffer(tf.getAllOpsInternal());
 
@@ -86,8 +93,8 @@ main() async {
             .where((a) => dartType(a.type) == null)
             .map((a) => '${a.name} => ${a.type}')
             .toList();
-        print('Omitting ${o
-            .name}: unsupported types $unsupported'); //: $unsupported');
+        print(
+            'Omitting ${o.name}: unsupported types $unsupported'); //: $unsupported');
         return false;
       }
 
@@ -144,11 +151,15 @@ main() async {
           ..named = true);
         method.optionalParameters.add(p);
 
+        var hasT =
+            op.attr.any((attr) => (attr.name == 'T' && attr.type == 'type')) ||
+                op.inputArg.any((a) => a.type == tf.DataType.DT_INVALID) ||
+                op.outputArg.any((a) => a.type == tf.DataType.DT_INVALID);
+
         var name = new ReCase(op.name).camelCase;
         method
           ..docs.addAll(getDocs(op.summary))
           ..docs.addAll(getDocs(op.description))
-          ..returns = new Reference('Output')
           ..name = escapeName(name);
 
         if (op.inputArg.any((a) => a.type == tf.DataType.DT_INVALID) ||
@@ -158,21 +169,16 @@ main() async {
 
         if (op.hasDeprecation()) {
           var ann = new Reference('Deprecated').call([
-            literal('DEPRECATED at GraphDef version ${op.deprecation
-                .version}:' +
-                ' ${op.deprecation.explanation}')
+            literal(
+                'DEPRECATED at GraphDef version ${op.deprecation.version}:' +
+                    ' ${op.deprecation.explanation}')
           ]);
           method.annotations.add(ann);
         }
 
-        var typeAttr = op.attr.where((o) => o.type == 'type').toList();
+        //var typeAttr = op.attr.where((o) => o.type == 'type').toList();
         var inputs = <String>[];
         String resultTypeName, outputTypeName;
-
-        var hasT =
-            op.attr.any((attr) => (attr.name == 'T' && attr.type == 'type')) ||
-                op.inputArg.any((a) => a.type == tf.DataType.DT_INVALID) ||
-                op.outputArg.any((a) => a.type == tf.DataType.DT_INVALID);
 
         if (op.outputArg.isEmpty) {
           method.docs.addAll(getDocs('This operation has no outputs.'));
@@ -182,7 +188,7 @@ main() async {
           if (output.hasDescription())
             method.docs.addAll(getDocs(
                 'This operation has one output: ${output.description}'));
-          method.returns = convertType(output.type, 0, typeAttr);
+          method.returns = convertType(output, 0, op);
         } else {
           // Create a custom output class.
           resultTypeName = new ReCase(op.name).pascalCase;
@@ -229,8 +235,8 @@ main() async {
                       var name = resultField.name = escapeName(
                           new ReCase(output.name == 'op' ? 'op\$' : output.name)
                               .camelCase);
-                      var type = resultField.type =
-                          convertType(output.type, i++, typeAttr);
+                      var type =
+                          resultField.type = convertType(output, i++, op);
                       resultConstructor.requiredParameters
                           .add(new Parameter((p) => p
                             ..name = name
@@ -240,9 +246,7 @@ main() async {
                           ..name = name
                           ..modifier =
                               resultField.modifier = FieldModifier.final$
-                          ..type = new TypeReference((b) => b
-                            ..symbol = 'Output'
-                            ..types.add(type));
+                          ..type = type;
                         outputConstructor.requiredParameters
                             .add(new Parameter((p) => p
                               ..name = name
@@ -292,7 +296,9 @@ main() async {
                     var args = <Expression>[];
 
                     for (int i = 0; i < op.outputArg.length; i++)
-                      args.add(refer('result\$').index(refer('idx\$$i')));
+                      args.add(refer('result\$')
+                          .index(refer('idx\$$i'))
+                          .asA(convertType(op.outputArg[i], i, op)));
 
                     b.statements.add(refer(resultTypeName)
                         .newInstance(args, {}, hasT ? [refer('T')] : [])
@@ -306,7 +312,7 @@ main() async {
 
         // All inputs should be tf.Output or []tf.Output
         for (var input in op.inputArg) {
-          var type = convertType(input.type, 0, typeAttr);
+          var type = convertType(input, 0, op);
           var name = escapeName(new ReCase(input.name).camelCase);
           inputs.add('_convertOutput($name)');
 
@@ -376,20 +382,33 @@ main() async {
           method.optionalParameters.add(p);
         }
 
+        body.add(new Code('// ignore: unnecessary_cast'));
         var retVal = refer('op\$').property('finish').call([]);
 
         if (op.outputArg.isEmpty) {
-          body.add(retVal.returned.statement);
+          body.add(retVal.asA(method.returns).returned.statement);
         } else {
           if (op.outputArg.length <= 1) {
-            retVal = retVal.index(literal(op.outputArg.length - 1));
+            var retType = method.returns;
+
+            if (retType is TypeReference &&
+                retType.symbol == 'Output' &&
+                retType.types.isNotEmpty) {
+              retType = (retType as TypeReference).types[0];
+            }
+
+            retVal = retVal
+                .index(literal(op.outputArg.length - 1))
+                .property('cast')
+                .call([], {}, [retType]);
           } else {
             body.add(retVal.assignVar('result\$').statement);
             var args = <Expression>[refer('graph'), refer('result\$')];
 
             for (int i = 0; i < op.outputArg.length; i++) {
               //var output = op.outputArg[i];
-              args.add(refer('result\$').index(literal(i)));
+              var type = convertType(op.outputArg[i], i, op);
+              args.add(refer('result\$').index(literal(i)).asA(type));
             }
             retVal = refer(outputTypeName)
                 .newInstance(args, {}, hasT ? [refer('T')] : []);
@@ -408,11 +427,20 @@ main() async {
   dartText =
       '// GENERATED CODE. DO NOT MODIFY BY HAND.\n\npart of tensorflow;\n\n' +
           dartText;
-  await new File('lib/src/dart/op_def.dart').writeAsString(dartText);
+
+  if (!args.contains('--do-it')) {
+    print(dartText);
+  } else {
+    await new File('lib/src/dart/op_def.dart').writeAsString(dartText);
+  }
 }
 
 Expression convertDefaultValue(tf.AttrValue defaultValue) {
   if (defaultValue.hasI()) return literal(defaultValue.i.toInt());
+  if (defaultValue.hasF() && defaultValue.f == double.infinity)
+    return new CodeExpression(new Code('double.infinity'));
+  if (defaultValue.hasF() && defaultValue.f == double.negativeInfinity)
+    return new CodeExpression(new Code('double.negativeInfinity'));
   if (defaultValue.hasF()) return literal(defaultValue.f);
   if (defaultValue.hasB()) return literalBool(defaultValue.b);
   if (defaultValue.hasType())

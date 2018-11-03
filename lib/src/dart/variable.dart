@@ -37,7 +37,7 @@ Output<T> getVariable<T>(String name,
     //v._initializer = assignVariableOp(v, assignOp, graph: defaultGraph, dtype: dtype);
     //v._resource = readVariableOp(v, dtype: dtype);
     return v;
-  });
+  }) as Output<T>;
 }
 
 DataType _toRef(DataType dtype) =>

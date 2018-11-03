@@ -9,7 +9,7 @@ Graph _topLevelDefaultGraph;
 List<Operation> _topLevelDeps = [];
 
 Graph get defaultGraph =>
-    Zone.current[_defaultGraphSymbol] ??
+    Zone.current[_defaultGraphSymbol] as Graph ??
     (_topLevelDefaultGraph ??= new Graph());
 
 /// Executes code within the context of a single [Graph].
@@ -21,7 +21,7 @@ T withScope<T>(Graph graph, T Function() f) {
 
 /// Executes a function, prepending a [prefix] to all operations.
 T withVariableScope<T>(String name, T Function() f) {
-  var scopes = Zone.current[_scopesSymbol] ?? [];
+  var scopes = Zone.current[_scopesSymbol] as Iterable ?? [];
   var zone = Zone.current
       .fork(zoneValues: {_scopesSymbol: new List.from(scopes)..add(name)});
   return zone.run<T>(f);
@@ -33,7 +33,7 @@ T withDeviceScope<T>(String device, T Function() f) =>
 
 /// Executes a function, applying [dependencies] to each created node.
 T withControlDependencies<T>(Iterable<Operation> dependencies, T Function() f) {
-  var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
+  var deps = Zone.current[_controlInputsSymbol] as Iterable ?? _topLevelDeps;
   var zone = Zone.current.fork(zoneValues: {
     _controlInputsSymbol: new List.from(deps)..addAll(dependencies)
   });

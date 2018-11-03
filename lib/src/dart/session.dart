@@ -34,6 +34,7 @@ class SessionRunner {
 
   SessionRunner._(this._session);
 
+  // ignore: generic_method_comment
   static Tuple4/*<int, String, List<Uint8List>, Uint8List>*/ _Session_run(
       int graph,
       Uint8List config,
@@ -65,7 +66,7 @@ class SessionRunner {
     _session._runner = null;
     var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
     deps.clear();
-    var run = new SessionRun._(result.item3, result.item4);
+    var run = new SessionRun<T>._(result.item3.cast<T>(), result.item4);
     _session._graph._runCallbacks
       ..forEach((c) => c.f(run[c.index]))
       ..clear();
@@ -118,11 +119,11 @@ class SessionRunner {
 }
 
 /// Output tensors and metadata obtained when executing a session.
-class SessionRun<T> extends DelegatingList {
+class SessionRun<T> extends DelegatingList<T> {
   final Uint8List _metadata;
   RunMetadata _runMetadata;
 
-  SessionRun._(List _tensors, this._metadata) : super(_tensors);
+  SessionRun._(List<T> _tensors, this._metadata) : super(_tensors);
 
   RunMetadata get metadata =>
       _runMetadata ??= new RunMetadata.fromBuffer(_metadata);

@@ -1,13 +1,10 @@
-import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:meta/meta.dart';
 import 'package:tensorflow/tensorflow.dart';
 import 'package:tensorflow/tensorflow.dart' as tf show assign;
 
 /// A value whose value is mutable.
 class Variable<T> {
-  final Output handle;
+  final Output<T> handle;
   final DataType dtype;
   final Shape _shape;
   final String name;
@@ -25,8 +22,10 @@ class Variable<T> {
       String container,
       Output<T> initializer})
       : _graph = graph ?? defaultGraph,
-        _pending = initializer ??
-            (shape == Shape.scalar ? zero(dtype) : zeros(shape, dtype: dtype)),
+        _pending = (initializer ??
+            (shape == Shape.scalar
+                ? zero<T>(dtype)
+                : zeros(shape, dtype: dtype))) as Output<T>,
         _shape = shape,
         handle = variableV2(
             graph: graph,
@@ -47,8 +46,10 @@ class Variable<T> {
       String container,
       Output<T> initializer})
       : _graph = graph ?? defaultGraph,
-        _pending = initializer ??
-            (shape == Shape.scalar ? zero(dtype) : zeros(shape, dtype: dtype)),
+        _pending = (initializer ??
+            (shape == Shape.scalar
+                ? zero(dtype)
+                : zeros(shape, dtype: dtype))) as Output<T>,
         _shape = shape,
         handle = varHandleOp(
             graph: graph,
@@ -56,19 +57,18 @@ class Variable<T> {
             shape: shape,
             container: container,
             sharedName: name,
-            operationName: scopedName(name)),
+            operationName: scopedName(name)) as Output<T>,
         isResourceVariable = true {
-    _id = new String.fromCharCodes(handle.run());
+    _id = new String.fromCharCodes(handle.run() as Iterable<int>);
   }
 
   String get id => _id;
 
-  Output get read => !isResourceVariable
+  Output<T> get read => !isResourceVariable
       ? value
       : readVariableOp(handle, graph: _graph, dtype: dtype);
 
-
-  Shape get shape => _shape;// isResourceVariable ? handle.shape : _shape;
+  Shape get shape => _shape; // isResourceVariable ? handle.shape : _shape;
 
   Output<T> get value {
     if (!isResourceVariable) {
@@ -96,8 +96,8 @@ class Variable<T> {
       //print('$name is now $v!');
       _dep = null;
       _watcher = null;
-      _pending =
-          constant(v is Iterable ? flatten(v) : v, dtype: dtype, shape: shape);
+      _pending = constant(v is Iterable ? flatten(v) as T : v as T,
+          dtype: dtype, shape: shape);
     });
   }
 

@@ -13,7 +13,7 @@ endmacro()
 get_tf_variable(TYPE "`cpu`, `gpu`")
 get_tf_variable(PLATFORM "`x86_64`, etc.")
 get_tf_variable(OS "`darwin`, `linux`")
-get_tf_variable(VERSION "1.7.0, etc.")
+get_tf_variable(VERSION "1.1.0, etc.")
 
 set(TF "${TF_TYPE}-${TF_OS}-${TF_PLATFORM}-${TF_VERSION}")
 set(TF_URL "https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-${TF}.tar.gz")

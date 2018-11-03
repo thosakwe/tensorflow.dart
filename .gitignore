@@ -38,3 +38,4 @@ tensorflow.tar.gz
 inception5h
 .DS_Store
 example/logs
+cmake-build-debug

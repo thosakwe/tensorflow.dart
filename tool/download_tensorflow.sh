@@ -7,8 +7,8 @@ fi
 
 if [ -z "$TF_VERSION" ]
 then
-  echo 'No `TF_VERSION` specified; defaulting to `1.7.0`'
-  export TF_VERSION='1.7.0'
+  echo 'No `TF_VERSION` specified; defaulting to `1.11.0`'
+  export TF_VERSION='1.11.0'
 fi
 
 if [ -z "$TF_TYPE" ]

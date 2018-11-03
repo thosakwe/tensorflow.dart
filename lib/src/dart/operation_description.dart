@@ -53,17 +53,17 @@ class OperationDescription<T> {
     var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
     deps.forEach(addControlInput);
 
-    setDevice(_device ?? Zone.current[_deviceSymbol]);
+    setDevice(_device ?? Zone.current[_deviceSymbol] as String);
     return new Operation<T>._fromPointer(_finish(TensorFlowException), _graph);
   }
 
-  Tuple3/*<int, String, Tensor>*/ _setAttrTensor(String name, Tensor value)
+  Tuple3 _setAttrTensor(String name, Tensor value)
       native "OperationDescription_set_attr_tensor";
 
   void setAttrTensor(String name, Tensor value) {
     if (value == null) return;
     var result = _setAttrTensor(name, value);
-    var code = _codeFrom(result.item1);
+    var code = _codeFrom(result.item1 as int);
     if (code != Code.ok)
       throw new TensorFlowException(code, '${result.item2} ${result.item3}');
   }

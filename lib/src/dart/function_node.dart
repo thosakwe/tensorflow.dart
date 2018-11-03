@@ -4,7 +4,6 @@ class Func {
   final int _pointer;
   final String name;
   Func gradient;
-  int _graphPointer;
 
   Func._(this._pointer, this.name);
 
@@ -68,7 +67,7 @@ class Func {
       {Graph graph, String operationName}) {
     graph ??= defaultGraph;
     copyIntoGraph(graph: graph);
-    var desc = graph.newOperation(
+    var desc = graph.newOperation<T>(
         name, operationName ??= graph._scope.uniqueName('$name/'));
     arguments.forEach(desc.addInput);
     return desc.finish();
@@ -81,12 +80,14 @@ class FuncArguments {
 
   FuncArguments._();
 
+  int get argCount => _argCount;
+
   Output<T> get<T>(String name, {@required DataType dtype, Shape shape}) {
     return _args.putIfAbsent(name, () {
       _argCount++;
       shape ??= Shape.scalar;
       return placeholder(dtype: dtype, shape: shape, operationName: name);
-    });
+    }) as Output<T>;
   }
 }
 

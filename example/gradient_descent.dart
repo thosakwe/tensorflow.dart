@@ -10,7 +10,7 @@ void main() {
   var yValues = new Tensor.from(ys).reshape(shape);
   var epochs = 5;
 
-  Variable<double> m, b;
+  Variable m, b;
   Output<double> x, y;
 
   // The initializer for random data.

@@ -13,6 +13,14 @@ class Output<T> {
 
   Output.__(this._graph, this._operation, this._index);
 
+  Output<U> cast<U>() {
+    return new Output<U>.__(_graph, _operation, _index)
+      .._initializer = _initializer
+      .._resource = _resource
+      .._dtype = _dtype
+      ..__shape = __shape;
+  }
+
   void depend() {
     _graph.session.runner.addTarget(op.name);
   }
@@ -82,7 +90,7 @@ class Output<T> {
 
   int _getType() native "Output_get_type";
 
-  Tuple2/*<int, String>*/ _reshape(Graph graph, Int64List dims)
+  Tuple2<int, String> _reshape(Graph graph, Int64List dims)
       native "Output_reshape";
 
   void reshape(Shape shape) {
@@ -124,16 +132,8 @@ class Output<T> {
       bool appendHashToName: false}) {
     var ops = new List<int>.from(operations?.map((o) => o._pointer) ?? [])
       ..add(_operation);
-    var result = Func._fromGraph(
-        _graph,
-        name ?? op.name,
-        [this],
-        ['result'],
-        description,
-        arguments ?? [],
-        1,
-        ops,
-        appendHashToName);
+    var result = Func._fromGraph(_graph, name ?? op.name, [this], ['result'],
+        description, arguments ?? [], 1, ops, appendHashToName);
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw new TensorFlowException(code, result.item2);
     var f = new Func._(result.item3, name ?? op.name)..gradient = gradient;

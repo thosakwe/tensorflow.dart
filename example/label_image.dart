@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:path/path.dart' as p;
 import 'package:tensorflow/tensorflow.dart' as tf;
 
@@ -40,7 +39,7 @@ main(List<String> args) async {
     ..writeln(' likely)');
 }
 
-tf.Output<Float32List> constructAndExecuteGraphToNormalizeImage(
+tf.Output<double> constructAndExecuteGraphToNormalizeImage(
     String imageFileName) {
   // Some constants specific to the pre-trained model at:
   // https://storage.googleapis.com/download.tensorflow.org/models/inception5h.zip
@@ -70,7 +69,7 @@ tf.Output<Float32List> constructAndExecuteGraphToNormalizeImage(
       tf.constant(0, operationName: 'make_batch'),
     ),
     tf.constant(
-      new Int32List.fromList([H, W]),
+      H * W,
       operationName: 'size',
       dtype: tf.DataType.DT_INT32,
     ),
@@ -82,13 +81,13 @@ tf.Output<Float32List> constructAndExecuteGraphToNormalizeImage(
 }
 
 List<double> executeInceptionGraph(
-    List<int> graphDefBytes, tf.Output<Float32List> image) {
+    List<int> graphDefBytes, tf.Output<double> image) {
   var g = new tf.Graph.fromGraphDef(new tf.GraphDef.fromBuffer(graphDefBytes));
   return tf.withScope(g, () {
     var runner = g.session.runner
       ..feed('input', new tf.Tensor.from(image.run()).reshape(image.shape))
       ..fetch('output');
-    return runner.run()[0];
+    return runner.run()[0] as List<double>;
   });
 }
 

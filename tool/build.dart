@@ -39,7 +39,7 @@ main(List<String> args, [bool isDownloading = false]) async {
     var argResults = argParser.parse(args);
     isDownloading = false; // (isDownloading == true) || argResults['download'];
 
-    if (argResults['help']) {
+    if (argResults['help'] as bool) {
       printUsage(stdout);
       return;
     }
@@ -51,17 +51,17 @@ main(List<String> args, [bool isDownloading = false]) async {
     }
 
     var sdk = getSdkPath();
-    var bashArgs = Platform.isWindows ? [] : [isDownloading ? '-e' : '-xe'];
+    var bashArgs = Platform.isWindows ? <String>[] : [isDownloading ? '-e' : '-xe'];
     var bash = await Process
         .start(Platform.isWindows ? 'cmd' : 'bash', bashArgs, environment: {
       'DART_SDK': sdk,
-      'TF_OS': argResults['os'],
-      'TF_PLATFORM': argResults['platform'],
-      'TF_TYPE': argResults['type'],
-      'TF_VERSION': argResults['version'],
+      'TF_OS': argResults['os'] as String,
+      'TF_PLATFORM': argResults['platform'] as String,
+      'TF_TYPE': argResults['type'] as String,
+      'TF_VERSION': argResults['version'] as String,
     });
 
-    if (argResults['force']) {
+    if (argResults['force'] as bool) {
       var cmakeCache = new File('CMakeCache.txt');
       if (await cmakeCache.exists()) await cmakeCache.delete();
     }
