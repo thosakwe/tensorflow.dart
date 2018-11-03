@@ -4,7 +4,7 @@
   <a href="https://pub.dartlang.org/packages/tensorflow"><img alt="Pub" src="https://img.shields.io/pub/v/tensorflow.svg"></a>
   <a href="https://travis-ci.org/thosakwe/tensorflow.dart"><img alt="Build status" src="https://travis-ci.org/thosakwe/tensorflow.dart.svg?branch=master"></a>
   <a href="https://gitter.im/tensorflow-dart/Lobby"><img alt="Gitter" src="https://img.shields.io/gitter/room/tensorflow-dart/Lobby.svg"></a>
-  <a href="https://github.com/thosakwe/tensorflow.dart/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/thosakwe/tensorflow.dart.svg"></a><br>
+  <a href="https://github.com/thosakwe/tensorflow.dart/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/thosakwe/tensorflow.dart.svg"></a><br><br>
 </div>
 
 [Tensorflow](https://github.com/tensorflow/tensorflow)
