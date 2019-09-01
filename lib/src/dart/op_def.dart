@@ -8809,7 +8809,9 @@ Output varHandleOp(
   op$.setAttrType('dtype', dtype);
   op$.setAttrShape('shape', shape);
 // ignore: unnecessary_cast
-  return op$.finish()[0].cast<Output>();
+var x = op$.finish()[0];
+print(x);
+  return x.cast<Output>();
 }
 
 /// This operation has no outputs.
