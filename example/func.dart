@@ -6,8 +6,8 @@ void main() {
   // in a regular programming language.
   //
   // It can be used to essentially register a
-  // new op.
-  var mod2 = new Func('mod2', (builder) {
+  // op.
+  var mod2 = Func('mod2', (builder) {
     // Use `builder.arguments` to signal to Tensorflow
     // the number of, and types of inputs the function expects.
     var n = builder.arguments.get('n', dtype: DataType.DT_INT32);

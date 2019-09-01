@@ -59,7 +59,7 @@ class Variable<T> {
             sharedName: name,
             operationName: scopedName(name)) as Output<T>,
         isResourceVariable = true {
-    _id = new String.fromCharCodes(handle.run() as Iterable<int>);
+    _id = String.fromCharCodes(handle.run() as Iterable<int>);
   }
 
   String get id => _id;

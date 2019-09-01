@@ -14,7 +14,7 @@ class Output<T> {
   Output.__(this._graph, this._operation, this._index);
 
   Output<U> cast<U>() {
-    return new Output<U>.__(_graph, _operation, _index)
+    return Output<U>.__(_graph, _operation, _index)
       .._initializer = _initializer
       .._resource = _resource
       .._dtype = _dtype
@@ -29,7 +29,7 @@ class Output<T> {
     if (_dtype == null) {
       _dtype = _getType();
       /*
-      throw new StateError('Could not determine the data type of this output.\n'
+      throw StateError('Could not determine the data type of this output.\n'
           'Most likely, a function is trying to infer the type of this output.');
           */
     }
@@ -38,11 +38,11 @@ class Output<T> {
 
   int get index => _index;
 
-  Operation get op => new Operation._fromPointer(_operation, _graph);
+  Operation get op => Operation._fromPointer(_operation, _graph);
 
   Int64List _shape(Graph graph) native "Output_shape";
 
-  Shape get shape => new Shape._(__shape ??= _shape(_graph));
+  Shape get shape => Shape._(__shape ??= _shape(_graph));
 
   T get value => identity(this).run();
 
@@ -96,7 +96,7 @@ class Output<T> {
   void reshape(Shape shape) {
     var result = _reshape(_graph, shape.dimensions);
     var code = _codeFrom(result.item1);
-    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+    if (code != Code.ok) throw TensorFlowException(code, result.item2);
   }
 
   void feed(Tensor value) {
@@ -130,13 +130,13 @@ class Output<T> {
       List<Output> arguments,
       List<Operation> operations,
       bool appendHashToName: false}) {
-    var ops = new List<int>.from(operations?.map((o) => o._pointer) ?? [])
+    var ops = List<int>.from(operations?.map((o) => o._pointer) ?? [])
       ..add(_operation);
     var result = Func._fromGraph(_graph, name ?? op.name, [this], ['result'],
         description, arguments ?? [], 1, ops, appendHashToName);
     var code = _codeFrom(result.item1);
-    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
-    var f = new Func._(result.item3, name ?? op.name)..gradient = gradient;
+    if (code != Code.ok) throw TensorFlowException(code, result.item2);
+    var f = Func._(result.item3, name ?? op.name)..gradient = gradient;
     f.copyIntoGraph(graph: _graph);
     return f;
   }

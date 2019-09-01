@@ -3,7 +3,7 @@ part of tensorflow;
 
 /// Represents a computation graph.  Graphs may be shared between sessions.
 abstract class _Graph {
-  final SymbolTable _scope = new SymbolTable();
+  final SymbolTable _scope = SymbolTable();
   final int _pointer;
   int _count = 0, _index = 0;
   int _output;
@@ -103,7 +103,7 @@ abstract class _Graph {
 
   T run<T>(Output<T> tensor) {
     if (_count == 0) {
-      throw new StateError('No nodes have been added to this Graph.');
+      throw StateError('No nodes have been added to this Graph.');
     }
 
     return Session._run(this, tensor);
@@ -122,7 +122,7 @@ Shape shape(int dim0,
         int dim7,
         int dim8,
         int dim9]) =>
-    new Shape([dim0, dim1, dim2, dim3, dim4, dim5, dim6, dim7, dim8, dim9]
+    Shape([dim0, dim1, dim2, dim3, dim4, dim5, dim6, dim7, dim8, dim9]
         .where((n) => n != null)
         .toList());
 
@@ -131,6 +131,6 @@ class Shape {
 
   Shape(this.dims);
 
-  static Shape get empty => new Shape([]);
+  static Shape get empty => Shape([]);
 }
 */

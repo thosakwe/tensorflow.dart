@@ -19,10 +19,10 @@ main(List<String> args) async {
 
   var modelDir = args[0], imageFile = args[1];
   var graphDefBytes =
-      await new File(p.join(modelDir, 'tensorflow_inception_graph.pb'))
+      await File(p.join(modelDir, 'tensorflow_inception_graph.pb'))
           .readAsBytes();
   var labels =
-      await new File(p.join(modelDir, 'imagenet_comp_graph_label_strings.txt'))
+      await File(p.join(modelDir, 'imagenet_comp_graph_label_strings.txt'))
           .openRead()
           .cast<List<int>>()
           .transform(utf8.decoder)
@@ -83,10 +83,10 @@ tf.Output<double> constructAndExecuteGraphToNormalizeImage(
 
 List<double> executeInceptionGraph(
     List<int> graphDefBytes, tf.Output<double> image) {
-  var g = new tf.Graph.fromGraphDef(new tf.GraphDef.fromBuffer(graphDefBytes));
+  var g = tf.Graph.fromGraphDef(tf.GraphDef.fromBuffer(graphDefBytes));
   return tf.withScope(g, () {
     var runner = g.session.runner
-      ..feed('input', new tf.Tensor.from(image.run()).reshape(image.shape))
+      ..feed('input', tf.Tensor.from(image.run()).reshape(image.shape))
       ..fetch('output');
     return runner.run()[0] as List<double>;
   });

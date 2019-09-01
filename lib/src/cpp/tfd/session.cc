@@ -131,7 +131,7 @@ void tfd::Session_run(Dart_NativeArguments arguments) {
     HandleError(Dart_ListLength(inputsHandle, &nInputs));
 
     if (nInputs > 0) {
-        inputs = new TF_Output[nInputs];
+        inputs = TF_Output[nInputs];
 
         for (intptr_t i = 0; i < nInputs; i++) {
             inputs[i] = convert_output_wrapper(Dart_ListGetAt(inputsHandle, i), (int) i);
@@ -252,7 +252,7 @@ void tfd::Session_run(Dart_NativeArguments arguments) {
     // Create a Uint8List for the run metadata.
     tuple[3] = Dart_NewExternalTypedData(Dart_TypedData_kUint8, (void *) metadata->data, metadata->length);
 
-    // Create a new tuple.
+    // Create a tuple.
     Dart_Handle out = Dart_New(getTuple4Type(), Dart_NewStringFromCString(""), 4, tuple);
     Dart_SetReturnValue(arguments, out);
 

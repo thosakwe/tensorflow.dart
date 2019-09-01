@@ -7,13 +7,13 @@ class Session {
   int _pointer;
 
   factory Session({Graph graph, ConfigProto config}) =>
-      new Session._(graph ?? defaultGraph, config: config);
+      Session._(graph ?? defaultGraph, config: config);
 
   Session._(this._graph, {this.config});
 
   Session._fromPointer(this._graph, this._pointer, {this.config});
 
-  SessionRunner get runner => _runner ??= new SessionRunner._(this);
+  SessionRunner get runner => _runner ??= SessionRunner._(this);
 }
 
 /// Run Operations and evaluate Tensors.
@@ -63,11 +63,11 @@ class SessionRunner {
     );
     var code = _codeFrom(result.item1 as int);
     if (code != Code.ok)
-      throw new TensorFlowException(code, result.item2 as String);
+      throw TensorFlowException(code, result.item2 as String);
     _session._runner = null;
     var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
     deps.clear();
-    var run = new SessionRun<T>._(
+    var run = SessionRun<T>._(
         (result.item3 as List).cast<T>(), result.item4 as Uint8List);
     _session._graph._runCallbacks
       ..forEach((c) => c.f(run[c.index]))
@@ -90,7 +90,7 @@ class SessionRunner {
 
   int _fetch(Operation op, {int index: 0}) {
     if (op.numOutputs < 0)
-      throw new ArgumentError("The operation '${op.name}' has no outputs" +
+      throw ArgumentError("The operation '${op.name}' has no outputs" +
           ", and therefore its results cannot be fetched.");
 
     for (int i = 0; i < _outputs.length; i++) {
@@ -98,7 +98,7 @@ class SessionRunner {
       if (output._operation == op._pointer && output._index == index) return i;
     }
 
-    var output = new Output._(_session._graph)
+    var output = Output._(_session._graph)
       .._operation = op._pointer
       .._index = index;
     _outputs.add(output);
@@ -128,9 +128,9 @@ class SessionRun<T> extends DelegatingList<T> {
   SessionRun._(List<T> _tensors, this._metadata) : super(_tensors);
 
   RunMetadata get metadata =>
-      _runMetadata ??= new RunMetadata.fromBuffer(_metadata);
+      _runMetadata ??= RunMetadata.fromBuffer(_metadata);
 
   @override
   void operator []=(int index, value) =>
-      throw new UnsupportedError('Cannot modify this list.');
+      throw UnsupportedError('Cannot modify this list.');
 }

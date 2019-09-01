@@ -4,7 +4,7 @@ import 'package:cli_util/cli_util.dart';
 import 'package:path/path.dart' as p;
 import 'package:system_info/system_info.dart';
 
-final ArgParser argParser = new ArgParser()
+final ArgParser argParser = ArgParser()
   ..addFlag('force',
       abbr: 'f',
       negatable: false,
@@ -46,7 +46,7 @@ main(List<String> args, [bool isDownloading = false]) async {
 
     for (var name in ['os', 'platform', 'type', 'version']) {
       if (argResults[name] == null) {
-        throw new ArgParserException("Missing required option '$name'.");
+        throw ArgParserException("Missing required option '$name'.");
       }
     }
 
@@ -64,7 +64,7 @@ main(List<String> args, [bool isDownloading = false]) async {
         });
 
     if (argResults['force'] as bool) {
-      var cmakeCache = new File('CMakeCache.txt');
+      var cmakeCache = File('CMakeCache.txt');
       if (await cmakeCache.exists()) await cmakeCache.delete();
     }
 

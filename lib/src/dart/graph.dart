@@ -10,7 +10,7 @@ List<Operation> _topLevelDeps = [];
 
 Graph get defaultGraph =>
     Zone.current[_defaultGraphSymbol] as Graph ??
-    (_topLevelDefaultGraph ??= new Graph());
+    (_topLevelDefaultGraph ??= Graph());
 
 /// Executes code within the context of a single [Graph].
 T withScope<T>(Graph graph, T Function() f) {
@@ -23,7 +23,7 @@ T withScope<T>(Graph graph, T Function() f) {
 T withVariableScope<T>(String name, T Function() f) {
   var scopes = Zone.current[_scopesSymbol] as Iterable ?? [];
   var zone = Zone.current
-      .fork(zoneValues: {_scopesSymbol: new List.from(scopes)..add(name)});
+      .fork(zoneValues: {_scopesSymbol: List.from(scopes)..add(name)});
   return zone.run<T>(f);
 }
 
@@ -35,7 +35,7 @@ T withDeviceScope<T>(String device, T Function() f) =>
 T withControlDependencies<T>(Iterable<Operation> dependencies, T Function() f) {
   var deps = Zone.current[_controlInputsSymbol] as Iterable ?? _topLevelDeps;
   var zone = Zone.current.fork(zoneValues: {
-    _controlInputsSymbol: new List.from(deps)..addAll(dependencies)
+    _controlInputsSymbol: List.from(deps)..addAll(dependencies)
   });
   return zone.run<T>(f);
 }
@@ -71,7 +71,7 @@ class Graph {
 
   int _pointer;
 
-  final SymbolTable _scope = new SymbolTable();
+  final SymbolTable _scope = SymbolTable();
   final Map<String, Output> _variables = {};
   final List<Func> _functions = [];
   int _index = 0;
@@ -84,7 +84,7 @@ class Graph {
 
   void addCallback(int i, void Function(Object) f) {
     if (!_runCallbacks.any((c) => c.index == i && c.f == f))
-      _runCallbacks.add(new _RunCallback(i, f));
+      _runCallbacks.add(_RunCallback(i, f));
   }
 
   static Tuple3<int, String, int> _importGraphDef(
@@ -94,8 +94,8 @@ class Graph {
   factory Graph.fromGraphDef(GraphDef graphDef, {String prefix}) {
     var result = _importGraphDef(graphDef.writeToBuffer(), prefix);
     var code = _codeFrom(result.item1);
-    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
-    return new Graph._fromPointer(result.item3);
+    if (code != Code.ok) throw TensorFlowException(code, result.item2);
+    return Graph._fromPointer(result.item3);
   }
 
   int _getOperation(String name) native "Graph_operation_by_name";
@@ -105,12 +105,12 @@ class Graph {
     var ptr = _getOperation(name);
     if (ptr == null || ptr == 0)
       throw "No operation named '$name' exists in this graph.";
-    return new Operation._fromPointer(ptr, this);
+    return Operation._fromPointer(ptr, this);
   }
 
-  Session get session => _session ??= new Session._(this);
+  Session get session => _session ??= Session._(this);
 
-  Iterator<Operation> get _iterator => new _OperationIterator(this);
+  Iterator<Operation> get _iterator => _OperationIterator(this);
 
   /// All the [Operation]s in the graph.
   List<Operation> get operations {
@@ -118,7 +118,7 @@ class Graph {
     var it = _iterator;
     var out = <Operation>[];
     while (it.moveNext()) out.add(it.current);
-    return new List<Operation>.unmodifiable(out);
+    return List<Operation>.unmodifiable(out);
   }
 
   /// Release resources associated with the Graph.
@@ -135,7 +135,7 @@ class Graph {
 
   /// Returns a builder to add Operations to the Graph.
   OperationDescription<T> newOperation<T>(String type, String name) {
-    return new OperationDescription._(this, type, name);
+    return OperationDescription._(this, type, name);
   }
 
   Tuple3<int, String, Uint8List> _toGraphDef() native "Graph_to_graph_def";
@@ -144,8 +144,8 @@ class Graph {
   GraphDef toGraphDef() {
     var result = _toGraphDef();
     var code = _codeFrom(result.item1);
-    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
-    return new GraphDef.fromBuffer(result.item3);
+    if (code != Code.ok) throw TensorFlowException(code, result.item2);
+    return GraphDef.fromBuffer(result.item3);
   }
 
   Output<T> constant<T>(T value,
@@ -154,9 +154,9 @@ class Graph {
     var tensor = value is Tensor
         ? value
         : (value is Shape
-            ? new Tensor.from(new Int32List.fromList(value.dimensions),
+            ? Tensor.from(Int32List.fromList(value.dimensions),
                 dtype: DataType.DT_INT32)
-            : new Tensor.from(value, dtype: dtype));
+            : Tensor.from(value, dtype: dtype));
     if (dtype != null) tensor = tensor.cast(dtype);
     if (shape != null) tensor = tensor.reshape(shape);
     var op = newOperation<T>('Const',
@@ -209,7 +209,7 @@ class Graph {
   List<Output> addGradients(List<Output> y, List<Output> x, {List<Output> dx}) {
     var result = _addGradients(y, x, dx, Output);
     var code = _codeFrom(result.item1);
-    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+    if (code != Code.ok) throw TensorFlowException(code, result.item2);
     return result.item3;
   }
 
@@ -247,7 +247,7 @@ class _OperationIterator extends Iterator<Operation> {
   bool moveNext() {
     var ptr = graph._iter_next(index++);
     if (ptr == null) return false;
-    _current = new Operation._fromPointer(ptr, graph);
+    _current = Operation._fromPointer(ptr, graph);
     return true;
   }
 }

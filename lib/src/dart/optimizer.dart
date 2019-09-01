@@ -12,7 +12,7 @@ abstract class Optimizer {
           bool useLocking: true,
           @required Iterable<Variable> train,
           Graph graph}) =>
-      new _GradientDescentOptimizer(learningRate, useLocking,
+      _GradientDescentOptimizer(learningRate, useLocking,
           train?.toList() ?? [], graph ?? defaultGraph);
 
   Operation applyDense(Variable var$, Output grad,

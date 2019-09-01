@@ -8,8 +8,8 @@ main() {
     'logs',
   );
 
-  new tf.FileWriter(logDir)
-    ..histogram('zeros', tf.zeros(new tf.Shape(2, 3)))
+  tf.FileWriter(logDir)
+    ..histogram('zeros', tf.zeros(tf.Shape(2, 3)))
     ..flush()
     ..runInTensorboard(host: 'localhost');
 }

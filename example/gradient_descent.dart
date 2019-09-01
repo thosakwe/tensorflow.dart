@@ -5,9 +5,9 @@ void main() {
   const DataType dtype = DataType.DT_FLOAT;
   var xs = [1.0, 2.0, 3.0, 5.0, 6.0, 7.0];
   var ys = [6.0, 11.0, 16.0, 26.0, 31.0, 36.0]; // f(x) = 5x + 1
-  var shape = new Shape(3);
-  var xValues = new Tensor.from(xs).reshape(shape);
-  var yValues = new Tensor.from(ys).reshape(shape);
+  var shape = Shape(3);
+  var xValues = Tensor.from(xs).reshape(shape);
+  var yValues = Tensor.from(ys).reshape(shape);
   var epochs = 5;
 
   Variable m, b;
@@ -16,8 +16,8 @@ void main() {
   // The initializer for random data.
 
   // Create m, b variables.
-  m = new Variable.resource('m', dtype: dtype, shape: shape);
-  b = new Variable.resource('b', dtype: dtype, shape: shape);
+  m = Variable.resource('m', dtype: dtype, shape: shape);
+  b = Variable.resource('b', dtype: dtype, shape: shape);
 
   m.assign(randomUniform(constant(shape), dtype: DataType.DT_FLOAT)).run();
   b.assign(randomUniform(constant(shape), dtype: DataType.DT_FLOAT)).run();
@@ -39,13 +39,13 @@ void main() {
   // Learning rate.
 
   var optimizer =
-      new Optimizer.gradientDescent(learningRate: 0.5, train: [m, b]);
+      Optimizer.gradientDescent(learningRate: 0.5, train: [m, b]);
   var train = optimizer.minimize(loss, gradLoss: [x]);
 
   for (int epoch = 0; epoch < epochs; epoch++) {
     //print('Epoch: $epoch');
-    x.feed(new Tensor.from(xs));
-    y.feed(new Tensor.from(ys));
+    x.feed(Tensor.from(xs));
+    y.feed(Tensor.from(ys));
     train.run();
     //m.watch();
   }
@@ -53,15 +53,15 @@ void main() {
   /*
   withControlDependencies(init, () {
     var optimizer =
-        new Optimizer.gradientDescent(train: [m, b], learningRate: 0.5);
+        Optimizer.gradientDescent(train: [m, b], learningRate: 0.5);
     print('Initial m: ${m.value.run()}');
 
     for (int epoch = 0; epoch < epochs; epoch++) {
       var train = optimizer.minimize(loss);
 
       //print('Epoch: $epoch');
-      x.feed(new Tensor.from(xs));
-      y.feed(new Tensor.from(ys));
+      x.feed(Tensor.from(xs));
+      y.feed(Tensor.from(ys));
       train.run();
       //m.watch();
     }

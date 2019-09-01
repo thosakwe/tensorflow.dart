@@ -11,7 +11,7 @@ class Func {
       native "FunctionNode_from_function_def";
 
   factory Func.fromFunctionDef(FunctionDef functionDef) {
-    return new Func._(_fromFunctionDef(functionDef.writeToBuffer()),
+    return Func._(_fromFunctionDef(functionDef.writeToBuffer()),
         functionDef.signature.name);
   }
 
@@ -29,8 +29,8 @@ class Func {
   factory Func(String name, void Function(FuncBuilder) build,
       {Func gradient, Graph existingGraph}) {
     var builder = existingGraph == null
-        ? new FuncBuilder._(name)
-        : new FuncBuilder._fromExisting(existingGraph, name);
+        ? FuncBuilder._(name)
+        : FuncBuilder._fromExisting(existingGraph, name);
     withScope(builder.graph, () => build(builder));
     var result = _fromGraph(
         builder.graph,
@@ -45,8 +45,8 @@ class Func {
     builder.graph.close();
 
     var code = _codeFrom(result.item1);
-    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
-    return new Func._(result.item3, name)..gradient = gradient;
+    if (code != Code.ok) throw TensorFlowException(code, result.item2);
+    return Func._(result.item3, name)..gradient = gradient;
   }
 
   Tuple3<int, String, Uint8List> _toFunctionDef()
@@ -55,8 +55,8 @@ class Func {
   FunctionDef toFunctionDef() {
     var result = _toFunctionDef();
     var code = _codeFrom(result.item1);
-    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
-    return new FunctionDef.fromBuffer(result.item3);
+    if (code != Code.ok) throw TensorFlowException(code, result.item2);
+    return FunctionDef.fromBuffer(result.item3);
   }
 
   void copyIntoGraph({Graph graph}) {
@@ -93,13 +93,13 @@ class FuncArguments {
 
 class FuncBuilder {
   final String name;
-  final FuncArguments arguments = new FuncArguments._();
+  final FuncArguments arguments = FuncArguments._();
   final Graph graph;
   final Map<String, Output> outputs = {};
   bool appendHashToName = false;
   String description;
 
-  FuncBuilder._(this.name) : graph = new Graph();
+  FuncBuilder._(this.name) : graph = Graph();
 
   FuncBuilder._fromExisting(this.graph, this.name);
 }

@@ -78,7 +78,7 @@ class TFFunction {
 }
 
 String scopedName(String name) {
-  var b = new StringBuffer();
+  var b = StringBuffer();
   var scopes = Zone.current[_scopesSymbol] ?? [];
   //shape ??= Shape.scalar;
 

@@ -3,7 +3,7 @@ part of tensorflow;
 @deprecated
 Output<T> getVariable<T>(String name,
     {DataType dtype: DataType.DT_FLOAT, Shape shape, Tensor initializer}) {
-  var b = new StringBuffer();
+  var b = StringBuffer();
   var scopes = Zone.current[_scopesSymbol] ?? [];
   //shape ??= Shape.scalar;
 
@@ -24,9 +24,9 @@ Output<T> getVariable<T>(String name,
       assignOp = initializer;
       /*} else {
       if (shape == Shape.scalar)
-        assignOp = new Tensor.from(0.0, dtype: dtype);
+        assignOp = Tensor.from(0.0, dtype: dtype);
       else
-        assignOp = new Tensor.from(shape.zeros).cast(dtype);
+        assignOp = Tensor.from(shape.zeros).cast(dtype);
     */
       defaultGraph.session.runner.feed(b.toString(), assignOp);
     }

@@ -1,7 +1,7 @@
 import 'package:tensorflow/tensorflow.dart';
 
 void main() {
-  var x = new Variable('x', dtype: DataType.DT_INT32, shape: Shape.scalar);
+  var x = Variable('x', dtype: DataType.DT_INT32, shape: Shape.scalar);
   var one = constant(1, dtype: DataType.DT_INT32);
 
   for (int i = 0; i < 10; i++) {

@@ -38,26 +38,26 @@ Reference convertType(tf.OpDef_ArgDef argDef, int index, tf.OpDef opDef,
   var t = (() {
     switch (argDef.type) {
       case tf.DataType.DT_BOOL:
-        return new Reference('bool');
+        return Reference('bool');
         break;
       case tf.DataType.DT_INT32:
-        return new Reference('int');
+        return Reference('int');
         break;
       case tf.DataType.DT_INT64:
-        return new Reference('int');
+        return Reference('int');
         break;
       case tf.DataType.DT_FLOAT:
-        return new Reference('double');
+        return Reference('double');
         break;
       case tf.DataType.DT_STRING:
-        return new Reference('String');
+        return Reference('String');
         break;
       case tf.DataType.DT_INVALID:
-        return refer('T'); //new Reference(attrs[index].name);
+        return refer('T'); //Reference(attrs[index].name);
         break;
       default:
         return null;
-        //t = new Reference('dynamic');
+        //t = Reference('dynamic');
         break;
     }
   })();
@@ -68,10 +68,10 @@ Reference convertType(tf.OpDef_ArgDef argDef, int index, tf.OpDef opDef,
     return t;
   }
 
-  return new TypeReference((b) {
+  return TypeReference((b) {
     b.symbol = 'Output';
     if (argDef.typeListAttr?.isNotEmpty == true) {
-      b.types.add(new TypeReference((b) => b
+      b.types.add(TypeReference((b) => b
         ..symbol = 'List'
         ..types.add(t)));
     } else if (t != null) b.types.add(t);
@@ -80,7 +80,7 @@ Reference convertType(tf.OpDef_ArgDef argDef, int index, tf.OpDef opDef,
 
 main(List<String> args) async {
   var ops =
-      tf.Operation.list(); //new tf.OpList.fromBuffer(tf.getAllOpsInternal());
+      tf.Operation.list(); //tf.OpList.fromBuffer(tf.getAllOpsInternal());
 
   var publicOps = ops.op.where((o) {
     // Ignore internals
@@ -120,7 +120,7 @@ main(List<String> args) async {
 
   print('Found ${publicOps.length} ops');
 
-  var lib = new Library((libBuilder) {
+  var lib = Library((libBuilder) {
     for (var op in publicOps) {
       var body = <Code>[
         refer('graph').assignNullAware(refer('defaultGraph')).statement,
@@ -138,14 +138,14 @@ main(List<String> args) async {
           .assignVar('op\$')
           .statement);
 
-      libBuilder.body.add(new Method((method) {
-        method.optionalParameters.add(new Parameter((b) {
+      libBuilder.body.add(Method((method) {
+        method.optionalParameters.add(Parameter((b) {
           b
             ..name = 'graph'
             ..type = refer('Graph');
         }));
 
-        var p = new Parameter((b) => b
+        var p = Parameter((b) => b
           ..name = 'operationName'
           ..type = refer('String')
           ..named = true);
@@ -156,7 +156,7 @@ main(List<String> args) async {
                 op.inputArg.any((a) => a.type == tf.DataType.DT_INVALID) ||
                 op.outputArg.any((a) => a.type == tf.DataType.DT_INVALID);
 
-        var name = new ReCase(op.name).camelCase;
+        var name = ReCase(op.name).camelCase;
         method
           ..docs.addAll(getDocs(op.summary))
           ..docs.addAll(getDocs(op.description))
@@ -168,7 +168,7 @@ main(List<String> args) async {
         }
 
         if (op.hasDeprecation()) {
-          var ann = new Reference('Deprecated').call([
+          var ann = Reference('Deprecated').call([
             literal(
                 'DEPRECATED at GraphDef version ${op.deprecation.version}:' +
                     ' ${op.deprecation.explanation}')
@@ -191,17 +191,17 @@ main(List<String> args) async {
           method.returns = convertType(output, 0, op);
         } else {
           // Create a custom output class.
-          resultTypeName = new ReCase(op.name).pascalCase;
+          resultTypeName = ReCase(op.name).pascalCase;
           outputTypeName = '${resultTypeName}Output';
           method.returns = refer(outputTypeName);
 
-          libBuilder.body.add(new Class((resultClass) {
+          libBuilder.body.add(Class((resultClass) {
             resultClass..name = escapeName(resultTypeName);
 
-            libBuilder.body.add(new Class((outputClass) {
+            libBuilder.body.add(Class((outputClass) {
               outputClass
                 ..name = escapeName(outputTypeName)
-                ..fields.add(new Field((b) => b
+                ..fields.add(Field((b) => b
                   ..name = '_graph'
                   ..modifier = FieldModifier.final$
                   ..type = refer('Graph')));
@@ -213,42 +213,42 @@ main(List<String> args) async {
               }
 
               // Add a field + constructor parameter for each argument.
-              outputClass.constructors.add(new Constructor((outputConstructor) {
+              outputClass.constructors.add(Constructor((outputConstructor) {
                 int i = 0;
 
-                outputConstructor.requiredParameters.add(new Parameter((b) => b
+                outputConstructor.requiredParameters.add(Parameter((b) => b
                   ..name = '_graph'
                   ..toThis = true));
 
-                outputConstructor.requiredParameters.add(new Parameter((p) => p
+                outputConstructor.requiredParameters.add(Parameter((p) => p
                   ..name = 'op'
                   ..toThis = true));
 
-                outputClass.fields.add(new Field((b) => b
+                outputClass.fields.add(Field((b) => b
                   ..name = 'op'
                   ..type = refer('Operation')));
 
                 resultClass.constructors
-                    .add(new Constructor((resultConstructor) {
+                    .add(Constructor((resultConstructor) {
                   for (var output in op.outputArg) {
-                    resultClass.fields.add(new Field((resultField) {
+                    resultClass.fields.add(Field((resultField) {
                       var name = resultField.name = escapeName(
-                          new ReCase(output.name == 'op' ? 'op\$' : output.name)
+                          ReCase(output.name == 'op' ? 'op\$' : output.name)
                               .camelCase);
                       var type =
                           resultField.type = convertType(output, i++, op);
                       resultConstructor.requiredParameters
-                          .add(new Parameter((p) => p
+                          .add(Parameter((p) => p
                             ..name = name
                             ..toThis = true));
-                      outputClass.fields.add(new Field((outputField) {
+                      outputClass.fields.add(Field((outputField) {
                         outputField
                           ..name = name
                           ..modifier =
                               resultField.modifier = FieldModifier.final$
                           ..type = type;
                         outputConstructor.requiredParameters
-                            .add(new Parameter((p) => p
+                            .add(Parameter((p) => p
                               ..name = name
                               ..toThis = true));
 
@@ -263,34 +263,34 @@ main(List<String> args) async {
               }));
 
               // Add a helper `run` method.
-              outputClass.methods.add(new Method((b) {
+              outputClass.methods.add(Method((b) {
                 b
                   ..name = 'run'
                   ..returns = refer(resultTypeName)
-                  ..optionalParameters.add(new Parameter((b) => b
+                  ..optionalParameters.add(Parameter((b) => b
                     ..name = 'feed'
                     ..named = true
-                    ..type = new TypeReference((b) => b
+                    ..type = TypeReference((b) => b
                       ..symbol = 'Map'
                       ..types.addAll([
                         refer('String'),
                         refer('Tensor'),
                       ]))))
-                  ..body = new Block((b) {
+                  ..body = Block((b) {
                     b.statements.addAll([
-                      new Code('var runner = _graph.session.runner;'),
-                      new Code('feed?.forEach(runner.feed);'),
+                      Code('var runner = _graph.session.runner;'),
+                      Code('feed?.forEach(runner.feed);'),
                     ]);
 
                     for (int i = 0; i < op.outputArg.length; i++) {
                       b.statements.addAll([
-                        new Code(
+                        Code(
                             'var idx\$$i = runner.fetch(op.name, index: $i);'),
                       ]);
                     }
 
                     b.statements.add(
-                      new Code('var result\$ = runner.run();'),
+                      Code('var result\$ = runner.run();'),
                     );
 
                     var args = <Expression>[];
@@ -313,20 +313,20 @@ main(List<String> args) async {
         // All inputs should be tf.Output or []tf.Output
         for (var input in op.inputArg) {
           var type = convertType(input, 0, op);
-          var name = escapeName(new ReCase(input.name).camelCase);
+          var name = escapeName(ReCase(input.name).camelCase);
           inputs.add('_convertOutput($name)');
 
           bool isList =
               input.typeListAttr.isNotEmpty || input.numberAttr.isNotEmpty;
           if (isList) {
-            type = new TypeReference((b) => b
+            type = TypeReference((b) => b
               ..symbol = 'List'
               ..types.add(type));
           }
 
-          var p = new Parameter((b) {
+          var p = Parameter((b) {
             b
-              ..name = escapeName(new ReCase(input.name).camelCase)
+              ..name = escapeName(ReCase(input.name).camelCase)
               ..type = type;
 
             if (input.hasDescription())
@@ -343,8 +343,8 @@ main(List<String> args) async {
         for (var attr in op.attr) {
           if (attr.name == 'T' && attr.type == 'type') continue;
 
-          var paramName = escapeName(new ReCase(attr.name).camelCase);
-          var p = new Parameter((b) {
+          var paramName = escapeName(ReCase(attr.name).camelCase);
+          var p = Parameter((b) {
             b
               ..name = paramName
               ..named = true
@@ -365,13 +365,13 @@ main(List<String> args) async {
               else {
                 var dtype = refer('dtype'), inferType = refer('inferType');
                 var firstInput = refer(
-                    escapeName(new ReCase(op.inputArg[0].name).camelCase));
+                    escapeName(ReCase(op.inputArg[0].name).camelCase));
                 body.insert(0,
                     dtype.assignNullAware(inferType([firstInput])).statement);
               }
             }
 
-            var setAttr = new StringBuffer('setAttr');
+            var setAttr = StringBuffer('setAttr');
             setAttr.write(attrType(attr.type));
             if (attr.type.startsWith('list')) setAttr.write('List');
 
@@ -382,7 +382,7 @@ main(List<String> args) async {
           method.optionalParameters.add(p);
         }
 
-        body.add(new Code('// ignore: unnecessary_cast'));
+        body.add(Code('// ignore: unnecessary_cast'));
         var retVal = refer('op\$').property('finish').call([]);
 
         if (op.outputArg.isEmpty) {
@@ -417,13 +417,13 @@ main(List<String> args) async {
           body.add(retVal.returned.statement);
         }
 
-        method.body = new Block.of(body);
+        method.body = Block.of(body);
       }));
     }
   });
 
   var dartText =
-      new DartFormatter().format(lib.accept(new DartEmitter()).toString());
+      DartFormatter().format(lib.accept(DartEmitter()).toString());
   dartText =
       '// GENERATED CODE. DO NOT MODIFY BY HAND.\n\npart of tensorflow;\n\n' +
           dartText;
@@ -431,27 +431,27 @@ main(List<String> args) async {
   if (!args.contains('--do-it')) {
     print(dartText);
   } else {
-    await new File('lib/src/dart/op_def.dart').writeAsString(dartText);
+    await File('lib/src/dart/op_def.dart').writeAsString(dartText);
   }
 }
 
 Expression convertDefaultValue(tf.AttrValue defaultValue) {
   if (defaultValue.hasI()) return literal(defaultValue.i.toInt());
   if (defaultValue.hasF() && defaultValue.f == double.infinity)
-    return new CodeExpression(new Code('double.infinity'));
+    return CodeExpression(Code('double.infinity'));
   if (defaultValue.hasF() && defaultValue.f == double.negativeInfinity)
-    return new CodeExpression(new Code('double.negativeInfinity'));
+    return CodeExpression(Code('double.negativeInfinity'));
   if (defaultValue.hasF()) return literal(defaultValue.f);
   if (defaultValue.hasB()) return literalBool(defaultValue.b);
   if (defaultValue.hasType())
     return refer('DataType.${defaultValue.type.name}');
   if (defaultValue.hasS())
-    return literalString(new String.fromCharCodes(defaultValue.s));
+    return literalString(String.fromCharCodes(defaultValue.s));
   //print(defaultValue.writeToJson());
   return null;
 }
 
-final RegExp _listType = new RegExp(r'list\(([^\)]+)\)');
+final RegExp _listType = RegExp(r'list\(([^\)]+)\)');
 
 String dartType(String tfType, [bool allowTensorType = false]) {
   switch (tfType) {

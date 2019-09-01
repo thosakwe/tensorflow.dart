@@ -13,7 +13,7 @@ class Operation<T> {
 
   Operation._fromPointer(this._pointer, this._graph);
 
-  static OpList list() => new OpList.fromBuffer(_getAllOpsInternal());
+  static OpList list() => OpList.fromBuffer(_getAllOpsInternal());
 
   //static int _Operation_new() native "Operation_new";
 
@@ -39,15 +39,15 @@ class Operation<T> {
   /// Returns a symbolic handle to one of the tensors produced by this operation.
   Output<T> operator [](int idx) {
     if (idx >= numOutputs)
-      throw new StateError(
+      throw StateError(
           "This operation ('$name') produces less than ${idx + 1} output(s).");
 
-    return new Output._(_graph)
+    return Output._(_graph)
       .._operation = _pointer
       .._index = idx;
     /*
     var result = _output(idx);
-    return new Output._(_graph)
+    return Output._(_graph)
       .._operation = result.item1
       .._index = result.item2;
       */

@@ -14,7 +14,7 @@ class FileWriter {
       int flushMillis: 120000,
       String filenameSuffix: '',
       tf.Graph graph}) {
-    new Directory(logDir).createSync(recursive: true);
+    Directory(logDir).createSync(recursive: true);
     _writer = tf.summaryWriter(graph: _graph = graph);
 
     var op = tf.createSummaryFileWriter(
@@ -54,7 +54,7 @@ class FileWriter {
     stdout.addStream(tensorboard.stdout);
     stderr.addStream(tensorboard.stderr);
 
-    var c = new CancelableCompleter(onCancel: () => tensorboard.kill());
+    var c = CancelableCompleter(onCancel: () => tensorboard.kill());
 
     //stdin.readByteSync();
     //tensorboard.kill();

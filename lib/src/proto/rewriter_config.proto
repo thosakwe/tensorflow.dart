@@ -92,7 +92,7 @@ message RewriterConfig {
         // during backprop instead of storing them, reducing peak memory usage.
         RECOMPUTATION_HEURISTICS = 5;
         // Scheduling will split big ops such as AddN and try to enforce a schedule
-        // of the new computations that decreases peak memory usage.
+        // of the computations that decreases peak memory usage.
         SCHEDULING_HEURISTICS = 6;
         // Use any combination of swapping and recomputation heuristics.
         HEURISTICS = 3;

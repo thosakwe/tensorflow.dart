@@ -75,7 +75,7 @@ class Any extends $pb.GeneratedMessage {
     return $pb.canUnpackIntoHelper(instance, typeUrl);
   }
 
-  /// Creates a new [Any] encoding [message].
+  /// Creates a [Any] encoding [message].
   ///
   /// The [typeUrl] will be [typeUrlPrefix]/`fullName` where `fullName` is
   /// the fully qualified name of the type of [message].

@@ -64,12 +64,12 @@ import 'package:tensorflow/tensorflow.dart' as tf;
 
 void main() {
   // Using the `SavedModel` API:
-  var model = new SavedModelBundle('example/saved_models');
+  var model = SavedModelBundle('example/saved_models');
   model.restore('variables.index');
 
   // Or, you can import from a `GraphDef` protocol buffer:
-  var graph = new Graph.fromGraphDef(graphDef);
-  graph['output'].run(feed: {'input': new Tensor.from('Hello, world!')});
+  var graph = Graph.fromGraphDef(graphDef);
+  graph['output'].run(feed: {'input': Tensor.from('Hello, world!')});
 }
 ```
 

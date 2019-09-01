@@ -3,14 +3,14 @@ import 'package:tensorflow/tensorflow.dart';
 
 ///
 class GradientTape<T> {
-  final Queue<Output<T>> _tape = new Queue();
+  final Queue<Output<T>> _tape = Queue();
   final bool _persistent;
   bool _done = false;
 
   GradientTape({bool persistent: false}) : _persistent = persistent;
 
   StateError _error() =>
-      new StateError('This GradientTape has already been closed.');
+      StateError('This GradientTape has already been closed.');
 
   void close() {
     _done = true;

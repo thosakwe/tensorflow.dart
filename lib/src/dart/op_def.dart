@@ -131,7 +131,7 @@ class QuantizedBatchNormWithGlobalNormalizationOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedBatchNormWithGlobalNormalization<T>(
+    return QuantizedBatchNormWithGlobalNormalization<T>(
         (result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>),
         (result$[idx$2] as Output<double>));
@@ -198,7 +198,7 @@ QuantizedBatchNormWithGlobalNormalizationOutput
   op$.setAttrBool('scale_after_normalization', scaleAfterNormalization);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedBatchNormWithGlobalNormalizationOutput<T>(
+  return QuantizedBatchNormWithGlobalNormalizationOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -227,7 +227,7 @@ class QuantizedReluXOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedReluX<T>((result$[idx$0] as Output<T>),
+    return QuantizedReluX<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -262,7 +262,7 @@ QuantizedReluXOutput quantizedReluX<T>(
   op$.setAttrType('out_type', outType);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedReluXOutput<T>(graph, result$, (result$[0] as Output<T>),
+  return QuantizedReluXOutput<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
@@ -287,7 +287,7 @@ class QuantizedReluOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedRelu<T>((result$[idx$0] as Output<T>),
+    return QuantizedRelu<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -318,7 +318,7 @@ QuantizedReluOutput quantizedRelu<T>(
   op$.setAttrType('out_type', outType);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedReluOutput<T>(graph, result$, (result$[0] as Output<T>),
+  return QuantizedReluOutput<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
@@ -393,7 +393,7 @@ class TopKV2Output<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new TopKV2<T>(
+    return TopKV2<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<int>));
   }
 }
@@ -416,7 +416,7 @@ TopKV2Output topKV2<T>(Output<T> input, Output<int> k,
   op$.setAttrBool('sorted', sorted);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TopKV2Output<T>(
+  return TopKV2Output<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<int>));
 }
 
@@ -437,7 +437,7 @@ class TopKOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new TopK<T>(
+    return TopK<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<int>));
   }
 }
@@ -461,7 +461,7 @@ TopKOutput topK<T>(Output<T> input,
   op$.setAttrBool('sorted', sorted);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TopKOutput<T>(
+  return TopKOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<int>));
 }
 
@@ -496,7 +496,7 @@ class SparseSoftmaxCrossEntropyWithLogitsOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new SparseSoftmaxCrossEntropyWithLogits<T>(
+    return SparseSoftmaxCrossEntropyWithLogits<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -524,7 +524,7 @@ SparseSoftmaxCrossEntropyWithLogitsOutput
   op$.setAttrType('Tlabels', tlabels);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseSoftmaxCrossEntropyWithLogitsOutput<T>(
+  return SparseSoftmaxCrossEntropyWithLogitsOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -702,7 +702,7 @@ class MaxPoolWithArgmaxOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new MaxPoolWithArgmax<T>(
+    return MaxPoolWithArgmax<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -732,7 +732,7 @@ MaxPoolWithArgmaxOutput maxPoolWithArgmax<T>(Output<T> input,
   op$.setAttrString('padding', padding);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new MaxPoolWithArgmaxOutput<T>(
+  return MaxPoolWithArgmaxOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -1039,7 +1039,7 @@ class QuantizedBiasAddOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedBiasAdd<T>((result$[idx$0] as Output<T>),
+    return QuantizedBiasAdd<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -1080,7 +1080,7 @@ QuantizedBiasAddOutput quantizedBiasAdd<T>(
   op$.setAttrType('out_type', outType);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedBiasAddOutput<T>(
+  return QuantizedBiasAddOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -1225,7 +1225,7 @@ class BatchNormWithGlobalNormalizationGradOutput<T> {
     var idx$3 = runner.fetch(op.name, index: 3);
     var idx$4 = runner.fetch(op.name, index: 4);
     var result$ = runner.run();
-    return new BatchNormWithGlobalNormalizationGrad<T>(
+    return BatchNormWithGlobalNormalizationGrad<T>(
         (result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>),
         (result$[idx$2] as Output<T>),
@@ -1271,7 +1271,7 @@ BatchNormWithGlobalNormalizationGradOutput
   op$.setAttrBool('scale_after_normalization', scaleAfterNormalization);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new BatchNormWithGlobalNormalizationGradOutput<T>(
+  return BatchNormWithGlobalNormalizationGradOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -1324,7 +1324,7 @@ class QuantizeDownAndShrinkRangeOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizeDownAndShrinkRange<T>((result$[idx$0] as Output<T>),
+    return QuantizeDownAndShrinkRange<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -1352,7 +1352,7 @@ QuantizeDownAndShrinkRangeOutput quantizeDownAndShrinkRange<T>(
   op$.setAttrType('out_type', outType);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizeDownAndShrinkRangeOutput<T>(
+  return QuantizeDownAndShrinkRangeOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -1381,7 +1381,7 @@ class QuantizedMatMulOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedMatMul<T>((result$[idx$0] as Output<T>),
+    return QuantizedMatMul<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -1428,7 +1428,7 @@ QuantizedMatMulOutput quantizedMatMul<T>(
   op$.setAttrType('Tactivation', tactivation);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedMatMulOutput<T>(graph, result$, (result$[0] as Output<T>),
+  return QuantizedMatMulOutput<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
@@ -1817,7 +1817,7 @@ class FusedBatchNormOutput<T> {
     var idx$3 = runner.fetch(op.name, index: 3);
     var idx$4 = runner.fetch(op.name, index: 4);
     var result$ = runner.run();
-    return new FusedBatchNorm<T>(
+    return FusedBatchNorm<T>(
         (result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>),
         (result$[idx$2] as Output<T>),
@@ -1861,7 +1861,7 @@ FusedBatchNormOutput fusedBatchNorm<T>(Output<T> x, Output<T> scale,
   op$.setAttrBool('is_training', isTraining);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new FusedBatchNormOutput<T>(
+  return FusedBatchNormOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -2316,7 +2316,7 @@ class FusedBatchNormV2Output<T> {
     var idx$3 = runner.fetch(op.name, index: 3);
     var idx$4 = runner.fetch(op.name, index: 4);
     var result$ = runner.run();
-    return new FusedBatchNormV2<T>(
+    return FusedBatchNormV2<T>(
         (result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>),
         (result$[idx$2] as Output<T>),
@@ -2362,7 +2362,7 @@ FusedBatchNormV2Output fusedBatchNormV2<T>(Output<T> x, Output<T> scale,
   op$.setAttrBool('is_training', isTraining);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new FusedBatchNormV2Output<T>(
+  return FusedBatchNormV2Output<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -2408,7 +2408,7 @@ class RequantizationRangeOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new RequantizationRange<T>(
+    return RequantizationRange<T>(
         (result$[idx$0] as Output<double>), (result$[idx$1] as Output<double>));
   }
 }
@@ -2433,7 +2433,7 @@ RequantizationRangeOutput requantizationRange<T>(
   op$.setAttrType('Tinput', tinput);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new RequantizationRangeOutput<T>(graph, result$,
+  return RequantizationRangeOutput<T>(graph, result$,
       (result$[0] as Output<double>), (result$[1] as Output<double>));
 }
 
@@ -2476,7 +2476,7 @@ class BoostedTreesSerializeEnsembleOutput {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new BoostedTreesSerializeEnsemble(
+    return BoostedTreesSerializeEnsemble(
         (result$[idx$0] as Output<int>), (result$[idx$1] as Output<String>));
   }
 }
@@ -2501,7 +2501,7 @@ BoostedTreesSerializeEnsembleOutput boostedTreesSerializeEnsemble(
   op$.addInput(treeEnsembleHandle);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new BoostedTreesSerializeEnsembleOutput(graph, result$,
+  return BoostedTreesSerializeEnsembleOutput(graph, result$,
       (result$[0] as Output<int>), (result$[1] as Output<String>));
 }
 
@@ -2759,7 +2759,7 @@ class QuantizedInstanceNormOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedInstanceNorm<T>((result$[idx$0] as Output<T>),
+    return QuantizedInstanceNorm<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -2796,7 +2796,7 @@ QuantizedInstanceNormOutput quantizedInstanceNorm<T>(
   op$.setAttrFloat('min_separation', minSeparation);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedInstanceNormOutput<T>(
+  return QuantizedInstanceNormOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -2950,7 +2950,7 @@ class QuantizedMaxPoolOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedMaxPool<T>((result$[idx$0] as Output<T>),
+    return QuantizedMaxPool<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -2983,7 +2983,7 @@ QuantizedMaxPoolOutput quantizedMaxPool<T>(
   op$.setAttrString('padding', padding);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedMaxPoolOutput<T>(
+  return QuantizedMaxPoolOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -3024,7 +3024,7 @@ class TensorArrayV3Output {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new TensorArrayV3(
+    return TensorArrayV3(
         (result$[idx$0] as Output), (result$[idx$1] as Output<double>));
   }
 }
@@ -3059,7 +3059,7 @@ TensorArrayV3Output tensorArrayV3(Output<int> size,
   op$.setAttrString('tensor_array_name', tensorArrayName);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TensorArrayV3Output(
+  return TensorArrayV3Output(
       graph, result$, (result$[0] as Output), (result$[1] as Output<double>));
 }
 
@@ -3120,7 +3120,7 @@ class CudnnRNNV2Output<T> {
     var idx$3 = runner.fetch(op.name, index: 3);
     var idx$4 = runner.fetch(op.name, index: 4);
     var result$ = runner.run();
-    return new CudnnRNNV2<T>(
+    return CudnnRNNV2<T>(
         (result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>),
         (result$[idx$2] as Output<T>),
@@ -3171,7 +3171,7 @@ CudnnRNNV2Output cudnnRNNV2<T>(
   op$.setAttrBool('is_training', isTraining);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new CudnnRNNV2Output<T>(
+  return CudnnRNNV2Output<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -3212,7 +3212,7 @@ class BroadcastGradientArgsOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new BroadcastGradientArgs<T>(
+    return BroadcastGradientArgs<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -3234,7 +3234,7 @@ BroadcastGradientArgsOutput broadcastGradientArgs<T>(Output<T> s0, Output<T> s1,
   op$.addInput(s1);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new BroadcastGradientArgsOutput<T>(
+  return BroadcastGradientArgsOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -3270,7 +3270,7 @@ class QuantizedRelu6Output<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedRelu6<T>((result$[idx$0] as Output<T>),
+    return QuantizedRelu6<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -3301,7 +3301,7 @@ QuantizedRelu6Output quantizedRelu6<T>(
   op$.setAttrType('out_type', outType);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedRelu6Output<T>(graph, result$, (result$[0] as Output<T>),
+  return QuantizedRelu6Output<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
@@ -3450,7 +3450,7 @@ class UniqueV2Output<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new UniqueV2<T>(
+    return UniqueV2<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -3477,7 +3477,7 @@ UniqueV2Output uniqueV2<T>(Output<T> x, Output<T> axis,
   op$.setAttrType('out_idx', outIdx);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new UniqueV2Output<T>(
+  return UniqueV2Output<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -3511,7 +3511,7 @@ class UniqueOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new Unique<T>(
+    return Unique<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -3533,7 +3533,7 @@ UniqueOutput unique<T>(Output<T> x,
   op$.setAttrType('out_idx', outIdx);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new UniqueOutput<T>(
+  return UniqueOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -3662,7 +3662,7 @@ class FakeQuantWithMinMaxVarsGradientOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new FakeQuantWithMinMaxVarsGradient(
+    return FakeQuantWithMinMaxVarsGradient(
         (result$[idx$0] as Output<double>),
         (result$[idx$1] as Output<double>),
         (result$[idx$2] as Output<double>));
@@ -3702,7 +3702,7 @@ FakeQuantWithMinMaxVarsGradientOutput fakeQuantWithMinMaxVarsGradient(
   op$.setAttrBool('narrow_range', narrowRange);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new FakeQuantWithMinMaxVarsGradientOutput(
+  return FakeQuantWithMinMaxVarsGradientOutput(
       graph,
       result$,
       (result$[0] as Output<double>),
@@ -3853,7 +3853,7 @@ class CudnnRNNParamsToCanonicalOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new CudnnRNNParamsToCanonical<T>(
+    return CudnnRNNParamsToCanonical<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -3896,7 +3896,7 @@ CudnnRNNParamsToCanonicalOutput cudnnRNNParamsToCanonical<T>(
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new CudnnRNNParamsToCanonicalOutput<T>(
+  return CudnnRNNParamsToCanonicalOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -3930,7 +3930,7 @@ class FakeQuantWithMinMaxVarsPerChannelGradientOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new FakeQuantWithMinMaxVarsPerChannelGradient(
+    return FakeQuantWithMinMaxVarsPerChannelGradient(
         (result$[idx$0] as Output<double>),
         (result$[idx$1] as Output<double>),
         (result$[idx$2] as Output<double>));
@@ -3968,7 +3968,7 @@ FakeQuantWithMinMaxVarsPerChannelGradientOutput
   op$.setAttrBool('narrow_range', narrowRange);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new FakeQuantWithMinMaxVarsPerChannelGradientOutput(
+  return FakeQuantWithMinMaxVarsPerChannelGradientOutput(
       graph,
       result$,
       (result$[0] as Output<double>),
@@ -4009,7 +4009,7 @@ class ParseSingleExampleOutput<T> {
     var idx$2 = runner.fetch(op.name, index: 2);
     var idx$3 = runner.fetch(op.name, index: 3);
     var result$ = runner.run();
-    return new ParseSingleExample<T>(
+    return ParseSingleExample<T>(
         (result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<List<T>>),
         (result$[idx$2] as Output<int>),
@@ -4053,7 +4053,7 @@ ParseSingleExampleOutput parseSingleExample<T>(
   op$.setAttrShapeList('dense_shapes', denseShapes);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new ParseSingleExampleOutput<T>(
+  return ParseSingleExampleOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -4534,7 +4534,7 @@ class SkipgramOutput {
     var idx$5 = runner.fetch(op.name, index: 5);
     var idx$6 = runner.fetch(op.name, index: 6);
     var result$ = runner.run();
-    return new Skipgram(
+    return Skipgram(
         (result$[idx$0] as Output<String>),
         (result$[idx$1] as Output<int>),
         (result$[idx$2] as Output<int>),
@@ -4584,7 +4584,7 @@ SkipgramOutput skipgram(
   op$.setAttrFloat('subsample', subsample);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SkipgramOutput(
+  return SkipgramOutput(
       graph,
       result$,
       (result$[0] as Output<String>),
@@ -5303,7 +5303,7 @@ class BarrierTakeManyOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new BarrierTakeMany<T>(
+    return BarrierTakeMany<T>(
         (result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<String>),
         (result$[idx$2] as Output<List<T>>));
@@ -5339,7 +5339,7 @@ BarrierTakeManyOutput barrierTakeMany<T>(
   op$.setAttrInt('timeout_ms', timeoutMs);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new BarrierTakeManyOutput<T>(
+  return BarrierTakeManyOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -5563,7 +5563,7 @@ class BoostedTreesGetEnsembleStatesOutput {
     var idx$3 = runner.fetch(op.name, index: 3);
     var idx$4 = runner.fetch(op.name, index: 4);
     var result$ = runner.run();
-    return new BoostedTreesGetEnsembleStates(
+    return BoostedTreesGetEnsembleStates(
         (result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<int>),
         (result$[idx$2] as Output<int>),
@@ -5603,7 +5603,7 @@ BoostedTreesGetEnsembleStatesOutput boostedTreesGetEnsembleStates(
   op$.addInput(treeEnsembleHandle);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new BoostedTreesGetEnsembleStatesOutput(
+  return BoostedTreesGetEnsembleStatesOutput(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -5887,7 +5887,7 @@ class TensorArrayConcatV2Output<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new TensorArrayConcatV2<T>(
+    return TensorArrayConcatV2<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<int>));
   }
 }
@@ -5916,7 +5916,7 @@ TensorArrayConcatV2Output tensorArrayConcatV2<T>(
   op$.setAttrShape('element_shape_except0', elementShapeExcept0);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TensorArrayConcatV2Output<T>(
+  return TensorArrayConcatV2Output<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<int>));
 }
 
@@ -6018,7 +6018,7 @@ class StringSplitV2Output {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new StringSplitV2((result$[idx$0] as Output<int>),
+    return StringSplitV2((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<String>), (result$[idx$2] as Output<int>));
   }
 }
@@ -6043,7 +6043,7 @@ StringSplitV2Output stringSplitV2(Output<String> input, Output<String> sep,
   op$.setAttrInt('maxsplit', maxsplit);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new StringSplitV2Output(graph, result$, (result$[0] as Output<int>),
+  return StringSplitV2Output(graph, result$, (result$[0] as Output<int>),
       (result$[1] as Output<String>), (result$[2] as Output<int>));
 }
 
@@ -6080,7 +6080,7 @@ class BatchOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new Batch<T>((result$[idx$0] as Output<List<T>>),
+    return Batch<T>((result$[idx$0] as Output<List<T>>),
         (result$[idx$1] as Output<int>), (result$[idx$2] as Output<int>));
   }
 }
@@ -6124,7 +6124,7 @@ BatchOutput batch<T>(List<Output<List<T>>> inTensors,
   op$.setAttrTypeList('T', t);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new BatchOutput<T>(graph, result$, (result$[0] as Output<List<T>>),
+  return BatchOutput<T>(graph, result$, (result$[0] as Output<List<T>>),
       (result$[1] as Output<int>), (result$[2] as Output<int>));
 }
 
@@ -6424,7 +6424,7 @@ class QuantizedAddOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedAdd<T>((result$[idx$0] as Output<T>),
+    return QuantizedAdd<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -6465,7 +6465,7 @@ QuantizedAddOutput quantizedAdd<T>(
   op$.setAttrType('Toutput', toutput);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedAddOutput<T>(graph, result$, (result$[0] as Output<T>),
+  return QuantizedAddOutput<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
@@ -6683,7 +6683,7 @@ class QuantizedResizeBilinearOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedResizeBilinear<T>((result$[idx$0] as Output<T>),
+    return QuantizedResizeBilinear<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -6711,7 +6711,7 @@ QuantizedResizeBilinearOutput quantizedResizeBilinear<T>(
   op$.setAttrBool('align_corners', alignCorners);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedResizeBilinearOutput<T>(
+  return QuantizedResizeBilinearOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -6879,7 +6879,7 @@ class SparseFillEmptyRowsGradOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new SparseFillEmptyRowsGrad<T>(
+    return SparseFillEmptyRowsGrad<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -6902,7 +6902,7 @@ SparseFillEmptyRowsGradOutput sparseFillEmptyRowsGrad<T>(
   op$.addInput(gradValues);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseFillEmptyRowsGradOutput<T>(
+  return SparseFillEmptyRowsGradOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -6927,7 +6927,7 @@ class QuantizedConv2DOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedConv2D<T>((result$[idx$0] as Output<T>),
+    return QuantizedConv2D<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -6974,7 +6974,7 @@ QuantizedConv2DOutput quantizedConv2D<T>(
   op$.setAttrIntList('dilations', dilations);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedConv2DOutput<T>(graph, result$, (result$[0] as Output<T>),
+  return QuantizedConv2DOutput<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
@@ -7019,7 +7019,7 @@ class SparseFillEmptyRowsOutput<T> {
     var idx$2 = runner.fetch(op.name, index: 2);
     var idx$3 = runner.fetch(op.name, index: 3);
     var result$ = runner.run();
-    return new SparseFillEmptyRows<T>(
+    return SparseFillEmptyRows<T>(
         (result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>),
         (result$[idx$2] as Output<bool>),
@@ -7052,7 +7052,7 @@ SparseFillEmptyRowsOutput sparseFillEmptyRows<T>(Output<int> indices,
   op$.addInput(defaultValue);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseFillEmptyRowsOutput<T>(
+  return SparseFillEmptyRowsOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -7161,7 +7161,7 @@ class SparseSparseMaximumOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new SparseSparseMaximum<T>(
+    return SparseSparseMaximum<T>(
         (result$[idx$0] as Output<int>), (result$[idx$1] as Output<T>));
   }
 }
@@ -7194,7 +7194,7 @@ SparseSparseMaximumOutput sparseSparseMaximum<T>(
   op$.addInput(bShape);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseSparseMaximumOutput<T>(
+  return SparseSparseMaximumOutput<T>(
       graph, result$, (result$[0] as Output<int>), (result$[1] as Output<T>));
 }
 
@@ -7324,7 +7324,7 @@ class SparseReduceSumSparseOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SparseReduceSumSparse<T>((result$[idx$0] as Output<int>),
+    return SparseReduceSumSparse<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -7353,7 +7353,7 @@ SparseReduceSumSparseOutput sparseReduceSumSparse<T>(Output<int> inputIndices,
   op$.setAttrBool('keep_dims', keepDims);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseReduceSumSparseOutput<T>(
+  return SparseReduceSumSparseOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -7424,7 +7424,7 @@ class SparseReduceMaxSparseOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SparseReduceMaxSparse<T>((result$[idx$0] as Output<int>),
+    return SparseReduceMaxSparse<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -7453,7 +7453,7 @@ SparseReduceMaxSparseOutput sparseReduceMaxSparse<T>(Output<int> inputIndices,
   op$.setAttrBool('keep_dims', keepDims);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseReduceMaxSparseOutput<T>(
+  return SparseReduceMaxSparseOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -7552,7 +7552,7 @@ class SparseReshapeOutput {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new SparseReshape(
+    return SparseReshape(
         (result$[idx$0] as Output<int>), (result$[idx$1] as Output<int>));
   }
 }
@@ -7576,7 +7576,7 @@ SparseReshapeOutput sparseReshape(
   op$.addInput(newShape);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseReshapeOutput(
+  return SparseReshapeOutput(
       graph, result$, (result$[0] as Output<int>), (result$[1] as Output<int>));
 }
 
@@ -7601,7 +7601,7 @@ class SparseSliceOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SparseSlice<T>((result$[idx$0] as Output<int>),
+    return SparseSlice<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -7629,7 +7629,7 @@ SparseSliceOutput sparseSlice<T>(Output<int> indices, Output<T> values,
   op$.addInput(size);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseSliceOutput<T>(graph, result$, (result$[0] as Output<int>),
+  return SparseSliceOutput<T>(graph, result$, (result$[0] as Output<int>),
       (result$[1] as Output<T>), (result$[2] as Output<int>));
 }
 
@@ -7689,7 +7689,7 @@ class DeserializeSparseOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new DeserializeSparse<T>((result$[idx$0] as Output<int>),
+    return DeserializeSparse<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -7718,7 +7718,7 @@ DeserializeSparseOutput deserializeSparse<T>(Output<T> serializedSparse,
   op$.setAttrType('Tserialized', tserialized);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new DeserializeSparseOutput<T>(
+  return DeserializeSparseOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -7773,7 +7773,7 @@ class FusedBatchNormGradV2Output<T> {
     var idx$3 = runner.fetch(op.name, index: 3);
     var idx$4 = runner.fetch(op.name, index: 4);
     var result$ = runner.run();
-    return new FusedBatchNormGradV2<T>(
+    return FusedBatchNormGradV2<T>(
         (result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>),
         (result$[idx$2] as Output<T>),
@@ -7823,7 +7823,7 @@ FusedBatchNormGradV2Output fusedBatchNormGradV2<T>(
   op$.setAttrBool('is_training', isTraining);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new FusedBatchNormGradV2Output<T>(
+  return FusedBatchNormGradV2Output<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -7908,7 +7908,7 @@ class SparseAddGradOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new SparseAddGrad<T>(
+    return SparseAddGrad<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -7933,7 +7933,7 @@ SparseAddGradOutput sparseAddGrad<T>(Output<T> backpropValGrad,
   op$.addInput(sumIndices);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseAddGradOutput<T>(
+  return SparseAddGradOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -7958,7 +7958,7 @@ class SparseToSparseSetOperationOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SparseToSparseSetOperation<T>((result$[idx$0] as Output<int>),
+    return SparseToSparseSetOperation<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -7998,7 +7998,7 @@ SparseToSparseSetOperationOutput sparseToSparseSetOperation<T>(
   op$.setAttrBool('validate_indices', validateIndices);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseToSparseSetOperationOutput<T>(
+  return SparseToSparseSetOperationOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -8137,7 +8137,7 @@ class SdcaOptimizerOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SdcaOptimizer((result$[idx$0] as Output<double>),
+    return SdcaOptimizer((result$[idx$0] as Output<double>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -8200,7 +8200,7 @@ SdcaOptimizerOutput sdcaOptimizer(
   op$.setAttrInt('num_inner_iterations', numInnerIterations);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SdcaOptimizerOutput(graph, result$, (result$[0] as Output<double>),
+  return SdcaOptimizerOutput(graph, result$, (result$[0] as Output<double>),
       (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
@@ -8259,7 +8259,7 @@ class UniformCandidateSamplerOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new UniformCandidateSampler((result$[idx$0] as Output<int>),
+    return UniformCandidateSampler((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -8296,7 +8296,7 @@ UniformCandidateSamplerOutput uniformCandidateSampler(Output<int> trueClasses,
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new UniformCandidateSamplerOutput(
+  return UniformCandidateSamplerOutput(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -8344,7 +8344,7 @@ class TryRpcOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new TryRpc((result$[idx$0] as Output<String>),
+    return TryRpc((result$[idx$0] as Output<String>),
         (result$[idx$1] as Output<int>), (result$[idx$2] as Output<String>));
   }
 }
@@ -8377,7 +8377,7 @@ TryRpcOutput tryRpc(
   op$.setAttrInt('timeout_in_ms', timeoutInMs);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TryRpcOutput(graph, result$, (result$[0] as Output<String>),
+  return TryRpcOutput(graph, result$, (result$[0] as Output<String>),
       (result$[1] as Output<int>), (result$[2] as Output<String>));
 }
 
@@ -8493,7 +8493,7 @@ class StringSplitOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new StringSplit((result$[idx$0] as Output<int>),
+    return StringSplit((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<String>), (result$[idx$2] as Output<int>));
   }
 }
@@ -8518,7 +8518,7 @@ StringSplitOutput stringSplit(Output<String> input, Output<String> delimiter,
   op$.setAttrBool('skip_empty', skipEmpty);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new StringSplitOutput(graph, result$, (result$[0] as Output<int>),
+  return StringSplitOutput(graph, result$, (result$[0] as Output<int>),
       (result$[1] as Output<String>), (result$[2] as Output<int>));
 }
 
@@ -8772,7 +8772,7 @@ class ComputeAccidentalHitsOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new ComputeAccidentalHits((result$[idx$0] as Output<int>),
+    return ComputeAccidentalHits((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<int>), (result$[idx$2] as Output<double>));
   }
 }
@@ -8804,7 +8804,7 @@ ComputeAccidentalHitsOutput computeAccidentalHits(
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new ComputeAccidentalHitsOutput(
+  return ComputeAccidentalHitsOutput(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -9002,7 +9002,7 @@ class ParseSequenceExampleOutput<T> {
     var idx$7 = runner.fetch(op.name, index: 7);
     var idx$8 = runner.fetch(op.name, index: 8);
     var result$ = runner.run();
-    return new ParseSequenceExample<T>(
+    return ParseSequenceExample<T>(
         (result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<List<T>>),
         (result$[idx$2] as Output<int>),
@@ -9089,7 +9089,7 @@ ParseSequenceExampleOutput parseSequenceExample<T>(Output<String> serialized,
   op$.setAttrShapeList('feature_list_dense_shapes', featureListDenseShapes);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new ParseSequenceExampleOutput<T>(
+  return ParseSequenceExampleOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -9191,7 +9191,7 @@ class ParseExampleOutput<T> {
     var idx$2 = runner.fetch(op.name, index: 2);
     var idx$3 = runner.fetch(op.name, index: 3);
     var result$ = runner.run();
-    return new ParseExample<T>(
+    return ParseExample<T>(
         (result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<List<T>>),
         (result$[idx$2] as Output<int>),
@@ -9240,7 +9240,7 @@ ParseExampleOutput parseExample<T>(
   op$.setAttrShapeList('dense_shapes', denseShapes);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new ParseExampleOutput<T>(
+  return ParseExampleOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -9668,7 +9668,7 @@ class QuantizedAvgPoolOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedAvgPool<T>((result$[idx$0] as Output<T>),
+    return QuantizedAvgPool<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -9701,7 +9701,7 @@ QuantizedAvgPoolOutput quantizedAvgPool<T>(
   op$.setAttrString('padding', padding);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedAvgPoolOutput<T>(
+  return QuantizedAvgPoolOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -9862,7 +9862,7 @@ class LookupTableExportV2Output<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new LookupTableExportV2<T>(
+    return LookupTableExportV2<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -9885,7 +9885,7 @@ LookupTableExportV2Output lookupTableExportV2<T>(Output tableHandle,
   op$.setAttrType('Tvalues', tvalues);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new LookupTableExportV2Output<T>(
+  return LookupTableExportV2Output<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -10087,7 +10087,7 @@ class ParseSingleSequenceExampleOutput<T> {
     var idx$6 = runner.fetch(op.name, index: 6);
     var idx$7 = runner.fetch(op.name, index: 7);
     var result$ = runner.run();
-    return new ParseSingleSequenceExample<T>(
+    return ParseSingleSequenceExample<T>(
         (result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<List<T>>),
         (result$[idx$2] as Output<int>),
@@ -10171,7 +10171,7 @@ ParseSingleSequenceExampleOutput parseSingleSequenceExample<T>(
   op$.setAttrShapeList('feature_list_dense_shapes', featureListDenseShapes);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new ParseSingleSequenceExampleOutput<T>(
+  return ParseSingleSequenceExampleOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -10201,7 +10201,7 @@ class LookupTableExportOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new LookupTableExport<T>(
+    return LookupTableExport<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -10224,7 +10224,7 @@ LookupTableExportOutput lookupTableExport<T>(Output<String> tableHandle,
   op$.setAttrType('Tvalues', tvalues);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new LookupTableExportOutput<T>(
+  return LookupTableExportOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -10267,7 +10267,7 @@ class BatchSvdOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new BatchSvd<T>((result$[idx$0] as Output<T>),
+    return BatchSvd<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<T>));
   }
 }
@@ -10296,7 +10296,7 @@ BatchSvdOutput batchSvd<T>(Output<T> input,
   op$.setAttrBool('full_matrices', fullMatrices);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new BatchSvdOutput<T>(graph, result$, (result$[0] as Output<T>),
+  return BatchSvdOutput<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<T>), (result$[2] as Output<T>));
 }
 
@@ -10380,7 +10380,7 @@ class SvdOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new Svd<T>((result$[idx$0] as Output<T>),
+    return Svd<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<T>));
   }
 }
@@ -10408,7 +10408,7 @@ SvdOutput svd<T>(Output<T> input,
   op$.setAttrBool('full_matrices', fullMatrices);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SvdOutput<T>(graph, result$, (result$[0] as Output<T>),
+  return SvdOutput<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<T>), (result$[2] as Output<T>));
 }
 
@@ -10445,7 +10445,7 @@ class SparseCrossOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SparseCross<T>((result$[idx$0] as Output<int>),
+    return SparseCross<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -10492,7 +10492,7 @@ SparseCrossOutput sparseCross<T>(
   op$.setAttrType('internal_type', internalType);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseCrossOutput<T>(graph, result$, (result$[0] as Output<int>),
+  return SparseCrossOutput<T>(graph, result$, (result$[0] as Output<int>),
       (result$[1] as Output<T>), (result$[2] as Output<int>));
 }
 
@@ -10537,7 +10537,7 @@ class SelfAdjointEigV2Output<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new SelfAdjointEigV2<T>(
+    return SelfAdjointEigV2<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -10559,7 +10559,7 @@ SelfAdjointEigV2Output selfAdjointEigV2<T>(Output<T> input,
   op$.setAttrBool('compute_v', computeV);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SelfAdjointEigV2Output<T>(
+  return SelfAdjointEigV2Output<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -10595,7 +10595,7 @@ class QuantizedConcatOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedConcat<T>((result$[idx$0] as Output<T>),
+    return QuantizedConcat<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -10628,7 +10628,7 @@ QuantizedConcatOutput quantizedConcat<T>(
   op$.setAttrInt('N', n);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedConcatOutput<T>(graph, result$, (result$[0] as Output<T>),
+  return QuantizedConcatOutput<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
@@ -10915,7 +10915,7 @@ class ReaderReadOutput {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new ReaderRead(
+    return ReaderRead(
         (result$[idx$0] as Output<String>), (result$[idx$1] as Output<String>));
   }
 }
@@ -10938,7 +10938,7 @@ ReaderReadOutput readerRead(
   op$.addInput(queueHandle);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new ReaderReadOutput(graph, result$, (result$[0] as Output<String>),
+  return ReaderReadOutput(graph, result$, (result$[0] as Output<String>),
       (result$[1] as Output<String>));
 }
 
@@ -10960,7 +10960,7 @@ class SparseSparseMinimumOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new SparseSparseMinimum<T>(
+    return SparseSparseMinimum<T>(
         (result$[idx$0] as Output<int>), (result$[idx$1] as Output<T>));
   }
 }
@@ -10993,7 +10993,7 @@ SparseSparseMinimumOutput sparseSparseMinimum<T>(
   op$.addInput(bShape);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseSparseMinimumOutput<T>(
+  return SparseSparseMinimumOutput<T>(
       graph, result$, (result$[0] as Output<int>), (result$[1] as Output<T>));
 }
 
@@ -11199,7 +11199,7 @@ class SparseConcatOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SparseConcat<T>((result$[idx$0] as Output<int>),
+    return SparseConcat<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -11227,7 +11227,7 @@ SparseConcatOutput sparseConcat<T>(
   op$.setAttrInt('N', n);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseConcatOutput<T>(graph, result$, (result$[0] as Output<int>),
+  return SparseConcatOutput<T>(graph, result$, (result$[0] as Output<int>),
       (result$[1] as Output<T>), (result$[2] as Output<int>));
 }
 
@@ -11442,7 +11442,7 @@ class CudnnRNNBackpropOutput<T> {
     var idx$2 = runner.fetch(op.name, index: 2);
     var idx$3 = runner.fetch(op.name, index: 3);
     var result$ = runner.run();
-    return new CudnnRNNBackprop<T>(
+    return CudnnRNNBackprop<T>(
         (result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>),
         (result$[idx$2] as Output<T>),
@@ -11505,7 +11505,7 @@ CudnnRNNBackpropOutput cudnnRNNBackprop<T>(
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new CudnnRNNBackpropOutput<T>(
+  return CudnnRNNBackpropOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -11532,7 +11532,7 @@ class NonMaxSuppressionV4Output {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new NonMaxSuppressionV4(
+    return NonMaxSuppressionV4(
         (result$[idx$0] as Output<int>), (result$[idx$1] as Output<int>));
   }
 }
@@ -11565,7 +11565,7 @@ NonMaxSuppressionV4Output nonMaxSuppressionV4(
   op$.setAttrBool('pad_to_max_output_size', padToMaxOutputSize);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new NonMaxSuppressionV4Output(
+  return NonMaxSuppressionV4Output(
       graph, result$, (result$[0] as Output<int>), (result$[1] as Output<int>));
 }
 
@@ -11722,7 +11722,7 @@ class UniqueWithCountsOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new UniqueWithCounts<T>((result$[idx$0] as Output<T>),
+    return UniqueWithCounts<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<T>));
   }
 }
@@ -11746,7 +11746,7 @@ UniqueWithCountsOutput uniqueWithCounts<T>(Output<T> x,
   op$.setAttrType('out_idx', outIdx);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new UniqueWithCountsOutput<T>(
+  return UniqueWithCountsOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -11868,7 +11868,7 @@ class SampleDistortedBoundingBoxOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SampleDistortedBoundingBox<T>((result$[idx$0] as Output<T>),
+    return SampleDistortedBoundingBox<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<double>));
   }
 }
@@ -11908,7 +11908,7 @@ SampleDistortedBoundingBoxOutput sampleDistortedBoundingBox<T>(
   op$.setAttrBool('use_image_if_no_bounding_boxes', useImageIfNoBoundingBoxes);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SampleDistortedBoundingBoxOutput<T>(
+  return SampleDistortedBoundingBoxOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -11933,7 +11933,7 @@ class ListDiffOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new ListDiff<T>(
+    return ListDiff<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -11956,7 +11956,7 @@ ListDiffOutput listDiff<T>(Output<T> x, Output<T> y,
   op$.setAttrType('out_idx', outIdx);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new ListDiffOutput<T>(
+  return ListDiffOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -12017,7 +12017,7 @@ class BoostedTreesCalculateBestGainsPerFeatureOutput {
     var idx$3 = runner.fetch(op.name, index: 3);
     var idx$4 = runner.fetch(op.name, index: 4);
     var result$ = runner.run();
-    return new BoostedTreesCalculateBestGainsPerFeature(
+    return BoostedTreesCalculateBestGainsPerFeature(
         (result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<double>),
         (result$[idx$2] as Output<int>),
@@ -12072,7 +12072,7 @@ BoostedTreesCalculateBestGainsPerFeatureOutput
   op$.setAttrInt('num_features', numFeatures);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new BoostedTreesCalculateBestGainsPerFeatureOutput(
+  return BoostedTreesCalculateBestGainsPerFeatureOutput(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -12144,7 +12144,7 @@ class TensorArrayConcatOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new TensorArrayConcat<T>(
+    return TensorArrayConcat<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<int>));
   }
 }
@@ -12174,7 +12174,7 @@ TensorArrayConcatOutput tensorArrayConcat<T>(
   op$.setAttrShape('element_shape_except0', elementShapeExcept0);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TensorArrayConcatOutput<T>(
+  return TensorArrayConcatOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<int>));
 }
 
@@ -12240,7 +12240,7 @@ class LogMatrixDeterminantOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new LogMatrixDeterminant<T>(
+    return LogMatrixDeterminant<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -12261,7 +12261,7 @@ LogMatrixDeterminantOutput logMatrixDeterminant<T>(Output<T> input,
   op$.addInput(input);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new LogMatrixDeterminantOutput<T>(
+  return LogMatrixDeterminantOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -12436,7 +12436,7 @@ class DecodeProtoV2Output<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new DecodeProtoV2<T>(
+    return DecodeProtoV2<T>(
         (result$[idx$0] as Output<int>), (result$[idx$1] as Output<List<T>>));
   }
 }
@@ -12470,7 +12470,7 @@ DecodeProtoV2Output decodeProtoV2<T>(Output<String> bytes,
   op$.setAttrBool('sanitize', sanitize);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new DecodeProtoV2Output<T>(graph, result$, (result$[0] as Output<int>),
+  return DecodeProtoV2Output<T>(graph, result$, (result$[0] as Output<int>),
       (result$[1] as Output<List<T>>));
 }
 
@@ -12495,7 +12495,7 @@ class LogUniformCandidateSamplerOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new LogUniformCandidateSampler((result$[idx$0] as Output<int>),
+    return LogUniformCandidateSampler((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -12533,7 +12533,7 @@ LogUniformCandidateSamplerOutput logUniformCandidateSampler(
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new LogUniformCandidateSamplerOutput(
+  return LogUniformCandidateSamplerOutput(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -12599,7 +12599,7 @@ class QrOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new Qr<T>(
+    return Qr<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -12621,7 +12621,7 @@ QrOutput qr<T>(Output<T> input,
   op$.setAttrBool('full_matrices', fullMatrices);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QrOutput<T>(
+  return QrOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -12976,7 +12976,7 @@ class UniqueWithCountsV2Output<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new UniqueWithCountsV2<T>((result$[idx$0] as Output<T>),
+    return UniqueWithCountsV2<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<T>));
   }
 }
@@ -13005,7 +13005,7 @@ UniqueWithCountsV2Output uniqueWithCountsV2<T>(Output<T> x, Output<T> axis,
   op$.setAttrType('out_idx', outIdx);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new UniqueWithCountsV2Output<T>(
+  return UniqueWithCountsV2Output<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -13063,7 +13063,7 @@ class DenseToSparseSetOperationOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new DenseToSparseSetOperation<T>((result$[idx$0] as Output<int>),
+    return DenseToSparseSetOperation<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -13096,7 +13096,7 @@ DenseToSparseSetOperationOutput denseToSparseSetOperation<T>(Output<T> set1,
   op$.setAttrBool('validate_indices', validateIndices);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new DenseToSparseSetOperationOutput<T>(
+  return DenseToSparseSetOperationOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -13334,7 +13334,7 @@ class QuantizedMulOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedMul<T>((result$[idx$0] as Output<T>),
+    return QuantizedMul<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -13375,7 +13375,7 @@ QuantizedMulOutput quantizedMul<T>(
   op$.setAttrType('Toutput', toutput);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedMulOutput<T>(graph, result$, (result$[0] as Output<T>),
+  return QuantizedMulOutput<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
@@ -13465,7 +13465,7 @@ class MergeOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new Merge<T>(
+    return Merge<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<int>));
   }
 }
@@ -13487,7 +13487,7 @@ MergeOutput merge<T>(List<Output<T>> inputs,
   op$.setAttrInt('N', n);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new MergeOutput<T>(
+  return MergeOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<int>));
 }
 
@@ -13626,7 +13626,7 @@ class TensorListPopBackOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new TensorListPopBack<T>(
+    return TensorListPopBack<T>(
         (result$[idx$0] as Output), (result$[idx$1] as Output<T>));
   }
 }
@@ -13648,7 +13648,7 @@ TensorListPopBackOutput tensorListPopBack<T>(Output inputHandle,
   op$.setAttrType('element_dtype', elementDtype);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TensorListPopBackOutput<T>(
+  return TensorListPopBackOutput<T>(
       graph, result$, (result$[0] as Output), (result$[1] as Output<T>));
 }
 
@@ -13690,7 +13690,7 @@ class TPUEmbeddingRetrieveAdagradParametersOutput {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new TPUEmbeddingRetrieveAdagradParameters(
+    return TPUEmbeddingRetrieveAdagradParameters(
         (result$[idx$0] as Output<double>), (result$[idx$1] as Output<double>));
   }
 }
@@ -13730,7 +13730,7 @@ TPUEmbeddingRetrieveAdagradParametersOutput
   op$.setAttrInt('host_id', hostId);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TPUEmbeddingRetrieveAdagradParametersOutput(graph, result$,
+  return TPUEmbeddingRetrieveAdagradParametersOutput(graph, result$,
       (result$[0] as Output<double>), (result$[1] as Output<double>));
 }
 
@@ -13797,7 +13797,7 @@ class CudnnRNNOutput<T> {
     var idx$2 = runner.fetch(op.name, index: 2);
     var idx$3 = runner.fetch(op.name, index: 3);
     var result$ = runner.run();
-    return new CudnnRNN<T>(
+    return CudnnRNN<T>(
         (result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>),
         (result$[idx$2] as Output<T>),
@@ -13844,7 +13844,7 @@ CudnnRNNOutput cudnnRNN<T>(
   op$.setAttrBool('is_training', isTraining);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new CudnnRNNOutput<T>(
+  return CudnnRNNOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -14043,7 +14043,7 @@ class BatchSelfAdjointEigV2Output<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new BatchSelfAdjointEigV2<T>(
+    return BatchSelfAdjointEigV2<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -14066,7 +14066,7 @@ BatchSelfAdjointEigV2Output batchSelfAdjointEigV2<T>(Output<T> input,
   op$.setAttrBool('compute_v', computeV);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new BatchSelfAdjointEigV2Output<T>(
+  return BatchSelfAdjointEigV2Output<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -14102,7 +14102,7 @@ class BoostedTreesTrainingPredictOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new BoostedTreesTrainingPredict((result$[idx$0] as Output<double>),
+    return BoostedTreesTrainingPredict((result$[idx$0] as Output<double>),
         (result$[idx$1] as Output<int>), (result$[idx$2] as Output<int>));
   }
 }
@@ -14139,7 +14139,7 @@ BoostedTreesTrainingPredictOutput boostedTreesTrainingPredict(
   op$.setAttrInt('logits_dimension', logitsDimension);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new BoostedTreesTrainingPredictOutput(
+  return BoostedTreesTrainingPredictOutput(
       graph,
       result$,
       (result$[0] as Output<double>),
@@ -14210,7 +14210,7 @@ class QuantizedReshapeOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizedReshape<T>((result$[idx$0] as Output<T>),
+    return QuantizedReshape<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -14238,7 +14238,7 @@ QuantizedReshapeOutput quantizedReshape<T>(Output<T> tensor, Output<T> shape,
   op$.setAttrType('Tshape', tshape);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizedReshapeOutput<T>(
+  return QuantizedReshapeOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -14439,7 +14439,7 @@ class RefMergeOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new RefMerge<T>(
+    return RefMerge<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<int>));
   }
 }
@@ -14461,7 +14461,7 @@ RefMergeOutput refMerge<T>(List<Output<T>> inputs,
   op$.setAttrInt('N', n);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new RefMergeOutput<T>(
+  return RefMergeOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<int>));
 }
 
@@ -14554,7 +14554,7 @@ class ReaderReadUpToOutput {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new ReaderReadUpTo(
+    return ReaderReadUpTo(
         (result$[idx$0] as Output<String>), (result$[idx$1] as Output<String>));
   }
 }
@@ -14578,7 +14578,7 @@ ReaderReadUpToOutput readerReadUpTo(Output<String> readerHandle,
   op$.addInput(numRecords);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new ReaderReadUpToOutput(graph, result$,
+  return ReaderReadUpToOutput(graph, result$,
       (result$[0] as Output<String>), (result$[1] as Output<String>));
 }
 
@@ -14599,7 +14599,7 @@ class ReaderReadUpToV2Output {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new ReaderReadUpToV2(
+    return ReaderReadUpToV2(
         (result$[idx$0] as Output<String>), (result$[idx$1] as Output<String>));
   }
 }
@@ -14623,7 +14623,7 @@ ReaderReadUpToV2Output readerReadUpToV2(
   op$.addInput(numRecords);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new ReaderReadUpToV2Output(graph, result$,
+  return ReaderReadUpToV2Output(graph, result$,
       (result$[0] as Output<String>), (result$[1] as Output<String>));
 }
 
@@ -14727,7 +14727,7 @@ class MapUnstageNoKeyOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new MapUnstageNoKey<T>(
+    return MapUnstageNoKey<T>(
         (result$[idx$0] as Output<int>), (result$[idx$1] as Output<List<T>>));
   }
 }
@@ -14759,7 +14759,7 @@ MapUnstageNoKeyOutput mapUnstageNoKey<T>(Output<int> indices,
   op$.setAttrString('shared_name', sharedName);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new MapUnstageNoKeyOutput<T>(graph, result$,
+  return MapUnstageNoKeyOutput<T>(graph, result$,
       (result$[0] as Output<int>), (result$[1] as Output<List<T>>));
 }
 
@@ -14827,7 +14827,7 @@ class CTCGreedyDecoderOutput {
     var idx$2 = runner.fetch(op.name, index: 2);
     var idx$3 = runner.fetch(op.name, index: 3);
     var result$ = runner.run();
-    return new CTCGreedyDecoder(
+    return CTCGreedyDecoder(
         (result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<int>),
         (result$[idx$2] as Output<int>),
@@ -14859,7 +14859,7 @@ CTCGreedyDecoderOutput cTCGreedyDecoder(
   op$.setAttrBool('merge_repeated', mergeRepeated);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new CTCGreedyDecoderOutput(
+  return CTCGreedyDecoderOutput(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -14920,7 +14920,7 @@ class QuantizeV2Output<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new QuantizeV2<T>((result$[idx$0] as Output<T>),
+    return QuantizeV2<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -14951,7 +14951,7 @@ QuantizeV2Output quantizeV2<T>(
   op$.setAttrString('round_mode', roundMode);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new QuantizeV2Output<T>(graph, result$, (result$[0] as Output<T>),
+  return QuantizeV2Output<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
@@ -15003,7 +15003,7 @@ class SparseReorderOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new SparseReorder<T>(
+    return SparseReorder<T>(
         (result$[idx$0] as Output<int>), (result$[idx$1] as Output<T>));
   }
 }
@@ -15027,7 +15027,7 @@ SparseReorderOutput sparseReorder<T>(
   op$.addInput(inputShape);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseReorderOutput<T>(
+  return SparseReorderOutput<T>(
       graph, result$, (result$[0] as Output<int>), (result$[1] as Output<T>));
 }
 
@@ -15114,7 +15114,7 @@ class ThreadUnsafeUnigramCandidateSamplerOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new ThreadUnsafeUnigramCandidateSampler(
+    return ThreadUnsafeUnigramCandidateSampler(
         (result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<double>),
         (result$[idx$2] as Output<double>));
@@ -15156,7 +15156,7 @@ ThreadUnsafeUnigramCandidateSamplerOutput threadUnsafeUnigramCandidateSampler(
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new ThreadUnsafeUnigramCandidateSamplerOutput(
+  return ThreadUnsafeUnigramCandidateSamplerOutput(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -15524,7 +15524,7 @@ class SparseAddOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SparseAdd<T>((result$[idx$0] as Output<int>),
+    return SparseAdd<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -15563,7 +15563,7 @@ SparseAddOutput sparseAdd<T>(
   op$.setAttrType('Treal', treal);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseAddOutput<T>(graph, result$, (result$[0] as Output<int>),
+  return SparseAddOutput<T>(graph, result$, (result$[0] as Output<int>),
       (result$[1] as Output<T>), (result$[2] as Output<int>));
 }
 
@@ -15703,7 +15703,7 @@ class DenseToDenseSetOperationOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new DenseToDenseSetOperation<T>((result$[idx$0] as Output<int>),
+    return DenseToDenseSetOperation<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -15734,7 +15734,7 @@ DenseToDenseSetOperationOutput denseToDenseSetOperation<T>(
   op$.setAttrBool('validate_indices', validateIndices);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new DenseToDenseSetOperationOutput<T>(
+  return DenseToDenseSetOperationOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -15760,7 +15760,7 @@ class SoftmaxCrossEntropyWithLogitsOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new SoftmaxCrossEntropyWithLogits<T>(
+    return SoftmaxCrossEntropyWithLogits<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -15785,7 +15785,7 @@ SoftmaxCrossEntropyWithLogitsOutput softmaxCrossEntropyWithLogits<T>(
   op$.addInput(labels);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SoftmaxCrossEntropyWithLogitsOutput<T>(
+  return SoftmaxCrossEntropyWithLogitsOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -16302,7 +16302,7 @@ class FusedBatchNormGradOutput<T> {
     var idx$3 = runner.fetch(op.name, index: 3);
     var idx$4 = runner.fetch(op.name, index: 4);
     var result$ = runner.run();
-    return new FusedBatchNormGrad<T>(
+    return FusedBatchNormGrad<T>(
         (result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>),
         (result$[idx$2] as Output<T>),
@@ -16346,7 +16346,7 @@ FusedBatchNormGradOutput fusedBatchNormGrad<T>(Output<T> yBackprop, Output<T> x,
   op$.setAttrBool('is_training', isTraining);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new FusedBatchNormGradOutput<T>(
+  return FusedBatchNormGradOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -16388,7 +16388,7 @@ class TensorArrayGradWithShapeOutput {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new TensorArrayGradWithShape(
+    return TensorArrayGradWithShape(
         (result$[idx$0] as Output), (result$[idx$1] as Output<double>));
   }
 }
@@ -16413,7 +16413,7 @@ TensorArrayGradWithShapeOutput tensorArrayGradWithShape(
   op$.setAttrString('source', source);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TensorArrayGradWithShapeOutput(
+  return TensorArrayGradWithShapeOutput(
       graph, result$, (result$[0] as Output), (result$[1] as Output<double>));
 }
 
@@ -16583,7 +16583,7 @@ class SparseAccumulatorTakeGradientOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SparseAccumulatorTakeGradient<T>((result$[idx$0] as Output<int>),
+    return SparseAccumulatorTakeGradient<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -16612,7 +16612,7 @@ SparseAccumulatorTakeGradientOutput sparseAccumulatorTakeGradient<T>(
   op$.setAttrType('dtype', dtype);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseAccumulatorTakeGradientOutput<T>(
+  return SparseAccumulatorTakeGradientOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -16672,7 +16672,7 @@ class GenerateVocabRemappingOutput {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new GenerateVocabRemapping(
+    return GenerateVocabRemapping(
         (result$[idx$0] as Output<int>), (result$[idx$1] as Output<int>));
   }
 }
@@ -16702,7 +16702,7 @@ GenerateVocabRemappingOutput generateVocabRemapping(
   op$.setAttrInt('old_vocab_size', oldVocabSize);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new GenerateVocabRemappingOutput(
+  return GenerateVocabRemappingOutput(
       graph, result$, (result$[0] as Output<int>), (result$[1] as Output<int>));
 }
 
@@ -16895,7 +16895,7 @@ class FractionalAvgPoolOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new FractionalAvgPool<T>((result$[idx$0] as Output<T>),
+    return FractionalAvgPool<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<int>), (result$[idx$2] as Output<int>));
   }
 }
@@ -16932,7 +16932,7 @@ FractionalAvgPoolOutput fractionalAvgPool<T>(Output<T> value,
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new FractionalAvgPoolOutput<T>(
+  return FractionalAvgPoolOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -16996,7 +16996,7 @@ class SparseSplitOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SparseSplit<T>((result$[idx$0] as Output<int>),
+    return SparseSplit<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -17024,7 +17024,7 @@ SparseSplitOutput sparseSplit<T>(Output<int> splitDim, Output<int> indices,
   op$.setAttrInt('num_split', numSplit);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SparseSplitOutput<T>(graph, result$, (result$[0] as Output<int>),
+  return SparseSplitOutput<T>(graph, result$, (result$[0] as Output<int>),
       (result$[1] as Output<T>), (result$[2] as Output<int>));
 }
 
@@ -17394,7 +17394,7 @@ class DeserializeManySparseOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new DeserializeManySparse<T>((result$[idx$0] as Output<int>),
+    return DeserializeManySparse<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -17423,7 +17423,7 @@ DeserializeManySparseOutput deserializeManySparse<T>(
   op$.setAttrType('dtype', dtype);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new DeserializeManySparseOutput<T>(
+  return DeserializeManySparseOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -17464,7 +17464,7 @@ class TensorArrayConcatV3Output<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new TensorArrayConcatV3<T>(
+    return TensorArrayConcatV3<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<int>));
   }
 }
@@ -17493,7 +17493,7 @@ TensorArrayConcatV3Output tensorArrayConcatV3<T>(
   op$.setAttrShape('element_shape_except0', elementShapeExcept0);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TensorArrayConcatV3Output<T>(
+  return TensorArrayConcatV3Output<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<int>));
 }
 
@@ -17659,10 +17659,10 @@ Output<bool> isBoostedTreesEnsembleInitialized(Output treeEnsembleHandle,
   return op$.finish()[0].cast<bool>();
 }
 
-/// Re-configures the GCS block cache with the new configuration values.
+/// Re-configures the GCS block cache with the configuration values.
 /// If the values are the same as already configured values, this op is a no-op. If
 /// they are different, the current contents of the block cache is dropped, and a
-/// new block cache is created fresh.
+/// block cache is created fresh.
 /// This operation has no outputs.
 Operation gcsConfigureBlockCache(
     Output maxCacheSize, Output blockSize, Output maxStaleness,
@@ -17823,7 +17823,7 @@ class OrderedMapUnstageNoKeyOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new OrderedMapUnstageNoKey<T>(
+    return OrderedMapUnstageNoKey<T>(
         (result$[idx$0] as Output<int>), (result$[idx$1] as Output<List<T>>));
   }
 }
@@ -17855,7 +17855,7 @@ OrderedMapUnstageNoKeyOutput orderedMapUnstageNoKey<T>(Output<int> indices,
   op$.setAttrString('shared_name', sharedName);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new OrderedMapUnstageNoKeyOutput<T>(graph, result$,
+  return OrderedMapUnstageNoKeyOutput<T>(graph, result$,
       (result$[0] as Output<int>), (result$[1] as Output<List<T>>));
 }
 
@@ -18324,7 +18324,7 @@ class CTCLossOutput {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new CTCLoss(
+    return CTCLoss(
         (result$[idx$0] as Output<double>), (result$[idx$1] as Output<double>));
   }
 }
@@ -18357,7 +18357,7 @@ CTCLossOutput cTCLoss(Output<double> inputs, Output<int> labelsIndices,
       'ignore_longer_outputs_than_inputs', ignoreLongerOutputsThanInputs);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new CTCLossOutput(graph, result$, (result$[0] as Output<double>),
+  return CTCLossOutput(graph, result$, (result$[0] as Output<double>),
       (result$[1] as Output<double>));
 }
 
@@ -18440,7 +18440,7 @@ class SwitchOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new Switch<T>(
+    return Switch<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -18462,7 +18462,7 @@ SwitchOutput switch$<T>(Output<T> data, Output<bool> pred,
   op$.addInput(pred);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SwitchOutput<T>(
+  return SwitchOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -18579,7 +18579,7 @@ class FractionalMaxPoolOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new FractionalMaxPool<T>((result$[idx$0] as Output<T>),
+    return FractionalMaxPool<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<int>), (result$[idx$2] as Output<int>));
   }
 }
@@ -18616,7 +18616,7 @@ FractionalMaxPoolOutput fractionalMaxPool<T>(Output<T> value,
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new FractionalMaxPoolOutput<T>(
+  return FractionalMaxPoolOutput<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -18683,7 +18683,7 @@ class FixedUnigramCandidateSamplerOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new FixedUnigramCandidateSampler((result$[idx$0] as Output<int>),
+    return FixedUnigramCandidateSampler((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -18735,7 +18735,7 @@ FixedUnigramCandidateSamplerOutput fixedUnigramCandidateSampler(
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new FixedUnigramCandidateSamplerOutput(
+  return FixedUnigramCandidateSamplerOutput(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -18801,7 +18801,7 @@ class LearnedUnigramCandidateSamplerOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new LearnedUnigramCandidateSampler((result$[idx$0] as Output<int>),
+    return LearnedUnigramCandidateSampler((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -18841,7 +18841,7 @@ LearnedUnigramCandidateSamplerOutput learnedUnigramCandidateSampler(
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new LearnedUnigramCandidateSamplerOutput(
+  return LearnedUnigramCandidateSamplerOutput(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -18870,7 +18870,7 @@ class RequantizeOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new Requantize<T>((result$[idx$0] as Output<T>),
+    return Requantize<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -18907,7 +18907,7 @@ RequantizeOutput requantize<T>(
   op$.setAttrType('out_type', outType);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new RequantizeOutput<T>(graph, result$, (result$[0] as Output<T>),
+  return RequantizeOutput<T>(graph, result$, (result$[0] as Output<T>),
       (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
@@ -19179,7 +19179,7 @@ class CudnnRNNBackpropV2Output<T> {
     var idx$2 = runner.fetch(op.name, index: 2);
     var idx$3 = runner.fetch(op.name, index: 3);
     var result$ = runner.run();
-    return new CudnnRNNBackpropV2<T>(
+    return CudnnRNNBackpropV2<T>(
         (result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>),
         (result$[idx$2] as Output<T>),
@@ -19244,7 +19244,7 @@ CudnnRNNBackpropV2Output cudnnRNNBackpropV2<T>(
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new CudnnRNNBackpropV2Output<T>(
+  return CudnnRNNBackpropV2Output<T>(
       graph,
       result$,
       (result$[0] as Output<T>),
@@ -19288,7 +19288,7 @@ class CTCBeamSearchDecoderOutput {
     var idx$2 = runner.fetch(op.name, index: 2);
     var idx$3 = runner.fetch(op.name, index: 3);
     var result$ = runner.run();
-    return new CTCBeamSearchDecoder(
+    return CTCBeamSearchDecoder(
         (result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<int>),
         (result$[idx$2] as Output<int>),
@@ -19326,7 +19326,7 @@ CTCBeamSearchDecoderOutput cTCBeamSearchDecoder(
   op$.setAttrBool('merge_repeated', mergeRepeated);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new CTCBeamSearchDecoderOutput(
+  return CTCBeamSearchDecoderOutput(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -19787,7 +19787,7 @@ class DecodeWavOutput {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new DecodeWav(
+    return DecodeWav(
         (result$[idx$0] as Output<double>), (result$[idx$1] as Output<int>));
   }
 }
@@ -19813,7 +19813,7 @@ DecodeWavOutput decodeWav(Output<String> contents,
   op$.setAttrInt('desired_samples', desiredSamples);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new DecodeWavOutput(graph, result$, (result$[0] as Output<double>),
+  return DecodeWavOutput(graph, result$, (result$[0] as Output<double>),
       (result$[1] as Output<int>));
 }
 
@@ -19902,7 +19902,7 @@ class AllCandidateSamplerOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new AllCandidateSampler((result$[idx$0] as Output<int>),
+    return AllCandidateSampler((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
@@ -19937,7 +19937,7 @@ AllCandidateSamplerOutput allCandidateSampler(Output<int> trueClasses,
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new AllCandidateSamplerOutput(
+  return AllCandidateSamplerOutput(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -20178,7 +20178,7 @@ class TakeManySparseFromTensorsMapOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new TakeManySparseFromTensorsMap<T>((result$[idx$0] as Output<int>),
+    return TakeManySparseFromTensorsMap<T>((result$[idx$0] as Output<int>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<int>));
   }
 }
@@ -20213,7 +20213,7 @@ TakeManySparseFromTensorsMapOutput takeManySparseFromTensorsMap<T>(
   op$.setAttrString('shared_name', sharedName);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TakeManySparseFromTensorsMapOutput<T>(
+  return TakeManySparseFromTensorsMapOutput<T>(
       graph,
       result$,
       (result$[0] as Output<int>),
@@ -20326,7 +20326,7 @@ class RefSwitchOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new RefSwitch<T>(
+    return RefSwitch<T>(
         (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
@@ -20348,7 +20348,7 @@ RefSwitchOutput refSwitch<T>(Output<T> data, Output<bool> pred,
   op$.addInput(pred);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new RefSwitchOutput<T>(
+  return RefSwitchOutput<T>(
       graph, result$, (result$[0] as Output<T>), (result$[1] as Output<T>));
 }
 
@@ -20369,7 +20369,7 @@ class TensorArrayGradV3Output {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new TensorArrayGradV3(
+    return TensorArrayGradV3(
         (result$[idx$0] as Output), (result$[idx$1] as Output<double>));
   }
 }
@@ -20392,7 +20392,7 @@ TensorArrayGradV3Output tensorArrayGradV3(Output handle, Output<double> flowIn,
   op$.setAttrString('source', source);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new TensorArrayGradV3Output(
+  return TensorArrayGradV3Output(
       graph, result$, (result$[0] as Output), (result$[1] as Output<double>));
 }
 
@@ -20480,7 +20480,7 @@ class ReaderReadV2Output {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return new ReaderReadV2(
+    return ReaderReadV2(
         (result$[idx$0] as Output<String>), (result$[idx$1] as Output<String>));
   }
 }
@@ -20502,7 +20502,7 @@ ReaderReadV2Output readerReadV2(Output readerHandle, Output queueHandle,
   op$.addInput(queueHandle);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new ReaderReadV2Output(graph, result$, (result$[0] as Output<String>),
+  return ReaderReadV2Output(graph, result$, (result$[0] as Output<String>),
       (result$[1] as Output<String>));
 }
 
@@ -20561,7 +20561,7 @@ class SampleDistortedBoundingBoxV2Output<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return new SampleDistortedBoundingBoxV2<T>((result$[idx$0] as Output<T>),
+    return SampleDistortedBoundingBoxV2<T>((result$[idx$0] as Output<T>),
         (result$[idx$1] as Output<T>), (result$[idx$2] as Output<double>));
   }
 }
@@ -20604,7 +20604,7 @@ SampleDistortedBoundingBoxV2Output sampleDistortedBoundingBoxV2<T>(
   op$.setAttrBool('use_image_if_no_bounding_boxes', useImageIfNoBoundingBoxes);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return new SampleDistortedBoundingBoxV2Output<T>(
+  return SampleDistortedBoundingBoxV2Output<T>(
       graph,
       result$,
       (result$[0] as Output<T>),

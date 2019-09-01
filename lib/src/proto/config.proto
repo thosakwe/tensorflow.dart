@@ -282,7 +282,7 @@ message ConfigProto {
     // true or session_inter_op_thread_pool is configured.
     int32 inter_op_parallelism_threads = 5;
 
-    // If true, use a new set of threads for this session rather than the global
+    // If true, use a set of threads for this session rather than the global
     // pool of threads. Only supported by direct sessions.
     //
     // If false, use the global threads created by the first session, or the

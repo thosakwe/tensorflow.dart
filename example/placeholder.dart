@@ -14,7 +14,7 @@ void main() {
 
   // Easily compute the area now.
   for (double r = 1.0; r <= 10.0; r++) {
-    var result = circleArea.run(feed: {'radius': new Tensor.from(r)});
+    var result = circleArea.run(feed: {'radius': Tensor.from(r)});
     print('Radius: $r, Area: $result');
   }
 }

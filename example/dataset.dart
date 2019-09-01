@@ -1,6 +1,6 @@
 import 'package:tensorflow/tensorflow.dart' as tf;
 
 void main() {
-  var ds = new tf.Dataset();
+  var ds = tf.Dataset();
   return ds.value.run();
 }

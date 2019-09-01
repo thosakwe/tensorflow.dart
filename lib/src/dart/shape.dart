@@ -28,7 +28,7 @@ Output<T> zero<T>(DataType dtype, {Graph graph, String operationName}) {
         dtype: dtype,
         operationName: operationName,
         graph: graph);
-  throw new ArgumentError('Not a scalar type: $dtype');
+  throw ArgumentError('Not a scalar type: $dtype');
 }
 
 /// Creates a tensor with all elements set to zero.
@@ -38,74 +38,74 @@ Output<T> zero<T>(DataType dtype, {Graph graph, String operationName}) {
 /// For example:
 ///
 /// ```dart
-/// tf.zeros(new tf.Shape(3, 4), dtype: tf.DataType.DT_INT32)  // [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+/// tf.zeros(tf.Shape(3, 4), dtype: tf.DataType.DT_INT32)  // [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 /// ```
 Output<List<T>> zeros<T extends num>(Shape shape,
     {DataType dtype: DataType.DT_FLOAT, String operationName, Graph graph}) {
   Tensor tensor;
 
   if (dtype == DataType.DT_DOUBLE) {
-    tensor = new Tensor.fromFloat64List(
-      new Float64List.fromList(
-        new List<double>.filled(shape.size, 0.0),
+    tensor = Tensor.fromFloat64List(
+      Float64List.fromList(
+        List<double>.filled(shape.size, 0.0),
       ),
     );
   } else if (dtype == DataType.DT_FLOAT) {
-    tensor = new Tensor.fromFloat32List(
-      new Float32List.fromList(
-        new List<double>.filled(shape.size, 0.0),
+    tensor = Tensor.fromFloat32List(
+      Float32List.fromList(
+        List<double>.filled(shape.size, 0.0),
       ),
     );
   } else if (dtype == DataType.DT_INT8) {
-    tensor = new Tensor.fromInt8List(
-      new Int8List.fromList(
-        new List<int>.filled(shape.size, 0),
+    tensor = Tensor.fromInt8List(
+      Int8List.fromList(
+        List<int>.filled(shape.size, 0),
       ),
     );
   } else if (dtype == DataType.DT_INT16) {
-    tensor = new Tensor.fromInt16List(
-      new Int16List.fromList(
-        new List<int>.filled(shape.size, 0),
+    tensor = Tensor.fromInt16List(
+      Int16List.fromList(
+        List<int>.filled(shape.size, 0),
       ),
     );
   } else if (dtype == DataType.DT_INT32) {
-    tensor = new Tensor.fromInt32List(
-      new Int32List.fromList(
-        new List<int>.filled(shape.size, 0),
+    tensor = Tensor.fromInt32List(
+      Int32List.fromList(
+        List<int>.filled(shape.size, 0),
       ),
     );
   } else if (dtype == DataType.DT_INT64) {
-    tensor = new Tensor.fromInt64List(
-      new Int64List.fromList(
-        new List<int>.filled(shape.size, 0),
+    tensor = Tensor.fromInt64List(
+      Int64List.fromList(
+        List<int>.filled(shape.size, 0),
       ),
     );
   } else if (dtype == DataType.DT_UINT8) {
-    tensor = new Tensor.fromUint8List(
-      new Uint8List.fromList(
-        new List<int>.filled(shape.size, 0),
+    tensor = Tensor.fromUint8List(
+      Uint8List.fromList(
+        List<int>.filled(shape.size, 0),
       ),
     );
   } else if (dtype == DataType.DT_UINT16) {
-    tensor = new Tensor.fromUint16List(
-      new Uint16List.fromList(
-        new List<int>.filled(shape.size, 0),
+    tensor = Tensor.fromUint16List(
+      Uint16List.fromList(
+        List<int>.filled(shape.size, 0),
       ),
     );
   } else if (dtype == DataType.DT_UINT32) {
-    tensor = new Tensor.fromUint32List(
-      new Uint32List.fromList(
-        new List<int>.filled(shape.size, 0),
+    tensor = Tensor.fromUint32List(
+      Uint32List.fromList(
+        List<int>.filled(shape.size, 0),
       ),
     );
   } else if (dtype == DataType.DT_UINT64) {
-    tensor = new Tensor.fromUint64List(
-      new Uint64List.fromList(
-        new List<int>.filled(shape.size, 0),
+    tensor = Tensor.fromUint64List(
+      Uint64List.fromList(
+        List<int>.filled(shape.size, 0),
       ),
     );
   } else {
-    throw new ArgumentError('Cannot create zeroed tensor of type $dtype.');
+    throw ArgumentError('Cannot create zeroed tensor of type $dtype.');
   }
 
   tensor = tensor.reshape(shape);
@@ -124,7 +124,7 @@ class Shape {
 
   /// Create a Shape representing an N-dimensional value.
   factory Shape.dims(List<int> dims) =>
-      new Shape._(new Int64List.fromList(dims));
+      Shape._(Int64List.fromList(dims));
 
   const Shape._(this._dims);
 
@@ -139,9 +139,9 @@ class Shape {
 
     for (int dim = _dims.length - 1; dim >= 0; dim--) {
       if (last == null)
-        last = new List<T>.filled(_dims[dim], fill);
+        last = List<T>.filled(_dims[dim], fill);
       else
-        last = new List.generate(_dims[dim], (_) => new List.from(last));
+        last = List.generate(_dims[dim], (_) => List.from(last));
     }
 
     return last ?? [];
@@ -163,7 +163,7 @@ class Shape {
           int dim7,
           int dim8,
           int dim9]) =>
-      new Shape.dims([
+      Shape.dims([
         dim0,
         dim1,
         dim2,
@@ -184,10 +184,10 @@ class Shape {
   static const Shape scalar = const Shape._(const []);
 
   /// Returns a reversed version of this dimension vector.
-  Shape get reversed => new Shape.dims(_dims.reversed.toList());
+  Shape get reversed => Shape.dims(_dims.reversed.toList());
 
   /// Create a Shape representing an unknown number of dimensions.
-  Int64List get dimensions => new Int64List.fromList(_dims);
+  Int64List get dimensions => Int64List.fromList(_dims);
 
   /// Convert a 1D list into a list with the correct dimensions.
   ///
@@ -201,10 +201,10 @@ class Shape {
     var out = flatten(items);
 
     if (this == scalar)
-      throw new UnsupportedError('The scalar shape cannot populate a list.');
+      throw UnsupportedError('The scalar shape cannot populate a list.');
 
     if (out.length != size)
-      throw new UnsupportedError('$items does not the match the shape $this.');
+      throw UnsupportedError('$items does not the match the shape $this.');
 
     // Say you received [1, 2, 3, 4, 5, 6, 7, 8].
     // But your shape is 2x2x2.
@@ -218,11 +218,11 @@ class Shape {
       if (dim < _dims.length - 1) {
         // We want to create 2 lists of whatever the next dimension is.
         // In this case, 2 lists of 2.
-        return new List.generate(size, (_) => compute(dim + 1));
+        return List.generate(size, (_) => compute(dim + 1));
       } else {
         // If this is the last dimension, then just return elements
         // of the linear list.
-        return new List.generate(size, (_) => out.elementAt(i++));
+        return List.generate(size, (_) => out.elementAt(i++));
       }
     }
 
@@ -244,7 +244,7 @@ class Shape {
       if (list.isNotEmpty == true) list = list.elementAt(0);
     }
 
-    return dims.isEmpty ? Shape.scalar : new Shape.dims(dims);
+    return dims.isEmpty ? Shape.scalar : Shape.dims(dims);
   }
 
   @override

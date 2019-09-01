@@ -21,7 +21,7 @@ void tfd::SavedModelBundle_new(Dart_NativeArguments arguments) {
     intptr_t length;
     HandleError(Dart_ListLength(tagsHandle, &length));
     nTags = (int) length;
-    tags = new const char *[length];
+    tags = const char *[length];
 
     for (intptr_t i = 0; i < length; i++) {
         HandleError(Dart_StringToCString(Dart_ListGetAt(tagsHandle, i), &tags[i]));
@@ -73,7 +73,7 @@ void tfd::SavedModelBundle_new(Dart_NativeArguments arguments) {
         tuple[3] = Dart_NewExternalTypedData(Dart_TypedData_kUint8, (void *) metagraph->data, metagraph->length);
     }
 
-    // Create a new tuple.
+    // Create a tuple.
     Dart_Handle out = Dart_New(getTuple4Type(), Dart_NewStringFromCString(""), 4, tuple);
     Dart_SetReturnValue(arguments, out);
 

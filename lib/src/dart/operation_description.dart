@@ -54,7 +54,7 @@ class OperationDescription<T> {
     deps.forEach(addControlInput);
 
     setDevice(_device ?? Zone.current[_deviceSymbol] as String);
-    return new Operation<T>._fromPointer(_finish(TensorFlowException), _graph);
+    return Operation<T>._fromPointer(_finish(TensorFlowException), _graph);
   }
 
   Tuple3 _setAttrTensor(String name, Tensor value)
@@ -65,7 +65,7 @@ class OperationDescription<T> {
     var result = _setAttrTensor(name, value);
     var code = _codeFrom(result.item1 as int);
     if (code != Code.ok)
-      throw new TensorFlowException(code, '${result.item2} ${result.item3}');
+      throw TensorFlowException(code, '${result.item2} ${result.item3}');
   }
 
   void _setAttrFunc(String name, String value)
@@ -153,7 +153,7 @@ class OperationDescription<T> {
   void setAttrTypeList(String name, List<DataType> value) {
     if (value == null) return;
     _setAttrTypeList(
-        name, new Int32List.fromList(value.map((t) => t.value).toList()));
+        name, Int32List.fromList(value.map((t) => t.value).toList()));
   }
 
   void _setDevice(String device) native "";
