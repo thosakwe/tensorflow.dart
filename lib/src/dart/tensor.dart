@@ -43,10 +43,10 @@ class Tensor {
       var first = value.first;
 
       if (first is int)
-        return Tensor.fromInt32List(Int32List.fromList(value as List<int>));
+        return Tensor.fromInt32List(Int32List.fromList(value.cast<int>()));
       if (first is double)
         return Tensor.fromFloat32List(
-            Float32List.fromList(value as List<double>));
+            Float32List.fromList(value.cast<double>()));
       if (first is Iterable) {
         var shape = Shape.infer(value);
         return Tensor.from(flatten(value), dtype: dtype).reshape(shape);

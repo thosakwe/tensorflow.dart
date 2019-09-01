@@ -6,4 +6,8 @@ main() async {
   var metaGraph = tf.MetaGraphDef.fromBuffer(data);
   var graph = tf.Graph.fromGraphDef(metaGraph.graphDef);
   print('Read graph: ${graph.operations.length} operation(s)');
+  for (var op in graph.operations) {
+    print('  * ${op.name}');
+  }
+  graph['Print'].run();
 }
