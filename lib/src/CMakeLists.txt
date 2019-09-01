@@ -1,37 +1,9 @@
 include(ExternalProject)
 find_package(Dart REQUIRED)
+find_path(TENSORFLOW_INCLUDE_DIR PATHS "tensorflow/c/c_api.h")
+find_library(TENSORFLOW_LIBRARY tensorflow)
 
-# Tensorflow configuration
-set(TF_VERSION 1.14.0)
-if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
-  set(TF_PLATFORM x86_64)
- else() 
-  message(ERROR "tensorflow_dart only supports x86_64.") 
-endif()
-if(LINUX)
-  set(TF_TYPE gpu)
-  set(TF_OS linux)
-elseif(APPLE)
-  set(TF_TYPE cpu)
-  set(TF_OS darwin)
-elseif(WIN32)
-  set(TF_TYPE gpu)
-  set(TF_OS windows)
-endif()
-set(TF "${TF_TYPE}-${TF_OS}-${TF_PLATFORM}-${TF_VERSION}")
-set(TF_URL "https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-${TF}.tar.gz")
-ExternalProject_Add(tensorflow_dist
-  URL ${TF_URL}
-  BUILD_COMMAND ""
-  CONFIGURE_COMMAND ""
-  INSTALL_COMMAND "")
-ExternalProject_Get_Property(tensorflow_dist source_dir)
-ExternalProject_Get_Property(tensorflow_dist install_dir)
-set(TENSORFLOW_DIR ${source_dir})
-include_directories("${TENSORFLOW_DIR}/include")
-link_directories("${TENSORFLOW_DIR}/lib")
-
-add_dart_native_extension(tensorflow_dart SHARED
+add_dart_native_extension(tensorflow_dart
   cpp/tensorflow_dart.h cpp/tensorflow_dart.cc
   cpp/tfd/tfd.h
   cpp/tfd/graph.h cpp/tfd/graph.cc
@@ -42,7 +14,5 @@ add_dart_native_extension(tensorflow_dart SHARED
   cpp/tfd/saved_model_bundle.cc
   cpp/tfd/saved_model_bundle.h
   cpp/tfd/function_node.cc cpp/tfd/function_node.h)
-add_dependencies(tensorflow_dart tensorflow_dist)
 target_link_libraries(tensorflow_dart tensorflow)
 install(TARGETS tensorflow_dart DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
-install(DIRECTORY "${TENSORFLOW_DIR}/lib/" DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
