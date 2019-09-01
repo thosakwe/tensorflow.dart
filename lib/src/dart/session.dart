@@ -34,8 +34,7 @@ class SessionRunner {
 
   SessionRunner._(this._session);
 
-  // ignore: generic_method_comment
-  static Tuple4/*<int, String, List<Uint8List>, Uint8List>*/ _Session_run(
+  static List _Session_run(
       int graph,
       Uint8List config,
       Uint8List runOptions,
@@ -50,7 +49,8 @@ class SessionRunner {
     if (_outputs.isEmpty && _targets.isEmpty)
       throw 'The session has not been configured to run any node. Call `SessionRunner.fetch` first.';
 
-    var result = _Session_run(
+    var result =
+        Tuple4<int, String, List<Uint8List>, Uint8List>.fromList(_Session_run(
       _session._graph._pointer,
       _session.config?.writeToBuffer(),
       options?.writeToBuffer(),
@@ -60,15 +60,13 @@ class SessionRunner {
       // nOutputs,
       _targets,
       _inputs,
-    );
-    var code = _codeFrom(result.item1 as int);
-    if (code != Code.ok)
-      throw TensorFlowException(code, result.item2 as String);
+    ));
+    var code = _codeFrom(result.item1);
+    if (code != Code.ok) throw TensorFlowException(code, result.item2);
     _session._runner = null;
     var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
     deps.clear();
-    var run = SessionRun<T>._(
-        (result.item3 as List).cast<T>(), result.item4 as Uint8List);
+    var run = SessionRun<T>._((result.item3).cast<T>(), result.item4);
     _session._graph._runCallbacks
       ..forEach((c) => c.f(run[c.index]))
       ..clear();

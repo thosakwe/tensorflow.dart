@@ -44,9 +44,7 @@ void tfd::Output_reshape(Dart_NativeArguments arguments) {
   else
     tuple[1] = Dart_Null();
 
-  auto tupleHandle = Dart_NewList(2);
-  Dart_ListSetAt(tupleHandle, 0, tuple[0]);
-  Dart_ListSetAt(tupleHandle, 1, tuple[1]);
+  auto tupleHandle = DartListOf(tuple, 2);
   Dart_SetReturnValue(arguments, tupleHandle);
   TF_DeleteStatus(status);
 }
@@ -253,8 +251,7 @@ void tfd::OperationDescription_set_attr_tensor(Dart_NativeArguments arguments) {
   }
 
   TF_DeleteStatus(status);
-  Dart_Handle out =
-      Dart_New(getTuple3Type(), Dart_NewStringFromCString(""), 3, tuple);
+  auto out = DartListOf(tuple, 3);
   Dart_SetReturnValue(arguments, out);
 }
 

@@ -109,7 +109,7 @@ void tfd::FunctionNode_from_graph(Dart_NativeArguments arguments) {
         tuple[2] = Dart_NewIntegerFromUint64((uint64_t) function);
     }
 
-    Dart_Handle out = Dart_New(getTuple3Type(), Dart_NewStringFromCString(""), 3, tuple);
+    auto out = DartListOf(tuple, 3);
     Dart_SetReturnValue(arguments, out);
     TF_DeleteStatus(status);
 }
@@ -136,7 +136,7 @@ void tfd::FunctionNode_to_function_def(Dart_NativeArguments arguments) {
         tuple[2] = Dart_NewExternalTypedData(Dart_TypedData_kUint8, (void *) buf->data, buf->length);
     }
 
-    Dart_Handle out = Dart_New(getTuple3Type(), Dart_NewStringFromCString(""), 3, tuple);
+    auto out = DartListOf(tuple, 3);
     Dart_SetReturnValue(arguments, out);
     TF_DeleteBuffer(buf);
     TF_DeleteStatus(status);

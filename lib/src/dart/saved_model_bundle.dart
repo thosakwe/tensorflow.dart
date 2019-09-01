@@ -16,8 +16,9 @@ class SavedModelBundle {
 
   factory SavedModelBundle(String exportDirectory,
       {List<String> tags: const [Tags.serving], RunOptions runOptions}) {
-    var result = _SavedModelBundle_new(
-        exportDirectory, tags ?? [], runOptions?.writeToBuffer());
+    var result = Tuple4<int, String, int, Uint8List>.fromList(
+        _SavedModelBundle_new(
+            exportDirectory, tags ?? [], runOptions?.writeToBuffer()));
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw TensorFlowException(code, result.item2);
     var path = p.absolute(exportDirectory);
@@ -29,9 +30,7 @@ class SavedModelBundle {
       : this.graph = Graph._fromPointer(graph),
         this.metaGraphDef = MetaGraphDef.fromBuffer(metaGraphDef);
 
-  static Tuple4<int, String, int, Uint8List> _SavedModelBundle_new(
-      String exportDirectory,
-      List<String> tags,
+  static List _SavedModelBundle_new(String exportDirectory, List<String> tags,
       Uint8List runOptions) native "SavedModelBundle_new";
 
   /*

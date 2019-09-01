@@ -67,7 +67,7 @@ void tfd::Graph_add_gradients(Dart_NativeArguments arguments) {
         }
     }
 
-    Dart_Handle out = Dart_New(getTuple3Type(), Dart_NewStringFromCString(""), 3, tuple);
+    auto out = DartListOf(tuple, 3);
     Dart_SetReturnValue(arguments, out);
     TF_DeleteStatus(status);
 }
@@ -347,7 +347,7 @@ void tfd::Graph_from_graph_def(Dart_NativeArguments arguments) {
         tuple[1] = Dart_Null();
         tuple[2] = Dart_NewIntegerFromUint64((uint64_t) graph);
         TF_DeleteImportGraphDefResults(results);
-        Dart_Handle out = Dart_New(getTuple3Type(), Dart_NewStringFromCString(""), 3, tuple);
+        auto out = DartListOf(tuple, 3);
         Dart_SetReturnValue(arguments, out);
     }
 
@@ -376,7 +376,7 @@ void tfd::Graph_to_graph_def(Dart_NativeArguments arguments) {
     }
 
     // Create a tuple.
-    Dart_Handle out = Dart_New(getTuple3Type(), Dart_NewStringFromCString(""), 3, tuple);
+    auto out = DartListOf(tuple, 3);
     Dart_SetReturnValue(arguments, out);
 }
 

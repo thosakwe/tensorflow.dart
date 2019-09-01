@@ -252,6 +252,15 @@ TF_Output tfd::convert_output_wrapper(Dart_Handle handle, int index) {
   // std::cout << "Op: " << op << "; index: " << index << std::endl;
   return {op, (int)idx};
 }
+
+Dart_Handle tfd::DartListOf(Dart_Handle *arr, intptr_t length) {
+  auto out = Dart_NewList(length);
+  for (intptr_t i = 0; i < length; i++) {
+    Dart_ListSetAt(out, i, arr[i]);
+  }
+  return out;
+}
+
 //
 // Dart_Handle tfd::getTuple2Type() {
 //    Dart_Handle tupleLib =
