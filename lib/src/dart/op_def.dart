@@ -8808,10 +8808,8 @@ Output varHandleOp(
   op$.setAttrString('shared_name', sharedName);
   op$.setAttrType('dtype', dtype);
   op$.setAttrShape('shape', shape);
-// ignore: unnecessary_cast
-var x = op$.finish()[0];
-print(x);
-  return x.cast<Output>();
+  // ignore: unnecessary_cast
+  return op$.finish()[0].cast<Output>();
 }
 
 /// This operation has no outputs.
