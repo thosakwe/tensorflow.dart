@@ -15,7 +15,7 @@ class Func {
         functionDef.signature.name);
   }
 
-  static Tuple3<int, String, int> _fromGraph(
+  static List _fromGraph(
       Graph graph,
       String name,
       List<Output> outputs,
@@ -32,7 +32,7 @@ class Func {
         ? FuncBuilder._(name)
         : FuncBuilder._fromExisting(existingGraph, name);
     withScope(builder.graph, () => build(builder));
-    var result = _fromGraph(
+    var result = Tuple3<int, String, int>.fromList(_fromGraph(
         builder.graph,
         builder.name,
         builder.outputs.values.toList(),
@@ -41,7 +41,7 @@ class Func {
         builder.arguments._args.values.toList(),
         -1,
         [],
-        builder.appendHashToName);
+        builder.appendHashToName));
     builder.graph.close();
 
     var code = _codeFrom(result.item1);
@@ -49,11 +49,10 @@ class Func {
     return Func._(result.item3, name)..gradient = gradient;
   }
 
-  Tuple3<int, String, Uint8List> _toFunctionDef()
-      native "FunctionNode_to_function_def";
+  List _toFunctionDef() native "FunctionNode_to_function_def";
 
   FunctionDef toFunctionDef() {
-    var result = _toFunctionDef();
+    var result = Tuple3<int, String, Uint8List>.fromList(_toFunctionDef());
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw TensorFlowException(code, result.item2);
     return FunctionDef.fromBuffer(result.item3);

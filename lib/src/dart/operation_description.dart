@@ -57,12 +57,12 @@ class OperationDescription<T> {
     return Operation<T>._fromPointer(_finish(TensorFlowException), _graph);
   }
 
-  Tuple3 _setAttrTensor(String name, Tensor value)
+  List _setAttrTensor(String name, Tensor value)
       native "OperationDescription_set_attr_tensor";
 
   void setAttrTensor(String name, Tensor value) {
     if (value == null) return;
-    var result = _setAttrTensor(name, value);
+    var result = Tuple3.fromList(_setAttrTensor(name, value));
     var code = _codeFrom(result.item1 as int);
     if (code != Code.ok)
       throw TensorFlowException(code, '${result.item2} ${result.item3}');

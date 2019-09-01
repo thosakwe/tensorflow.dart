@@ -49,8 +49,7 @@ class SessionRunner {
     if (_outputs.isEmpty && _targets.isEmpty)
       throw 'The session has not been configured to run any node. Call `SessionRunner.fetch` first.';
 
-    var result =
-        Tuple4<int, String, List<Uint8List>, Uint8List>.fromList(_Session_run(
+    var output = _Session_run(
       _session._graph._pointer,
       _session.config?.writeToBuffer(),
       options?.writeToBuffer(),
@@ -60,7 +59,10 @@ class SessionRunner {
       // nOutputs,
       _targets,
       _inputs,
-    ));
+    );
+    // print(output.map((x) => x.runtimeType));
+    var result =
+        Tuple4<int, String, List<Uint8List>, Uint8List>.fromList(output);
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw TensorFlowException(code, result.item2);
     _session._runner = null;

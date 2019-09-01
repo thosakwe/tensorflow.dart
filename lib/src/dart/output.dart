@@ -132,8 +132,16 @@ class Output<T> {
       bool appendHashToName: false}) {
     var ops = List<int>.from(operations?.map((o) => o._pointer) ?? [])
       ..add(_operation);
-    var result = Func._fromGraph(_graph, name ?? op.name, [this], ['result'],
-        description, arguments ?? [], 1, ops, appendHashToName);
+    var result = Tuple3<int, String, int>.fromList(Func._fromGraph(
+        _graph,
+        name ?? op.name,
+        [this],
+        ['result'],
+        description,
+        arguments ?? [],
+        1,
+        ops,
+        appendHashToName));
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw TensorFlowException(code, result.item2);
     var f = Func._(result.item3, name ?? op.name)..gradient = gradient;

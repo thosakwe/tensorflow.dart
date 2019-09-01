@@ -251,7 +251,10 @@ void tfd::Session_run(Dart_NativeArguments arguments) {
   }
 
   // Create a List of Uint8Lists, one per tensor.
-  Dart_Handle tensors = tuple[2] = Dart_NewList(nOutputs);
+  auto coreLibrary = Dart_LookupLibrary(Dart_NewStringFromCString("dart:core"));
+  auto uint8ListType = Dart_GetType(
+      coreLibrary, Dart_NewStringFromCString("Uint8List"), 0, nullptr);
+  Dart_Handle tensors = tuple[2] = Dart_NewListOfType(uint8ListType, nOutputs);
 
   if (tensorOutput != nullptr) {
     for (int i = 0; i < nOutputs; i++) {

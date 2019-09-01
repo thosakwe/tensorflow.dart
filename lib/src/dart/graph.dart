@@ -87,12 +87,13 @@ class Graph {
       _runCallbacks.add(_RunCallback(i, f));
   }
 
-  static Tuple3<int, String, int> _importGraphDef(
-      Uint8List graphDef, String prefix) native "Graph_from_graph_def";
+  static List _importGraphDef(Uint8List graphDef, String prefix)
+      native "Graph_from_graph_def";
 
   /// Import a serialized representation of a TensorFlow graph.
   factory Graph.fromGraphDef(GraphDef graphDef, {String prefix}) {
-    var result = _importGraphDef(graphDef.writeToBuffer(), prefix);
+    var result = Tuple3<int, String, int>.fromList(
+        _importGraphDef(graphDef.writeToBuffer(), prefix));
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw TensorFlowException(code, result.item2);
     return Graph._fromPointer(result.item3);
@@ -138,11 +139,11 @@ class Graph {
     return OperationDescription._(this, type, name);
   }
 
-  Tuple3<int, String, Uint8List> _toGraphDef() native "Graph_to_graph_def";
+  List _toGraphDef() native "Graph_to_graph_def";
 
   /// Generate a serialized representation of the Graph.
   GraphDef toGraphDef() {
-    var result = _toGraphDef();
+    var result = Tuple3<int, String, Uint8List>.fromList(_toGraphDef());
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw TensorFlowException(code, result.item2);
     return GraphDef.fromBuffer(result.item3);
@@ -185,10 +186,7 @@ class Graph {
     Dart_Handle outputTypeHandle = Dart_GetNativeArgument(arguments, 4); // Type outputType
  */
 
-  Tuple3<int, String, List<Output>> _addGradients(
-      List<Output> y,
-      List<Output> x,
-      List<Output> dx,
+  List _addGradients(List<Output> y, List<Output> x, List<Output> dx,
       Type outputType) native "Graph_add_gradients";
 
   /// Adds operations to compute the partial derivatives of sum of `y`s w.r.t `x`s,
@@ -207,7 +205,8 @@ class Graph {
   /// https:///www.tensorflow.org/code/tensorflow/cc/gradients/README.md
   /// for instructions on how to add C++ more gradients.
   List<Output> addGradients(List<Output> y, List<Output> x, {List<Output> dx}) {
-    var result = _addGradients(y, x, dx, Output);
+    var result = Tuple3<int, String, List<Output>>.fromList(
+        _addGradients(y, x, dx, Output));
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw TensorFlowException(code, result.item2);
     return result.item3;
