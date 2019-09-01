@@ -388,13 +388,10 @@ main(List<String> args) async {
           if (op.outputArg.length <= 1) {
             var retType = method.returns;
 
-            if (retType is TypeReference && retType.symbol == 'Output') {
-              if ((retType as TypeReference).types.isNotEmpty) {
-                retType = (retType as TypeReference).types[0];
-              } else {
-                // TODO: Should this always be Uint8List?
-                // retType = refer('Uint8List');
-              }
+            if (retType is TypeReference &&
+                retType.symbol == 'Output' &&
+                retType.types.isNotEmpty) {
+              retType = (retType as TypeReference).types[0];
             }
 
             retVal = retVal
@@ -507,7 +504,6 @@ String attrType(String tfType) {
     case 'String':
       return 'String';
     case 'func':
-    case 'Func':
       return 'Func';
     default:
       var m = _listType.firstMatch(tfType);

@@ -16,6 +16,7 @@ sudo tar -zxvf libtensorflow-cpu-linux-x86_64-1.14.0.tar.gz
 cd "$TRAVIS_BUILD_DIR"
 mkdir -p cmake-build-debug
 cd cmake-build-debug
+cmake ..
 # LD_LIBRARY_PATH=. cmake -DCMAKE_C_FLAGS="-I." -DCMAKE_CXX_FLAGS="-I." ..
 cmake --build . -- "-j${NUM_MAKE_JOBS}"
 cd ..
