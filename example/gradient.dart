@@ -12,8 +12,8 @@ void main() {
     [3.0]
   ]);
 
-  var w1 = Variable.resource('w1',
-      shape: Shape(2, 1), dtype: DataType.DT_FLOAT);
+  var w1 =
+      Variable.resource('w1', shape: Shape(2, 1), dtype: DataType.DT_FLOAT);
   w1.assign(constant(w1.shape.apply([0.1, 0.2]))).run();
 
   var layer1 = tanh(matMul(x, w1.value));

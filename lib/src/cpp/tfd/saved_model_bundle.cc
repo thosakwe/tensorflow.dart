@@ -21,7 +21,7 @@ void tfd::SavedModelBundle_new(Dart_NativeArguments arguments) {
     intptr_t length;
     HandleError(Dart_ListLength(tagsHandle, &length));
     nTags = (int) length;
-    tags = const char *[length];
+    tags = new const char *[length];
 
     for (intptr_t i = 0; i < length; i++) {
         HandleError(Dart_StringToCString(Dart_ListGetAt(tagsHandle, i), &tags[i]));

@@ -1080,12 +1080,8 @@ QuantizedBiasAddOutput quantizedBiasAdd<T>(
   op$.setAttrType('out_type', outType);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return QuantizedBiasAddOutput<T>(
-      graph,
-      result$,
-      (result$[0] as Output<T>),
-      (result$[1] as Output<double>),
-      (result$[2] as Output<double>));
+  return QuantizedBiasAddOutput<T>(graph, result$, (result$[0] as Output<T>),
+      (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
 Output<T> dataFormatVecPermute<T>(Output<T> x,
@@ -2983,12 +2979,8 @@ QuantizedMaxPoolOutput quantizedMaxPool<T>(
   op$.setAttrString('padding', padding);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return QuantizedMaxPoolOutput<T>(
-      graph,
-      result$,
-      (result$[0] as Output<T>),
-      (result$[1] as Output<double>),
-      (result$[2] as Output<double>));
+  return QuantizedMaxPoolOutput<T>(graph, result$, (result$[0] as Output<T>),
+      (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
 Output<T> mirrorPadGrad<T>(Output<T> input, Output<T> paddings,
@@ -3662,10 +3654,8 @@ class FakeQuantWithMinMaxVarsGradientOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return FakeQuantWithMinMaxVarsGradient(
-        (result$[idx$0] as Output<double>),
-        (result$[idx$1] as Output<double>),
-        (result$[idx$2] as Output<double>));
+    return FakeQuantWithMinMaxVarsGradient((result$[idx$0] as Output<double>),
+        (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
 
@@ -5339,12 +5329,8 @@ BarrierTakeManyOutput barrierTakeMany<T>(
   op$.setAttrInt('timeout_ms', timeoutMs);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return BarrierTakeManyOutput<T>(
-      graph,
-      result$,
-      (result$[0] as Output<int>),
-      (result$[1] as Output<String>),
-      (result$[2] as Output<List<T>>));
+  return BarrierTakeManyOutput<T>(graph, result$, (result$[0] as Output<int>),
+      (result$[1] as Output<String>), (result$[2] as Output<List<T>>));
 }
 
 Output<T> matrixLogarithm<T>(Output<T> input,
@@ -7718,12 +7704,8 @@ DeserializeSparseOutput deserializeSparse<T>(Output<T> serializedSparse,
   op$.setAttrType('Tserialized', tserialized);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return DeserializeSparseOutput<T>(
-      graph,
-      result$,
-      (result$[0] as Output<int>),
-      (result$[1] as Output<T>),
-      (result$[2] as Output<int>));
+  return DeserializeSparseOutput<T>(graph, result$, (result$[0] as Output<int>),
+      (result$[1] as Output<T>), (result$[2] as Output<int>));
 }
 
 Output<T> serializeSparse<T>(
@@ -9701,12 +9683,8 @@ QuantizedAvgPoolOutput quantizedAvgPool<T>(
   op$.setAttrString('padding', padding);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return QuantizedAvgPoolOutput<T>(
-      graph,
-      result$,
-      (result$[0] as Output<T>),
-      (result$[1] as Output<double>),
-      (result$[2] as Output<double>));
+  return QuantizedAvgPoolOutput<T>(graph, result$, (result$[0] as Output<T>),
+      (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
 Output<T> applyPowerSign<T>(Output<T> var$, Output<T> m, Output<T> lr,
@@ -10380,8 +10358,8 @@ class SvdOutput<T> {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return Svd<T>((result$[idx$0] as Output<T>),
-        (result$[idx$1] as Output<T>), (result$[idx$2] as Output<T>));
+    return Svd<T>((result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>),
+        (result$[idx$2] as Output<T>));
   }
 }
 
@@ -11746,12 +11724,8 @@ UniqueWithCountsOutput uniqueWithCounts<T>(Output<T> x,
   op$.setAttrType('out_idx', outIdx);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return UniqueWithCountsOutput<T>(
-      graph,
-      result$,
-      (result$[0] as Output<T>),
-      (result$[1] as Output<T>),
-      (result$[2] as Output<T>));
+  return UniqueWithCountsOutput<T>(graph, result$, (result$[0] as Output<T>),
+      (result$[1] as Output<T>), (result$[2] as Output<T>));
 }
 
 Output<T> resizeBicubicGrad<T>(Output<double> grads, Output<T> originalImage,
@@ -12599,8 +12573,7 @@ class QrOutput<T> {
     var idx$0 = runner.fetch(op.name, index: 0);
     var idx$1 = runner.fetch(op.name, index: 1);
     var result$ = runner.run();
-    return Qr<T>(
-        (result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
+    return Qr<T>((result$[idx$0] as Output<T>), (result$[idx$1] as Output<T>));
   }
 }
 
@@ -13005,12 +12978,8 @@ UniqueWithCountsV2Output uniqueWithCountsV2<T>(Output<T> x, Output<T> axis,
   op$.setAttrType('out_idx', outIdx);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return UniqueWithCountsV2Output<T>(
-      graph,
-      result$,
-      (result$[0] as Output<T>),
-      (result$[1] as Output<T>),
-      (result$[2] as Output<T>));
+  return UniqueWithCountsV2Output<T>(graph, result$, (result$[0] as Output<T>),
+      (result$[1] as Output<T>), (result$[2] as Output<T>));
 }
 
 Output anonymousIterator(
@@ -14238,12 +14207,8 @@ QuantizedReshapeOutput quantizedReshape<T>(Output<T> tensor, Output<T> shape,
   op$.setAttrType('Tshape', tshape);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return QuantizedReshapeOutput<T>(
-      graph,
-      result$,
-      (result$[0] as Output<T>),
-      (result$[1] as Output<double>),
-      (result$[2] as Output<double>));
+  return QuantizedReshapeOutput<T>(graph, result$, (result$[0] as Output<T>),
+      (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
 Output mapDataset<T>(Output inputDataset, List<Output<List<T>>> otherArguments,
@@ -14578,8 +14543,8 @@ ReaderReadUpToOutput readerReadUpTo(Output<String> readerHandle,
   op$.addInput(numRecords);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return ReaderReadUpToOutput(graph, result$,
-      (result$[0] as Output<String>), (result$[1] as Output<String>));
+  return ReaderReadUpToOutput(graph, result$, (result$[0] as Output<String>),
+      (result$[1] as Output<String>));
 }
 
 class ReaderReadUpToV2Output {
@@ -14623,8 +14588,8 @@ ReaderReadUpToV2Output readerReadUpToV2(
   op$.addInput(numRecords);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return ReaderReadUpToV2Output(graph, result$,
-      (result$[0] as Output<String>), (result$[1] as Output<String>));
+  return ReaderReadUpToV2Output(graph, result$, (result$[0] as Output<String>),
+      (result$[1] as Output<String>));
 }
 
 Output tensorSliceDataset<T>(List<Output<List<T>>> components,
@@ -14759,8 +14724,8 @@ MapUnstageNoKeyOutput mapUnstageNoKey<T>(Output<int> indices,
   op$.setAttrString('shared_name', sharedName);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return MapUnstageNoKeyOutput<T>(graph, result$,
-      (result$[0] as Output<int>), (result$[1] as Output<List<T>>));
+  return MapUnstageNoKeyOutput<T>(graph, result$, (result$[0] as Output<int>),
+      (result$[1] as Output<List<T>>));
 }
 
 Output textLineDataset(Output<String> filenames, Output<String> compressionType,
@@ -15114,10 +15079,8 @@ class ThreadUnsafeUnigramCandidateSamplerOutput {
     var idx$1 = runner.fetch(op.name, index: 1);
     var idx$2 = runner.fetch(op.name, index: 2);
     var result$ = runner.run();
-    return ThreadUnsafeUnigramCandidateSampler(
-        (result$[idx$0] as Output<int>),
-        (result$[idx$1] as Output<double>),
-        (result$[idx$2] as Output<double>));
+    return ThreadUnsafeUnigramCandidateSampler((result$[idx$0] as Output<int>),
+        (result$[idx$1] as Output<double>), (result$[idx$2] as Output<double>));
   }
 }
 
@@ -16932,12 +16895,8 @@ FractionalAvgPoolOutput fractionalAvgPool<T>(Output<T> value,
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return FractionalAvgPoolOutput<T>(
-      graph,
-      result$,
-      (result$[0] as Output<T>),
-      (result$[1] as Output<int>),
-      (result$[2] as Output<int>));
+  return FractionalAvgPoolOutput<T>(graph, result$, (result$[0] as Output<T>),
+      (result$[1] as Output<int>), (result$[2] as Output<int>));
 }
 
 Output randomDataset(Output<int> seed, Output<int> seed2,
@@ -18616,12 +18575,8 @@ FractionalMaxPoolOutput fractionalMaxPool<T>(Output<T> value,
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return FractionalMaxPoolOutput<T>(
-      graph,
-      result$,
-      (result$[0] as Output<T>),
-      (result$[1] as Output<int>),
-      (result$[2] as Output<int>));
+  return FractionalMaxPoolOutput<T>(graph, result$, (result$[0] as Output<T>),
+      (result$[1] as Output<int>), (result$[2] as Output<int>));
 }
 
 Output<T> reciprocal<T>(Output<T> x, {Graph graph, String operationName}) {
@@ -19937,12 +19892,8 @@ AllCandidateSamplerOutput allCandidateSampler(Output<int> trueClasses,
   op$.setAttrInt('seed2', seed2);
 // ignore: unnecessary_cast
   var result$ = op$.finish();
-  return AllCandidateSamplerOutput(
-      graph,
-      result$,
-      (result$[0] as Output<int>),
-      (result$[1] as Output<double>),
-      (result$[2] as Output<double>));
+  return AllCandidateSamplerOutput(graph, result$, (result$[0] as Output<int>),
+      (result$[1] as Output<double>), (result$[2] as Output<double>));
 }
 
 Output<T> nextIteration<T>(Output<T> data,

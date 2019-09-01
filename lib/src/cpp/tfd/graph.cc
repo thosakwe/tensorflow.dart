@@ -60,7 +60,7 @@ void tfd::Graph_add_gradients(Dart_NativeArguments arguments) {
 
         for (intptr_t i = 0; i < nx; i++) {
             TF_Output output = dy[i];
-            auto *args = Dart_Handle[3]{graphHandle, Dart_NewIntegerFromUint64((uint64_t) output.oper),
+            auto *args = new Dart_Handle[3]{graphHandle, Dart_NewIntegerFromUint64((uint64_t) output.oper),
                                             Dart_NewInteger(output.index)};
             Dart_Handle outY = Dart_New(outputTypeHandle, Dart_NewStringFromCString("__"), 3, args);
             HandleError(Dart_ListSetAt(outYs, i, outY));
@@ -142,7 +142,7 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
             intptr_t obj_length;
             HandleError(Dart_ListLength(obj, &obj_length));
 
-            auto *inputArr = TF_Output[obj_length];
+            auto *inputArr = new TF_Output[obj_length];
 
             for (intptr_t j = 0; j < obj_length; j++) {
                 inputArr[i] = convert_output_wrapper(Dart_ListGetAt(obj, j), index++);
@@ -202,7 +202,7 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
             intptr_t dimLength;
             HandleError(Dart_ListLength(dimList, &dimLength));
 
-            auto *dims = int64_t[dimLength];
+            auto *dims = new int64_t[dimLength];
 
             for (intptr_t j = 0; j < dimLength; j++) {
                 HandleError(Dart_IntegerToInt64(Dart_ListGetAt(dimList, j), dims + j));
@@ -254,7 +254,7 @@ void tfd::Graph_add_operation(Dart_NativeArguments arguments) {
                 HandleError(Dart_ObjectIsType(first, shapeType, &firstIsShape));
 
                 if (Dart_IsBoolean(first)) {
-                    auto *out = bool[listLength];
+                    auto *out = new bool[listLength];
 
                     for (intptr_t j = 0; j < listLength; j++) {
                         bool v;

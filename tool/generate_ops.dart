@@ -79,8 +79,7 @@ Reference convertType(tf.OpDef_ArgDef argDef, int index, tf.OpDef opDef,
 }
 
 main(List<String> args) async {
-  var ops =
-      tf.Operation.list(); //tf.OpList.fromBuffer(tf.getAllOpsInternal());
+  var ops = tf.Operation.list(); //tf.OpList.fromBuffer(tf.getAllOpsInternal());
 
   var publicOps = ops.op.where((o) {
     // Ignore internals
@@ -228,8 +227,7 @@ main(List<String> args) async {
                   ..name = 'op'
                   ..type = refer('Operation')));
 
-                resultClass.constructors
-                    .add(Constructor((resultConstructor) {
+                resultClass.constructors.add(Constructor((resultConstructor) {
                   for (var output in op.outputArg) {
                     resultClass.fields.add(Field((resultField) {
                       var name = resultField.name = escapeName(
@@ -284,8 +282,7 @@ main(List<String> args) async {
 
                     for (int i = 0; i < op.outputArg.length; i++) {
                       b.statements.addAll([
-                        Code(
-                            'var idx\$$i = runner.fetch(op.name, index: $i);'),
+                        Code('var idx\$$i = runner.fetch(op.name, index: $i);'),
                       ]);
                     }
 
@@ -364,8 +361,8 @@ main(List<String> args) async {
                 b.annotations.add(refer('required'));
               else {
                 var dtype = refer('dtype'), inferType = refer('inferType');
-                var firstInput = refer(
-                    escapeName(ReCase(op.inputArg[0].name).camelCase));
+                var firstInput =
+                    refer(escapeName(ReCase(op.inputArg[0].name).camelCase));
                 body.insert(0,
                     dtype.assignNullAware(inferType([firstInput])).statement);
               }
@@ -422,8 +419,7 @@ main(List<String> args) async {
     }
   });
 
-  var dartText =
-      DartFormatter().format(lib.accept(DartEmitter()).toString());
+  var dartText = DartFormatter().format(lib.accept(DartEmitter()).toString());
   dartText =
       '// GENERATED CODE. DO NOT MODIFY BY HAND.\n\npart of tensorflow;\n\n' +
           dartText;

@@ -43,8 +43,7 @@ class Tensor {
       var first = value.first;
 
       if (first is int)
-        return Tensor.fromInt32List(
-            Int32List.fromList(value as List<int>));
+        return Tensor.fromInt32List(Int32List.fromList(value as List<int>));
       if (first is double)
         return Tensor.fromFloat32List(
             Float32List.fromList(value as List<double>));
@@ -76,8 +75,7 @@ class Tensor {
       ..addAll(utf8.encode(s));
     //..add(0)
 
-    return Tensor(
-        DataType.DT_STRING, Shape.scalar, Uint8List.fromList(bytes));
+    return Tensor(DataType.DT_STRING, Shape.scalar, Uint8List.fromList(bytes));
   }
 
   factory Tensor.fromInt(int n, {DataType dtype: DataType.DT_INT32}) {
@@ -107,11 +105,9 @@ class Tensor {
   factory Tensor.fromDouble(double n, {DataType dtype: DataType.DT_FLOAT}) {
     switch (dtype) {
       case DataType.DT_FLOAT:
-        return Tensor.fromFloat32List(Float32List.fromList([n]))
-            .asScalar;
+        return Tensor.fromFloat32List(Float32List.fromList([n])).asScalar;
       case DataType.DT_DOUBLE:
-        return Tensor.fromFloat64List(Float64List.fromList([n]))
-            .asScalar;
+        return Tensor.fromFloat64List(Float64List.fromList([n])).asScalar;
     }
 
     if (dtype == null) return Tensor.fromDouble(n);
@@ -127,35 +123,35 @@ class Tensor {
   factory Tensor.fromBool(bool b) =>
       Tensor.fromUint8List(Uint8List.fromList([b ? 1 : 0])).asScalar;
 
-  factory Tensor.fromInt8List(Int8List list) => Tensor.fromBuffer(
-      DataType.DT_INT8, Shape(list.length), list.buffer);
+  factory Tensor.fromInt8List(Int8List list) =>
+      Tensor.fromBuffer(DataType.DT_INT8, Shape(list.length), list.buffer);
 
-  factory Tensor.fromInt16List(Int16List list) => Tensor.fromBuffer(
-      DataType.DT_INT16, Shape(list.length), list.buffer);
+  factory Tensor.fromInt16List(Int16List list) =>
+      Tensor.fromBuffer(DataType.DT_INT16, Shape(list.length), list.buffer);
 
-  factory Tensor.fromInt32List(Int32List list) => Tensor.fromBuffer(
-      DataType.DT_INT32, Shape(list.length), list.buffer);
+  factory Tensor.fromInt32List(Int32List list) =>
+      Tensor.fromBuffer(DataType.DT_INT32, Shape(list.length), list.buffer);
 
-  factory Tensor.fromInt64List(Int64List list) => Tensor.fromBuffer(
-      DataType.DT_INT64, Shape(list.length), list.buffer);
+  factory Tensor.fromInt64List(Int64List list) =>
+      Tensor.fromBuffer(DataType.DT_INT64, Shape(list.length), list.buffer);
 
   factory Tensor.fromUint8List(Uint8List list) =>
       Tensor(DataType.DT_UINT8, Shape(list.length), list);
 
-  factory Tensor.fromUint16List(Uint16List list) => Tensor.fromBuffer(
-      DataType.DT_UINT16, Shape(list.length), list.buffer);
+  factory Tensor.fromUint16List(Uint16List list) =>
+      Tensor.fromBuffer(DataType.DT_UINT16, Shape(list.length), list.buffer);
 
-  factory Tensor.fromUint32List(Uint32List list) => Tensor.fromBuffer(
-      DataType.DT_UINT32, Shape(list.length), list.buffer);
+  factory Tensor.fromUint32List(Uint32List list) =>
+      Tensor.fromBuffer(DataType.DT_UINT32, Shape(list.length), list.buffer);
 
-  factory Tensor.fromUint64List(Uint64List list) => Tensor.fromBuffer(
-      DataType.DT_UINT64, Shape(list.length), list.buffer);
+  factory Tensor.fromUint64List(Uint64List list) =>
+      Tensor.fromBuffer(DataType.DT_UINT64, Shape(list.length), list.buffer);
 
-  factory Tensor.fromFloat32List(Float32List list) => Tensor.fromBuffer(
-      DataType.DT_FLOAT, Shape(list.length), list.buffer);
+  factory Tensor.fromFloat32List(Float32List list) =>
+      Tensor.fromBuffer(DataType.DT_FLOAT, Shape(list.length), list.buffer);
 
-  factory Tensor.fromFloat64List(Float64List list) => Tensor.fromBuffer(
-      DataType.DT_DOUBLE, Shape(list.length), list.buffer);
+  factory Tensor.fromFloat64List(Float64List list) =>
+      Tensor.fromBuffer(DataType.DT_DOUBLE, Shape(list.length), list.buffer);
 
   /// Returns this [Tensor] as a 0-dimensional scalar.
   Tensor get asScalar => reshape(Shape.scalar);
@@ -216,8 +212,7 @@ class Tensor {
 
   /// Returns the value in a scalar UTF-8 [String] tensor.
   String get asUtf8String => dtype == DataType.DT_STRING
-      ? utf8.decode(Uint8List.view(asUint8List.buffer),
-          allowMalformed: true)
+      ? utf8.decode(Uint8List.view(asUint8List.buffer), allowMalformed: true)
       : throw ArgumentError('Not a string type: $dtype');
 
   /// Returns the size, in bytes, of the tensor data.

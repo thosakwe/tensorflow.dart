@@ -123,8 +123,7 @@ class Shape {
   final List<int> _dims;
 
   /// Create a Shape representing an N-dimensional value.
-  factory Shape.dims(List<int> dims) =>
-      Shape._(Int64List.fromList(dims));
+  factory Shape.dims(List<int> dims) => Shape._(Int64List.fromList(dims));
 
   const Shape._(this._dims);
 
@@ -163,18 +162,9 @@ class Shape {
           int dim7,
           int dim8,
           int dim9]) =>
-      Shape.dims([
-        dim0,
-        dim1,
-        dim2,
-        dim3,
-        dim4,
-        dim5,
-        dim6,
-        dim7,
-        dim8,
-        dim9
-      ].where((n) => n != null).toList());
+      Shape.dims([dim0, dim1, dim2, dim3, dim4, dim5, dim6, dim7, dim8, dim9]
+          .where((n) => n != null)
+          .toList());
 
   //static Shape scalar() native "Shape_scalar";
 

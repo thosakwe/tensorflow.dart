@@ -1,6 +1,6 @@
 include(ExternalProject)
 find_package(Dart REQUIRED)
-find_path(TENSORFLOW_INCLUDE_DIR PATHS "tensorflow/c/c_api.h")
+find_path(TENSORFLOW_INCLUDE_DIR "tensorflow/c/c_api.h")
 find_library(TENSORFLOW_LIBRARY tensorflow)
 
 add_dart_native_extension(tensorflow_dart
@@ -14,5 +14,7 @@ add_dart_native_extension(tensorflow_dart
   cpp/tfd/saved_model_bundle.cc
   cpp/tfd/saved_model_bundle.h
   cpp/tfd/function_node.cc cpp/tfd/function_node.h)
-target_link_libraries(tensorflow_dart tensorflow)
+target_include_directories(tensorflow_dart PUBLIC ${TENSORFLOW_INCLUDE_DIR})
+target_link_libraries(tensorflow_dart tensorflow ${TENSORFLOW_LIBRARY})
 install(TARGETS tensorflow_dart DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+# install(TARGETS tensorflow_dart DESTINATION "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/..")

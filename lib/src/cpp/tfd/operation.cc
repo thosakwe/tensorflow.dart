@@ -51,7 +51,7 @@ void tfd::Output_shape(Dart_NativeArguments arguments) {
     auto *graph = dereference_graph_ptr(Dart_GetNativeArgument(arguments, 1));
     auto *status = TF_NewStatus();
     int nDims = TF_GraphGetTensorNumDims(graph, output, status);
-    auto *dims = int64_t[nDims];
+    auto *dims = new int64_t[nDims];
     TF_GraphGetTensorShape(graph, output, dims, nDims, status);
     Dart_SetReturnValue(arguments, Dart_NewExternalTypedData(Dart_TypedData_kInt64, dims, nDims));
     TF_DeleteStatus(status);
@@ -125,7 +125,7 @@ void tfd::OperationDescription_add_input_list(Dart_NativeArguments arguments) {
     auto *desc = dereference_operation_description_ptr(Dart_GetNativeArgument(arguments, 0));
     intptr_t length;
     HandleError(Dart_ListLength(listHandle, &length));
-    auto *inputs = TF_Output[length];
+    auto *inputs = new TF_Output[length];
 
     for (intptr_t i = 0; i < length; i++) {
         inputs[i] = convert_output_wrapper(Dart_ListGetAt(listHandle, i));

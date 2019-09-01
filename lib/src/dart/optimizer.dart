@@ -12,8 +12,8 @@ abstract class Optimizer {
           bool useLocking: true,
           @required Iterable<Variable> train,
           Graph graph}) =>
-      _GradientDescentOptimizer(learningRate, useLocking,
-          train?.toList() ?? [], graph ?? defaultGraph);
+      _GradientDescentOptimizer(learningRate, useLocking, train?.toList() ?? [],
+          graph ?? defaultGraph);
 
   Operation applyDense(Variable var$, Output grad,
       {String operationName, bool useLocking: true});

@@ -38,8 +38,7 @@ void main() {
 
   // Learning rate.
 
-  var optimizer =
-      Optimizer.gradientDescent(learningRate: 0.5, train: [m, b]);
+  var optimizer = Optimizer.gradientDescent(learningRate: 0.5, train: [m, b]);
   var train = optimizer.minimize(loss, gradLoss: [x]);
 
   for (int epoch = 0; epoch < epochs; epoch++) {

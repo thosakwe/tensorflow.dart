@@ -39,3 +39,4 @@ inception5h
 .DS_Store
 example/logs
 cmake-build-*/
+./*.{dylib,dll,so}
