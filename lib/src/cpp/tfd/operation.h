@@ -20,7 +20,7 @@ namespace tfd
     void Operation_new(Dart_NativeArguments arguments);
     void Operation_num_outputs(Dart_NativeArguments arguments);
     void Operation_type(Dart_NativeArguments arguments);
-    void Operation_output(Dart_NativeArguments arguments);
+//    void Operation_output(Dart_NativeArguments arguments);
 
     void OperationDescription_add_control_input(Dart_NativeArguments arguments);
     void OperationDescription_add_input(Dart_NativeArguments arguments);

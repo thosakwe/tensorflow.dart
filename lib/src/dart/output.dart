@@ -90,11 +90,11 @@ class Output<T> {
 
   int _getType() native "Output_get_type";
 
-  Tuple2<int, String> _reshape(Graph graph, Int64List dims)
-      native "Output_reshape";
+  List _reshape(Graph graph, Int64List dims) native "Output_reshape";
 
   void reshape(Shape shape) {
-    var result = _reshape(_graph, shape.dimensions);
+    var result =
+        Tuple2<int, String>.fromList(_reshape(_graph, shape.dimensions));
     var code = _codeFrom(result.item1);
     if (code != Code.ok) throw TensorFlowException(code, result.item2);
   }

@@ -29,7 +29,7 @@ class Operation<T> {
   /// Returns the number of tensors produced by this operation.
   int get numOutputs native "Operation_num_outputs";
 
-  Tuple2<int, int> _output(int idx) native "Operation_output";
+  // Tuple2<int, int> _output(int idx) native "Operation_output";
 
   /// Returns [op], but forces subsequent operations to depend upon it.
   ///
