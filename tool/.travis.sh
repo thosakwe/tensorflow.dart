@@ -10,8 +10,8 @@ NUM_MAKE_JOBS=$(($(nproc 2> /dev/null || echo ${DEFAULT_NUM_MAKE_JOBS})+1))
 PWD=`pwd`
 cd /usr
 # Download tensorflow
-wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.14.0.tar.gz
-tar -zxvf libtensorflow-cpu-linux-x86_64-1.14.0.tar.gz
+sudo wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.14.0.tar.gz
+sudo tar -zxvf libtensorflow-cpu-linux-x86_64-1.14.0.tar.gz
 cd "$PWD"
 
 # Build the library
