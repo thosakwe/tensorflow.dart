@@ -7,14 +7,13 @@ DEFAULT_NUM_MAKE_JOBS=2
 # https://github.com/travis-ci/travis-ci/issues/4696#issuecomment-308517449
 NUM_MAKE_JOBS=$(($(nproc 2> /dev/null || echo ${DEFAULT_NUM_MAKE_JOBS})+1))
 
-PWD=`pwd`
 cd /usr
 # Download tensorflow
 sudo wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.14.0.tar.gz
 sudo tar -zxvf libtensorflow-cpu-linux-x86_64-1.14.0.tar.gz
-cd "$PWD"
 
 # Build the library
+cd "$TRAVIS_BUILD_DIR"
 mkdir -p cmake-build-debug
 cd cmake-build-debug
 # LD_LIBRARY_PATH=. cmake -DCMAKE_C_FLAGS="-I." -DCMAKE_CXX_FLAGS="-I." ..

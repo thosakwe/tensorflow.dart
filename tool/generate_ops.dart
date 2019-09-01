@@ -393,7 +393,7 @@ main(List<String> args) async {
                 retType = (retType as TypeReference).types[0];
               } else {
                 // TODO: Should this always be Uint8List?
-                retType = refer('Uint8List');
+                // retType = refer('Uint8List');
               }
             }
 
@@ -507,6 +507,7 @@ String attrType(String tfType) {
     case 'String':
       return 'String';
     case 'func':
+    case 'Func':
       return 'Func';
     default:
       var m = _listType.firstMatch(tfType);
