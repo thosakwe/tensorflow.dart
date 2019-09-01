@@ -2,3 +2,4 @@ language: dart
 script: bash tool/.travis.sh
 dart:
   - dev
+  - stable

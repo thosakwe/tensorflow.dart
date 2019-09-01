@@ -1,3 +1,4 @@
+// ignore_for_file: unawaited_futures
 import 'dart:io';
 import 'package:args/args.dart';
 import 'package:cli_util/cli_util.dart';

@@ -8,10 +8,6 @@ DEFAULT_NUM_MAKE_JOBS=2
 NUM_MAKE_JOBS=$(($(nproc 2> /dev/null || echo ${DEFAULT_NUM_MAKE_JOBS})+1))
 
 # Build the library
-export TF_OS=linux
-export TF_TYPE=cpu
-export TF_VERSION=1.11.0
-export TF_PLATFORM=x86_64
 mkdir -p cmake-build-debug
 cd cmake-build-debug
 cmake ..

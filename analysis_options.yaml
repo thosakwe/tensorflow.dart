@@ -2,3 +2,8 @@ include: package:pedantic/analysis_options.yaml
 analyzer:
   strong-mode:
     implicit-casts: false
+  errors:
+    curly_braces_in_flow_control_structures: ignore
+    prefer_equal_for_default_values: ignore
+    unawaited_futures: ignore
+    unnecessary_const: ignore
