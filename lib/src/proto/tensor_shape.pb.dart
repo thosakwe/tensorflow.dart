@@ -1,105 +1,98 @@
 ///
 //  Generated code. Do not modify.
-///
-// ignore_for_file: non_constant_identifier_names,library_prefixes
-library tensorflow_tensor_shape;
+//  source: tensor_shape.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-// ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' as $core
+    show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
 import 'package:fixnum/fixnum.dart';
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
-class TensorShapeProto_Dim extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('TensorShapeProto_Dim')
+class TensorShapeProto_Dim extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('TensorShapeProto.Dim',
+      package: const $pb.PackageName('tensorflow'))
     ..aInt64(1, 'size')
     ..aOS(2, 'name')
     ..hasRequiredFields = false;
 
-  TensorShapeProto_Dim() : super();
-  TensorShapeProto_Dim.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  TensorShapeProto_Dim.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
+  TensorShapeProto_Dim._() : super();
+  factory TensorShapeProto_Dim() => create();
+  factory TensorShapeProto_Dim.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory TensorShapeProto_Dim.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
   TensorShapeProto_Dim clone() =>
-      new TensorShapeProto_Dim()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static TensorShapeProto_Dim create() => new TensorShapeProto_Dim();
-  static PbList<TensorShapeProto_Dim> createRepeated() =>
-      new PbList<TensorShapeProto_Dim>();
-  static TensorShapeProto_Dim getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyTensorShapeProto_Dim();
-    return _defaultInstance;
-  }
-
+      TensorShapeProto_Dim()..mergeFromMessage(this);
+  TensorShapeProto_Dim copyWith(void Function(TensorShapeProto_Dim) updates) =>
+      super.copyWith((message) => updates(message as TensorShapeProto_Dim));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TensorShapeProto_Dim create() => TensorShapeProto_Dim._();
+  TensorShapeProto_Dim createEmptyInstance() => create();
+  static $pb.PbList<TensorShapeProto_Dim> createRepeated() =>
+      $pb.PbList<TensorShapeProto_Dim>();
+  static TensorShapeProto_Dim getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static TensorShapeProto_Dim _defaultInstance;
-  static void $checkItem(TensorShapeProto_Dim v) {
-    if (v is! TensorShapeProto_Dim) checkItemFailed(v, 'TensorShapeProto_Dim');
-  }
 
   Int64 get size => $_getI64(0);
   set size(Int64 v) {
     $_setInt64(0, v);
   }
 
-  bool hasSize() => $_has(0);
+  $core.bool hasSize() => $_has(0);
   void clearSize() => clearField(1);
 
-  String get name => $_getS(1, '');
-  set name(String v) {
+  $core.String get name => $_getS(1, '');
+  set name($core.String v) {
     $_setString(1, v);
   }
 
-  bool hasName() => $_has(1);
+  $core.bool hasName() => $_has(1);
   void clearName() => clearField(2);
 }
 
-class _ReadonlyTensorShapeProto_Dim extends TensorShapeProto_Dim
-    with ReadonlyMessageMixin {}
-
-class TensorShapeProto extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('TensorShapeProto')
-    ..pp<TensorShapeProto_Dim>(2, 'dim', PbFieldType.PM,
-        TensorShapeProto_Dim.$checkItem, TensorShapeProto_Dim.create)
+class TensorShapeProto extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('TensorShapeProto',
+      package: const $pb.PackageName('tensorflow'))
+    ..pc<TensorShapeProto_Dim>(
+        2, 'dim', $pb.PbFieldType.PM, TensorShapeProto_Dim.create)
     ..aOB(3, 'unknownRank')
     ..hasRequiredFields = false;
 
-  TensorShapeProto() : super();
-  TensorShapeProto.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  TensorShapeProto.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  TensorShapeProto clone() => new TensorShapeProto()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static TensorShapeProto create() => new TensorShapeProto();
-  static PbList<TensorShapeProto> createRepeated() =>
-      new PbList<TensorShapeProto>();
-  static TensorShapeProto getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyTensorShapeProto();
-    return _defaultInstance;
-  }
-
+  TensorShapeProto._() : super();
+  factory TensorShapeProto() => create();
+  factory TensorShapeProto.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory TensorShapeProto.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  TensorShapeProto clone() => TensorShapeProto()..mergeFromMessage(this);
+  TensorShapeProto copyWith(void Function(TensorShapeProto) updates) =>
+      super.copyWith((message) => updates(message as TensorShapeProto));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TensorShapeProto create() => TensorShapeProto._();
+  TensorShapeProto createEmptyInstance() => create();
+  static $pb.PbList<TensorShapeProto> createRepeated() =>
+      $pb.PbList<TensorShapeProto>();
+  static TensorShapeProto getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static TensorShapeProto _defaultInstance;
-  static void $checkItem(TensorShapeProto v) {
-    if (v is! TensorShapeProto) checkItemFailed(v, 'TensorShapeProto');
-  }
 
-  List<TensorShapeProto_Dim> get dim => $_getList(0);
+  $core.List<TensorShapeProto_Dim> get dim => $_getList(0);
 
-  bool get unknownRank => $_get(1, false);
-  set unknownRank(bool v) {
+  $core.bool get unknownRank => $_get(1, false);
+  set unknownRank($core.bool v) {
     $_setBool(1, v);
   }
 
-  bool hasUnknownRank() => $_has(1);
+  $core.bool hasUnknownRank() => $_has(1);
   void clearUnknownRank() => clearField(3);
 }
-
-class _ReadonlyTensorShapeProto extends TensorShapeProto
-    with ReadonlyMessageMixin {}

@@ -1,53 +1,53 @@
 ///
 //  Generated code. Do not modify.
-///
-// ignore_for_file: non_constant_identifier_names,library_prefixes
-library tensorflow_step_stats;
+//  source: step_stats.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-// ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' as $core
+    show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
 import 'package:fixnum/fixnum.dart';
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'tensor_description.pb.dart';
-import 'allocation_description.pb.dart';
+import 'tensor_description.pb.dart' as $0;
+import 'allocation_description.pb.dart' as $1;
 
-class AllocationRecord extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('AllocationRecord')
+class AllocationRecord extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AllocationRecord',
+      package: const $pb.PackageName('tensorflow'))
     ..aInt64(1, 'allocMicros')
     ..aInt64(2, 'allocBytes')
     ..hasRequiredFields = false;
 
-  AllocationRecord() : super();
-  AllocationRecord.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  AllocationRecord.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  AllocationRecord clone() => new AllocationRecord()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static AllocationRecord create() => new AllocationRecord();
-  static PbList<AllocationRecord> createRepeated() =>
-      new PbList<AllocationRecord>();
-  static AllocationRecord getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyAllocationRecord();
-    return _defaultInstance;
-  }
-
+  AllocationRecord._() : super();
+  factory AllocationRecord() => create();
+  factory AllocationRecord.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory AllocationRecord.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  AllocationRecord clone() => AllocationRecord()..mergeFromMessage(this);
+  AllocationRecord copyWith(void Function(AllocationRecord) updates) =>
+      super.copyWith((message) => updates(message as AllocationRecord));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AllocationRecord create() => AllocationRecord._();
+  AllocationRecord createEmptyInstance() => create();
+  static $pb.PbList<AllocationRecord> createRepeated() =>
+      $pb.PbList<AllocationRecord>();
+  static AllocationRecord getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static AllocationRecord _defaultInstance;
-  static void $checkItem(AllocationRecord v) {
-    if (v is! AllocationRecord) checkItemFailed(v, 'AllocationRecord');
-  }
 
   Int64 get allocMicros => $_getI64(0);
   set allocMicros(Int64 v) {
     $_setInt64(0, v);
   }
 
-  bool hasAllocMicros() => $_has(0);
+  $core.bool hasAllocMicros() => $_has(0);
   void clearAllocMicros() => clearField(1);
 
   Int64 get allocBytes => $_getI64(1);
@@ -55,54 +55,49 @@ class AllocationRecord extends GeneratedMessage {
     $_setInt64(1, v);
   }
 
-  bool hasAllocBytes() => $_has(1);
+  $core.bool hasAllocBytes() => $_has(1);
   void clearAllocBytes() => clearField(2);
 }
 
-class _ReadonlyAllocationRecord extends AllocationRecord
-    with ReadonlyMessageMixin {}
-
-class AllocatorMemoryUsed extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('AllocatorMemoryUsed')
+class AllocatorMemoryUsed extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AllocatorMemoryUsed',
+      package: const $pb.PackageName('tensorflow'))
     ..aOS(1, 'allocatorName')
     ..aInt64(2, 'totalBytes')
     ..aInt64(3, 'peakBytes')
     ..aInt64(4, 'liveBytes')
     ..aInt64(5, 'allocatorBytesInUse')
-    ..pp<AllocationRecord>(6, 'allocationRecords', PbFieldType.PM,
-        AllocationRecord.$checkItem, AllocationRecord.create)
+    ..pc<AllocationRecord>(
+        6, 'allocationRecords', $pb.PbFieldType.PM, AllocationRecord.create)
     ..hasRequiredFields = false;
 
-  AllocatorMemoryUsed() : super();
-  AllocatorMemoryUsed.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  AllocatorMemoryUsed.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  AllocatorMemoryUsed clone() =>
-      new AllocatorMemoryUsed()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static AllocatorMemoryUsed create() => new AllocatorMemoryUsed();
-  static PbList<AllocatorMemoryUsed> createRepeated() =>
-      new PbList<AllocatorMemoryUsed>();
-  static AllocatorMemoryUsed getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyAllocatorMemoryUsed();
-    return _defaultInstance;
-  }
-
+  AllocatorMemoryUsed._() : super();
+  factory AllocatorMemoryUsed() => create();
+  factory AllocatorMemoryUsed.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory AllocatorMemoryUsed.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  AllocatorMemoryUsed clone() => AllocatorMemoryUsed()..mergeFromMessage(this);
+  AllocatorMemoryUsed copyWith(void Function(AllocatorMemoryUsed) updates) =>
+      super.copyWith((message) => updates(message as AllocatorMemoryUsed));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AllocatorMemoryUsed create() => AllocatorMemoryUsed._();
+  AllocatorMemoryUsed createEmptyInstance() => create();
+  static $pb.PbList<AllocatorMemoryUsed> createRepeated() =>
+      $pb.PbList<AllocatorMemoryUsed>();
+  static AllocatorMemoryUsed getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static AllocatorMemoryUsed _defaultInstance;
-  static void $checkItem(AllocatorMemoryUsed v) {
-    if (v is! AllocatorMemoryUsed) checkItemFailed(v, 'AllocatorMemoryUsed');
-  }
 
-  String get allocatorName => $_getS(0, '');
-  set allocatorName(String v) {
+  $core.String get allocatorName => $_getS(0, '');
+  set allocatorName($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasAllocatorName() => $_has(0);
+  $core.bool hasAllocatorName() => $_has(0);
   void clearAllocatorName() => clearField(1);
 
   Int64 get totalBytes => $_getI64(1);
@@ -110,7 +105,7 @@ class AllocatorMemoryUsed extends GeneratedMessage {
     $_setInt64(1, v);
   }
 
-  bool hasTotalBytes() => $_has(1);
+  $core.bool hasTotalBytes() => $_has(1);
   void clearTotalBytes() => clearField(2);
 
   Int64 get peakBytes => $_getI64(2);
@@ -118,7 +113,7 @@ class AllocatorMemoryUsed extends GeneratedMessage {
     $_setInt64(2, v);
   }
 
-  bool hasPeakBytes() => $_has(2);
+  $core.bool hasPeakBytes() => $_has(2);
   void clearPeakBytes() => clearField(3);
 
   Int64 get liveBytes => $_getI64(3);
@@ -126,7 +121,7 @@ class AllocatorMemoryUsed extends GeneratedMessage {
     $_setInt64(3, v);
   }
 
-  bool hasLiveBytes() => $_has(3);
+  $core.bool hasLiveBytes() => $_has(3);
   void clearLiveBytes() => clearField(4);
 
   Int64 get allocatorBytesInUse => $_getI64(4);
@@ -134,106 +129,104 @@ class AllocatorMemoryUsed extends GeneratedMessage {
     $_setInt64(4, v);
   }
 
-  bool hasAllocatorBytesInUse() => $_has(4);
+  $core.bool hasAllocatorBytesInUse() => $_has(4);
   void clearAllocatorBytesInUse() => clearField(5);
 
-  List<AllocationRecord> get allocationRecords => $_getList(5);
+  $core.List<AllocationRecord> get allocationRecords => $_getList(5);
 }
 
-class _ReadonlyAllocatorMemoryUsed extends AllocatorMemoryUsed
-    with ReadonlyMessageMixin {}
-
-class NodeOutput extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('NodeOutput')
-    ..a<int>(1, 'slot', PbFieldType.O3)
-    ..a<TensorDescription>(3, 'tensorDescription', PbFieldType.OM,
-        TensorDescription.getDefault, TensorDescription.create)
+class NodeOutput extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('NodeOutput',
+      package: const $pb.PackageName('tensorflow'))
+    ..a<$core.int>(1, 'slot', $pb.PbFieldType.O3)
+    ..a<$0.TensorDescription>(3, 'tensorDescription', $pb.PbFieldType.OM,
+        $0.TensorDescription.getDefault, $0.TensorDescription.create)
     ..hasRequiredFields = false;
 
-  NodeOutput() : super();
-  NodeOutput.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  NodeOutput.fromJson(String i, [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  NodeOutput clone() => new NodeOutput()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static NodeOutput create() => new NodeOutput();
-  static PbList<NodeOutput> createRepeated() => new PbList<NodeOutput>();
-  static NodeOutput getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyNodeOutput();
-    return _defaultInstance;
-  }
-
+  NodeOutput._() : super();
+  factory NodeOutput() => create();
+  factory NodeOutput.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory NodeOutput.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  NodeOutput clone() => NodeOutput()..mergeFromMessage(this);
+  NodeOutput copyWith(void Function(NodeOutput) updates) =>
+      super.copyWith((message) => updates(message as NodeOutput));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NodeOutput create() => NodeOutput._();
+  NodeOutput createEmptyInstance() => create();
+  static $pb.PbList<NodeOutput> createRepeated() => $pb.PbList<NodeOutput>();
+  static NodeOutput getDefault() => _defaultInstance ??= create()..freeze();
   static NodeOutput _defaultInstance;
-  static void $checkItem(NodeOutput v) {
-    if (v is! NodeOutput) checkItemFailed(v, 'NodeOutput');
+
+  $core.int get slot => $_get(0, 0);
+  set slot($core.int v) {
+    $_setSignedInt32(0, v);
   }
 
-  int get slot => $_get(0, 0);
-  set slot(int v) {
-    $_setUnsignedInt32(0, v);
-  }
-
-  bool hasSlot() => $_has(0);
+  $core.bool hasSlot() => $_has(0);
   void clearSlot() => clearField(1);
 
-  TensorDescription get tensorDescription => $_getN(1);
-  set tensorDescription(TensorDescription v) {
+  $0.TensorDescription get tensorDescription => $_getN(1);
+  set tensorDescription($0.TensorDescription v) {
     setField(3, v);
   }
 
-  bool hasTensorDescription() => $_has(1);
+  $core.bool hasTensorDescription() => $_has(1);
   void clearTensorDescription() => clearField(3);
 }
 
-class _ReadonlyNodeOutput extends NodeOutput with ReadonlyMessageMixin {}
-
-class MemoryStats extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('MemoryStats')
+class MemoryStats extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('MemoryStats',
+      package: const $pb.PackageName('tensorflow'))
     ..aInt64(1, 'tempMemorySize')
     ..aInt64(2, 'deviceTempMemorySize')
     ..aInt64(3, 'persistentMemorySize')
     ..aInt64(4, 'devicePersistentMemorySize')
-    ..p<Int64>(5, 'persistentTensorAllocIds', PbFieldType.P6)
-    ..p<Int64>(6, 'devicePersistentTensorAllocIds', PbFieldType.P6)
+    ..p<Int64>(5, 'persistentTensorAllocIds', $pb.PbFieldType.P6)
+    ..p<Int64>(6, 'devicePersistentTensorAllocIds', $pb.PbFieldType.P6)
     ..hasRequiredFields = false;
 
-  MemoryStats() : super();
-  MemoryStats.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  MemoryStats.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  MemoryStats clone() => new MemoryStats()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static MemoryStats create() => new MemoryStats();
-  static PbList<MemoryStats> createRepeated() => new PbList<MemoryStats>();
-  static MemoryStats getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyMemoryStats();
-    return _defaultInstance;
-  }
-
+  MemoryStats._() : super();
+  factory MemoryStats() => create();
+  factory MemoryStats.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory MemoryStats.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  MemoryStats clone() => MemoryStats()..mergeFromMessage(this);
+  MemoryStats copyWith(void Function(MemoryStats) updates) =>
+      super.copyWith((message) => updates(message as MemoryStats));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MemoryStats create() => MemoryStats._();
+  MemoryStats createEmptyInstance() => create();
+  static $pb.PbList<MemoryStats> createRepeated() => $pb.PbList<MemoryStats>();
+  static MemoryStats getDefault() => _defaultInstance ??= create()..freeze();
   static MemoryStats _defaultInstance;
-  static void $checkItem(MemoryStats v) {
-    if (v is! MemoryStats) checkItemFailed(v, 'MemoryStats');
-  }
 
   Int64 get tempMemorySize => $_getI64(0);
   set tempMemorySize(Int64 v) {
     $_setInt64(0, v);
   }
 
-  bool hasTempMemorySize() => $_has(0);
+  $core.bool hasTempMemorySize() => $_has(0);
   void clearTempMemorySize() => clearField(1);
 
+  @$core.Deprecated('This field is deprecated.')
   Int64 get deviceTempMemorySize => $_getI64(1);
+  @$core.Deprecated('This field is deprecated.')
   set deviceTempMemorySize(Int64 v) {
     $_setInt64(1, v);
   }
 
-  bool hasDeviceTempMemorySize() => $_has(1);
+  @$core.Deprecated('This field is deprecated.')
+  $core.bool hasDeviceTempMemorySize() => $_has(1);
+  @$core.Deprecated('This field is deprecated.')
   void clearDeviceTempMemorySize() => clearField(2);
 
   Int64 get persistentMemorySize => $_getI64(2);
@@ -241,72 +234,73 @@ class MemoryStats extends GeneratedMessage {
     $_setInt64(2, v);
   }
 
-  bool hasPersistentMemorySize() => $_has(2);
+  $core.bool hasPersistentMemorySize() => $_has(2);
   void clearPersistentMemorySize() => clearField(3);
 
+  @$core.Deprecated('This field is deprecated.')
   Int64 get devicePersistentMemorySize => $_getI64(3);
+  @$core.Deprecated('This field is deprecated.')
   set devicePersistentMemorySize(Int64 v) {
     $_setInt64(3, v);
   }
 
-  bool hasDevicePersistentMemorySize() => $_has(3);
+  @$core.Deprecated('This field is deprecated.')
+  $core.bool hasDevicePersistentMemorySize() => $_has(3);
+  @$core.Deprecated('This field is deprecated.')
   void clearDevicePersistentMemorySize() => clearField(4);
 
-  List<Int64> get persistentTensorAllocIds => $_getList(4);
+  $core.List<Int64> get persistentTensorAllocIds => $_getList(4);
 
-  List<Int64> get devicePersistentTensorAllocIds => $_getList(5);
+  @$core.Deprecated('This field is deprecated.')
+  $core.List<Int64> get devicePersistentTensorAllocIds => $_getList(5);
 }
 
-class _ReadonlyMemoryStats extends MemoryStats with ReadonlyMessageMixin {}
-
-class NodeExecStats extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('NodeExecStats')
+class NodeExecStats extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('NodeExecStats',
+      package: const $pb.PackageName('tensorflow'))
     ..aOS(1, 'nodeName')
     ..aInt64(2, 'allStartMicros')
     ..aInt64(3, 'opStartRelMicros')
     ..aInt64(4, 'opEndRelMicros')
     ..aInt64(5, 'allEndRelMicros')
-    ..pp<AllocatorMemoryUsed>(6, 'memory', PbFieldType.PM,
-        AllocatorMemoryUsed.$checkItem, AllocatorMemoryUsed.create)
-    ..pp<NodeOutput>(
-        7, 'output', PbFieldType.PM, NodeOutput.$checkItem, NodeOutput.create)
+    ..pc<AllocatorMemoryUsed>(
+        6, 'memory', $pb.PbFieldType.PM, AllocatorMemoryUsed.create)
+    ..pc<NodeOutput>(7, 'output', $pb.PbFieldType.PM, NodeOutput.create)
     ..aOS(8, 'timelineLabel')
     ..aInt64(9, 'scheduledMicros')
-    ..a<int>(10, 'threadId', PbFieldType.OU3)
-    ..pp<AllocationDescription>(11, 'referencedTensor', PbFieldType.PM,
-        AllocationDescription.$checkItem, AllocationDescription.create)
-    ..a<MemoryStats>(12, 'memoryStats', PbFieldType.OM, MemoryStats.getDefault,
-        MemoryStats.create)
+    ..a<$core.int>(10, 'threadId', $pb.PbFieldType.OU3)
+    ..pc<$1.AllocationDescription>(11, 'referencedTensor', $pb.PbFieldType.PM,
+        $1.AllocationDescription.create)
+    ..a<MemoryStats>(12, 'memoryStats', $pb.PbFieldType.OM,
+        MemoryStats.getDefault, MemoryStats.create)
     ..hasRequiredFields = false;
 
-  NodeExecStats() : super();
-  NodeExecStats.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  NodeExecStats.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  NodeExecStats clone() => new NodeExecStats()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static NodeExecStats create() => new NodeExecStats();
-  static PbList<NodeExecStats> createRepeated() => new PbList<NodeExecStats>();
-  static NodeExecStats getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyNodeExecStats();
-    return _defaultInstance;
-  }
-
+  NodeExecStats._() : super();
+  factory NodeExecStats() => create();
+  factory NodeExecStats.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory NodeExecStats.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  NodeExecStats clone() => NodeExecStats()..mergeFromMessage(this);
+  NodeExecStats copyWith(void Function(NodeExecStats) updates) =>
+      super.copyWith((message) => updates(message as NodeExecStats));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NodeExecStats create() => NodeExecStats._();
+  NodeExecStats createEmptyInstance() => create();
+  static $pb.PbList<NodeExecStats> createRepeated() =>
+      $pb.PbList<NodeExecStats>();
+  static NodeExecStats getDefault() => _defaultInstance ??= create()..freeze();
   static NodeExecStats _defaultInstance;
-  static void $checkItem(NodeExecStats v) {
-    if (v is! NodeExecStats) checkItemFailed(v, 'NodeExecStats');
-  }
 
-  String get nodeName => $_getS(0, '');
-  set nodeName(String v) {
+  $core.String get nodeName => $_getS(0, '');
+  set nodeName($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasNodeName() => $_has(0);
+  $core.bool hasNodeName() => $_has(0);
   void clearNodeName() => clearField(1);
 
   Int64 get allStartMicros => $_getI64(1);
@@ -314,7 +308,7 @@ class NodeExecStats extends GeneratedMessage {
     $_setInt64(1, v);
   }
 
-  bool hasAllStartMicros() => $_has(1);
+  $core.bool hasAllStartMicros() => $_has(1);
   void clearAllStartMicros() => clearField(2);
 
   Int64 get opStartRelMicros => $_getI64(2);
@@ -322,7 +316,7 @@ class NodeExecStats extends GeneratedMessage {
     $_setInt64(2, v);
   }
 
-  bool hasOpStartRelMicros() => $_has(2);
+  $core.bool hasOpStartRelMicros() => $_has(2);
   void clearOpStartRelMicros() => clearField(3);
 
   Int64 get opEndRelMicros => $_getI64(3);
@@ -330,7 +324,7 @@ class NodeExecStats extends GeneratedMessage {
     $_setInt64(3, v);
   }
 
-  bool hasOpEndRelMicros() => $_has(3);
+  $core.bool hasOpEndRelMicros() => $_has(3);
   void clearOpEndRelMicros() => clearField(4);
 
   Int64 get allEndRelMicros => $_getI64(4);
@@ -338,19 +332,19 @@ class NodeExecStats extends GeneratedMessage {
     $_setInt64(4, v);
   }
 
-  bool hasAllEndRelMicros() => $_has(4);
+  $core.bool hasAllEndRelMicros() => $_has(4);
   void clearAllEndRelMicros() => clearField(5);
 
-  List<AllocatorMemoryUsed> get memory => $_getList(5);
+  $core.List<AllocatorMemoryUsed> get memory => $_getList(5);
 
-  List<NodeOutput> get output => $_getList(6);
+  $core.List<NodeOutput> get output => $_getList(6);
 
-  String get timelineLabel => $_getS(7, '');
-  set timelineLabel(String v) {
+  $core.String get timelineLabel => $_getS(7, '');
+  set timelineLabel($core.String v) {
     $_setString(7, v);
   }
 
-  bool hasTimelineLabel() => $_has(7);
+  $core.bool hasTimelineLabel() => $_has(7);
   void clearTimelineLabel() => clearField(8);
 
   Int64 get scheduledMicros => $_getI64(8);
@@ -358,101 +352,93 @@ class NodeExecStats extends GeneratedMessage {
     $_setInt64(8, v);
   }
 
-  bool hasScheduledMicros() => $_has(8);
+  $core.bool hasScheduledMicros() => $_has(8);
   void clearScheduledMicros() => clearField(9);
 
-  int get threadId => $_get(9, 0);
-  set threadId(int v) {
+  $core.int get threadId => $_get(9, 0);
+  set threadId($core.int v) {
     $_setUnsignedInt32(9, v);
   }
 
-  bool hasThreadId() => $_has(9);
+  $core.bool hasThreadId() => $_has(9);
   void clearThreadId() => clearField(10);
 
-  List<AllocationDescription> get referencedTensor => $_getList(10);
+  $core.List<$1.AllocationDescription> get referencedTensor => $_getList(10);
 
   MemoryStats get memoryStats => $_getN(11);
   set memoryStats(MemoryStats v) {
     setField(12, v);
   }
 
-  bool hasMemoryStats() => $_has(11);
+  $core.bool hasMemoryStats() => $_has(11);
   void clearMemoryStats() => clearField(12);
 }
 
-class _ReadonlyNodeExecStats extends NodeExecStats with ReadonlyMessageMixin {}
-
-class DeviceStepStats extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('DeviceStepStats')
+class DeviceStepStats extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('DeviceStepStats',
+      package: const $pb.PackageName('tensorflow'))
     ..aOS(1, 'device')
-    ..pp<NodeExecStats>(2, 'nodeStats', PbFieldType.PM,
-        NodeExecStats.$checkItem, NodeExecStats.create)
+    ..pc<NodeExecStats>(
+        2, 'nodeStats', $pb.PbFieldType.PM, NodeExecStats.create)
     ..hasRequiredFields = false;
 
-  DeviceStepStats() : super();
-  DeviceStepStats.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  DeviceStepStats.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  DeviceStepStats clone() => new DeviceStepStats()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static DeviceStepStats create() => new DeviceStepStats();
-  static PbList<DeviceStepStats> createRepeated() =>
-      new PbList<DeviceStepStats>();
-  static DeviceStepStats getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyDeviceStepStats();
-    return _defaultInstance;
-  }
-
+  DeviceStepStats._() : super();
+  factory DeviceStepStats() => create();
+  factory DeviceStepStats.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory DeviceStepStats.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  DeviceStepStats clone() => DeviceStepStats()..mergeFromMessage(this);
+  DeviceStepStats copyWith(void Function(DeviceStepStats) updates) =>
+      super.copyWith((message) => updates(message as DeviceStepStats));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DeviceStepStats create() => DeviceStepStats._();
+  DeviceStepStats createEmptyInstance() => create();
+  static $pb.PbList<DeviceStepStats> createRepeated() =>
+      $pb.PbList<DeviceStepStats>();
+  static DeviceStepStats getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static DeviceStepStats _defaultInstance;
-  static void $checkItem(DeviceStepStats v) {
-    if (v is! DeviceStepStats) checkItemFailed(v, 'DeviceStepStats');
-  }
 
-  String get device => $_getS(0, '');
-  set device(String v) {
+  $core.String get device => $_getS(0, '');
+  set device($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasDevice() => $_has(0);
+  $core.bool hasDevice() => $_has(0);
   void clearDevice() => clearField(1);
 
-  List<NodeExecStats> get nodeStats => $_getList(1);
+  $core.List<NodeExecStats> get nodeStats => $_getList(1);
 }
 
-class _ReadonlyDeviceStepStats extends DeviceStepStats
-    with ReadonlyMessageMixin {}
+class StepStats extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i =
+      $pb.BuilderInfo('StepStats', package: const $pb.PackageName('tensorflow'))
+        ..pc<DeviceStepStats>(
+            1, 'devStats', $pb.PbFieldType.PM, DeviceStepStats.create)
+        ..hasRequiredFields = false;
 
-class StepStats extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('StepStats')
-    ..pp<DeviceStepStats>(1, 'devStats', PbFieldType.PM,
-        DeviceStepStats.$checkItem, DeviceStepStats.create)
-    ..hasRequiredFields = false;
-
-  StepStats() : super();
-  StepStats.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  StepStats.fromJson(String i, [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  StepStats clone() => new StepStats()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static StepStats create() => new StepStats();
-  static PbList<StepStats> createRepeated() => new PbList<StepStats>();
-  static StepStats getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyStepStats();
-    return _defaultInstance;
-  }
-
+  StepStats._() : super();
+  factory StepStats() => create();
+  factory StepStats.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory StepStats.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  StepStats clone() => StepStats()..mergeFromMessage(this);
+  StepStats copyWith(void Function(StepStats) updates) =>
+      super.copyWith((message) => updates(message as StepStats));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StepStats create() => StepStats._();
+  StepStats createEmptyInstance() => create();
+  static $pb.PbList<StepStats> createRepeated() => $pb.PbList<StepStats>();
+  static StepStats getDefault() => _defaultInstance ??= create()..freeze();
   static StepStats _defaultInstance;
-  static void $checkItem(StepStats v) {
-    if (v is! StepStats) checkItemFailed(v, 'StepStats');
-  }
 
-  List<DeviceStepStats> get devStats => $_getList(0);
+  $core.List<DeviceStepStats> get devStats => $_getList(0);
 }
-
-class _ReadonlyStepStats extends StepStats with ReadonlyMessageMixin {}

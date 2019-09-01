@@ -1,251 +1,153 @@
 ///
 //  Generated code. Do not modify.
-///
-// ignore_for_file: non_constant_identifier_names,library_prefixes
-library tensorflow_function;
+//  source: function.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-// ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' as $core
+    show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'op_def.pb.dart';
-import 'node_def.pb.dart';
-import 'attr_value.pb.dart';
+import 'op_def.pb.dart' as $0;
+import 'node_def.pb.dart' as $1;
+import 'attr_value.pb.dart' as $2;
 
-class FunctionDefLibrary extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('FunctionDefLibrary')
-    ..pp<FunctionDef>(1, 'function', PbFieldType.PM, FunctionDef.$checkItem,
-        FunctionDef.create)
-    ..pp<GradientDef>(2, 'gradient', PbFieldType.PM, GradientDef.$checkItem,
-        GradientDef.create)
+class FunctionDefLibrary extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FunctionDefLibrary',
+      package: const $pb.PackageName('tensorflow'))
+    ..pc<FunctionDef>(1, 'function', $pb.PbFieldType.PM, FunctionDef.create)
+    ..pc<GradientDef>(2, 'gradient', $pb.PbFieldType.PM, GradientDef.create)
     ..hasRequiredFields = false;
 
-  FunctionDefLibrary() : super();
-  FunctionDefLibrary.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  FunctionDefLibrary.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  FunctionDefLibrary clone() =>
-      new FunctionDefLibrary()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static FunctionDefLibrary create() => new FunctionDefLibrary();
-  static PbList<FunctionDefLibrary> createRepeated() =>
-      new PbList<FunctionDefLibrary>();
-  static FunctionDefLibrary getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyFunctionDefLibrary();
-    return _defaultInstance;
-  }
-
+  FunctionDefLibrary._() : super();
+  factory FunctionDefLibrary() => create();
+  factory FunctionDefLibrary.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory FunctionDefLibrary.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  FunctionDefLibrary clone() => FunctionDefLibrary()..mergeFromMessage(this);
+  FunctionDefLibrary copyWith(void Function(FunctionDefLibrary) updates) =>
+      super.copyWith((message) => updates(message as FunctionDefLibrary));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FunctionDefLibrary create() => FunctionDefLibrary._();
+  FunctionDefLibrary createEmptyInstance() => create();
+  static $pb.PbList<FunctionDefLibrary> createRepeated() =>
+      $pb.PbList<FunctionDefLibrary>();
+  static FunctionDefLibrary getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static FunctionDefLibrary _defaultInstance;
-  static void $checkItem(FunctionDefLibrary v) {
-    if (v is! FunctionDefLibrary) checkItemFailed(v, 'FunctionDefLibrary');
-  }
 
-  List<FunctionDef> get function => $_getList(0);
+  $core.List<FunctionDef> get function => $_getList(0);
 
-  List<GradientDef> get gradient => $_getList(1);
+  $core.List<GradientDef> get gradient => $_getList(1);
 }
 
-class _ReadonlyFunctionDefLibrary extends FunctionDefLibrary
-    with ReadonlyMessageMixin {}
-
-class FunctionDef_AttrEntry extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('FunctionDef_AttrEntry')
-    ..aOS(1, 'key')
-    ..a<AttrValue>(
-        2, 'value', PbFieldType.OM, AttrValue.getDefault, AttrValue.create)
+class FunctionDef extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FunctionDef',
+      package: const $pb.PackageName('tensorflow'))
+    ..a<$0.OpDef>(1, 'signature', $pb.PbFieldType.OM, $0.OpDef.getDefault,
+        $0.OpDef.create)
+    ..pc<$1.NodeDef>(3, 'nodeDef', $pb.PbFieldType.PM, $1.NodeDef.create)
+    ..m<$core.String, $core.String>(
+        4,
+        'ret',
+        'FunctionDef.RetEntry',
+        $pb.PbFieldType.OS,
+        $pb.PbFieldType.OS,
+        null,
+        null,
+        null,
+        const $pb.PackageName('tensorflow'))
+    ..m<$core.String, $2.AttrValue>(
+        5,
+        'attr',
+        'FunctionDef.AttrEntry',
+        $pb.PbFieldType.OS,
+        $pb.PbFieldType.OM,
+        $2.AttrValue.create,
+        null,
+        null,
+        const $pb.PackageName('tensorflow'))
     ..hasRequiredFields = false;
 
-  FunctionDef_AttrEntry() : super();
-  FunctionDef_AttrEntry.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  FunctionDef_AttrEntry.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  FunctionDef_AttrEntry clone() =>
-      new FunctionDef_AttrEntry()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static FunctionDef_AttrEntry create() => new FunctionDef_AttrEntry();
-  static PbList<FunctionDef_AttrEntry> createRepeated() =>
-      new PbList<FunctionDef_AttrEntry>();
-  static FunctionDef_AttrEntry getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyFunctionDef_AttrEntry();
-    return _defaultInstance;
-  }
-
-  static FunctionDef_AttrEntry _defaultInstance;
-  static void $checkItem(FunctionDef_AttrEntry v) {
-    if (v is! FunctionDef_AttrEntry)
-      checkItemFailed(v, 'FunctionDef_AttrEntry');
-  }
-
-  String get key => $_getS(0, '');
-  set key(String v) {
-    $_setString(0, v);
-  }
-
-  bool hasKey() => $_has(0);
-  void clearKey() => clearField(1);
-
-  AttrValue get value => $_getN(1);
-  set value(AttrValue v) {
-    setField(2, v);
-  }
-
-  bool hasValue() => $_has(1);
-  void clearValue() => clearField(2);
-}
-
-class _ReadonlyFunctionDef_AttrEntry extends FunctionDef_AttrEntry
-    with ReadonlyMessageMixin {}
-
-class FunctionDef_RetEntry extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('FunctionDef_RetEntry')
-    ..aOS(1, 'key')
-    ..aOS(2, 'value')
-    ..hasRequiredFields = false;
-
-  FunctionDef_RetEntry() : super();
-  FunctionDef_RetEntry.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  FunctionDef_RetEntry.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  FunctionDef_RetEntry clone() =>
-      new FunctionDef_RetEntry()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static FunctionDef_RetEntry create() => new FunctionDef_RetEntry();
-  static PbList<FunctionDef_RetEntry> createRepeated() =>
-      new PbList<FunctionDef_RetEntry>();
-  static FunctionDef_RetEntry getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyFunctionDef_RetEntry();
-    return _defaultInstance;
-  }
-
-  static FunctionDef_RetEntry _defaultInstance;
-  static void $checkItem(FunctionDef_RetEntry v) {
-    if (v is! FunctionDef_RetEntry) checkItemFailed(v, 'FunctionDef_RetEntry');
-  }
-
-  String get key => $_getS(0, '');
-  set key(String v) {
-    $_setString(0, v);
-  }
-
-  bool hasKey() => $_has(0);
-  void clearKey() => clearField(1);
-
-  String get value => $_getS(1, '');
-  set value(String v) {
-    $_setString(1, v);
-  }
-
-  bool hasValue() => $_has(1);
-  void clearValue() => clearField(2);
-}
-
-class _ReadonlyFunctionDef_RetEntry extends FunctionDef_RetEntry
-    with ReadonlyMessageMixin {}
-
-class FunctionDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('FunctionDef')
-    ..a<OpDef>(1, 'signature', PbFieldType.OM, OpDef.getDefault, OpDef.create)
-    ..pp<NodeDef>(
-        3, 'nodeDef', PbFieldType.PM, NodeDef.$checkItem, NodeDef.create)
-    ..pp<FunctionDef_RetEntry>(4, 'ret', PbFieldType.PM,
-        FunctionDef_RetEntry.$checkItem, FunctionDef_RetEntry.create)
-    ..pp<FunctionDef_AttrEntry>(5, 'attr', PbFieldType.PM,
-        FunctionDef_AttrEntry.$checkItem, FunctionDef_AttrEntry.create)
-    ..hasRequiredFields = false;
-
-  FunctionDef() : super();
-  FunctionDef.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  FunctionDef.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  FunctionDef clone() => new FunctionDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static FunctionDef create() => new FunctionDef();
-  static PbList<FunctionDef> createRepeated() => new PbList<FunctionDef>();
-  static FunctionDef getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyFunctionDef();
-    return _defaultInstance;
-  }
-
+  FunctionDef._() : super();
+  factory FunctionDef() => create();
+  factory FunctionDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory FunctionDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  FunctionDef clone() => FunctionDef()..mergeFromMessage(this);
+  FunctionDef copyWith(void Function(FunctionDef) updates) =>
+      super.copyWith((message) => updates(message as FunctionDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FunctionDef create() => FunctionDef._();
+  FunctionDef createEmptyInstance() => create();
+  static $pb.PbList<FunctionDef> createRepeated() => $pb.PbList<FunctionDef>();
+  static FunctionDef getDefault() => _defaultInstance ??= create()..freeze();
   static FunctionDef _defaultInstance;
-  static void $checkItem(FunctionDef v) {
-    if (v is! FunctionDef) checkItemFailed(v, 'FunctionDef');
-  }
 
-  OpDef get signature => $_getN(0);
-  set signature(OpDef v) {
+  $0.OpDef get signature => $_getN(0);
+  set signature($0.OpDef v) {
     setField(1, v);
   }
 
-  bool hasSignature() => $_has(0);
+  $core.bool hasSignature() => $_has(0);
   void clearSignature() => clearField(1);
 
-  List<NodeDef> get nodeDef => $_getList(1);
+  $core.List<$1.NodeDef> get nodeDef => $_getList(1);
 
-  List<FunctionDef_RetEntry> get ret => $_getList(2);
+  $core.Map<$core.String, $core.String> get ret => $_getMap(2);
 
-  List<FunctionDef_AttrEntry> get attr => $_getList(3);
+  $core.Map<$core.String, $2.AttrValue> get attr => $_getMap(3);
 }
 
-class _ReadonlyFunctionDef extends FunctionDef with ReadonlyMessageMixin {}
-
-class GradientDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('GradientDef')
+class GradientDef extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('GradientDef',
+      package: const $pb.PackageName('tensorflow'))
     ..aOS(1, 'functionName')
     ..aOS(2, 'gradientFunc')
     ..hasRequiredFields = false;
 
-  GradientDef() : super();
-  GradientDef.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  GradientDef.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  GradientDef clone() => new GradientDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static GradientDef create() => new GradientDef();
-  static PbList<GradientDef> createRepeated() => new PbList<GradientDef>();
-  static GradientDef getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyGradientDef();
-    return _defaultInstance;
-  }
-
+  GradientDef._() : super();
+  factory GradientDef() => create();
+  factory GradientDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory GradientDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  GradientDef clone() => GradientDef()..mergeFromMessage(this);
+  GradientDef copyWith(void Function(GradientDef) updates) =>
+      super.copyWith((message) => updates(message as GradientDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GradientDef create() => GradientDef._();
+  GradientDef createEmptyInstance() => create();
+  static $pb.PbList<GradientDef> createRepeated() => $pb.PbList<GradientDef>();
+  static GradientDef getDefault() => _defaultInstance ??= create()..freeze();
   static GradientDef _defaultInstance;
-  static void $checkItem(GradientDef v) {
-    if (v is! GradientDef) checkItemFailed(v, 'GradientDef');
-  }
 
-  String get functionName => $_getS(0, '');
-  set functionName(String v) {
+  $core.String get functionName => $_getS(0, '');
+  set functionName($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasFunctionName() => $_has(0);
+  $core.bool hasFunctionName() => $_has(0);
   void clearFunctionName() => clearField(1);
 
-  String get gradientFunc => $_getS(1, '');
-  set gradientFunc(String v) {
+  $core.String get gradientFunc => $_getS(1, '');
+  set gradientFunc($core.String v) {
     $_setString(1, v);
   }
 
-  bool hasGradientFunc() => $_has(1);
+  $core.bool hasGradientFunc() => $_has(1);
   void clearGradientFunc() => clearField(2);
 }
-
-class _ReadonlyGradientDef extends GradientDef with ReadonlyMessageMixin {}

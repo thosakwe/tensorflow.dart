@@ -1,76 +1,77 @@
 ///
 //  Generated code. Do not modify.
-///
-// ignore_for_file: non_constant_identifier_names,library_prefixes
-library tensorflow_tensor_description;
+//  source: tensor_description.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-// ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' as $core
+    show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'tensor_shape.pb.dart';
-import 'allocation_description.pb.dart';
+import 'tensor_shape.pb.dart' as $0;
+import 'allocation_description.pb.dart' as $1;
 
-import 'types.pbenum.dart';
+import 'types.pbenum.dart' as $2;
 
-class TensorDescription extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('TensorDescription')
-    ..e<DataType>(1, 'dtype', PbFieldType.OE, DataType.DT_INVALID,
-        DataType.valueOf, DataType.values)
-    ..a<TensorShapeProto>(2, 'shape', PbFieldType.OM,
-        TensorShapeProto.getDefault, TensorShapeProto.create)
-    ..a<AllocationDescription>(4, 'allocationDescription', PbFieldType.OM,
-        AllocationDescription.getDefault, AllocationDescription.create)
+class TensorDescription extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('TensorDescription',
+      package: const $pb.PackageName('tensorflow'))
+    ..e<$2.DataType>(1, 'dtype', $pb.PbFieldType.OE, $2.DataType.DT_INVALID,
+        $2.DataType.valueOf, $2.DataType.values)
+    ..a<$0.TensorShapeProto>(2, 'shape', $pb.PbFieldType.OM,
+        $0.TensorShapeProto.getDefault, $0.TensorShapeProto.create)
+    ..a<$1.AllocationDescription>(
+        4,
+        'allocationDescription',
+        $pb.PbFieldType.OM,
+        $1.AllocationDescription.getDefault,
+        $1.AllocationDescription.create)
     ..hasRequiredFields = false;
 
-  TensorDescription() : super();
-  TensorDescription.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  TensorDescription.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  TensorDescription clone() => new TensorDescription()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static TensorDescription create() => new TensorDescription();
-  static PbList<TensorDescription> createRepeated() =>
-      new PbList<TensorDescription>();
-  static TensorDescription getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyTensorDescription();
-    return _defaultInstance;
-  }
-
+  TensorDescription._() : super();
+  factory TensorDescription() => create();
+  factory TensorDescription.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory TensorDescription.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  TensorDescription clone() => TensorDescription()..mergeFromMessage(this);
+  TensorDescription copyWith(void Function(TensorDescription) updates) =>
+      super.copyWith((message) => updates(message as TensorDescription));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TensorDescription create() => TensorDescription._();
+  TensorDescription createEmptyInstance() => create();
+  static $pb.PbList<TensorDescription> createRepeated() =>
+      $pb.PbList<TensorDescription>();
+  static TensorDescription getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static TensorDescription _defaultInstance;
-  static void $checkItem(TensorDescription v) {
-    if (v is! TensorDescription) checkItemFailed(v, 'TensorDescription');
-  }
 
-  DataType get dtype => $_getN(0);
-  set dtype(DataType v) {
+  $2.DataType get dtype => $_getN(0);
+  set dtype($2.DataType v) {
     setField(1, v);
   }
 
-  bool hasDtype() => $_has(0);
+  $core.bool hasDtype() => $_has(0);
   void clearDtype() => clearField(1);
 
-  TensorShapeProto get shape => $_getN(1);
-  set shape(TensorShapeProto v) {
+  $0.TensorShapeProto get shape => $_getN(1);
+  set shape($0.TensorShapeProto v) {
     setField(2, v);
   }
 
-  bool hasShape() => $_has(1);
+  $core.bool hasShape() => $_has(1);
   void clearShape() => clearField(2);
 
-  AllocationDescription get allocationDescription => $_getN(2);
-  set allocationDescription(AllocationDescription v) {
+  $1.AllocationDescription get allocationDescription => $_getN(2);
+  set allocationDescription($1.AllocationDescription v) {
     setField(4, v);
   }
 
-  bool hasAllocationDescription() => $_has(2);
+  $core.bool hasAllocationDescription() => $_has(2);
   void clearAllocationDescription() => clearField(4);
 }
-
-class _ReadonlyTensorDescription extends TensorDescription
-    with ReadonlyMessageMixin {}

@@ -1,133 +1,158 @@
 ///
 //  Generated code. Do not modify.
-///
-// ignore_for_file: non_constant_identifier_names,library_prefixes
-library tensorflow_attr_value;
+//  source: attr_value.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-// ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' as $core
+    show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
 import 'package:fixnum/fixnum.dart';
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'tensor_shape.pb.dart';
-import 'tensor.pb.dart';
+import 'tensor_shape.pb.dart' as $0;
+import 'tensor.pb.dart' as $1;
 
-import 'types.pbenum.dart';
+import 'types.pbenum.dart' as $2;
 
-class AttrValue_ListValue extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('AttrValue_ListValue')
-    ..p<List<int>>(2, 's', PbFieldType.PY)
-    ..p<Int64>(3, 'i', PbFieldType.K6)
-    ..p<double>(4, 'f', PbFieldType.KF)
-    ..p<bool>(5, 'b', PbFieldType.KB)
-    ..pp<DataType>(6, 'type', PbFieldType.KE, DataType.$checkItem, null,
-        DataType.valueOf, DataType.values)
-    ..pp<TensorShapeProto>(7, 'shape', PbFieldType.PM,
-        TensorShapeProto.$checkItem, TensorShapeProto.create)
-    ..pp<TensorProto>(
-        8, 'tensor', PbFieldType.PM, TensorProto.$checkItem, TensorProto.create)
-    ..pp<NameAttrList>(
-        9, 'func', PbFieldType.PM, NameAttrList.$checkItem, NameAttrList.create)
+class AttrValue_ListValue extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AttrValue.ListValue',
+      package: const $pb.PackageName('tensorflow'))
+    ..p<$core.List<$core.int>>(2, 's', $pb.PbFieldType.PY)
+    ..p<Int64>(3, 'i', $pb.PbFieldType.K6)
+    ..p<$core.double>(4, 'f', $pb.PbFieldType.KF)
+    ..p<$core.bool>(5, 'b', $pb.PbFieldType.KB)
+    ..pc<$2.DataType>(6, 'type', $pb.PbFieldType.KE, null, $2.DataType.valueOf,
+        $2.DataType.values)
+    ..pc<$0.TensorShapeProto>(
+        7, 'shape', $pb.PbFieldType.PM, $0.TensorShapeProto.create)
+    ..pc<$1.TensorProto>(8, 'tensor', $pb.PbFieldType.PM, $1.TensorProto.create)
+    ..pc<NameAttrList>(9, 'func', $pb.PbFieldType.PM, NameAttrList.create)
     ..hasRequiredFields = false;
 
-  AttrValue_ListValue() : super();
-  AttrValue_ListValue.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  AttrValue_ListValue.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  AttrValue_ListValue clone() =>
-      new AttrValue_ListValue()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static AttrValue_ListValue create() => new AttrValue_ListValue();
-  static PbList<AttrValue_ListValue> createRepeated() =>
-      new PbList<AttrValue_ListValue>();
-  static AttrValue_ListValue getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyAttrValue_ListValue();
-    return _defaultInstance;
-  }
-
+  AttrValue_ListValue._() : super();
+  factory AttrValue_ListValue() => create();
+  factory AttrValue_ListValue.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory AttrValue_ListValue.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  AttrValue_ListValue clone() => AttrValue_ListValue()..mergeFromMessage(this);
+  AttrValue_ListValue copyWith(void Function(AttrValue_ListValue) updates) =>
+      super.copyWith((message) => updates(message as AttrValue_ListValue));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AttrValue_ListValue create() => AttrValue_ListValue._();
+  AttrValue_ListValue createEmptyInstance() => create();
+  static $pb.PbList<AttrValue_ListValue> createRepeated() =>
+      $pb.PbList<AttrValue_ListValue>();
+  static AttrValue_ListValue getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static AttrValue_ListValue _defaultInstance;
-  static void $checkItem(AttrValue_ListValue v) {
-    if (v is! AttrValue_ListValue) checkItemFailed(v, 'AttrValue_ListValue');
-  }
 
-  List<List<int>> get s => $_getList(0);
+  $core.List<$core.List<$core.int>> get s => $_getList(0);
 
-  List<Int64> get i => $_getList(1);
+  $core.List<Int64> get i => $_getList(1);
 
-  List<double> get f => $_getList(2);
+  $core.List<$core.double> get f => $_getList(2);
 
-  List<bool> get b => $_getList(3);
+  $core.List<$core.bool> get b => $_getList(3);
 
-  List<DataType> get type => $_getList(4);
+  $core.List<$2.DataType> get type => $_getList(4);
 
-  List<TensorShapeProto> get shape => $_getList(5);
+  $core.List<$0.TensorShapeProto> get shape => $_getList(5);
 
-  List<TensorProto> get tensor => $_getList(6);
+  $core.List<$1.TensorProto> get tensor => $_getList(6);
 
-  List<NameAttrList> get func => $_getList(7);
+  $core.List<NameAttrList> get func => $_getList(7);
 }
 
-class _ReadonlyAttrValue_ListValue extends AttrValue_ListValue
-    with ReadonlyMessageMixin {}
+enum AttrValue_Value {
+  list,
+  s,
+  i,
+  f,
+  b,
+  type,
+  shape,
+  tensor,
+  placeholder,
+  func,
+  notSet
+}
 
-class AttrValue extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('AttrValue')
-    ..a<AttrValue_ListValue>(1, 'list', PbFieldType.OM,
-        AttrValue_ListValue.getDefault, AttrValue_ListValue.create)
-    ..a<List<int>>(2, 's', PbFieldType.OY)
-    ..aInt64(3, 'i')
-    ..a<double>(4, 'f', PbFieldType.OF)
-    ..aOB(5, 'b')
-    ..e<DataType>(6, 'type', PbFieldType.OE, DataType.DT_INVALID,
-        DataType.valueOf, DataType.values)
-    ..a<TensorShapeProto>(7, 'shape', PbFieldType.OM,
-        TensorShapeProto.getDefault, TensorShapeProto.create)
-    ..a<TensorProto>(
-        8, 'tensor', PbFieldType.OM, TensorProto.getDefault, TensorProto.create)
-    ..aOS(9, 'placeholder')
-    ..a<NameAttrList>(10, 'func', PbFieldType.OM, NameAttrList.getDefault,
-        NameAttrList.create)
-    ..hasRequiredFields = false;
+class AttrValue extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, AttrValue_Value> _AttrValue_ValueByTag = {
+    1: AttrValue_Value.list,
+    2: AttrValue_Value.s,
+    3: AttrValue_Value.i,
+    4: AttrValue_Value.f,
+    5: AttrValue_Value.b,
+    6: AttrValue_Value.type,
+    7: AttrValue_Value.shape,
+    8: AttrValue_Value.tensor,
+    9: AttrValue_Value.placeholder,
+    10: AttrValue_Value.func,
+    0: AttrValue_Value.notSet
+  };
+  static final $pb.BuilderInfo _i =
+      $pb.BuilderInfo('AttrValue', package: const $pb.PackageName('tensorflow'))
+        ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        ..a<AttrValue_ListValue>(1, 'list', $pb.PbFieldType.OM,
+            AttrValue_ListValue.getDefault, AttrValue_ListValue.create)
+        ..a<$core.List<$core.int>>(2, 's', $pb.PbFieldType.OY)
+        ..aInt64(3, 'i')
+        ..a<$core.double>(4, 'f', $pb.PbFieldType.OF)
+        ..aOB(5, 'b')
+        ..e<$2.DataType>(6, 'type', $pb.PbFieldType.OE, $2.DataType.DT_INVALID,
+            $2.DataType.valueOf, $2.DataType.values)
+        ..a<$0.TensorShapeProto>(7, 'shape', $pb.PbFieldType.OM,
+            $0.TensorShapeProto.getDefault, $0.TensorShapeProto.create)
+        ..a<$1.TensorProto>(8, 'tensor', $pb.PbFieldType.OM,
+            $1.TensorProto.getDefault, $1.TensorProto.create)
+        ..aOS(9, 'placeholder')
+        ..a<NameAttrList>(10, 'func', $pb.PbFieldType.OM,
+            NameAttrList.getDefault, NameAttrList.create)
+        ..hasRequiredFields = false;
 
-  AttrValue() : super();
-  AttrValue.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  AttrValue.fromJson(String i, [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  AttrValue clone() => new AttrValue()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static AttrValue create() => new AttrValue();
-  static PbList<AttrValue> createRepeated() => new PbList<AttrValue>();
-  static AttrValue getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyAttrValue();
-    return _defaultInstance;
-  }
-
+  AttrValue._() : super();
+  factory AttrValue() => create();
+  factory AttrValue.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory AttrValue.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  AttrValue clone() => AttrValue()..mergeFromMessage(this);
+  AttrValue copyWith(void Function(AttrValue) updates) =>
+      super.copyWith((message) => updates(message as AttrValue));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AttrValue create() => AttrValue._();
+  AttrValue createEmptyInstance() => create();
+  static $pb.PbList<AttrValue> createRepeated() => $pb.PbList<AttrValue>();
+  static AttrValue getDefault() => _defaultInstance ??= create()..freeze();
   static AttrValue _defaultInstance;
-  static void $checkItem(AttrValue v) {
-    if (v is! AttrValue) checkItemFailed(v, 'AttrValue');
-  }
+
+  AttrValue_Value whichValue() => _AttrValue_ValueByTag[$_whichOneof(0)];
+  void clearValue() => clearField($_whichOneof(0));
 
   AttrValue_ListValue get list => $_getN(0);
   set list(AttrValue_ListValue v) {
     setField(1, v);
   }
 
-  bool hasList() => $_has(0);
+  $core.bool hasList() => $_has(0);
   void clearList() => clearField(1);
 
-  List<int> get s => $_getN(1);
-  set s(List<int> v) {
+  $core.List<$core.int> get s => $_getN(1);
+  set s($core.List<$core.int> v) {
     $_setBytes(1, v);
   }
 
-  bool hasS() => $_has(1);
+  $core.bool hasS() => $_has(1);
   void clearS() => clearField(2);
 
   Int64 get i => $_getI64(2);
@@ -135,55 +160,55 @@ class AttrValue extends GeneratedMessage {
     $_setInt64(2, v);
   }
 
-  bool hasI() => $_has(2);
+  $core.bool hasI() => $_has(2);
   void clearI() => clearField(3);
 
-  double get f => $_getN(3);
-  set f(double v) {
+  $core.double get f => $_getN(3);
+  set f($core.double v) {
     $_setFloat(3, v);
   }
 
-  bool hasF() => $_has(3);
+  $core.bool hasF() => $_has(3);
   void clearF() => clearField(4);
 
-  bool get b => $_get(4, false);
-  set b(bool v) {
+  $core.bool get b => $_get(4, false);
+  set b($core.bool v) {
     $_setBool(4, v);
   }
 
-  bool hasB() => $_has(4);
+  $core.bool hasB() => $_has(4);
   void clearB() => clearField(5);
 
-  DataType get type => $_getN(5);
-  set type(DataType v) {
+  $2.DataType get type => $_getN(5);
+  set type($2.DataType v) {
     setField(6, v);
   }
 
-  bool hasType() => $_has(5);
+  $core.bool hasType() => $_has(5);
   void clearType() => clearField(6);
 
-  TensorShapeProto get shape => $_getN(6);
-  set shape(TensorShapeProto v) {
+  $0.TensorShapeProto get shape => $_getN(6);
+  set shape($0.TensorShapeProto v) {
     setField(7, v);
   }
 
-  bool hasShape() => $_has(6);
+  $core.bool hasShape() => $_has(6);
   void clearShape() => clearField(7);
 
-  TensorProto get tensor => $_getN(7);
-  set tensor(TensorProto v) {
+  $1.TensorProto get tensor => $_getN(7);
+  set tensor($1.TensorProto v) {
     setField(8, v);
   }
 
-  bool hasTensor() => $_has(7);
+  $core.bool hasTensor() => $_has(7);
   void clearTensor() => clearField(8);
 
-  String get placeholder => $_getS(8, '');
-  set placeholder(String v) {
+  $core.String get placeholder => $_getS(8, '');
+  set placeholder($core.String v) {
     $_setString(8, v);
   }
 
-  bool hasPlaceholder() => $_has(8);
+  $core.bool hasPlaceholder() => $_has(8);
   void clearPlaceholder() => clearField(9);
 
   NameAttrList get func => $_getN(9);
@@ -191,102 +216,53 @@ class AttrValue extends GeneratedMessage {
     setField(10, v);
   }
 
-  bool hasFunc() => $_has(9);
+  $core.bool hasFunc() => $_has(9);
   void clearFunc() => clearField(10);
 }
 
-class _ReadonlyAttrValue extends AttrValue with ReadonlyMessageMixin {}
-
-class NameAttrList_AttrEntry extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('NameAttrList_AttrEntry')
-    ..aOS(1, 'key')
-    ..a<AttrValue>(
-        2, 'value', PbFieldType.OM, AttrValue.getDefault, AttrValue.create)
-    ..hasRequiredFields = false;
-
-  NameAttrList_AttrEntry() : super();
-  NameAttrList_AttrEntry.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  NameAttrList_AttrEntry.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  NameAttrList_AttrEntry clone() =>
-      new NameAttrList_AttrEntry()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static NameAttrList_AttrEntry create() => new NameAttrList_AttrEntry();
-  static PbList<NameAttrList_AttrEntry> createRepeated() =>
-      new PbList<NameAttrList_AttrEntry>();
-  static NameAttrList_AttrEntry getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyNameAttrList_AttrEntry();
-    return _defaultInstance;
-  }
-
-  static NameAttrList_AttrEntry _defaultInstance;
-  static void $checkItem(NameAttrList_AttrEntry v) {
-    if (v is! NameAttrList_AttrEntry)
-      checkItemFailed(v, 'NameAttrList_AttrEntry');
-  }
-
-  String get key => $_getS(0, '');
-  set key(String v) {
-    $_setString(0, v);
-  }
-
-  bool hasKey() => $_has(0);
-  void clearKey() => clearField(1);
-
-  AttrValue get value => $_getN(1);
-  set value(AttrValue v) {
-    setField(2, v);
-  }
-
-  bool hasValue() => $_has(1);
-  void clearValue() => clearField(2);
-}
-
-class _ReadonlyNameAttrList_AttrEntry extends NameAttrList_AttrEntry
-    with ReadonlyMessageMixin {}
-
-class NameAttrList extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('NameAttrList')
+class NameAttrList extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('NameAttrList',
+      package: const $pb.PackageName('tensorflow'))
     ..aOS(1, 'name')
-    ..pp<NameAttrList_AttrEntry>(2, 'attr', PbFieldType.PM,
-        NameAttrList_AttrEntry.$checkItem, NameAttrList_AttrEntry.create)
+    ..m<$core.String, AttrValue>(
+        2,
+        'attr',
+        'NameAttrList.AttrEntry',
+        $pb.PbFieldType.OS,
+        $pb.PbFieldType.OM,
+        AttrValue.create,
+        null,
+        null,
+        const $pb.PackageName('tensorflow'))
     ..hasRequiredFields = false;
 
-  NameAttrList() : super();
-  NameAttrList.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  NameAttrList.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  NameAttrList clone() => new NameAttrList()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static NameAttrList create() => new NameAttrList();
-  static PbList<NameAttrList> createRepeated() => new PbList<NameAttrList>();
-  static NameAttrList getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyNameAttrList();
-    return _defaultInstance;
-  }
-
+  NameAttrList._() : super();
+  factory NameAttrList() => create();
+  factory NameAttrList.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory NameAttrList.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  NameAttrList clone() => NameAttrList()..mergeFromMessage(this);
+  NameAttrList copyWith(void Function(NameAttrList) updates) =>
+      super.copyWith((message) => updates(message as NameAttrList));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NameAttrList create() => NameAttrList._();
+  NameAttrList createEmptyInstance() => create();
+  static $pb.PbList<NameAttrList> createRepeated() =>
+      $pb.PbList<NameAttrList>();
+  static NameAttrList getDefault() => _defaultInstance ??= create()..freeze();
   static NameAttrList _defaultInstance;
-  static void $checkItem(NameAttrList v) {
-    if (v is! NameAttrList) checkItemFailed(v, 'NameAttrList');
-  }
 
-  String get name => $_getS(0, '');
-  set name(String v) {
+  $core.String get name => $_getS(0, '');
+  set name($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasName() => $_has(0);
+  $core.bool hasName() => $_has(0);
   void clearName() => clearField(1);
 
-  List<NameAttrList_AttrEntry> get attr => $_getList(1);
+  $core.Map<$core.String, AttrValue> get attr => $_getMap(1);
 }
-
-class _ReadonlyNameAttrList extends NameAttrList with ReadonlyMessageMixin {}

@@ -17,7 +17,6 @@ class FileWriter {
     new Directory(logDir).createSync(recursive: true);
     _writer = tf.summaryWriter(graph: _graph = graph);
 
-
     var op = tf.createSummaryFileWriter(
       _writer,
       tf.constant(logDir),

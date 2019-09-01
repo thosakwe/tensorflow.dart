@@ -61,12 +61,14 @@ class SessionRunner {
       _targets,
       _inputs,
     );
-    var code = _codeFrom(result.item1);
-    if (code != Code.ok) throw new TensorFlowException(code, result.item2);
+    var code = _codeFrom(result.item1 as int);
+    if (code != Code.ok)
+      throw new TensorFlowException(code, result.item2 as String);
     _session._runner = null;
     var deps = Zone.current[_controlInputsSymbol] ?? _topLevelDeps;
     deps.clear();
-    var run = new SessionRun<T>._(result.item3.cast<T>(), result.item4);
+    var run = new SessionRun<T>._(
+        (result.item3 as List).cast<T>(), result.item4 as Uint8List);
     _session._graph._runCallbacks
       ..forEach((c) => c.f(run[c.index]))
       ..clear();

@@ -24,6 +24,7 @@ main(List<String> args) async {
   var labels =
       await new File(p.join(modelDir, 'imagenet_comp_graph_label_strings.txt'))
           .openRead()
+          .cast<List<int>>()
           .transform(utf8.decoder)
           .transform(const LineSplitter())
           .toList();

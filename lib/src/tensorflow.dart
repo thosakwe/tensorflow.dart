@@ -133,7 +133,6 @@ Output<bool> reduceAll<T>(Output<T> value, Output<T> axis,
 }
 */
 
-
 /// Same as [reduceMean], but performs a "min."
 Output<T> reduceMin<T>(Output<T> value, Output<T> axis,
     {Graph graph, bool keepDims: true, DataType tidx: DataType.DT_INT32}) {

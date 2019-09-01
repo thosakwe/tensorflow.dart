@@ -1,525 +1,419 @@
 ///
 //  Generated code. Do not modify.
-///
-// ignore_for_file: non_constant_identifier_names,library_prefixes
-library tensorflow_meta_graph;
+//  source: meta_graph.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-// ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' as $core
+    show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
 import 'package:fixnum/fixnum.dart';
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'graph.pb.dart';
-import 'saver.pb.dart';
-import 'op_def.pb.dart';
-import 'any.pb.dart' as $google$protobuf;
-import 'tensor_shape.pb.dart';
+import 'graph.pb.dart' as $0;
+import 'saver.pb.dart' as $1;
+import 'op_def.pb.dart' as $2;
+import 'any.pb.dart' as $3;
+import 'tensor_shape.pb.dart' as $4;
 
-import 'types.pbenum.dart';
+import 'types.pbenum.dart' as $5;
 
-class MetaGraphDef_MetaInfoDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('MetaGraphDef_MetaInfoDef')
+class MetaGraphDef_MetaInfoDef extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('MetaGraphDef.MetaInfoDef',
+      package: const $pb.PackageName('tensorflow'))
     ..aOS(1, 'metaGraphVersion')
-    ..a<OpList>(
-        2, 'strippedOpList', PbFieldType.OM, OpList.getDefault, OpList.create)
-    ..a<$google$protobuf.Any>(3, 'anyInfo', PbFieldType.OM,
-        $google$protobuf.Any.getDefault, $google$protobuf.Any.create)
+    ..a<$2.OpList>(2, 'strippedOpList', $pb.PbFieldType.OM,
+        $2.OpList.getDefault, $2.OpList.create)
+    ..a<$3.Any>(
+        3, 'anyInfo', $pb.PbFieldType.OM, $3.Any.getDefault, $3.Any.create)
     ..pPS(4, 'tags')
     ..aOS(5, 'tensorflowVersion')
     ..aOS(6, 'tensorflowGitVersion')
     ..aOB(7, 'strippedDefaultAttrs')
     ..hasRequiredFields = false;
 
-  MetaGraphDef_MetaInfoDef() : super();
-  MetaGraphDef_MetaInfoDef.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  MetaGraphDef_MetaInfoDef.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
+  MetaGraphDef_MetaInfoDef._() : super();
+  factory MetaGraphDef_MetaInfoDef() => create();
+  factory MetaGraphDef_MetaInfoDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory MetaGraphDef_MetaInfoDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
   MetaGraphDef_MetaInfoDef clone() =>
-      new MetaGraphDef_MetaInfoDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static MetaGraphDef_MetaInfoDef create() => new MetaGraphDef_MetaInfoDef();
-  static PbList<MetaGraphDef_MetaInfoDef> createRepeated() =>
-      new PbList<MetaGraphDef_MetaInfoDef>();
-  static MetaGraphDef_MetaInfoDef getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyMetaGraphDef_MetaInfoDef();
-    return _defaultInstance;
-  }
-
+      MetaGraphDef_MetaInfoDef()..mergeFromMessage(this);
+  MetaGraphDef_MetaInfoDef copyWith(
+          void Function(MetaGraphDef_MetaInfoDef) updates) =>
+      super.copyWith((message) => updates(message as MetaGraphDef_MetaInfoDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MetaGraphDef_MetaInfoDef create() => MetaGraphDef_MetaInfoDef._();
+  MetaGraphDef_MetaInfoDef createEmptyInstance() => create();
+  static $pb.PbList<MetaGraphDef_MetaInfoDef> createRepeated() =>
+      $pb.PbList<MetaGraphDef_MetaInfoDef>();
+  static MetaGraphDef_MetaInfoDef getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static MetaGraphDef_MetaInfoDef _defaultInstance;
-  static void $checkItem(MetaGraphDef_MetaInfoDef v) {
-    if (v is! MetaGraphDef_MetaInfoDef)
-      checkItemFailed(v, 'MetaGraphDef_MetaInfoDef');
-  }
 
-  String get metaGraphVersion => $_getS(0, '');
-  set metaGraphVersion(String v) {
+  $core.String get metaGraphVersion => $_getS(0, '');
+  set metaGraphVersion($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasMetaGraphVersion() => $_has(0);
+  $core.bool hasMetaGraphVersion() => $_has(0);
   void clearMetaGraphVersion() => clearField(1);
 
-  OpList get strippedOpList => $_getN(1);
-  set strippedOpList(OpList v) {
+  $2.OpList get strippedOpList => $_getN(1);
+  set strippedOpList($2.OpList v) {
     setField(2, v);
   }
 
-  bool hasStrippedOpList() => $_has(1);
+  $core.bool hasStrippedOpList() => $_has(1);
   void clearStrippedOpList() => clearField(2);
 
-  $google$protobuf.Any get anyInfo => $_getN(2);
-  set anyInfo($google$protobuf.Any v) {
+  $3.Any get anyInfo => $_getN(2);
+  set anyInfo($3.Any v) {
     setField(3, v);
   }
 
-  bool hasAnyInfo() => $_has(2);
+  $core.bool hasAnyInfo() => $_has(2);
   void clearAnyInfo() => clearField(3);
 
-  List<String> get tags => $_getList(3);
+  $core.List<$core.String> get tags => $_getList(3);
 
-  String get tensorflowVersion => $_getS(4, '');
-  set tensorflowVersion(String v) {
+  $core.String get tensorflowVersion => $_getS(4, '');
+  set tensorflowVersion($core.String v) {
     $_setString(4, v);
   }
 
-  bool hasTensorflowVersion() => $_has(4);
+  $core.bool hasTensorflowVersion() => $_has(4);
   void clearTensorflowVersion() => clearField(5);
 
-  String get tensorflowGitVersion => $_getS(5, '');
-  set tensorflowGitVersion(String v) {
+  $core.String get tensorflowGitVersion => $_getS(5, '');
+  set tensorflowGitVersion($core.String v) {
     $_setString(5, v);
   }
 
-  bool hasTensorflowGitVersion() => $_has(5);
+  $core.bool hasTensorflowGitVersion() => $_has(5);
   void clearTensorflowGitVersion() => clearField(6);
 
-  bool get strippedDefaultAttrs => $_get(6, false);
-  set strippedDefaultAttrs(bool v) {
+  $core.bool get strippedDefaultAttrs => $_get(6, false);
+  set strippedDefaultAttrs($core.bool v) {
     $_setBool(6, v);
   }
 
-  bool hasStrippedDefaultAttrs() => $_has(6);
+  $core.bool hasStrippedDefaultAttrs() => $_has(6);
   void clearStrippedDefaultAttrs() => clearField(7);
 }
 
-class _ReadonlyMetaGraphDef_MetaInfoDef extends MetaGraphDef_MetaInfoDef
-    with ReadonlyMessageMixin {}
-
-class MetaGraphDef_CollectionDefEntry extends GeneratedMessage {
-  static final BuilderInfo _i =
-      new BuilderInfo('MetaGraphDef_CollectionDefEntry')
-        ..aOS(1, 'key')
-        ..a<CollectionDef>(2, 'value', PbFieldType.OM, CollectionDef.getDefault,
-            CollectionDef.create)
-        ..hasRequiredFields = false;
-
-  MetaGraphDef_CollectionDefEntry() : super();
-  MetaGraphDef_CollectionDefEntry.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  MetaGraphDef_CollectionDefEntry.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  MetaGraphDef_CollectionDefEntry clone() =>
-      new MetaGraphDef_CollectionDefEntry()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static MetaGraphDef_CollectionDefEntry create() =>
-      new MetaGraphDef_CollectionDefEntry();
-  static PbList<MetaGraphDef_CollectionDefEntry> createRepeated() =>
-      new PbList<MetaGraphDef_CollectionDefEntry>();
-  static MetaGraphDef_CollectionDefEntry getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyMetaGraphDef_CollectionDefEntry();
-    return _defaultInstance;
-  }
-
-  static MetaGraphDef_CollectionDefEntry _defaultInstance;
-  static void $checkItem(MetaGraphDef_CollectionDefEntry v) {
-    if (v is! MetaGraphDef_CollectionDefEntry)
-      checkItemFailed(v, 'MetaGraphDef_CollectionDefEntry');
-  }
-
-  String get key => $_getS(0, '');
-  set key(String v) {
-    $_setString(0, v);
-  }
-
-  bool hasKey() => $_has(0);
-  void clearKey() => clearField(1);
-
-  CollectionDef get value => $_getN(1);
-  set value(CollectionDef v) {
-    setField(2, v);
-  }
-
-  bool hasValue() => $_has(1);
-  void clearValue() => clearField(2);
-}
-
-class _ReadonlyMetaGraphDef_CollectionDefEntry
-    extends MetaGraphDef_CollectionDefEntry with ReadonlyMessageMixin {}
-
-class MetaGraphDef_SignatureDefEntry extends GeneratedMessage {
-  static final BuilderInfo _i =
-      new BuilderInfo('MetaGraphDef_SignatureDefEntry')
-        ..aOS(1, 'key')
-        ..a<SignatureDef>(2, 'value', PbFieldType.OM, SignatureDef.getDefault,
-            SignatureDef.create)
-        ..hasRequiredFields = false;
-
-  MetaGraphDef_SignatureDefEntry() : super();
-  MetaGraphDef_SignatureDefEntry.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  MetaGraphDef_SignatureDefEntry.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  MetaGraphDef_SignatureDefEntry clone() =>
-      new MetaGraphDef_SignatureDefEntry()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static MetaGraphDef_SignatureDefEntry create() =>
-      new MetaGraphDef_SignatureDefEntry();
-  static PbList<MetaGraphDef_SignatureDefEntry> createRepeated() =>
-      new PbList<MetaGraphDef_SignatureDefEntry>();
-  static MetaGraphDef_SignatureDefEntry getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyMetaGraphDef_SignatureDefEntry();
-    return _defaultInstance;
-  }
-
-  static MetaGraphDef_SignatureDefEntry _defaultInstance;
-  static void $checkItem(MetaGraphDef_SignatureDefEntry v) {
-    if (v is! MetaGraphDef_SignatureDefEntry)
-      checkItemFailed(v, 'MetaGraphDef_SignatureDefEntry');
-  }
-
-  String get key => $_getS(0, '');
-  set key(String v) {
-    $_setString(0, v);
-  }
-
-  bool hasKey() => $_has(0);
-  void clearKey() => clearField(1);
-
-  SignatureDef get value => $_getN(1);
-  set value(SignatureDef v) {
-    setField(2, v);
-  }
-
-  bool hasValue() => $_has(1);
-  void clearValue() => clearField(2);
-}
-
-class _ReadonlyMetaGraphDef_SignatureDefEntry
-    extends MetaGraphDef_SignatureDefEntry with ReadonlyMessageMixin {}
-
-class MetaGraphDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('MetaGraphDef')
-    ..a<MetaGraphDef_MetaInfoDef>(1, 'metaInfoDef', PbFieldType.OM,
+class MetaGraphDef extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('MetaGraphDef',
+      package: const $pb.PackageName('tensorflow'))
+    ..a<MetaGraphDef_MetaInfoDef>(1, 'metaInfoDef', $pb.PbFieldType.OM,
         MetaGraphDef_MetaInfoDef.getDefault, MetaGraphDef_MetaInfoDef.create)
-    ..a<GraphDef>(
-        2, 'graphDef', PbFieldType.OM, GraphDef.getDefault, GraphDef.create)
-    ..a<SaverDef>(
-        3, 'saverDef', PbFieldType.OM, SaverDef.getDefault, SaverDef.create)
-    ..pp<MetaGraphDef_CollectionDefEntry>(
+    ..a<$0.GraphDef>(2, 'graphDef', $pb.PbFieldType.OM, $0.GraphDef.getDefault,
+        $0.GraphDef.create)
+    ..a<$1.SaverDef>(3, 'saverDef', $pb.PbFieldType.OM, $1.SaverDef.getDefault,
+        $1.SaverDef.create)
+    ..m<$core.String, CollectionDef>(
         4,
         'collectionDef',
-        PbFieldType.PM,
-        MetaGraphDef_CollectionDefEntry.$checkItem,
-        MetaGraphDef_CollectionDefEntry.create)
-    ..pp<MetaGraphDef_SignatureDefEntry>(
+        'MetaGraphDef.CollectionDefEntry',
+        $pb.PbFieldType.OS,
+        $pb.PbFieldType.OM,
+        CollectionDef.create,
+        null,
+        null,
+        const $pb.PackageName('tensorflow'))
+    ..m<$core.String, SignatureDef>(
         5,
         'signatureDef',
-        PbFieldType.PM,
-        MetaGraphDef_SignatureDefEntry.$checkItem,
-        MetaGraphDef_SignatureDefEntry.create)
-    ..pp<AssetFileDef>(6, 'assetFileDef', PbFieldType.PM,
-        AssetFileDef.$checkItem, AssetFileDef.create)
+        'MetaGraphDef.SignatureDefEntry',
+        $pb.PbFieldType.OS,
+        $pb.PbFieldType.OM,
+        SignatureDef.create,
+        null,
+        null,
+        const $pb.PackageName('tensorflow'))
+    ..pc<AssetFileDef>(
+        6, 'assetFileDef', $pb.PbFieldType.PM, AssetFileDef.create)
     ..hasRequiredFields = false;
 
-  MetaGraphDef() : super();
-  MetaGraphDef.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  MetaGraphDef.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  MetaGraphDef clone() => new MetaGraphDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static MetaGraphDef create() => new MetaGraphDef();
-  static PbList<MetaGraphDef> createRepeated() => new PbList<MetaGraphDef>();
-  static MetaGraphDef getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyMetaGraphDef();
-    return _defaultInstance;
-  }
-
+  MetaGraphDef._() : super();
+  factory MetaGraphDef() => create();
+  factory MetaGraphDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory MetaGraphDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  MetaGraphDef clone() => MetaGraphDef()..mergeFromMessage(this);
+  MetaGraphDef copyWith(void Function(MetaGraphDef) updates) =>
+      super.copyWith((message) => updates(message as MetaGraphDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MetaGraphDef create() => MetaGraphDef._();
+  MetaGraphDef createEmptyInstance() => create();
+  static $pb.PbList<MetaGraphDef> createRepeated() =>
+      $pb.PbList<MetaGraphDef>();
+  static MetaGraphDef getDefault() => _defaultInstance ??= create()..freeze();
   static MetaGraphDef _defaultInstance;
-  static void $checkItem(MetaGraphDef v) {
-    if (v is! MetaGraphDef) checkItemFailed(v, 'MetaGraphDef');
-  }
 
   MetaGraphDef_MetaInfoDef get metaInfoDef => $_getN(0);
   set metaInfoDef(MetaGraphDef_MetaInfoDef v) {
     setField(1, v);
   }
 
-  bool hasMetaInfoDef() => $_has(0);
+  $core.bool hasMetaInfoDef() => $_has(0);
   void clearMetaInfoDef() => clearField(1);
 
-  GraphDef get graphDef => $_getN(1);
-  set graphDef(GraphDef v) {
+  $0.GraphDef get graphDef => $_getN(1);
+  set graphDef($0.GraphDef v) {
     setField(2, v);
   }
 
-  bool hasGraphDef() => $_has(1);
+  $core.bool hasGraphDef() => $_has(1);
   void clearGraphDef() => clearField(2);
 
-  SaverDef get saverDef => $_getN(2);
-  set saverDef(SaverDef v) {
+  $1.SaverDef get saverDef => $_getN(2);
+  set saverDef($1.SaverDef v) {
     setField(3, v);
   }
 
-  bool hasSaverDef() => $_has(2);
+  $core.bool hasSaverDef() => $_has(2);
   void clearSaverDef() => clearField(3);
 
-  List<MetaGraphDef_CollectionDefEntry> get collectionDef => $_getList(3);
+  $core.Map<$core.String, CollectionDef> get collectionDef => $_getMap(3);
 
-  List<MetaGraphDef_SignatureDefEntry> get signatureDef => $_getList(4);
+  $core.Map<$core.String, SignatureDef> get signatureDef => $_getMap(4);
 
-  List<AssetFileDef> get assetFileDef => $_getList(5);
+  $core.List<AssetFileDef> get assetFileDef => $_getList(5);
 }
 
-class _ReadonlyMetaGraphDef extends MetaGraphDef with ReadonlyMessageMixin {}
-
-class CollectionDef_NodeList extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('CollectionDef_NodeList')
+class CollectionDef_NodeList extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('CollectionDef.NodeList',
+      package: const $pb.PackageName('tensorflow'))
     ..pPS(1, 'value')
     ..hasRequiredFields = false;
 
-  CollectionDef_NodeList() : super();
-  CollectionDef_NodeList.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  CollectionDef_NodeList.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
+  CollectionDef_NodeList._() : super();
+  factory CollectionDef_NodeList() => create();
+  factory CollectionDef_NodeList.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory CollectionDef_NodeList.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
   CollectionDef_NodeList clone() =>
-      new CollectionDef_NodeList()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static CollectionDef_NodeList create() => new CollectionDef_NodeList();
-  static PbList<CollectionDef_NodeList> createRepeated() =>
-      new PbList<CollectionDef_NodeList>();
-  static CollectionDef_NodeList getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyCollectionDef_NodeList();
-    return _defaultInstance;
-  }
-
+      CollectionDef_NodeList()..mergeFromMessage(this);
+  CollectionDef_NodeList copyWith(
+          void Function(CollectionDef_NodeList) updates) =>
+      super.copyWith((message) => updates(message as CollectionDef_NodeList));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CollectionDef_NodeList create() => CollectionDef_NodeList._();
+  CollectionDef_NodeList createEmptyInstance() => create();
+  static $pb.PbList<CollectionDef_NodeList> createRepeated() =>
+      $pb.PbList<CollectionDef_NodeList>();
+  static CollectionDef_NodeList getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static CollectionDef_NodeList _defaultInstance;
-  static void $checkItem(CollectionDef_NodeList v) {
-    if (v is! CollectionDef_NodeList)
-      checkItemFailed(v, 'CollectionDef_NodeList');
-  }
 
-  List<String> get value => $_getList(0);
+  $core.List<$core.String> get value => $_getList(0);
 }
 
-class _ReadonlyCollectionDef_NodeList extends CollectionDef_NodeList
-    with ReadonlyMessageMixin {}
-
-class CollectionDef_BytesList extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('CollectionDef_BytesList')
-    ..p<List<int>>(1, 'value', PbFieldType.PY)
+class CollectionDef_BytesList extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('CollectionDef.BytesList',
+      package: const $pb.PackageName('tensorflow'))
+    ..p<$core.List<$core.int>>(1, 'value', $pb.PbFieldType.PY)
     ..hasRequiredFields = false;
 
-  CollectionDef_BytesList() : super();
-  CollectionDef_BytesList.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  CollectionDef_BytesList.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
+  CollectionDef_BytesList._() : super();
+  factory CollectionDef_BytesList() => create();
+  factory CollectionDef_BytesList.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory CollectionDef_BytesList.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
   CollectionDef_BytesList clone() =>
-      new CollectionDef_BytesList()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static CollectionDef_BytesList create() => new CollectionDef_BytesList();
-  static PbList<CollectionDef_BytesList> createRepeated() =>
-      new PbList<CollectionDef_BytesList>();
-  static CollectionDef_BytesList getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyCollectionDef_BytesList();
-    return _defaultInstance;
-  }
-
+      CollectionDef_BytesList()..mergeFromMessage(this);
+  CollectionDef_BytesList copyWith(
+          void Function(CollectionDef_BytesList) updates) =>
+      super.copyWith((message) => updates(message as CollectionDef_BytesList));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CollectionDef_BytesList create() => CollectionDef_BytesList._();
+  CollectionDef_BytesList createEmptyInstance() => create();
+  static $pb.PbList<CollectionDef_BytesList> createRepeated() =>
+      $pb.PbList<CollectionDef_BytesList>();
+  static CollectionDef_BytesList getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static CollectionDef_BytesList _defaultInstance;
-  static void $checkItem(CollectionDef_BytesList v) {
-    if (v is! CollectionDef_BytesList)
-      checkItemFailed(v, 'CollectionDef_BytesList');
-  }
 
-  List<List<int>> get value => $_getList(0);
+  $core.List<$core.List<$core.int>> get value => $_getList(0);
 }
 
-class _ReadonlyCollectionDef_BytesList extends CollectionDef_BytesList
-    with ReadonlyMessageMixin {}
-
-class CollectionDef_Int64List extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('CollectionDef_Int64List')
-    ..p<Int64>(1, 'value', PbFieldType.K6)
+class CollectionDef_Int64List extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('CollectionDef.Int64List',
+      package: const $pb.PackageName('tensorflow'))
+    ..p<Int64>(1, 'value', $pb.PbFieldType.K6)
     ..hasRequiredFields = false;
 
-  CollectionDef_Int64List() : super();
-  CollectionDef_Int64List.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  CollectionDef_Int64List.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
+  CollectionDef_Int64List._() : super();
+  factory CollectionDef_Int64List() => create();
+  factory CollectionDef_Int64List.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory CollectionDef_Int64List.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
   CollectionDef_Int64List clone() =>
-      new CollectionDef_Int64List()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static CollectionDef_Int64List create() => new CollectionDef_Int64List();
-  static PbList<CollectionDef_Int64List> createRepeated() =>
-      new PbList<CollectionDef_Int64List>();
-  static CollectionDef_Int64List getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyCollectionDef_Int64List();
-    return _defaultInstance;
-  }
-
+      CollectionDef_Int64List()..mergeFromMessage(this);
+  CollectionDef_Int64List copyWith(
+          void Function(CollectionDef_Int64List) updates) =>
+      super.copyWith((message) => updates(message as CollectionDef_Int64List));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CollectionDef_Int64List create() => CollectionDef_Int64List._();
+  CollectionDef_Int64List createEmptyInstance() => create();
+  static $pb.PbList<CollectionDef_Int64List> createRepeated() =>
+      $pb.PbList<CollectionDef_Int64List>();
+  static CollectionDef_Int64List getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static CollectionDef_Int64List _defaultInstance;
-  static void $checkItem(CollectionDef_Int64List v) {
-    if (v is! CollectionDef_Int64List)
-      checkItemFailed(v, 'CollectionDef_Int64List');
-  }
 
-  List<Int64> get value => $_getList(0);
+  $core.List<Int64> get value => $_getList(0);
 }
 
-class _ReadonlyCollectionDef_Int64List extends CollectionDef_Int64List
-    with ReadonlyMessageMixin {}
-
-class CollectionDef_FloatList extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('CollectionDef_FloatList')
-    ..p<double>(1, 'value', PbFieldType.KF)
+class CollectionDef_FloatList extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('CollectionDef.FloatList',
+      package: const $pb.PackageName('tensorflow'))
+    ..p<$core.double>(1, 'value', $pb.PbFieldType.KF)
     ..hasRequiredFields = false;
 
-  CollectionDef_FloatList() : super();
-  CollectionDef_FloatList.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  CollectionDef_FloatList.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
+  CollectionDef_FloatList._() : super();
+  factory CollectionDef_FloatList() => create();
+  factory CollectionDef_FloatList.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory CollectionDef_FloatList.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
   CollectionDef_FloatList clone() =>
-      new CollectionDef_FloatList()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static CollectionDef_FloatList create() => new CollectionDef_FloatList();
-  static PbList<CollectionDef_FloatList> createRepeated() =>
-      new PbList<CollectionDef_FloatList>();
-  static CollectionDef_FloatList getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyCollectionDef_FloatList();
-    return _defaultInstance;
-  }
-
+      CollectionDef_FloatList()..mergeFromMessage(this);
+  CollectionDef_FloatList copyWith(
+          void Function(CollectionDef_FloatList) updates) =>
+      super.copyWith((message) => updates(message as CollectionDef_FloatList));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CollectionDef_FloatList create() => CollectionDef_FloatList._();
+  CollectionDef_FloatList createEmptyInstance() => create();
+  static $pb.PbList<CollectionDef_FloatList> createRepeated() =>
+      $pb.PbList<CollectionDef_FloatList>();
+  static CollectionDef_FloatList getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static CollectionDef_FloatList _defaultInstance;
-  static void $checkItem(CollectionDef_FloatList v) {
-    if (v is! CollectionDef_FloatList)
-      checkItemFailed(v, 'CollectionDef_FloatList');
-  }
 
-  List<double> get value => $_getList(0);
+  $core.List<$core.double> get value => $_getList(0);
 }
 
-class _ReadonlyCollectionDef_FloatList extends CollectionDef_FloatList
-    with ReadonlyMessageMixin {}
-
-class CollectionDef_AnyList extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('CollectionDef_AnyList')
-    ..pp<$google$protobuf.Any>(1, 'value', PbFieldType.PM,
-        $google$protobuf.Any.$checkItem, $google$protobuf.Any.create)
+class CollectionDef_AnyList extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('CollectionDef.AnyList',
+      package: const $pb.PackageName('tensorflow'))
+    ..pc<$3.Any>(1, 'value', $pb.PbFieldType.PM, $3.Any.create)
     ..hasRequiredFields = false;
 
-  CollectionDef_AnyList() : super();
-  CollectionDef_AnyList.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  CollectionDef_AnyList.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
+  CollectionDef_AnyList._() : super();
+  factory CollectionDef_AnyList() => create();
+  factory CollectionDef_AnyList.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory CollectionDef_AnyList.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
   CollectionDef_AnyList clone() =>
-      new CollectionDef_AnyList()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static CollectionDef_AnyList create() => new CollectionDef_AnyList();
-  static PbList<CollectionDef_AnyList> createRepeated() =>
-      new PbList<CollectionDef_AnyList>();
-  static CollectionDef_AnyList getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyCollectionDef_AnyList();
-    return _defaultInstance;
-  }
-
+      CollectionDef_AnyList()..mergeFromMessage(this);
+  CollectionDef_AnyList copyWith(
+          void Function(CollectionDef_AnyList) updates) =>
+      super.copyWith((message) => updates(message as CollectionDef_AnyList));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CollectionDef_AnyList create() => CollectionDef_AnyList._();
+  CollectionDef_AnyList createEmptyInstance() => create();
+  static $pb.PbList<CollectionDef_AnyList> createRepeated() =>
+      $pb.PbList<CollectionDef_AnyList>();
+  static CollectionDef_AnyList getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static CollectionDef_AnyList _defaultInstance;
-  static void $checkItem(CollectionDef_AnyList v) {
-    if (v is! CollectionDef_AnyList)
-      checkItemFailed(v, 'CollectionDef_AnyList');
-  }
 
-  List<$google$protobuf.Any> get value => $_getList(0);
+  $core.List<$3.Any> get value => $_getList(0);
 }
 
-class _ReadonlyCollectionDef_AnyList extends CollectionDef_AnyList
-    with ReadonlyMessageMixin {}
+enum CollectionDef_Kind {
+  nodeList,
+  bytesList,
+  int64List,
+  floatList,
+  anyList,
+  notSet
+}
 
-class CollectionDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('CollectionDef')
-    ..a<CollectionDef_NodeList>(1, 'nodeList', PbFieldType.OM,
+class CollectionDef extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, CollectionDef_Kind>
+      _CollectionDef_KindByTag = {
+    1: CollectionDef_Kind.nodeList,
+    2: CollectionDef_Kind.bytesList,
+    3: CollectionDef_Kind.int64List,
+    4: CollectionDef_Kind.floatList,
+    5: CollectionDef_Kind.anyList,
+    0: CollectionDef_Kind.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('CollectionDef',
+      package: const $pb.PackageName('tensorflow'))
+    ..oo(0, [1, 2, 3, 4, 5])
+    ..a<CollectionDef_NodeList>(1, 'nodeList', $pb.PbFieldType.OM,
         CollectionDef_NodeList.getDefault, CollectionDef_NodeList.create)
-    ..a<CollectionDef_BytesList>(2, 'bytesList', PbFieldType.OM,
+    ..a<CollectionDef_BytesList>(2, 'bytesList', $pb.PbFieldType.OM,
         CollectionDef_BytesList.getDefault, CollectionDef_BytesList.create)
-    ..a<CollectionDef_Int64List>(3, 'int64List', PbFieldType.OM,
+    ..a<CollectionDef_Int64List>(3, 'int64List', $pb.PbFieldType.OM,
         CollectionDef_Int64List.getDefault, CollectionDef_Int64List.create)
-    ..a<CollectionDef_FloatList>(4, 'floatList', PbFieldType.OM,
+    ..a<CollectionDef_FloatList>(4, 'floatList', $pb.PbFieldType.OM,
         CollectionDef_FloatList.getDefault, CollectionDef_FloatList.create)
-    ..a<CollectionDef_AnyList>(5, 'anyList', PbFieldType.OM,
+    ..a<CollectionDef_AnyList>(5, 'anyList', $pb.PbFieldType.OM,
         CollectionDef_AnyList.getDefault, CollectionDef_AnyList.create)
     ..hasRequiredFields = false;
 
-  CollectionDef() : super();
-  CollectionDef.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  CollectionDef.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  CollectionDef clone() => new CollectionDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static CollectionDef create() => new CollectionDef();
-  static PbList<CollectionDef> createRepeated() => new PbList<CollectionDef>();
-  static CollectionDef getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyCollectionDef();
-    return _defaultInstance;
-  }
-
+  CollectionDef._() : super();
+  factory CollectionDef() => create();
+  factory CollectionDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory CollectionDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  CollectionDef clone() => CollectionDef()..mergeFromMessage(this);
+  CollectionDef copyWith(void Function(CollectionDef) updates) =>
+      super.copyWith((message) => updates(message as CollectionDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CollectionDef create() => CollectionDef._();
+  CollectionDef createEmptyInstance() => create();
+  static $pb.PbList<CollectionDef> createRepeated() =>
+      $pb.PbList<CollectionDef>();
+  static CollectionDef getDefault() => _defaultInstance ??= create()..freeze();
   static CollectionDef _defaultInstance;
-  static void $checkItem(CollectionDef v) {
-    if (v is! CollectionDef) checkItemFailed(v, 'CollectionDef');
-  }
+
+  CollectionDef_Kind whichKind() => _CollectionDef_KindByTag[$_whichOneof(0)];
+  void clearKind() => clearField($_whichOneof(0));
 
   CollectionDef_NodeList get nodeList => $_getN(0);
   set nodeList(CollectionDef_NodeList v) {
     setField(1, v);
   }
 
-  bool hasNodeList() => $_has(0);
+  $core.bool hasNodeList() => $_has(0);
   void clearNodeList() => clearField(1);
 
   CollectionDef_BytesList get bytesList => $_getN(1);
@@ -527,7 +421,7 @@ class CollectionDef extends GeneratedMessage {
     setField(2, v);
   }
 
-  bool hasBytesList() => $_has(1);
+  $core.bool hasBytesList() => $_has(1);
   void clearBytesList() => clearField(2);
 
   CollectionDef_Int64List get int64List => $_getN(2);
@@ -535,7 +429,7 @@ class CollectionDef extends GeneratedMessage {
     setField(3, v);
   }
 
-  bool hasInt64List() => $_has(2);
+  $core.bool hasInt64List() => $_has(2);
   void clearInt64List() => clearField(3);
 
   CollectionDef_FloatList get floatList => $_getN(3);
@@ -543,7 +437,7 @@ class CollectionDef extends GeneratedMessage {
     setField(4, v);
   }
 
-  bool hasFloatList() => $_has(3);
+  $core.bool hasFloatList() => $_has(3);
   void clearFloatList() => clearField(4);
 
   CollectionDef_AnyList get anyList => $_getN(4);
@@ -551,124 +445,131 @@ class CollectionDef extends GeneratedMessage {
     setField(5, v);
   }
 
-  bool hasAnyList() => $_has(4);
+  $core.bool hasAnyList() => $_has(4);
   void clearAnyList() => clearField(5);
 }
 
-class _ReadonlyCollectionDef extends CollectionDef with ReadonlyMessageMixin {}
-
-class TensorInfo_CooSparse extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('TensorInfo_CooSparse')
+class TensorInfo_CooSparse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('TensorInfo.CooSparse',
+      package: const $pb.PackageName('tensorflow'))
     ..aOS(1, 'valuesTensorName')
     ..aOS(2, 'indicesTensorName')
     ..aOS(3, 'denseShapeTensorName')
     ..hasRequiredFields = false;
 
-  TensorInfo_CooSparse() : super();
-  TensorInfo_CooSparse.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  TensorInfo_CooSparse.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
+  TensorInfo_CooSparse._() : super();
+  factory TensorInfo_CooSparse() => create();
+  factory TensorInfo_CooSparse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory TensorInfo_CooSparse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
   TensorInfo_CooSparse clone() =>
-      new TensorInfo_CooSparse()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static TensorInfo_CooSparse create() => new TensorInfo_CooSparse();
-  static PbList<TensorInfo_CooSparse> createRepeated() =>
-      new PbList<TensorInfo_CooSparse>();
-  static TensorInfo_CooSparse getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyTensorInfo_CooSparse();
-    return _defaultInstance;
-  }
-
+      TensorInfo_CooSparse()..mergeFromMessage(this);
+  TensorInfo_CooSparse copyWith(void Function(TensorInfo_CooSparse) updates) =>
+      super.copyWith((message) => updates(message as TensorInfo_CooSparse));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TensorInfo_CooSparse create() => TensorInfo_CooSparse._();
+  TensorInfo_CooSparse createEmptyInstance() => create();
+  static $pb.PbList<TensorInfo_CooSparse> createRepeated() =>
+      $pb.PbList<TensorInfo_CooSparse>();
+  static TensorInfo_CooSparse getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static TensorInfo_CooSparse _defaultInstance;
-  static void $checkItem(TensorInfo_CooSparse v) {
-    if (v is! TensorInfo_CooSparse) checkItemFailed(v, 'TensorInfo_CooSparse');
-  }
 
-  String get valuesTensorName => $_getS(0, '');
-  set valuesTensorName(String v) {
+  $core.String get valuesTensorName => $_getS(0, '');
+  set valuesTensorName($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasValuesTensorName() => $_has(0);
+  $core.bool hasValuesTensorName() => $_has(0);
   void clearValuesTensorName() => clearField(1);
 
-  String get indicesTensorName => $_getS(1, '');
-  set indicesTensorName(String v) {
+  $core.String get indicesTensorName => $_getS(1, '');
+  set indicesTensorName($core.String v) {
     $_setString(1, v);
   }
 
-  bool hasIndicesTensorName() => $_has(1);
+  $core.bool hasIndicesTensorName() => $_has(1);
   void clearIndicesTensorName() => clearField(2);
 
-  String get denseShapeTensorName => $_getS(2, '');
-  set denseShapeTensorName(String v) {
+  $core.String get denseShapeTensorName => $_getS(2, '');
+  set denseShapeTensorName($core.String v) {
     $_setString(2, v);
   }
 
-  bool hasDenseShapeTensorName() => $_has(2);
+  $core.bool hasDenseShapeTensorName() => $_has(2);
   void clearDenseShapeTensorName() => clearField(3);
 }
 
-class _ReadonlyTensorInfo_CooSparse extends TensorInfo_CooSparse
-    with ReadonlyMessageMixin {}
+enum TensorInfo_Encoding { name, cooSparse, notSet }
 
-class TensorInfo extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('TensorInfo')
+class TensorInfo extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, TensorInfo_Encoding>
+      _TensorInfo_EncodingByTag = {
+    1: TensorInfo_Encoding.name,
+    4: TensorInfo_Encoding.cooSparse,
+    0: TensorInfo_Encoding.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('TensorInfo',
+      package: const $pb.PackageName('tensorflow'))
+    ..oo(0, [1, 4])
     ..aOS(1, 'name')
-    ..e<DataType>(2, 'dtype', PbFieldType.OE, DataType.DT_INVALID,
-        DataType.valueOf, DataType.values)
-    ..a<TensorShapeProto>(3, 'tensorShape', PbFieldType.OM,
-        TensorShapeProto.getDefault, TensorShapeProto.create)
-    ..a<TensorInfo_CooSparse>(4, 'cooSparse', PbFieldType.OM,
+    ..e<$5.DataType>(2, 'dtype', $pb.PbFieldType.OE, $5.DataType.DT_INVALID,
+        $5.DataType.valueOf, $5.DataType.values)
+    ..a<$4.TensorShapeProto>(3, 'tensorShape', $pb.PbFieldType.OM,
+        $4.TensorShapeProto.getDefault, $4.TensorShapeProto.create)
+    ..a<TensorInfo_CooSparse>(4, 'cooSparse', $pb.PbFieldType.OM,
         TensorInfo_CooSparse.getDefault, TensorInfo_CooSparse.create)
     ..hasRequiredFields = false;
 
-  TensorInfo() : super();
-  TensorInfo.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  TensorInfo.fromJson(String i, [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  TensorInfo clone() => new TensorInfo()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static TensorInfo create() => new TensorInfo();
-  static PbList<TensorInfo> createRepeated() => new PbList<TensorInfo>();
-  static TensorInfo getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyTensorInfo();
-    return _defaultInstance;
-  }
-
+  TensorInfo._() : super();
+  factory TensorInfo() => create();
+  factory TensorInfo.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory TensorInfo.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  TensorInfo clone() => TensorInfo()..mergeFromMessage(this);
+  TensorInfo copyWith(void Function(TensorInfo) updates) =>
+      super.copyWith((message) => updates(message as TensorInfo));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TensorInfo create() => TensorInfo._();
+  TensorInfo createEmptyInstance() => create();
+  static $pb.PbList<TensorInfo> createRepeated() => $pb.PbList<TensorInfo>();
+  static TensorInfo getDefault() => _defaultInstance ??= create()..freeze();
   static TensorInfo _defaultInstance;
-  static void $checkItem(TensorInfo v) {
-    if (v is! TensorInfo) checkItemFailed(v, 'TensorInfo');
-  }
 
-  String get name => $_getS(0, '');
-  set name(String v) {
+  TensorInfo_Encoding whichEncoding() =>
+      _TensorInfo_EncodingByTag[$_whichOneof(0)];
+  void clearEncoding() => clearField($_whichOneof(0));
+
+  $core.String get name => $_getS(0, '');
+  set name($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasName() => $_has(0);
+  $core.bool hasName() => $_has(0);
   void clearName() => clearField(1);
 
-  DataType get dtype => $_getN(1);
-  set dtype(DataType v) {
+  $5.DataType get dtype => $_getN(1);
+  set dtype($5.DataType v) {
     setField(2, v);
   }
 
-  bool hasDtype() => $_has(1);
+  $core.bool hasDtype() => $_has(1);
   void clearDtype() => clearField(2);
 
-  TensorShapeProto get tensorShape => $_getN(2);
-  set tensorShape(TensorShapeProto v) {
+  $4.TensorShapeProto get tensorShape => $_getN(2);
+  set tensorShape($4.TensorShapeProto v) {
     setField(3, v);
   }
 
-  bool hasTensorShape() => $_has(2);
+  $core.bool hasTensorShape() => $_has(2);
   void clearTensorShape() => clearField(3);
 
   TensorInfo_CooSparse get cooSparse => $_getN(3);
@@ -676,206 +577,110 @@ class TensorInfo extends GeneratedMessage {
     setField(4, v);
   }
 
-  bool hasCooSparse() => $_has(3);
+  $core.bool hasCooSparse() => $_has(3);
   void clearCooSparse() => clearField(4);
 }
 
-class _ReadonlyTensorInfo extends TensorInfo with ReadonlyMessageMixin {}
-
-class SignatureDef_InputsEntry extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('SignatureDef_InputsEntry')
-    ..aOS(1, 'key')
-    ..a<TensorInfo>(
-        2, 'value', PbFieldType.OM, TensorInfo.getDefault, TensorInfo.create)
-    ..hasRequiredFields = false;
-
-  SignatureDef_InputsEntry() : super();
-  SignatureDef_InputsEntry.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  SignatureDef_InputsEntry.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  SignatureDef_InputsEntry clone() =>
-      new SignatureDef_InputsEntry()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static SignatureDef_InputsEntry create() => new SignatureDef_InputsEntry();
-  static PbList<SignatureDef_InputsEntry> createRepeated() =>
-      new PbList<SignatureDef_InputsEntry>();
-  static SignatureDef_InputsEntry getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlySignatureDef_InputsEntry();
-    return _defaultInstance;
-  }
-
-  static SignatureDef_InputsEntry _defaultInstance;
-  static void $checkItem(SignatureDef_InputsEntry v) {
-    if (v is! SignatureDef_InputsEntry)
-      checkItemFailed(v, 'SignatureDef_InputsEntry');
-  }
-
-  String get key => $_getS(0, '');
-  set key(String v) {
-    $_setString(0, v);
-  }
-
-  bool hasKey() => $_has(0);
-  void clearKey() => clearField(1);
-
-  TensorInfo get value => $_getN(1);
-  set value(TensorInfo v) {
-    setField(2, v);
-  }
-
-  bool hasValue() => $_has(1);
-  void clearValue() => clearField(2);
-}
-
-class _ReadonlySignatureDef_InputsEntry extends SignatureDef_InputsEntry
-    with ReadonlyMessageMixin {}
-
-class SignatureDef_OutputsEntry extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('SignatureDef_OutputsEntry')
-    ..aOS(1, 'key')
-    ..a<TensorInfo>(
-        2, 'value', PbFieldType.OM, TensorInfo.getDefault, TensorInfo.create)
-    ..hasRequiredFields = false;
-
-  SignatureDef_OutputsEntry() : super();
-  SignatureDef_OutputsEntry.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  SignatureDef_OutputsEntry.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  SignatureDef_OutputsEntry clone() =>
-      new SignatureDef_OutputsEntry()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static SignatureDef_OutputsEntry create() => new SignatureDef_OutputsEntry();
-  static PbList<SignatureDef_OutputsEntry> createRepeated() =>
-      new PbList<SignatureDef_OutputsEntry>();
-  static SignatureDef_OutputsEntry getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlySignatureDef_OutputsEntry();
-    return _defaultInstance;
-  }
-
-  static SignatureDef_OutputsEntry _defaultInstance;
-  static void $checkItem(SignatureDef_OutputsEntry v) {
-    if (v is! SignatureDef_OutputsEntry)
-      checkItemFailed(v, 'SignatureDef_OutputsEntry');
-  }
-
-  String get key => $_getS(0, '');
-  set key(String v) {
-    $_setString(0, v);
-  }
-
-  bool hasKey() => $_has(0);
-  void clearKey() => clearField(1);
-
-  TensorInfo get value => $_getN(1);
-  set value(TensorInfo v) {
-    setField(2, v);
-  }
-
-  bool hasValue() => $_has(1);
-  void clearValue() => clearField(2);
-}
-
-class _ReadonlySignatureDef_OutputsEntry extends SignatureDef_OutputsEntry
-    with ReadonlyMessageMixin {}
-
-class SignatureDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('SignatureDef')
-    ..pp<SignatureDef_InputsEntry>(1, 'inputs', PbFieldType.PM,
-        SignatureDef_InputsEntry.$checkItem, SignatureDef_InputsEntry.create)
-    ..pp<SignatureDef_OutputsEntry>(2, 'outputs', PbFieldType.PM,
-        SignatureDef_OutputsEntry.$checkItem, SignatureDef_OutputsEntry.create)
+class SignatureDef extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignatureDef',
+      package: const $pb.PackageName('tensorflow'))
+    ..m<$core.String, TensorInfo>(
+        1,
+        'inputs',
+        'SignatureDef.InputsEntry',
+        $pb.PbFieldType.OS,
+        $pb.PbFieldType.OM,
+        TensorInfo.create,
+        null,
+        null,
+        const $pb.PackageName('tensorflow'))
+    ..m<$core.String, TensorInfo>(
+        2,
+        'outputs',
+        'SignatureDef.OutputsEntry',
+        $pb.PbFieldType.OS,
+        $pb.PbFieldType.OM,
+        TensorInfo.create,
+        null,
+        null,
+        const $pb.PackageName('tensorflow'))
     ..aOS(3, 'methodName')
     ..hasRequiredFields = false;
 
-  SignatureDef() : super();
-  SignatureDef.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  SignatureDef.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  SignatureDef clone() => new SignatureDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static SignatureDef create() => new SignatureDef();
-  static PbList<SignatureDef> createRepeated() => new PbList<SignatureDef>();
-  static SignatureDef getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlySignatureDef();
-    return _defaultInstance;
-  }
-
+  SignatureDef._() : super();
+  factory SignatureDef() => create();
+  factory SignatureDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory SignatureDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  SignatureDef clone() => SignatureDef()..mergeFromMessage(this);
+  SignatureDef copyWith(void Function(SignatureDef) updates) =>
+      super.copyWith((message) => updates(message as SignatureDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SignatureDef create() => SignatureDef._();
+  SignatureDef createEmptyInstance() => create();
+  static $pb.PbList<SignatureDef> createRepeated() =>
+      $pb.PbList<SignatureDef>();
+  static SignatureDef getDefault() => _defaultInstance ??= create()..freeze();
   static SignatureDef _defaultInstance;
-  static void $checkItem(SignatureDef v) {
-    if (v is! SignatureDef) checkItemFailed(v, 'SignatureDef');
-  }
 
-  List<SignatureDef_InputsEntry> get inputs => $_getList(0);
+  $core.Map<$core.String, TensorInfo> get inputs => $_getMap(0);
 
-  List<SignatureDef_OutputsEntry> get outputs => $_getList(1);
+  $core.Map<$core.String, TensorInfo> get outputs => $_getMap(1);
 
-  String get methodName => $_getS(2, '');
-  set methodName(String v) {
+  $core.String get methodName => $_getS(2, '');
+  set methodName($core.String v) {
     $_setString(2, v);
   }
 
-  bool hasMethodName() => $_has(2);
+  $core.bool hasMethodName() => $_has(2);
   void clearMethodName() => clearField(3);
 }
 
-class _ReadonlySignatureDef extends SignatureDef with ReadonlyMessageMixin {}
-
-class AssetFileDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('AssetFileDef')
-    ..a<TensorInfo>(1, 'tensorInfo', PbFieldType.OM, TensorInfo.getDefault,
+class AssetFileDef extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AssetFileDef',
+      package: const $pb.PackageName('tensorflow'))
+    ..a<TensorInfo>(1, 'tensorInfo', $pb.PbFieldType.OM, TensorInfo.getDefault,
         TensorInfo.create)
     ..aOS(2, 'filename')
     ..hasRequiredFields = false;
 
-  AssetFileDef() : super();
-  AssetFileDef.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  AssetFileDef.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  AssetFileDef clone() => new AssetFileDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static AssetFileDef create() => new AssetFileDef();
-  static PbList<AssetFileDef> createRepeated() => new PbList<AssetFileDef>();
-  static AssetFileDef getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyAssetFileDef();
-    return _defaultInstance;
-  }
-
+  AssetFileDef._() : super();
+  factory AssetFileDef() => create();
+  factory AssetFileDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory AssetFileDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  AssetFileDef clone() => AssetFileDef()..mergeFromMessage(this);
+  AssetFileDef copyWith(void Function(AssetFileDef) updates) =>
+      super.copyWith((message) => updates(message as AssetFileDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AssetFileDef create() => AssetFileDef._();
+  AssetFileDef createEmptyInstance() => create();
+  static $pb.PbList<AssetFileDef> createRepeated() =>
+      $pb.PbList<AssetFileDef>();
+  static AssetFileDef getDefault() => _defaultInstance ??= create()..freeze();
   static AssetFileDef _defaultInstance;
-  static void $checkItem(AssetFileDef v) {
-    if (v is! AssetFileDef) checkItemFailed(v, 'AssetFileDef');
-  }
 
   TensorInfo get tensorInfo => $_getN(0);
   set tensorInfo(TensorInfo v) {
     setField(1, v);
   }
 
-  bool hasTensorInfo() => $_has(0);
+  $core.bool hasTensorInfo() => $_has(0);
   void clearTensorInfo() => clearField(1);
 
-  String get filename => $_getS(1, '');
-  set filename(String v) {
+  $core.String get filename => $_getS(1, '');
+  set filename($core.String v) {
     $_setString(1, v);
   }
 
-  bool hasFilename() => $_has(1);
+  $core.bool hasFilename() => $_has(1);
   void clearFilename() => clearField(2);
 }
-
-class _ReadonlyAssetFileDef extends AssetFileDef with ReadonlyMessageMixin {}

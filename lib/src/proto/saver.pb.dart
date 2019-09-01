@@ -1,101 +1,102 @@
 ///
 //  Generated code. Do not modify.
-///
-// ignore_for_file: non_constant_identifier_names,library_prefixes
-library tensorflow_saver;
+//  source: saver.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-// ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' as $core
+    show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'saver.pbenum.dart';
 
 export 'saver.pbenum.dart';
 
-class SaverDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('SaverDef')
-    ..aOS(1, 'filenameTensorName')
-    ..aOS(2, 'saveTensorName')
-    ..aOS(3, 'restoreOpName')
-    ..a<int>(4, 'maxToKeep', PbFieldType.O3)
-    ..aOB(5, 'sharded')
-    ..a<double>(6, 'keepCheckpointEveryNHours', PbFieldType.OF)
-    ..e<SaverDef_CheckpointFormatVersion>(
-        7,
-        'version',
-        PbFieldType.OE,
-        SaverDef_CheckpointFormatVersion.LEGACY,
-        SaverDef_CheckpointFormatVersion.valueOf,
-        SaverDef_CheckpointFormatVersion.values)
-    ..hasRequiredFields = false;
+class SaverDef extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i =
+      $pb.BuilderInfo('SaverDef', package: const $pb.PackageName('tensorflow'))
+        ..aOS(1, 'filenameTensorName')
+        ..aOS(2, 'saveTensorName')
+        ..aOS(3, 'restoreOpName')
+        ..a<$core.int>(4, 'maxToKeep', $pb.PbFieldType.O3)
+        ..aOB(5, 'sharded')
+        ..a<$core.double>(6, 'keepCheckpointEveryNHours', $pb.PbFieldType.OF)
+        ..e<SaverDef_CheckpointFormatVersion>(
+            7,
+            'version',
+            $pb.PbFieldType.OE,
+            SaverDef_CheckpointFormatVersion.LEGACY,
+            SaverDef_CheckpointFormatVersion.valueOf,
+            SaverDef_CheckpointFormatVersion.values)
+        ..hasRequiredFields = false;
 
-  SaverDef() : super();
-  SaverDef.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  SaverDef.fromJson(String i, [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  SaverDef clone() => new SaverDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static SaverDef create() => new SaverDef();
-  static PbList<SaverDef> createRepeated() => new PbList<SaverDef>();
-  static SaverDef getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlySaverDef();
-    return _defaultInstance;
-  }
-
+  SaverDef._() : super();
+  factory SaverDef() => create();
+  factory SaverDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory SaverDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  SaverDef clone() => SaverDef()..mergeFromMessage(this);
+  SaverDef copyWith(void Function(SaverDef) updates) =>
+      super.copyWith((message) => updates(message as SaverDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SaverDef create() => SaverDef._();
+  SaverDef createEmptyInstance() => create();
+  static $pb.PbList<SaverDef> createRepeated() => $pb.PbList<SaverDef>();
+  static SaverDef getDefault() => _defaultInstance ??= create()..freeze();
   static SaverDef _defaultInstance;
-  static void $checkItem(SaverDef v) {
-    if (v is! SaverDef) checkItemFailed(v, 'SaverDef');
-  }
 
-  String get filenameTensorName => $_getS(0, '');
-  set filenameTensorName(String v) {
+  $core.String get filenameTensorName => $_getS(0, '');
+  set filenameTensorName($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasFilenameTensorName() => $_has(0);
+  $core.bool hasFilenameTensorName() => $_has(0);
   void clearFilenameTensorName() => clearField(1);
 
-  String get saveTensorName => $_getS(1, '');
-  set saveTensorName(String v) {
+  $core.String get saveTensorName => $_getS(1, '');
+  set saveTensorName($core.String v) {
     $_setString(1, v);
   }
 
-  bool hasSaveTensorName() => $_has(1);
+  $core.bool hasSaveTensorName() => $_has(1);
   void clearSaveTensorName() => clearField(2);
 
-  String get restoreOpName => $_getS(2, '');
-  set restoreOpName(String v) {
+  $core.String get restoreOpName => $_getS(2, '');
+  set restoreOpName($core.String v) {
     $_setString(2, v);
   }
 
-  bool hasRestoreOpName() => $_has(2);
+  $core.bool hasRestoreOpName() => $_has(2);
   void clearRestoreOpName() => clearField(3);
 
-  int get maxToKeep => $_get(3, 0);
-  set maxToKeep(int v) {
-    $_setUnsignedInt32(3, v);
+  $core.int get maxToKeep => $_get(3, 0);
+  set maxToKeep($core.int v) {
+    $_setSignedInt32(3, v);
   }
 
-  bool hasMaxToKeep() => $_has(3);
+  $core.bool hasMaxToKeep() => $_has(3);
   void clearMaxToKeep() => clearField(4);
 
-  bool get sharded => $_get(4, false);
-  set sharded(bool v) {
+  $core.bool get sharded => $_get(4, false);
+  set sharded($core.bool v) {
     $_setBool(4, v);
   }
 
-  bool hasSharded() => $_has(4);
+  $core.bool hasSharded() => $_has(4);
   void clearSharded() => clearField(5);
 
-  double get keepCheckpointEveryNHours => $_getN(5);
-  set keepCheckpointEveryNHours(double v) {
+  $core.double get keepCheckpointEveryNHours => $_getN(5);
+  set keepCheckpointEveryNHours($core.double v) {
     $_setFloat(5, v);
   }
 
-  bool hasKeepCheckpointEveryNHours() => $_has(5);
+  $core.bool hasKeepCheckpointEveryNHours() => $_has(5);
   void clearKeepCheckpointEveryNHours() => clearField(6);
 
   SaverDef_CheckpointFormatVersion get version => $_getN(6);
@@ -103,8 +104,6 @@ class SaverDef extends GeneratedMessage {
     setField(7, v);
   }
 
-  bool hasVersion() => $_has(6);
+  $core.bool hasVersion() => $_has(6);
   void clearVersion() => clearField(7);
 }
-
-class _ReadonlySaverDef extends SaverDef with ReadonlyMessageMixin {}

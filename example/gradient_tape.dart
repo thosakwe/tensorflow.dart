@@ -1,7 +1,8 @@
 import 'package:tensorflow/tensorflow.dart';
 
 void main() {
-  var w = new Variable('w',
+  var w = new Variable(
+    'w',
     dtype: DataType.DT_FLOAT,
     shape: new Shape(1, 1),
     initializer: constant(1.0, shape: new Shape(1, 1)),

@@ -15,4 +15,3 @@ Operation group(Iterable inputs, {String operationName, Graph graph}) {
   return withControlDependencies(
       ops, () => noOp(graph: graph, operationName: operationName));
 }
-

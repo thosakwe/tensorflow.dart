@@ -13,5 +13,6 @@ void main() {
   // https://stackoverflow.com/questions/37508771/how-to-save-and-restore-a-tensorflow-graph-and-its-state-in-c/37671613#37671613
 
   // Restore to a checkpoint.
-  model.restoreCheckPoint('variables/variables.index', dtype: tf.DataType.DT_INT64);
+  model.restoreCheckPoint('variables/variables.index',
+      dtype: tf.DataType.DT_INT64);
 }

@@ -1,185 +1,182 @@
 ///
 //  Generated code. Do not modify.
-///
-// ignore_for_file: non_constant_identifier_names,library_prefixes
-library tensorflow_op_def;
+//  source: op_def.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-// ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' as $core
+    show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
 import 'package:fixnum/fixnum.dart';
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'attr_value.pb.dart';
+import 'attr_value.pb.dart' as $0;
 
-import 'types.pbenum.dart';
+import 'types.pbenum.dart' as $1;
 
-class OpDef_ArgDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('OpDef_ArgDef')
+class OpDef_ArgDef extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('OpDef.ArgDef',
+      package: const $pb.PackageName('tensorflow'))
     ..aOS(1, 'name')
     ..aOS(2, 'description')
-    ..e<DataType>(3, 'type', PbFieldType.OE, DataType.DT_INVALID,
-        DataType.valueOf, DataType.values)
+    ..e<$1.DataType>(3, 'type', $pb.PbFieldType.OE, $1.DataType.DT_INVALID,
+        $1.DataType.valueOf, $1.DataType.values)
     ..aOS(4, 'typeAttr')
     ..aOS(5, 'numberAttr')
     ..aOS(6, 'typeListAttr')
     ..aOB(16, 'isRef')
     ..hasRequiredFields = false;
 
-  OpDef_ArgDef() : super();
-  OpDef_ArgDef.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  OpDef_ArgDef.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  OpDef_ArgDef clone() => new OpDef_ArgDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static OpDef_ArgDef create() => new OpDef_ArgDef();
-  static PbList<OpDef_ArgDef> createRepeated() => new PbList<OpDef_ArgDef>();
-  static OpDef_ArgDef getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyOpDef_ArgDef();
-    return _defaultInstance;
-  }
-
+  OpDef_ArgDef._() : super();
+  factory OpDef_ArgDef() => create();
+  factory OpDef_ArgDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory OpDef_ArgDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  OpDef_ArgDef clone() => OpDef_ArgDef()..mergeFromMessage(this);
+  OpDef_ArgDef copyWith(void Function(OpDef_ArgDef) updates) =>
+      super.copyWith((message) => updates(message as OpDef_ArgDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static OpDef_ArgDef create() => OpDef_ArgDef._();
+  OpDef_ArgDef createEmptyInstance() => create();
+  static $pb.PbList<OpDef_ArgDef> createRepeated() =>
+      $pb.PbList<OpDef_ArgDef>();
+  static OpDef_ArgDef getDefault() => _defaultInstance ??= create()..freeze();
   static OpDef_ArgDef _defaultInstance;
-  static void $checkItem(OpDef_ArgDef v) {
-    if (v is! OpDef_ArgDef) checkItemFailed(v, 'OpDef_ArgDef');
-  }
 
-  String get name => $_getS(0, '');
-  set name(String v) {
+  $core.String get name => $_getS(0, '');
+  set name($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasName() => $_has(0);
+  $core.bool hasName() => $_has(0);
   void clearName() => clearField(1);
 
-  String get description => $_getS(1, '');
-  set description(String v) {
+  $core.String get description => $_getS(1, '');
+  set description($core.String v) {
     $_setString(1, v);
   }
 
-  bool hasDescription() => $_has(1);
+  $core.bool hasDescription() => $_has(1);
   void clearDescription() => clearField(2);
 
-  DataType get type => $_getN(2);
-  set type(DataType v) {
+  $1.DataType get type => $_getN(2);
+  set type($1.DataType v) {
     setField(3, v);
   }
 
-  bool hasType() => $_has(2);
+  $core.bool hasType() => $_has(2);
   void clearType() => clearField(3);
 
-  String get typeAttr => $_getS(3, '');
-  set typeAttr(String v) {
+  $core.String get typeAttr => $_getS(3, '');
+  set typeAttr($core.String v) {
     $_setString(3, v);
   }
 
-  bool hasTypeAttr() => $_has(3);
+  $core.bool hasTypeAttr() => $_has(3);
   void clearTypeAttr() => clearField(4);
 
-  String get numberAttr => $_getS(4, '');
-  set numberAttr(String v) {
+  $core.String get numberAttr => $_getS(4, '');
+  set numberAttr($core.String v) {
     $_setString(4, v);
   }
 
-  bool hasNumberAttr() => $_has(4);
+  $core.bool hasNumberAttr() => $_has(4);
   void clearNumberAttr() => clearField(5);
 
-  String get typeListAttr => $_getS(5, '');
-  set typeListAttr(String v) {
+  $core.String get typeListAttr => $_getS(5, '');
+  set typeListAttr($core.String v) {
     $_setString(5, v);
   }
 
-  bool hasTypeListAttr() => $_has(5);
+  $core.bool hasTypeListAttr() => $_has(5);
   void clearTypeListAttr() => clearField(6);
 
-  bool get isRef => $_get(6, false);
-  set isRef(bool v) {
+  $core.bool get isRef => $_get(6, false);
+  set isRef($core.bool v) {
     $_setBool(6, v);
   }
 
-  bool hasIsRef() => $_has(6);
+  $core.bool hasIsRef() => $_has(6);
   void clearIsRef() => clearField(16);
 }
 
-class _ReadonlyOpDef_ArgDef extends OpDef_ArgDef with ReadonlyMessageMixin {}
-
-class OpDef_AttrDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('OpDef_AttrDef')
+class OpDef_AttrDef extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('OpDef.AttrDef',
+      package: const $pb.PackageName('tensorflow'))
     ..aOS(1, 'name')
     ..aOS(2, 'type')
-    ..a<AttrValue>(3, 'defaultValue', PbFieldType.OM, AttrValue.getDefault,
-        AttrValue.create)
+    ..a<$0.AttrValue>(3, 'defaultValue', $pb.PbFieldType.OM,
+        $0.AttrValue.getDefault, $0.AttrValue.create)
     ..aOS(4, 'description')
     ..aOB(5, 'hasMinimum')
     ..aInt64(6, 'minimum_6')
-    ..a<AttrValue>(7, 'allowedValues', PbFieldType.OM, AttrValue.getDefault,
-        AttrValue.create)
+    ..a<$0.AttrValue>(7, 'allowedValues', $pb.PbFieldType.OM,
+        $0.AttrValue.getDefault, $0.AttrValue.create)
     ..hasRequiredFields = false;
 
-  OpDef_AttrDef() : super();
-  OpDef_AttrDef.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  OpDef_AttrDef.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  OpDef_AttrDef clone() => new OpDef_AttrDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static OpDef_AttrDef create() => new OpDef_AttrDef();
-  static PbList<OpDef_AttrDef> createRepeated() => new PbList<OpDef_AttrDef>();
-  static OpDef_AttrDef getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyOpDef_AttrDef();
-    return _defaultInstance;
-  }
-
+  OpDef_AttrDef._() : super();
+  factory OpDef_AttrDef() => create();
+  factory OpDef_AttrDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory OpDef_AttrDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  OpDef_AttrDef clone() => OpDef_AttrDef()..mergeFromMessage(this);
+  OpDef_AttrDef copyWith(void Function(OpDef_AttrDef) updates) =>
+      super.copyWith((message) => updates(message as OpDef_AttrDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static OpDef_AttrDef create() => OpDef_AttrDef._();
+  OpDef_AttrDef createEmptyInstance() => create();
+  static $pb.PbList<OpDef_AttrDef> createRepeated() =>
+      $pb.PbList<OpDef_AttrDef>();
+  static OpDef_AttrDef getDefault() => _defaultInstance ??= create()..freeze();
   static OpDef_AttrDef _defaultInstance;
-  static void $checkItem(OpDef_AttrDef v) {
-    if (v is! OpDef_AttrDef) checkItemFailed(v, 'OpDef_AttrDef');
-  }
 
-  String get name => $_getS(0, '');
-  set name(String v) {
+  $core.String get name => $_getS(0, '');
+  set name($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasName() => $_has(0);
+  $core.bool hasName() => $_has(0);
   void clearName() => clearField(1);
 
-  String get type => $_getS(1, '');
-  set type(String v) {
+  $core.String get type => $_getS(1, '');
+  set type($core.String v) {
     $_setString(1, v);
   }
 
-  bool hasType() => $_has(1);
+  $core.bool hasType() => $_has(1);
   void clearType() => clearField(2);
 
-  AttrValue get defaultValue => $_getN(2);
-  set defaultValue(AttrValue v) {
+  $0.AttrValue get defaultValue => $_getN(2);
+  set defaultValue($0.AttrValue v) {
     setField(3, v);
   }
 
-  bool hasDefaultValue() => $_has(2);
+  $core.bool hasDefaultValue() => $_has(2);
   void clearDefaultValue() => clearField(3);
 
-  String get description => $_getS(3, '');
-  set description(String v) {
+  $core.String get description => $_getS(3, '');
+  set description($core.String v) {
     $_setString(3, v);
   }
 
-  bool hasDescription() => $_has(3);
+  $core.bool hasDescription() => $_has(3);
   void clearDescription() => clearField(4);
 
-  bool get hasMinimum => $_get(4, false);
-  set hasMinimum(bool v) {
+  $core.bool get hasMinimum => $_get(4, false);
+  set hasMinimum($core.bool v) {
     $_setBool(4, v);
   }
 
-  bool hasHasMinimum() => $_has(4);
+  $core.bool hasHasMinimum() => $_has(4);
   void clearHasMinimum() => clearField(5);
 
   Int64 get minimum_6 => $_getI64(5);
@@ -187,32 +184,28 @@ class OpDef_AttrDef extends GeneratedMessage {
     $_setInt64(5, v);
   }
 
-  bool hasMinimum_6() => $_has(5);
+  $core.bool hasMinimum_6() => $_has(5);
   void clearMinimum_6() => clearField(6);
 
-  AttrValue get allowedValues => $_getN(6);
-  set allowedValues(AttrValue v) {
+  $0.AttrValue get allowedValues => $_getN(6);
+  set allowedValues($0.AttrValue v) {
     setField(7, v);
   }
 
-  bool hasAllowedValues() => $_has(6);
+  $core.bool hasAllowedValues() => $_has(6);
   void clearAllowedValues() => clearField(7);
 }
 
-class _ReadonlyOpDef_AttrDef extends OpDef_AttrDef with ReadonlyMessageMixin {}
-
-class OpDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('OpDef')
+class OpDef extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('OpDef',
+      package: const $pb.PackageName('tensorflow'))
     ..aOS(1, 'name')
-    ..pp<OpDef_ArgDef>(2, 'inputArg', PbFieldType.PM, OpDef_ArgDef.$checkItem,
-        OpDef_ArgDef.create)
-    ..pp<OpDef_ArgDef>(3, 'outputArg', PbFieldType.PM, OpDef_ArgDef.$checkItem,
-        OpDef_ArgDef.create)
-    ..pp<OpDef_AttrDef>(4, 'attr', PbFieldType.PM, OpDef_AttrDef.$checkItem,
-        OpDef_AttrDef.create)
+    ..pc<OpDef_ArgDef>(2, 'inputArg', $pb.PbFieldType.PM, OpDef_ArgDef.create)
+    ..pc<OpDef_ArgDef>(3, 'outputArg', $pb.PbFieldType.PM, OpDef_ArgDef.create)
+    ..pc<OpDef_AttrDef>(4, 'attr', $pb.PbFieldType.PM, OpDef_AttrDef.create)
     ..aOS(5, 'summary')
     ..aOS(6, 'description')
-    ..a<OpDeprecation>(8, 'deprecation', PbFieldType.OM,
+    ..a<OpDeprecation>(8, 'deprecation', $pb.PbFieldType.OM,
         OpDeprecation.getDefault, OpDeprecation.create)
     ..aOB(16, 'isAggregate')
     ..aOB(17, 'isStateful')
@@ -220,53 +213,53 @@ class OpDef extends GeneratedMessage {
     ..aOB(19, 'allowsUninitializedInput')
     ..hasRequiredFields = false;
 
-  OpDef() : super();
-  OpDef.fromBuffer(List<int> i, [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  OpDef.fromJson(String i, [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  OpDef clone() => new OpDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static OpDef create() => new OpDef();
-  static PbList<OpDef> createRepeated() => new PbList<OpDef>();
-  static OpDef getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyOpDef();
-    return _defaultInstance;
-  }
-
+  OpDef._() : super();
+  factory OpDef() => create();
+  factory OpDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory OpDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  OpDef clone() => OpDef()..mergeFromMessage(this);
+  OpDef copyWith(void Function(OpDef) updates) =>
+      super.copyWith((message) => updates(message as OpDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static OpDef create() => OpDef._();
+  OpDef createEmptyInstance() => create();
+  static $pb.PbList<OpDef> createRepeated() => $pb.PbList<OpDef>();
+  static OpDef getDefault() => _defaultInstance ??= create()..freeze();
   static OpDef _defaultInstance;
-  static void $checkItem(OpDef v) {
-    if (v is! OpDef) checkItemFailed(v, 'OpDef');
-  }
 
-  String get name => $_getS(0, '');
-  set name(String v) {
+  $core.String get name => $_getS(0, '');
+  set name($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasName() => $_has(0);
+  $core.bool hasName() => $_has(0);
   void clearName() => clearField(1);
 
-  List<OpDef_ArgDef> get inputArg => $_getList(1);
+  $core.List<OpDef_ArgDef> get inputArg => $_getList(1);
 
-  List<OpDef_ArgDef> get outputArg => $_getList(2);
+  $core.List<OpDef_ArgDef> get outputArg => $_getList(2);
 
-  List<OpDef_AttrDef> get attr => $_getList(3);
+  $core.List<OpDef_AttrDef> get attr => $_getList(3);
 
-  String get summary => $_getS(4, '');
-  set summary(String v) {
+  $core.String get summary => $_getS(4, '');
+  set summary($core.String v) {
     $_setString(4, v);
   }
 
-  bool hasSummary() => $_has(4);
+  $core.bool hasSummary() => $_has(4);
   void clearSummary() => clearField(5);
 
-  String get description => $_getS(5, '');
-  set description(String v) {
+  $core.String get description => $_getS(5, '');
+  set description($core.String v) {
     $_setString(5, v);
   }
 
-  bool hasDescription() => $_has(5);
+  $core.bool hasDescription() => $_has(5);
   void clearDescription() => clearField(6);
 
   OpDeprecation get deprecation => $_getN(6);
@@ -274,117 +267,110 @@ class OpDef extends GeneratedMessage {
     setField(8, v);
   }
 
-  bool hasDeprecation() => $_has(6);
+  $core.bool hasDeprecation() => $_has(6);
   void clearDeprecation() => clearField(8);
 
-  bool get isAggregate => $_get(7, false);
-  set isAggregate(bool v) {
+  $core.bool get isAggregate => $_get(7, false);
+  set isAggregate($core.bool v) {
     $_setBool(7, v);
   }
 
-  bool hasIsAggregate() => $_has(7);
+  $core.bool hasIsAggregate() => $_has(7);
   void clearIsAggregate() => clearField(16);
 
-  bool get isStateful => $_get(8, false);
-  set isStateful(bool v) {
+  $core.bool get isStateful => $_get(8, false);
+  set isStateful($core.bool v) {
     $_setBool(8, v);
   }
 
-  bool hasIsStateful() => $_has(8);
+  $core.bool hasIsStateful() => $_has(8);
   void clearIsStateful() => clearField(17);
 
-  bool get isCommutative => $_get(9, false);
-  set isCommutative(bool v) {
+  $core.bool get isCommutative => $_get(9, false);
+  set isCommutative($core.bool v) {
     $_setBool(9, v);
   }
 
-  bool hasIsCommutative() => $_has(9);
+  $core.bool hasIsCommutative() => $_has(9);
   void clearIsCommutative() => clearField(18);
 
-  bool get allowsUninitializedInput => $_get(10, false);
-  set allowsUninitializedInput(bool v) {
+  $core.bool get allowsUninitializedInput => $_get(10, false);
+  set allowsUninitializedInput($core.bool v) {
     $_setBool(10, v);
   }
 
-  bool hasAllowsUninitializedInput() => $_has(10);
+  $core.bool hasAllowsUninitializedInput() => $_has(10);
   void clearAllowsUninitializedInput() => clearField(19);
 }
 
-class _ReadonlyOpDef extends OpDef with ReadonlyMessageMixin {}
-
-class OpDeprecation extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('OpDeprecation')
-    ..a<int>(1, 'version', PbFieldType.O3)
+class OpDeprecation extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('OpDeprecation',
+      package: const $pb.PackageName('tensorflow'))
+    ..a<$core.int>(1, 'version', $pb.PbFieldType.O3)
     ..aOS(2, 'explanation')
     ..hasRequiredFields = false;
 
-  OpDeprecation() : super();
-  OpDeprecation.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  OpDeprecation.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  OpDeprecation clone() => new OpDeprecation()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static OpDeprecation create() => new OpDeprecation();
-  static PbList<OpDeprecation> createRepeated() => new PbList<OpDeprecation>();
-  static OpDeprecation getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyOpDeprecation();
-    return _defaultInstance;
-  }
-
+  OpDeprecation._() : super();
+  factory OpDeprecation() => create();
+  factory OpDeprecation.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory OpDeprecation.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  OpDeprecation clone() => OpDeprecation()..mergeFromMessage(this);
+  OpDeprecation copyWith(void Function(OpDeprecation) updates) =>
+      super.copyWith((message) => updates(message as OpDeprecation));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static OpDeprecation create() => OpDeprecation._();
+  OpDeprecation createEmptyInstance() => create();
+  static $pb.PbList<OpDeprecation> createRepeated() =>
+      $pb.PbList<OpDeprecation>();
+  static OpDeprecation getDefault() => _defaultInstance ??= create()..freeze();
   static OpDeprecation _defaultInstance;
-  static void $checkItem(OpDeprecation v) {
-    if (v is! OpDeprecation) checkItemFailed(v, 'OpDeprecation');
+
+  $core.int get version => $_get(0, 0);
+  set version($core.int v) {
+    $_setSignedInt32(0, v);
   }
 
-  int get version => $_get(0, 0);
-  set version(int v) {
-    $_setUnsignedInt32(0, v);
-  }
-
-  bool hasVersion() => $_has(0);
+  $core.bool hasVersion() => $_has(0);
   void clearVersion() => clearField(1);
 
-  String get explanation => $_getS(1, '');
-  set explanation(String v) {
+  $core.String get explanation => $_getS(1, '');
+  set explanation($core.String v) {
     $_setString(1, v);
   }
 
-  bool hasExplanation() => $_has(1);
+  $core.bool hasExplanation() => $_has(1);
   void clearExplanation() => clearField(2);
 }
 
-class _ReadonlyOpDeprecation extends OpDeprecation with ReadonlyMessageMixin {}
+class OpList extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i =
+      $pb.BuilderInfo('OpList', package: const $pb.PackageName('tensorflow'))
+        ..pc<OpDef>(1, 'op', $pb.PbFieldType.PM, OpDef.create)
+        ..hasRequiredFields = false;
 
-class OpList extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('OpList')
-    ..pp<OpDef>(1, 'op', PbFieldType.PM, OpDef.$checkItem, OpDef.create)
-    ..hasRequiredFields = false;
-
-  OpList() : super();
-  OpList.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  OpList.fromJson(String i, [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  OpList clone() => new OpList()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static OpList create() => new OpList();
-  static PbList<OpList> createRepeated() => new PbList<OpList>();
-  static OpList getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyOpList();
-    return _defaultInstance;
-  }
-
+  OpList._() : super();
+  factory OpList() => create();
+  factory OpList.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory OpList.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  OpList clone() => OpList()..mergeFromMessage(this);
+  OpList copyWith(void Function(OpList) updates) =>
+      super.copyWith((message) => updates(message as OpList));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static OpList create() => OpList._();
+  OpList createEmptyInstance() => create();
+  static $pb.PbList<OpList> createRepeated() => $pb.PbList<OpList>();
+  static OpList getDefault() => _defaultInstance ??= create()..freeze();
   static OpList _defaultInstance;
-  static void $checkItem(OpList v) {
-    if (v is! OpList) checkItemFailed(v, 'OpList');
-  }
 
-  List<OpDef> get op => $_getList(0);
+  $core.List<OpDef> get op => $_getList(0);
 }
-
-class _ReadonlyOpList extends OpList with ReadonlyMessageMixin {}

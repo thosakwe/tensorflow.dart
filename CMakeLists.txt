@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 project(tensorflow_dart)
 set (CMAKE_CXX_STANDARD 11)
-add_subdirectory(third_party)
+set(EXPORT_COMPILE_COMMANDS ON)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_dart_utils/cmake")
 add_subdirectory(lib)

@@ -1,56 +1,56 @@
 ///
 //  Generated code. Do not modify.
-///
-// ignore_for_file: non_constant_identifier_names,library_prefixes
-library tensorflow_allocation_description;
+//  source: allocation_description.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-// ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' as $core
+    show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
 import 'package:fixnum/fixnum.dart';
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
-class AllocationDescription extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('AllocationDescription')
+class AllocationDescription extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('AllocationDescription',
+      package: const $pb.PackageName('tensorflow'))
     ..aInt64(1, 'requestedBytes')
     ..aInt64(2, 'allocatedBytes')
     ..aOS(3, 'allocatorName')
     ..aInt64(4, 'allocationId')
     ..aOB(5, 'hasSingleReference')
-    ..a<Int64>(6, 'ptr', PbFieldType.OU6, Int64.ZERO)
+    ..a<Int64>(6, 'ptr', $pb.PbFieldType.OU6, Int64.ZERO)
     ..hasRequiredFields = false;
 
-  AllocationDescription() : super();
-  AllocationDescription.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  AllocationDescription.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
+  AllocationDescription._() : super();
+  factory AllocationDescription() => create();
+  factory AllocationDescription.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory AllocationDescription.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
   AllocationDescription clone() =>
-      new AllocationDescription()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static AllocationDescription create() => new AllocationDescription();
-  static PbList<AllocationDescription> createRepeated() =>
-      new PbList<AllocationDescription>();
-  static AllocationDescription getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyAllocationDescription();
-    return _defaultInstance;
-  }
-
+      AllocationDescription()..mergeFromMessage(this);
+  AllocationDescription copyWith(
+          void Function(AllocationDescription) updates) =>
+      super.copyWith((message) => updates(message as AllocationDescription));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AllocationDescription create() => AllocationDescription._();
+  AllocationDescription createEmptyInstance() => create();
+  static $pb.PbList<AllocationDescription> createRepeated() =>
+      $pb.PbList<AllocationDescription>();
+  static AllocationDescription getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static AllocationDescription _defaultInstance;
-  static void $checkItem(AllocationDescription v) {
-    if (v is! AllocationDescription)
-      checkItemFailed(v, 'AllocationDescription');
-  }
 
   Int64 get requestedBytes => $_getI64(0);
   set requestedBytes(Int64 v) {
     $_setInt64(0, v);
   }
 
-  bool hasRequestedBytes() => $_has(0);
+  $core.bool hasRequestedBytes() => $_has(0);
   void clearRequestedBytes() => clearField(1);
 
   Int64 get allocatedBytes => $_getI64(1);
@@ -58,15 +58,15 @@ class AllocationDescription extends GeneratedMessage {
     $_setInt64(1, v);
   }
 
-  bool hasAllocatedBytes() => $_has(1);
+  $core.bool hasAllocatedBytes() => $_has(1);
   void clearAllocatedBytes() => clearField(2);
 
-  String get allocatorName => $_getS(2, '');
-  set allocatorName(String v) {
+  $core.String get allocatorName => $_getS(2, '');
+  set allocatorName($core.String v) {
     $_setString(2, v);
   }
 
-  bool hasAllocatorName() => $_has(2);
+  $core.bool hasAllocatorName() => $_has(2);
   void clearAllocatorName() => clearField(3);
 
   Int64 get allocationId => $_getI64(3);
@@ -74,15 +74,15 @@ class AllocationDescription extends GeneratedMessage {
     $_setInt64(3, v);
   }
 
-  bool hasAllocationId() => $_has(3);
+  $core.bool hasAllocationId() => $_has(3);
   void clearAllocationId() => clearField(4);
 
-  bool get hasSingleReference => $_get(4, false);
-  set hasSingleReference(bool v) {
+  $core.bool get hasSingleReference => $_get(4, false);
+  set hasSingleReference($core.bool v) {
     $_setBool(4, v);
   }
 
-  bool hasHasSingleReference() => $_has(4);
+  $core.bool hasHasSingleReference() => $_has(4);
   void clearHasSingleReference() => clearField(5);
 
   Int64 get ptr => $_getI64(5);
@@ -90,9 +90,6 @@ class AllocationDescription extends GeneratedMessage {
     $_setInt64(5, v);
   }
 
-  bool hasPtr() => $_has(5);
+  $core.bool hasPtr() => $_has(5);
   void clearPtr() => clearField(6);
 }
-
-class _ReadonlyAllocationDescription extends AllocationDescription
-    with ReadonlyMessageMixin {}

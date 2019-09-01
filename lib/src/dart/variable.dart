@@ -2,9 +2,7 @@ part of tensorflow;
 
 @deprecated
 Output<T> getVariable<T>(String name,
-    {DataType dtype: DataType.DT_FLOAT,
-    Shape shape,
-    Tensor initializer}) {
+    {DataType dtype: DataType.DT_FLOAT, Shape shape, Tensor initializer}) {
   var b = new StringBuffer();
   var scopes = Zone.current[_scopesSymbol] ?? [];
   //shape ??= Shape.scalar;
@@ -24,7 +22,7 @@ Output<T> getVariable<T>(String name,
 
     if (initializer != null) {
       assignOp = initializer;
-    /*} else {
+      /*} else {
       if (shape == Shape.scalar)
         assignOp = new Tensor.from(0.0, dtype: dtype);
       else
@@ -32,7 +30,6 @@ Output<T> getVariable<T>(String name,
     */
       defaultGraph.session.runner.feed(b.toString(), assignOp);
     }
-
 
     //v._initializer = assignVariableOp(v, assignOp, graph: defaultGraph, dtype: dtype);
     //v._resource = readVariableOp(v, dtype: dtype);

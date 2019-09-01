@@ -2,7 +2,9 @@ import 'dart:collection';
 import 'package:tensorflow/tensorflow.dart';
 
 ///
-class GradientTape<T> { final Queue<Output<T>> _tape = new Queue(); final bool _persistent;
+class GradientTape<T> {
+  final Queue<Output<T>> _tape = new Queue();
+  final bool _persistent;
   bool _done = false;
 
   GradientTape({bool persistent: false}) : _persistent = persistent;

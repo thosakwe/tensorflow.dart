@@ -1,178 +1,171 @@
 ///
 //  Generated code. Do not modify.
-///
-// ignore_for_file: non_constant_identifier_names,library_prefixes
-library tensorflow_tensor;
+//  source: tensor.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-// ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' as $core
+    show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
 import 'package:fixnum/fixnum.dart';
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'tensor_shape.pb.dart';
-import 'resource_handle.pb.dart';
+import 'tensor_shape.pb.dart' as $0;
+import 'resource_handle.pb.dart' as $1;
 
-import 'types.pbenum.dart';
+import 'types.pbenum.dart' as $2;
 
-class TensorProto extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('TensorProto')
-    ..e<DataType>(1, 'dtype', PbFieldType.OE, DataType.DT_INVALID,
-        DataType.valueOf, DataType.values)
-    ..a<TensorShapeProto>(2, 'tensorShape', PbFieldType.OM,
-        TensorShapeProto.getDefault, TensorShapeProto.create)
-    ..a<int>(3, 'versionNumber', PbFieldType.O3)
-    ..a<List<int>>(4, 'tensorContent', PbFieldType.OY)
-    ..p<double>(5, 'floatVal', PbFieldType.KF)
-    ..p<double>(6, 'doubleVal', PbFieldType.KD)
-    ..p<int>(7, 'intVal', PbFieldType.K3)
-    ..p<List<int>>(8, 'stringVal', PbFieldType.PY)
-    ..p<double>(9, 'scomplexVal', PbFieldType.KF)
-    ..p<Int64>(10, 'int64Val', PbFieldType.K6)
-    ..p<bool>(11, 'boolVal', PbFieldType.KB)
-    ..p<double>(12, 'dcomplexVal', PbFieldType.KD)
-    ..p<int>(13, 'halfVal', PbFieldType.K3)
-    ..pp<ResourceHandleProto>(14, 'resourceHandleVal', PbFieldType.PM,
-        ResourceHandleProto.$checkItem, ResourceHandleProto.create)
-    ..pp<VariantTensorDataProto>(15, 'variantVal', PbFieldType.PM,
-        VariantTensorDataProto.$checkItem, VariantTensorDataProto.create)
-    ..p<int>(16, 'uint32Val', PbFieldType.KU3)
-    ..p<Int64>(17, 'uint64Val', PbFieldType.KU6)
+class TensorProto extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('TensorProto',
+      package: const $pb.PackageName('tensorflow'))
+    ..e<$2.DataType>(1, 'dtype', $pb.PbFieldType.OE, $2.DataType.DT_INVALID,
+        $2.DataType.valueOf, $2.DataType.values)
+    ..a<$0.TensorShapeProto>(2, 'tensorShape', $pb.PbFieldType.OM,
+        $0.TensorShapeProto.getDefault, $0.TensorShapeProto.create)
+    ..a<$core.int>(3, 'versionNumber', $pb.PbFieldType.O3)
+    ..a<$core.List<$core.int>>(4, 'tensorContent', $pb.PbFieldType.OY)
+    ..p<$core.double>(5, 'floatVal', $pb.PbFieldType.KF)
+    ..p<$core.double>(6, 'doubleVal', $pb.PbFieldType.KD)
+    ..p<$core.int>(7, 'intVal', $pb.PbFieldType.K3)
+    ..p<$core.List<$core.int>>(8, 'stringVal', $pb.PbFieldType.PY)
+    ..p<$core.double>(9, 'scomplexVal', $pb.PbFieldType.KF)
+    ..p<Int64>(10, 'int64Val', $pb.PbFieldType.K6)
+    ..p<$core.bool>(11, 'boolVal', $pb.PbFieldType.KB)
+    ..p<$core.double>(12, 'dcomplexVal', $pb.PbFieldType.KD)
+    ..p<$core.int>(13, 'halfVal', $pb.PbFieldType.K3)
+    ..pc<$1.ResourceHandleProto>(14, 'resourceHandleVal', $pb.PbFieldType.PM,
+        $1.ResourceHandleProto.create)
+    ..pc<VariantTensorDataProto>(
+        15, 'variantVal', $pb.PbFieldType.PM, VariantTensorDataProto.create)
+    ..p<$core.int>(16, 'uint32Val', $pb.PbFieldType.KU3)
+    ..p<Int64>(17, 'uint64Val', $pb.PbFieldType.KU6)
     ..hasRequiredFields = false;
 
-  TensorProto() : super();
-  TensorProto.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  TensorProto.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  TensorProto clone() => new TensorProto()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static TensorProto create() => new TensorProto();
-  static PbList<TensorProto> createRepeated() => new PbList<TensorProto>();
-  static TensorProto getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyTensorProto();
-    return _defaultInstance;
-  }
-
+  TensorProto._() : super();
+  factory TensorProto() => create();
+  factory TensorProto.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory TensorProto.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  TensorProto clone() => TensorProto()..mergeFromMessage(this);
+  TensorProto copyWith(void Function(TensorProto) updates) =>
+      super.copyWith((message) => updates(message as TensorProto));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TensorProto create() => TensorProto._();
+  TensorProto createEmptyInstance() => create();
+  static $pb.PbList<TensorProto> createRepeated() => $pb.PbList<TensorProto>();
+  static TensorProto getDefault() => _defaultInstance ??= create()..freeze();
   static TensorProto _defaultInstance;
-  static void $checkItem(TensorProto v) {
-    if (v is! TensorProto) checkItemFailed(v, 'TensorProto');
-  }
 
-  DataType get dtype => $_getN(0);
-  set dtype(DataType v) {
+  $2.DataType get dtype => $_getN(0);
+  set dtype($2.DataType v) {
     setField(1, v);
   }
 
-  bool hasDtype() => $_has(0);
+  $core.bool hasDtype() => $_has(0);
   void clearDtype() => clearField(1);
 
-  TensorShapeProto get tensorShape => $_getN(1);
-  set tensorShape(TensorShapeProto v) {
+  $0.TensorShapeProto get tensorShape => $_getN(1);
+  set tensorShape($0.TensorShapeProto v) {
     setField(2, v);
   }
 
-  bool hasTensorShape() => $_has(1);
+  $core.bool hasTensorShape() => $_has(1);
   void clearTensorShape() => clearField(2);
 
-  int get versionNumber => $_get(2, 0);
-  set versionNumber(int v) {
-    $_setUnsignedInt32(2, v);
+  $core.int get versionNumber => $_get(2, 0);
+  set versionNumber($core.int v) {
+    $_setSignedInt32(2, v);
   }
 
-  bool hasVersionNumber() => $_has(2);
+  $core.bool hasVersionNumber() => $_has(2);
   void clearVersionNumber() => clearField(3);
 
-  List<int> get tensorContent => $_getN(3);
-  set tensorContent(List<int> v) {
+  $core.List<$core.int> get tensorContent => $_getN(3);
+  set tensorContent($core.List<$core.int> v) {
     $_setBytes(3, v);
   }
 
-  bool hasTensorContent() => $_has(3);
+  $core.bool hasTensorContent() => $_has(3);
   void clearTensorContent() => clearField(4);
 
-  List<double> get floatVal => $_getList(4);
+  $core.List<$core.double> get floatVal => $_getList(4);
 
-  List<double> get doubleVal => $_getList(5);
+  $core.List<$core.double> get doubleVal => $_getList(5);
 
-  List<int> get intVal => $_getList(6);
+  $core.List<$core.int> get intVal => $_getList(6);
 
-  List<List<int>> get stringVal => $_getList(7);
+  $core.List<$core.List<$core.int>> get stringVal => $_getList(7);
 
-  List<double> get scomplexVal => $_getList(8);
+  $core.List<$core.double> get scomplexVal => $_getList(8);
 
-  List<Int64> get int64Val => $_getList(9);
+  $core.List<Int64> get int64Val => $_getList(9);
 
-  List<bool> get boolVal => $_getList(10);
+  $core.List<$core.bool> get boolVal => $_getList(10);
 
-  List<double> get dcomplexVal => $_getList(11);
+  $core.List<$core.double> get dcomplexVal => $_getList(11);
 
-  List<int> get halfVal => $_getList(12);
+  $core.List<$core.int> get halfVal => $_getList(12);
 
-  List<ResourceHandleProto> get resourceHandleVal => $_getList(13);
+  $core.List<$1.ResourceHandleProto> get resourceHandleVal => $_getList(13);
 
-  List<VariantTensorDataProto> get variantVal => $_getList(14);
+  $core.List<VariantTensorDataProto> get variantVal => $_getList(14);
 
-  List<int> get uint32Val => $_getList(15);
+  $core.List<$core.int> get uint32Val => $_getList(15);
 
-  List<Int64> get uint64Val => $_getList(16);
+  $core.List<Int64> get uint64Val => $_getList(16);
 }
 
-class _ReadonlyTensorProto extends TensorProto with ReadonlyMessageMixin {}
-
-class VariantTensorDataProto extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('VariantTensorDataProto')
+class VariantTensorDataProto extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('VariantTensorDataProto',
+      package: const $pb.PackageName('tensorflow'))
     ..aOS(1, 'typeName')
-    ..a<List<int>>(2, 'metadata', PbFieldType.OY)
-    ..pp<TensorProto>(3, 'tensors', PbFieldType.PM, TensorProto.$checkItem,
-        TensorProto.create)
+    ..a<$core.List<$core.int>>(2, 'metadata', $pb.PbFieldType.OY)
+    ..pc<TensorProto>(3, 'tensors', $pb.PbFieldType.PM, TensorProto.create)
     ..hasRequiredFields = false;
 
-  VariantTensorDataProto() : super();
-  VariantTensorDataProto.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  VariantTensorDataProto.fromJson(String i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
+  VariantTensorDataProto._() : super();
+  factory VariantTensorDataProto() => create();
+  factory VariantTensorDataProto.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory VariantTensorDataProto.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
   VariantTensorDataProto clone() =>
-      new VariantTensorDataProto()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static VariantTensorDataProto create() => new VariantTensorDataProto();
-  static PbList<VariantTensorDataProto> createRepeated() =>
-      new PbList<VariantTensorDataProto>();
-  static VariantTensorDataProto getDefault() {
-    if (_defaultInstance == null)
-      _defaultInstance = new _ReadonlyVariantTensorDataProto();
-    return _defaultInstance;
-  }
-
+      VariantTensorDataProto()..mergeFromMessage(this);
+  VariantTensorDataProto copyWith(
+          void Function(VariantTensorDataProto) updates) =>
+      super.copyWith((message) => updates(message as VariantTensorDataProto));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static VariantTensorDataProto create() => VariantTensorDataProto._();
+  VariantTensorDataProto createEmptyInstance() => create();
+  static $pb.PbList<VariantTensorDataProto> createRepeated() =>
+      $pb.PbList<VariantTensorDataProto>();
+  static VariantTensorDataProto getDefault() =>
+      _defaultInstance ??= create()..freeze();
   static VariantTensorDataProto _defaultInstance;
-  static void $checkItem(VariantTensorDataProto v) {
-    if (v is! VariantTensorDataProto)
-      checkItemFailed(v, 'VariantTensorDataProto');
-  }
 
-  String get typeName => $_getS(0, '');
-  set typeName(String v) {
+  $core.String get typeName => $_getS(0, '');
+  set typeName($core.String v) {
     $_setString(0, v);
   }
 
-  bool hasTypeName() => $_has(0);
+  $core.bool hasTypeName() => $_has(0);
   void clearTypeName() => clearField(1);
 
-  List<int> get metadata => $_getN(1);
-  set metadata(List<int> v) {
+  $core.List<$core.int> get metadata => $_getN(1);
+  set metadata($core.List<$core.int> v) {
     $_setBytes(1, v);
   }
 
-  bool hasMetadata() => $_has(1);
+  $core.bool hasMetadata() => $_has(1);
   void clearMetadata() => clearField(2);
 
-  List<TensorProto> get tensors => $_getList(2);
+  $core.List<TensorProto> get tensors => $_getList(2);
 }
-
-class _ReadonlyVariantTensorDataProto extends VariantTensorDataProto
-    with ReadonlyMessageMixin {}

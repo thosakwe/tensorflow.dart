@@ -1,58 +1,57 @@
 ///
 //  Generated code. Do not modify.
-///
-// ignore_for_file: non_constant_identifier_names,library_prefixes
-library tensorflow_versions;
+//  source: versions.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-// ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' as $core
+    show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
-class VersionDef extends GeneratedMessage {
-  static final BuilderInfo _i = new BuilderInfo('VersionDef')
-    ..a<int>(1, 'producer', PbFieldType.O3)
-    ..a<int>(2, 'minConsumer', PbFieldType.O3)
-    ..p<int>(3, 'badConsumers', PbFieldType.P3)
+class VersionDef extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('VersionDef',
+      package: const $pb.PackageName('tensorflow'))
+    ..a<$core.int>(1, 'producer', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, 'minConsumer', $pb.PbFieldType.O3)
+    ..p<$core.int>(3, 'badConsumers', $pb.PbFieldType.P3)
     ..hasRequiredFields = false;
 
-  VersionDef() : super();
-  VersionDef.fromBuffer(List<int> i,
-      [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromBuffer(i, r);
-  VersionDef.fromJson(String i, [ExtensionRegistry r = ExtensionRegistry.EMPTY])
-      : super.fromJson(i, r);
-  VersionDef clone() => new VersionDef()..mergeFromMessage(this);
-  BuilderInfo get info_ => _i;
-  static VersionDef create() => new VersionDef();
-  static PbList<VersionDef> createRepeated() => new PbList<VersionDef>();
-  static VersionDef getDefault() {
-    if (_defaultInstance == null) _defaultInstance = new _ReadonlyVersionDef();
-    return _defaultInstance;
-  }
-
+  VersionDef._() : super();
+  factory VersionDef() => create();
+  factory VersionDef.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory VersionDef.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  VersionDef clone() => VersionDef()..mergeFromMessage(this);
+  VersionDef copyWith(void Function(VersionDef) updates) =>
+      super.copyWith((message) => updates(message as VersionDef));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static VersionDef create() => VersionDef._();
+  VersionDef createEmptyInstance() => create();
+  static $pb.PbList<VersionDef> createRepeated() => $pb.PbList<VersionDef>();
+  static VersionDef getDefault() => _defaultInstance ??= create()..freeze();
   static VersionDef _defaultInstance;
-  static void $checkItem(VersionDef v) {
-    if (v is! VersionDef) checkItemFailed(v, 'VersionDef');
+
+  $core.int get producer => $_get(0, 0);
+  set producer($core.int v) {
+    $_setSignedInt32(0, v);
   }
 
-  int get producer => $_get(0, 0);
-  set producer(int v) {
-    $_setUnsignedInt32(0, v);
-  }
-
-  bool hasProducer() => $_has(0);
+  $core.bool hasProducer() => $_has(0);
   void clearProducer() => clearField(1);
 
-  int get minConsumer => $_get(1, 0);
-  set minConsumer(int v) {
-    $_setUnsignedInt32(1, v);
+  $core.int get minConsumer => $_get(1, 0);
+  set minConsumer($core.int v) {
+    $_setSignedInt32(1, v);
   }
 
-  bool hasMinConsumer() => $_has(1);
+  $core.bool hasMinConsumer() => $_has(1);
   void clearMinConsumer() => clearField(2);
 
-  List<int> get badConsumers => $_getList(2);
+  $core.List<$core.int> get badConsumers => $_getList(2);
 }
-
-class _ReadonlyVersionDef extends VersionDef with ReadonlyMessageMixin {}
