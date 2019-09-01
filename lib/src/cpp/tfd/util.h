@@ -29,12 +29,12 @@ namespace tfd
     TF_Output convert_output_wrapper(Dart_Handle handle, int index = 0);
 
     void throwCoreError(const char *msg, const char *errorType = "ArgumentError");
-
-    Dart_Handle getTuple2Type();
-
-    Dart_Handle getTuple3Type();
-
-    Dart_Handle getTuple4Type();
+//
+//    Dart_Handle getTuple2Type();
+//
+//    Dart_Handle getTuple3Type();
+//
+//    Dart_Handle getTuple4Type();
 }
 
 #endif //TENSORFLOW_DART_UTIL_H
