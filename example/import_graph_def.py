@@ -6,7 +6,6 @@ init_op = tf.global_variables_initializer()
 saver = tf.train.Saver({'v1': v1})
 
 with tf.Session() as sess:
-    tf.reset_default_graph()
     sess.run(init_op)
     x = v1.assign(tf.constant(1337.0))
     x = tf.Print(v1, [v1])

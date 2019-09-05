@@ -4,6 +4,11 @@ void main() {
   // Import the saved model from the directory we created in `import_saved_model.py`.
   var model = tf.SavedModelBundle('example/saved_models');
 
+  // Print all the ops we found.
+  for (var op in model.graph.operations) {
+    print('* ${op.name} => ${op.type}');
+  }
+
   // We've successfully imported the model, but we'll need to restore some tensors
   // for it to run.
   //

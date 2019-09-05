@@ -56,7 +56,8 @@ class SavedModelBundle {
       constant(metaGraphDef.saverDef.filenameTensorName.replaceAll(':0', '')),
       dt: dtype,
     );
-    throw o.run();
+    o.run();
+    // throw o.run();
 
     /*
     graph.session.runner
