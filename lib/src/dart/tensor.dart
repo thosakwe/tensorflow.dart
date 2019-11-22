@@ -10,6 +10,7 @@ class Tensor {
 
   Tensor._(this._dataType, this._data, this._shape);
 
+  /// Create a Tensor manually, given its type and shape, and a blob of data.
   factory Tensor(DataType dtype, Shape shape, Uint8List data) =>
       Tensor._(dtype.value, data, shape.dimensions);
 
@@ -18,7 +19,7 @@ class Tensor {
   /// [dtype] may be ignored.
   factory Tensor.from(value, {DataType dtype}) {
     if (value is Tensor) return value.cast(dtype ?? value.dtype);
-    if (value is String) return Tensor.fromString(value);
+    if (value is String) return Tensor.fromUtf8String(value);
     if (value is bool) return Tensor.fromBool(value);
     if (value is double) return Tensor.fromDouble(value, dtype: dtype);
     if (value is int) return Tensor.fromInt(value, dtype: dtype);
@@ -57,27 +58,23 @@ class Tensor {
     throw ArgumentError('Cannot convert $value into a Tensor.');
   }
 
+  /// Forwards to the main [Tensor] constructor.
   factory Tensor.fromBuffer(DataType dtype, Shape shape, ByteBuffer data) =>
       Tensor(dtype, shape, Uint8List.view(data));
 
-  //static Tuple3<int, String, Uint8List> _string(String s)
-  //    native "Tensors_string";
-
-  factory Tensor.fromString(String s, {bool padding: false}) {
-    /*
-    var result = _string(s);
-    var code = _codeFrom(result.item1);
-    if (code != Code.ok) throw TensorFlowException(code, result.item2);
-    return Tensor._(DataType.DT_STRING.value,
-        Uint8List.view(result.item3.buffer, 9), Shape.scalar.dimensions);
-    */
-    var bytes = List.filled(padding ? 8 : 0, 0, growable: true)
-      ..addAll(utf8.encode(s));
-    //..add(0)
-
+  /// Creates a Tensor from an ASCII string.
+  factory Tensor.fromAsciiString(String s) {
+    var bytes = ascii.encode(s);
     return Tensor(DataType.DT_STRING, Shape.scalar, Uint8List.fromList(bytes));
   }
 
+  /// Creates a Tensor from a UTF-8 string.
+  factory Tensor.fromUtf8String(String s) {
+    var bytes = utf8.encode(s);
+    return Tensor(DataType.DT_STRING, Shape.scalar, Uint8List.fromList(bytes));
+  }
+
+  /// Converts a Dart int into a Tensor.
   factory Tensor.fromInt(int n, {DataType dtype: DataType.DT_INT32}) {
     switch (dtype) {
       case DataType.DT_INT8:
@@ -102,6 +99,7 @@ class Tensor {
     throw ArgumentError('Not an integer type: $dtype');
   }
 
+  /// Converts a Dart double into a Tensor.
   factory Tensor.fromDouble(double n, {DataType dtype: DataType.DT_FLOAT}) {
     switch (dtype) {
       case DataType.DT_FLOAT:
@@ -114,42 +112,54 @@ class Tensor {
     throw ArgumentError('Not a float/double type: $dtype');
   }
 
+  /// Turns the dimensions of a [shape] into an integer-list Tensor.
   factory Tensor.fromShape(Shape shape) {
     if (shape.size == 0)
       throw 'Cannot convert a scalar (empty) Shape to a Tensor.';
     return Tensor.fromInt64List(shape.dimensions).reshape(shape);
   }
 
+  /// Tensor conversion constructor; self-explanatory.
   factory Tensor.fromBool(bool b) =>
       Tensor.fromUint8List(Uint8List.fromList([b ? 1 : 0])).asScalar;
 
+  /// Tensor conversion constructor; self-explanatory.
   factory Tensor.fromInt8List(Int8List list) =>
       Tensor.fromBuffer(DataType.DT_INT8, Shape(list.length), list.buffer);
 
+  /// Tensor conversion constructor; self-explanatory.
   factory Tensor.fromInt16List(Int16List list) =>
       Tensor.fromBuffer(DataType.DT_INT16, Shape(list.length), list.buffer);
 
+  /// Tensor conversion constructor; self-explanatory.
   factory Tensor.fromInt32List(Int32List list) =>
       Tensor.fromBuffer(DataType.DT_INT32, Shape(list.length), list.buffer);
 
+  /// Tensor conversion constructor; self-explanatory.
   factory Tensor.fromInt64List(Int64List list) =>
       Tensor.fromBuffer(DataType.DT_INT64, Shape(list.length), list.buffer);
 
+  /// Tensor conversion constructor; self-explanatory.
   factory Tensor.fromUint8List(Uint8List list) =>
       Tensor(DataType.DT_UINT8, Shape(list.length), list);
 
+  /// Tensor conversion constructor; self-explanatory.
   factory Tensor.fromUint16List(Uint16List list) =>
       Tensor.fromBuffer(DataType.DT_UINT16, Shape(list.length), list.buffer);
 
+  /// Tensor conversion constructor; self-explanatory.
   factory Tensor.fromUint32List(Uint32List list) =>
       Tensor.fromBuffer(DataType.DT_UINT32, Shape(list.length), list.buffer);
 
+  /// Tensor conversion constructor; self-explanatory.
   factory Tensor.fromUint64List(Uint64List list) =>
       Tensor.fromBuffer(DataType.DT_UINT64, Shape(list.length), list.buffer);
 
+  /// Tensor conversion constructor; self-explanatory.
   factory Tensor.fromFloat32List(Float32List list) =>
       Tensor.fromBuffer(DataType.DT_FLOAT, Shape(list.length), list.buffer);
 
+  /// Tensor conversion constructor; self-explanatory.
   factory Tensor.fromFloat64List(Float64List list) =>
       Tensor.fromBuffer(DataType.DT_DOUBLE, Shape(list.length), list.buffer);
 
@@ -337,6 +347,7 @@ class Tensor {
   }
 }
 
+/// The list of Tensorflow integer types.
 const List<DataType> intTypes = const [
   DataType.DT_INT8,
   DataType.DT_INT16,
@@ -347,4 +358,6 @@ const List<DataType> intTypes = const [
   DataType.DT_UINT32,
   DataType.DT_INT64,
 ];
+
+/// The list of Tensorflow float/double types.
 const List<DataType> floatTypes = const [DataType.DT_DOUBLE, DataType.DT_FLOAT];

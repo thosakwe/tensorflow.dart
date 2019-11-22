@@ -127,7 +127,6 @@ class Graph {
   void reset() {
     close();
     _pointer = _Graph_new();
-    _operations = null;
     _runCallbacks.clear();
     _variables.clear();
     _functions.clear();
