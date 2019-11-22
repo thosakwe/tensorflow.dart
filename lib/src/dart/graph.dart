@@ -75,7 +75,6 @@ class Graph {
   final Map<String, Output> _variables = {};
   final List<Func> _functions = [];
   int _index = 0;
-  List<Operation> _operations;
   Session _session;
 
   Graph() : _pointer = _Graph_new();

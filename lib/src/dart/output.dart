@@ -46,48 +46,6 @@ class Output<T> {
 
   T get value => identity(this).run();
 
-  Output<T> operator ~() => neg<T>(this, graph: _graph);
-
-  Output<T> operator *(Output<T> other) => mul<T>(this, other, graph: _graph);
-
-  Output<T> operator ~/(Output<T> other) =>
-      truncateDiv<T>(this, other, graph: _graph);
-
-  Output<T> operator /(Output<T> other) => div<T>(this, other, graph: _graph);
-
-  Output<T> operator %(Output<T> other) => mod<T>(this, other, graph: _graph);
-
-  Output<T> operator +(Output<T> other) => add<T>(this, other, graph: _graph);
-
-  Output<T> operator -(Output<T> other) => sub<T>(this, other, graph: _graph);
-
-  Output<T> operator &(Output<T> other) =>
-      bitwiseAnd<T>(this, other, graph: _graph);
-
-  Output<T> operator ^(Output<T> other) =>
-      bitwiseXor<T>(this, other, graph: _graph);
-
-  Output<T> operator |(Output<T> other) =>
-      bitwiseOr<T>(this, other, graph: _graph);
-
-  Output<bool> operator >(Output<T> other) =>
-      greater<T>(this, other, graph: _graph);
-
-  Output<bool> operator >=(Output<T> other) =>
-      greaterEqual<T>(this, other, graph: _graph);
-
-  Output<bool> operator <(Output<T> other) =>
-      less<T>(this, other, graph: _graph);
-
-  Output<bool> operator <=(Output<T> other) =>
-      lessEqual<T>(this, other, graph: _graph);
-
-  Output<T> operator <<(Output<T> other) =>
-      leftShift<T>(this, other, graph: _graph);
-
-  Output<T> operator >>(Output<T> other) =>
-      rightShift<T>(this, other, graph: _graph);
-
   int _getType() native "Output_get_type";
 
   List _reshape(Graph graph, Int64List dims) native "Output_reshape";
